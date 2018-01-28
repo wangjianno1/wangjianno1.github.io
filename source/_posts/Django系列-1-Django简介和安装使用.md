@@ -38,6 +38,7 @@ pip install Django==1.11.2
 ```
 
 （2）源码安装
+
 下载pytz 2017.2 版本；下载Django 1.11.2版本。分别解压，然后通过python setup.py install先安装pytz，再安装Django即可。二者被安装到lib/python2.7/site-packages目录中。
 
 备注：使用python -m django --version命令查看是否安装成功
