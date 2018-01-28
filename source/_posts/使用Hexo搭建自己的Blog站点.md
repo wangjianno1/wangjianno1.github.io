@@ -116,7 +116,9 @@ layout.ejs是一个完整的html页面的模板文件，该模板中包含了导
 # 使用Hexo的闲杂问题
 
 （1）如何保存自己的Hexo生成的原始文件以及自己编写MarkDown文件呢？
+
 可以在“用户名.github.io”仓库下新建一个非master分支，将Hexo的原始文件提交到该分支上（不能是master分支哦，因为master分支是用github pages的默认使用的分支哦）
+
 （2）。。。
 
 
