@@ -5,7 +5,7 @@ tags: Python WEB开发
 categories: Django
 ---
 
-# 1.Django简介
+# Django简介
 
 Python下有许多款不同的Web框架。Django是重量级选手中最有代表性的一位。许多网站和APP都基于Django。 Django是一个开放源代码的Web应用框架，由Python写成。Django遵守BSD版权，初次发布于2005年7月, 并于2008年9月发布了第一个正式版本1.0。Django的优势如下：
 
@@ -25,7 +25,7 @@ python web框架
 
 引入APP的概念，以APP来扩展WEB项目
 
-# 2.Django的安装
+# Django的安装
 
 Django的安装有pip和源码安装两种方式（本次使用的是Django 1.11.2，Python环境是2.7.13），如下：
 
@@ -43,7 +43,7 @@ pip install Django==1.11.2
 
 备注：使用python -m django --version命令查看是否安装成功
 
-# 3.创建Django web project
+# 创建Django web project
 
 安装完django之后，就拥有django-admin工具命令了，该工具可以用来创建项目、创建APP等等。可以执行执行django-admin help查看其支持的子命令。
 
@@ -51,7 +51,7 @@ pip install Django==1.11.2
 
 执行命令django-admin startproject testproject命令，创建一个名称为testproject的WEB项目。在当前目录自动生成如下目录结构：
 
-![django工程目录结构](../images/django_1_1.png)
+![django工程目录结构](/images/django_1_1.png)
 
 其中各个文件的作用简单说明如下：
 
@@ -73,9 +73,9 @@ pip install Django==1.11.2
 
 在浏览器中输入http://ip:port即可访问。效果如下：
 
-![django helloworld页面](../images/django_1_2.png)
+![django helloworld页面](/images/django_1_2.png)
 
-# 4.在web project中创建app
+# 在web project中创建app
 
 创建app的过程大致为：
 
@@ -85,7 +85,7 @@ pip install Django==1.11.2
 
 自动生成如下的APP目录结构如下：
 
-![django web app目录结构](../images/django_1_3.png)
+![django web app目录结构](/images/django_1_3.png)
 
 其中各个文件的作用简单说明如下：
 
@@ -94,7 +94,7 @@ pip install Django==1.11.2
 	admin.py  #用来给Djanjo内置的admin app来使用，用来做该APP的admin后台相关的操作
 	tests.py  #用来做测试使用的
 
-# 5.Django中project和app的区别
+# Django中project和app的区别
 
 Django有project和app两个概念。project的范畴是整个项目工程，包含一些全局配置，这些配置构成一个全局的运行平台。app代表的是project一个相对独立的功能模块，业务逻辑都在各个app中。
 
