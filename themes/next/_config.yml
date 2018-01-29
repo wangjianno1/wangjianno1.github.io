@@ -122,7 +122,7 @@ menu:
 # Enable/Disable menu icons / item badges.
 menu_settings:
   icons: true
-  badges: false
+  badges: true
 
 # ---------------------------------------------------------------
 # Scheme Settings
@@ -150,8 +150,8 @@ site_state: true
 social:
   GitHub: https://github.com/wangjianno1 || github
   E-Mail: mailto:wangjiannovip@gmail.com || envelope
-  #Google: https://plus.google.com/yourname || google
-  #Twitter: https://twitter.com/yourname || twitter
+  Google: https://plus.google.com/wangjianno1 || google
+  Twitter: https://twitter.com/wangjianno1 || twitter
   #FB Page: https://www.facebook.com/yourname || facebook
   #VK Group: https://vk.com/yourname || vk
   #StackOverflow: https://stackoverflow.com/yourname || stack-overflow
