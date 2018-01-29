@@ -243,8 +243,8 @@ excerpt_description: true
 # Automatically Excerpt. Not recommend.
 # Please use <!-- more --> in the post to control excerpt accurately.
 auto_excerpt:
-  enable: false
-  length: 150
+  enable: true
+  length: 250
 
 # Post meta display settings
 post_meta:
@@ -412,7 +412,7 @@ pangu: false
 #swiftype_key:
 
 # Baidu Analytics ID
-#baidu_analytics:
+baidu_analytics: 8ff0b3da8786fc33df71f8ced9eebd5a
 
 # Disqus
 disqus:
