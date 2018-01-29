@@ -7,7 +7,9 @@ categories: 杂货铺
 
 # Hexo简介
 
-Hexo是一个快速、简洁且高效的博客框架。Hexo使用Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。Hexo是类似于Jekyll的东东哦，但Hexo目前比较流行。简单来说，我们在Hexo框架内编写MarkDown格式的文档，然后使用Hexo帮我们生产静态的WEB资源（如HTML/CSS/JS等）。使用这些静态WEB页面，我们就可以部署个人WEB站点。
+Hexo是一个快速、简洁且高效的博客框架。Hexo使用Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。简单来说，我们在Hexo框架内编写MarkDown格式的文档，然后使用Hexo帮我们生产静态的WEB资源（如HTML/CSS/JS等）。使用这些静态WEB页面，我们就可以部署个人WEB站点。
+
+Hexo出自台湾大学生tommy351之手，是一个基于Node.js的静态博客程序，其编译上百篇文字只需要几秒。Hexo是类似于Jekyll，Octopress这样的东东哦，但Hexo目前比较流行。
 
 # Hexo环境的搭建
 
