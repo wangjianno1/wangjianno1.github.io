@@ -118,7 +118,7 @@ change master to master_host='192.168.3.100',master_port=3306,master_user='dba',
 对于mysql 5.7+及MariaDB来说，支持“多源复制”架构，使用`change master to`命令时，需要明确当前slave的名称，执行命令范例如下：
 
 ```bash
-change master 'xx_db' to master_host='10.27.102.202',master_user='rep',master_password='123456',master_log_file='mysql.000006',master_log_pos=238976927;    //其中xx_db是“多源复制”中某一个slave IO线程
+change master 'xx_db' to master_host='10.27.102.202',master_user='rep',master_password='123456',master_log_file='mysql.000006',master_log_pos=238976927;    #其中xx_db是“多源复制”中某一个slave IO线程
 ```
 
 （5）启动slave，也即启动从库的IO线程和SQL线程。
