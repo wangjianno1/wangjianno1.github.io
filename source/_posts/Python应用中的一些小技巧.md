@@ -39,5 +39,6 @@ python -m pyftpdlib -u wahaha -P test  #启动一个需要使用账号wahaha，�
 # 使用Python格式化输出json数据
 
 ```bash
-cat file.json | python -m json.tool
+cat data.json | python -m json.tool
+python -m json.tool data.json
 ```
