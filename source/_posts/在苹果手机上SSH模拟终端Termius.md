@@ -15,4 +15,4 @@ Termius是类似于SecureCRT/XShell的终端登陆工具，支持SSH/Telnet协�
 
 （1）双击屏幕，相当于TAB键，可以进行命令提示和补全。
 
-（2）点击上图中红框按钮，然后再苹果上滑动，可以目前上、下、左、右以及PageUP/PageDown键。
+（2）点击上图中红框按钮，然后再苹果上滑动，可以模拟上、下、左、右以及PageUP/PageDOWN键。
