@@ -2,7 +2,7 @@
 title: JAVA基础（1）_简介及技能图谱
 date: 2018-01-30 18:44:37
 tags: JAVA基础
-categories: JAVA技术栈
+categories: JAVA
 ---
 
 # JAVA语言简介

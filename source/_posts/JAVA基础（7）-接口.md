@@ -2,7 +2,7 @@
 title: JAVA基础（7）_接口
 date: 2018-01-30 19:27:22
 tags: JAVA基础
-categories: JAVA技术栈
+categories: JAVA
 ---
 
 # 接口的概念

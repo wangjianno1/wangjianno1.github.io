@@ -2,7 +2,7 @@
 title: JAVA基础（6）_OOP概念相关
 date: 2018-01-30 19:24:01
 tags: JAVA基础
-categories: JAVA技术栈
+categories: JAVA
 ---
 
 # OOP中一些基本概念

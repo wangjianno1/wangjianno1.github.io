@@ -2,7 +2,7 @@
 title: JAVA基础（3）_控制逻辑语句
 date: 2018-01-30 19:04:52
 tags: JAVA基础
-categories: JAVA技术栈
+categories: JAVA
 ---
 
 # 顺序语句

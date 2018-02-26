@@ -2,7 +2,7 @@
 title: JAVA基础（13）_抽象类与抽象方法
 date: 2018-01-31 00:06:08
 tags: JAVA基础
-categories: JAVA技术栈
+categories: JAVA
 ---
 
 # 抽象方法

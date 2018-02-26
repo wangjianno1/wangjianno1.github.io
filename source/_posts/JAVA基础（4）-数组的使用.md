@@ -2,7 +2,7 @@
 title: JAVA基础（4）_数组的使用
 date: 2018-01-30 19:14:20
 tags: JAVA基础
-categories: JAVA技术栈
+categories: JAVA
 ---
 
 # 数组变量的声明

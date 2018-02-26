@@ -2,7 +2,7 @@
 title: JAVA基础（11）_注解annotation技术
 date: 2018-01-30 23:54:37
 tags: JAVA基础
-categories: JAVA技术栈
+categories: JAVA
 ---
 
 # annotation注解简介

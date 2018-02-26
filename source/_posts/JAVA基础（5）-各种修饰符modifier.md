@@ -2,7 +2,7 @@
 title: JAVA基础（5）_各种修饰符modifier
 date: 2018-01-30 19:19:56
 tags: JAVA基础
-categories: JAVA技术栈
+categories: JAVA
 ---
 
 # 修饰符简介
