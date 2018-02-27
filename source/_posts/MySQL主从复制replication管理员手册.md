@@ -86,6 +86,8 @@ mysqlbinlog /var/lib/mysql/mysql-bin.000001
 
 # 通过show slave status命令查看从库的同步状态
 
+在Slave节点上执行如下命令，
+
 ```bash
 show slave status\G;
 ```
@@ -117,8 +119,8 @@ show slave status\G;
 另外，对于mysql 5.7+及MariaDB来说，它们支持“多源复制”，也即是“多主库对应一个从库”的复制结构，那么对于slave库来说，同时会从多个主库上复制数据，也即有多个Slave IO线程和SQL线程，那么直接执行show slave status会返回为空，此时可以执行如下命令来查看slave的同步状态：
 
 ```bash
-show all slaves status \G;
-show slave 'xx_db' status \G;   #仅查看某一个slave的复制状态
+show all slaves status \G;      #查看所有slave的复制状态，也是在Slave节点上执行
+show slave 'xx_db' status \G;   #仅查看某一个slave的复制状态，也是在Slave节点上执行
 ```
 
 # 关闭或启动slave IO线程或SQL线程

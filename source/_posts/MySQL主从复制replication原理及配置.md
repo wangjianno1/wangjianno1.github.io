@@ -129,7 +129,7 @@ start slave;
 
 （6）校验复制状态
 
-执行`show slave status;`命令查看复制状态。一般情况下，当Slave_IO_Running和Salve_SQL_Running都为YES时，我们才认为主从复制的状态是正常的。
+在Slave节点上执行`show slave status;`命令查看复制状态。一般情况下，当Slave_IO_Running和Salve_SQL_Running都为YES时，我们才认为主从复制的状态是正常的。
 
 # 基于binlog的mysql主从复制的部分复制配置
 
