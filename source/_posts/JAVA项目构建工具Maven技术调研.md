@@ -164,6 +164,68 @@ pom.xml的主要结构如下：
 学习资料参考于：
 http://blog.csdn.net/u011939453/article/details/43017865
 
+# Maven pom.xml中变量的使用
+
+举例来说：
+
+```
+<properties>
+  <spring.version>2.5</spring.version>
+</properties>
+
+<depencencies>
+  <dependency>
+    <groupId>org.springframework</groupId>
+    <artifactid>spring-beans</artifactId>
+    <version>${spring.version}</version>
+  </dependency>
+  <dependency>
+    <groupId>org.springframework</groupId>
+    <artifactid>spring-context</artifactId>
+    <version>${spring.version}</version>
+  </dependency>
+  <dependency>
+    <groupId>org.springframework</groupId>
+    <artifactid>spring-core</artifactId>
+    <version>${spring.version}</version>
+  </dependency>
+</depencencies>
+```
+
+这里配置了一个`spring.version`的属性变量，然后通过`${spring.version}`来引用该变量，这样就避免了在多个地方配置版本号。
+
+# Maven中dependency的scope作用域
+
++ test
+
+表明该dependency在测试范围有效，在编译和打包时都不会使用这个依赖。
+
++ compile
+
+表明该dependency在编译范围有效，在编译和打包时都会将依赖包含进去。
+
++ provided
+
+在编译和测试的过程有效，最后生成war包时不会加入。以servlet-api依赖来说，tomcat等web服务器已经存在了，如果再打包会冲突 
+
++ runtime
+
+在运行的时候依赖，在编译的时候不依赖 。
+
+备注：若不指明dependency的scope，则默认的依赖范围是compile.
+
+举例来说，如下为junit只在测试阶段使用该依赖，打包部署到生成环境时，则不会依赖junit包。
+
+```
+<depencencies>
+  <dependency>
+    <groupId>junit</groupId>
+    <artifactId>junit</artifactId>
+    <version>3.8.1</version>
+  </dependency>
+</depencencies>
+```
+
 # Maven Plugins
 
 clean、compile、install等等都属于maven的插件，即maven自身其实很简单，主要的功能是有maven插件来完成的。
