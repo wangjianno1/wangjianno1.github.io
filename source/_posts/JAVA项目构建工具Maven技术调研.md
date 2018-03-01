@@ -109,9 +109,56 @@ cd worksapce && mvn archetype:generate -DgroupId=组织名（公司域名的反�
 
 # pom.xml文件编写
 
-pom.xml的主要结构如下：
+pom.xml的完整的标签和结构如下：
 
-```bash
+```xml
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+ 
+    <!-- The Basics -->
+    <groupId>...</groupId>
+    <artifactId>...</artifactId>
+    <version>...</version>
+    <packaging>...</packaging>
+    <dependencies>...</dependencies>
+    <parent>...</parent>
+    <dependencyManagement>...</dependencyManagement>
+    <modules>...</modules>
+    <properties>...</properties>
+ 
+    <!-- Build Settings -->
+    <build>...</build>
+    <reporting>...</reporting>
+ 
+    <!-- More Project Information -->
+    <name>...</name>
+    <description>...</description>
+    <url>...</url>
+    <inceptionYear>...</inceptionYear>
+    <licenses>...</licenses>
+    <organization>...</organization>
+    <developers>...</developers>
+    <contributors>...</contributors>
+ 
+    <!-- Environment Settings -->
+    <issueManagement>...</issueManagement>
+    <ciManagement>...</ciManagement>
+    <mailingLists>...</mailingLists>
+    <scm>...</scm>
+    <prerequisites>...</prerequisites>
+    <repositories>...</repositories>
+    <pluginRepositories>...</pluginRepositories>
+    <distributionManagement>...</distributionManagement>
+    <profiles>...</profiles>
+</project>
+```
+
+如下为一个pom.xml配置文件的例子：
+
+```xml
 <project>
     <groupId>公司域名反写+项目名</groupId>
     <artifactId>项目名-模块名</artifactId>
