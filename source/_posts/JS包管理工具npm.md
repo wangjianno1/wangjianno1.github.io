@@ -2,7 +2,7 @@
 title: JS包管理工具npm
 date: 2018-02-05 20:43:08
 tags:
-categories: JavaScript
+categories: 前端工具
 ---
 
 # npm简介
@@ -86,8 +86,6 @@ scripts          #定义npm script脚本，然后通过npm run *来执行
 "install": "node-gyp rebuild"
 ```
 
-学习资料参考于：http://www.ruanyifeng.com/blog/2016/10/npm_scripts.html
-
 # npm闲杂问题
 
 （1）npm代理设置
@@ -96,5 +94,6 @@ scripts          #定义npm script脚本，然后通过npm run *来执行
 npm search express --proxy http://10.17.29.112:3128
 ```
 
-详细参考于：http://www.cnblogs.com/youfeng365/p/5846674.html
-
+详细参考于：
+http://www.cnblogs.com/youfeng365/p/5846674.html
+http://www.ruanyifeng.com/blog/2016/10/npm_scripts.html
