@@ -134,6 +134,6 @@ webpack-dev-server提供了iframe和inline两种自动刷新模式。iframe模�
 
 # webpack在实践中的一些最佳实践
 
-（1）一般来说，我们根据部署环境的不同，分别创建webpack-dev.config.js、webpack-test.config.js以及webpack-prod.config.js三个webpack的配置文件，分别代表开发环境/测试环境/生产环境的webpack配置文件。
+（1）一般来说，我们根据部署环境的不同，分别创建`webpack-dev.config.js`、`webpack-test.config.js`以及`webpack-prod.config.js`三个webpack的配置文件，分别代表开发环境/测试环境/生产环境的webpack配置文件。
 
 （2）有时我们需要在使用webpack打包的过程中，进行一个文件copy的操作，例如我们需要将src中的一些文件copy到webpack的output目录中，我们就可以使用一个webpack的第三方plugins，名称为TransferWebpackPlugin，官网地址为`https://github.com/molforp/transfer-webpack-plugin`.
