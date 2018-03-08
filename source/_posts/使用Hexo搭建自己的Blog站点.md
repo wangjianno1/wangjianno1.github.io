@@ -41,7 +41,7 @@ Hexo出自台湾大学生tommy351之手，是一个基于Node.js的静态博客�
 
 （3）使用hexo server命令启动hexo http server服务器，然后在浏览器中输入`http://ip:4000`来预览文章内容
 
-也可以使用`hexo server -p port --watch`来打开服务器，这样hexo server就会热加载最新的编辑内容，而不用每次编辑文件后就需要重启的hexo server。
+也可以使用`hexo server -p port --watch`来打开服务器，这样hexo server就会热加载最新的编辑内容，而不用每次编辑文件后就需要重启的hexo server。加上`--draft`选项可以将草稿文章也显示到页面上。
 
 （4）使用hexo generate命令生成文档的静态WEB资源
 
