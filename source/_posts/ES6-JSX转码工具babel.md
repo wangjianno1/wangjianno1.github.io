@@ -1,9 +1,10 @@
 ---
 title: ES6/JSX转码工具babel
+categories: 前端工具
 date: 2018-03-08 19:11:01
 tags:
-categories: 前端工具
 ---
+
 
 # babel简介
 
@@ -29,9 +30,9 @@ input.map(function (item) {
 
 Babel有两种使用方式，如下：
 
-（1）直接安装babel的命令行工具，或结合webpack的babel-loader进行转码。
+（1）直接安装babel的命令行工具，或结合webpack的babel-loader进行转码
 
-（2）在浏览器中直接转码。
+（2）在浏览器中直接转码
 
 在浏览器中转码时，需要在HTML中做如下配置：
 
