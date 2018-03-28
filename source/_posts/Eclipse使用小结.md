@@ -73,3 +73,10 @@ Eclipse插件安装有如下几种方式：
 
 （2）安装Eclipse，并安装PyDev插件即可
 
+# eclipse中的一些闲杂知识
+
+（1）点击Windows | Show View | Progress即可打开Eclipse Progress窗格，效果如下：
+
+![](/images/eclipse_1_3.png)
+
+在Eclipse Progress窗格中可以看到Eclipse当前正在处理的各种任务及任务状态。
