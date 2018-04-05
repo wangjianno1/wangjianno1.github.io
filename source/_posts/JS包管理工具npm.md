@@ -42,6 +42,20 @@ npm list          #查看当前目录中安装了那些npm包
 npm list express  #查看某个npm包的版本
 ```
 
+另外，关于npm install package@version的版本问题还有一个特殊注意的地方：
+
+```
+npm install package@*       #表示安装最新的版本，相当于npm install package@latest
+npm install package@1.1.0   #表示安装指定的版本，本例中即1.1.0
+npm install package@~1.1.0  #表示满足>=1.1.0 && < 1.2.0条件中最新的版本号
+npm install package@^1.1.0  #表示满足>=1.1.0 && < 2.0.0条件中最新的版本号
+```
+
+其中~和^两个前缀让人比较迷惑，简单的来说：
+
+	~ 前缀表示，安装大于指定的这个版本，并且匹配到x.y.z中z最新的版本
+	^ 前缀在^0.y.z时的表现和~0.y.z是一样的，然而^1.y.z的时候，就会匹配到y和z都是最新的版本
+
 # package.json
 
 npm管理的JavaScript模块包中会包含一个package.json文件，该文件包括了该package包的名称、版本、作者、该包的依赖等等信息，如下为package.json常见的属性配置：
