@@ -125,6 +125,7 @@ Pragma -> Cache-Control -> Expires
 ETag/If-None-Match -> Last-Modified/If-Modified-Since
 ```
 
+备注：强缓存的优先级高于协商缓存，也就是说只有本地强缓存策略失效后，才会考虑向考虑向后端询问协商。
 
 学习资料参考于：
 https://juejin.im/post/5a673af06fb9a01c927ed880
