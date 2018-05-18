@@ -49,7 +49,7 @@ categories: Tools
 
 # Google Chrome开发者工具Network面板的一些小Tips
 
-使用Disable cache，可以禁止Chrome从本地cache中获取资源，而是直接发起HTTP请求到服务端获取资源。使用Preserve log可以避免Network面板中历史的资源请求记录被清除。这样的一个好处是，如果我们在浏览器中请求的是A资源，但是A资源被30X到B资源，可是我们在Network面板中看不到从资源A 30X到资源B的这个处理过程，这时勾选上Preserve log功能就好了。
+使用Disable cache，可以禁止Chrome从本地cache中获取资源，而是直接发起HTTP请求到服务端获取资源，这样浏览器就直接忽略本地缓存（Cache-Control/Expires等）。使用Preserve log可以避免Network面板中历史的资源请求记录被清除。这样的一个好处是，如果我们在浏览器中请求的是A资源，但是A资源被30X到B资源，可是我们在Network面板中看不到从资源A 30X到资源B的这个处理过程，这时勾选上Preserve log功能就好了。
 
 ![](/images/chrome_1_7.png)
 
