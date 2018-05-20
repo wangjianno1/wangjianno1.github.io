@@ -91,3 +91,33 @@ public class FruitGenerator implements Generator<String> {
     }
 }
 ```
+
+# 伪泛型 与 类型擦除
+
+泛型的本质是参数化类型的应用，也就是说所操作的数据类型被指定为一个参数。泛型的概念在C++、C#以及JAVA中都有实现。但是实现的技术是不同的。
+
+C#里面的泛型无论在程序源码中、编译后的IL中，或者是运行期的CLR中，都是切实存在的，List<int>和List<String>就是两个不同的类型，它们在系统运行时生成，有自己的虚方法表和类型数据，这种实现称为“类型膨胀”，在C#中基于这种方法实现的泛型称为“真实泛型”。JAVA语言中的泛型则不一样，它只在源码中存在，在编译后的字节码文件中就不存在了，而是在相应的地方插入了强制类型转化代码，因此，对于运行期的JAVA语言来说，ArrayList<int>与ArrayList<String>就是同一个类型，所以JAVA中泛型技术实际上是JAVA语言的一颗语法糖，JAVA语言中的泛型实现方法称为“类型擦除”，JAVA中基于这种方法实现的泛型称为“伪泛型”。
+
+如下为使用JAVA泛型的一段源代码：
+
+```java
+public class void main(String[] args) {
+    Map<String, String> map = new HashMap<String, String>();
+    map.put("hello", "你好");
+    map.put("how ary you?", "吃了吗");
+    System.out.println(map.get("hello"));
+    System.out.println(map.get("how are you?"));
+}
+```
+
+把上段JAVA代码编译成Class文件，然后再用字节码反编译工具进行反编译后，将会发现泛型都不见了，泛型类型都变回了原生类型，如下所示：
+
+```java
+public class void main(String[] args) {
+    Map<String, String> map = new HashMap<String, String>();
+    map.put("hello", "你好");
+    map.put("how ary you?", "吃了吗");
+    System.out.println((String)map.get("hello"));
+    System.out.println((String)map.get("how are you?"));
+}
+```
