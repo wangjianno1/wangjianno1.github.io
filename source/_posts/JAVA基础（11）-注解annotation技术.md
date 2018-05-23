@@ -29,7 +29,13 @@ JAVA内置了三种标准注解和四种元注解。
 
 （3）@SuppressWarnings
 
-使用@SuppressWarnings可以关闭不当的编译器警告信息。
+使用@SuppressWarnings可以关闭不当的编译器警告信息。举例来说：
+
+- 抑制单类型的警告，如`@SuppressWarnings("unchecked")`表示只抑制无检查的警告
+- 抑制多类型的警告，如`@SuppressWarnings(value={"unchecked", "rawtypes"})`表示抑制无检查和rawtypes的警告
+- 抑制所有类型的警告，即使用`@SuppressWarnings("all")`表示抑制所有的告警
+
+备注：还有其他很多种的警告类型，如unused、restriction以及deprecation等等。
 
 JAVA还提供了四种元注解，专门用来的负责创建新注解的注解。如下：
 
