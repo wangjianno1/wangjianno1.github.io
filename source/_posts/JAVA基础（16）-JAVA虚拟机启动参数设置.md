@@ -33,11 +33,11 @@ Java JVM启动参数共分为三类：
 
 （3）-classpath classpath 或 -cp classpath
 
-告知JVM搜索目录名、jar文档名、zip文档名，之间用冒号(:)分隔；使用-classpath后JVM将不再使用CLASSPATH中的类搜索路径，如果-classpath和CLASSPATH都没有设置，则jvm使用当前路径(.)作为类搜索路径。
+告知JVM搜索目录名、jar文档名、zip文档名，之间用冒号(:)分隔；使用-classpath后JVM将不再使用CLASSPATH中的类搜索路径，如果-classpath和CLASSPATH都没有设置，则JVM使用当前路径(.)作为类搜索路径。
 
 JVM搜索类的方式和顺序为：Bootstrap，Extension，User。
 
-- Bootstrap中的路径是jvm自带的jar或zip文件，jvm首先搜索这些包文件，用`System.getProperty("sun.boot.class.path")`可得到搜索路径。
+- Bootstrap中的路径是JVM自带的jar或zip文件，JVM首先搜索这些包文件，用`System.getProperty("sun.boot.class.path")`可得到搜索路径。
 - Extension是位于`%{JRE_HOME}/lib/ext`目录下的jar文件，JVM在搜索完Bootstrap后就搜索该目录下的jar文件，用`System.getProperty("java.ext.dirs")`可得到搜索路径。
 - User搜索顺序为当前路径.、CLASSPATH、-classpath，JVM最后搜索这些目录，用`System.getProperty("java.class.path")`可得到搜索路径。
 
@@ -77,8 +77,8 @@ JVM搜索类的方式和顺序为：Bootstrap，Extension，User。
 
 用-XX作为前缀的参数列表在JVM中可能是不健壮的，SUN也不推荐使用，后续可能会在没有通知的情况下就直接取消了。但是由于这些参数中的确有很多是对我们很有用的，比如我们经常会见到的-XX:PermSize、-XX:MaxPermSize等等。我们将Java HotSpot VM中-XX:的可配置参数列表分成三类：
 
-- 行为参数（Behavioral Options）：用于改变jvm的一些基础行为
-- 性能调优（Performance Tuning）：用于jvm的性能调优
+- 行为参数（Behavioral Options）：用于改变JVM的一些基础行为
+- 性能调优（Performance Tuning）：用于JVM的性能调优
 - 调试参数（Debugging Options）：一般用于打开跟踪、打印、输出等JVM参数，用于显示JVM更加详细的信息
 
 （1）行为参数举例
