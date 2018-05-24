@@ -117,6 +117,13 @@ for (Object key : map.keySet()) {
 for (Object value : map.values()) {
     System.out.println(value);
 }
+//使用Map.Entry来遍历，Map.Entry是Map的内部接口，在HashMap会实现这个接口，而成为HashMap的内部类
+for (Map.Entry<String, Integer> entity : map.entrySet()) {
+    String key1 = entity.getKey();
+    Integer value1 = entity.getValue();
+    System.out.println(key1);
+    System.out.println(value1);
+}
 //使用forEach + Lambda表达式遍历（需要JDK1.8及以上版本）
 map.forEach((k, v) -> {
         System.out.println("key=" + k);
