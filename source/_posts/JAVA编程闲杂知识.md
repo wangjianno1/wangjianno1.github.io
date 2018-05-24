@@ -21,3 +21,19 @@ public static void testfunc() {
         System.out.println("bbbbb");
 }
 ```
+
+# Java中字符串比较
+
+双等号`str1 == str2`表示比较两个字符串对象是否在内存中时同一个。`str1.equals(str2)`表示比较两个字符串的内容是否一样。
+
+```java
+String str1 = "Lee";
+String str2 = "Lee";
+str1 == str2        // true，因为他们在内存中是同一个对象
+str1.equals(str2)   // true，因为str1和str2的字符串内容是一样的
+
+String str1 = new String("Lee");
+String str2 = new String("Lee");
+str1 == str2        // false，因为他们在内存中不是同一个对象
+str1.equals(str2)   // true，因为str1和str2的字符串内容是一样的
+```
