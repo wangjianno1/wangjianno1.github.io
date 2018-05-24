@@ -1,5 +1,5 @@
 ---
-title: JAVA基础（7）_接口
+title: JAVA语言中接口的使用
 date: 2018-01-30 19:27:22
 tags: JAVA基础
 categories: JAVA

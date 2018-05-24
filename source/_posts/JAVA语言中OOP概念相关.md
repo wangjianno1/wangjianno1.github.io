@@ -1,5 +1,5 @@
 ---
-title: JAVA基础（6）_OOP概念相关
+title: JAVA语言中OOP概念相关
 date: 2018-01-30 19:24:01
 tags: JAVA基础
 categories: JAVA

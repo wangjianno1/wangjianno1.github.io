@@ -1,5 +1,5 @@
 ---
-title: JAVA基础（4）_数组的使用
+title: JAVA语言中数组的使用
 date: 2018-01-30 19:14:20
 tags: JAVA基础
 categories: JAVA

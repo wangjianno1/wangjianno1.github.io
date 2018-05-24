@@ -1,5 +1,5 @@
 ---
-title: JAVA基础（2）_各种数据类型
+title: JAVA语言中各种数据类型
 date: 2018-01-30 19:02:36
 tags: JAVA基础
 categories: JAVA

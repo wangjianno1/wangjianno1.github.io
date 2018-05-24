@@ -1,5 +1,5 @@
 ---
-title: JAVA基础（9）_容器类或集合类
+title: JAVA中容器类或集合类
 date: 2018-01-30 19:34:15
 tags: JAVA基础
 categories: JAVA

@@ -1,5 +1,5 @@
 ---
-title: JAVA基础（12）_泛型编程
+title: JAVA中泛型编程
 date: 2018-01-30 23:59:52
 tags: JAVA基础
 categories: JAVA

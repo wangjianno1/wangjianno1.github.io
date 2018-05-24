@@ -1,5 +1,5 @@
 ---
-title: JAVA基础（17）_类加载机制
+title: JAVA语言中类加载机制
 date: 2018-01-31 00:20:02
 tags: JAVA基础
 categories: JAVA

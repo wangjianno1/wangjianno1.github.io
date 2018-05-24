@@ -1,5 +1,5 @@
 ---
-title: JAVA基础（14）_日志记录模块
+title: JAVA中日志记录模块
 date: 2018-01-31 00:09:49
 tags: JAVA基础
 categories: JAVA

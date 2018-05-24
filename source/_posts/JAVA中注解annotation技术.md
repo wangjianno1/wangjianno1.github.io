@@ -1,5 +1,5 @@
 ---
-title: JAVA基础（11）_注解annotation技术
+title: JAVA中注解annotation技术
 date: 2018-01-30 23:54:37
 tags: JAVA基础
 categories: JAVA

@@ -1,5 +1,5 @@
 ---
-title: JAVA基础（18）_JAVA编程闲杂知识
+title: JAVA编程闲杂知识
 date: 2018-01-31 00:25:20
 tags: JAVA基础
 categories: JAVA

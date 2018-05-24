@@ -1,5 +1,5 @@
 ---
-title: JAVA基础（16）_JAVA虚拟机启动参数设置
+title: JAVA虚拟机启动参数设置
 date: 2018-01-31 00:18:03
 tags: JAVA基础
 categories: JAVA

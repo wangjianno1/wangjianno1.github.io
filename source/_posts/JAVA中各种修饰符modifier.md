@@ -1,5 +1,5 @@
 ---
-title: JAVA基础（5）_各种修饰符modifier
+title: JAVA语言中各种修饰符modifier
 date: 2018-01-30 19:19:56
 tags: JAVA基础
 categories: JAVA
