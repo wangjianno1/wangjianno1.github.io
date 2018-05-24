@@ -114,7 +114,7 @@ for (Object key : map.keySet()) {
     System.out.println(key);
 }
 //遍历Map的value值
-for (Object value: map.values()) {
+for (Object value : map.values()) {
     System.out.println(value);
 }
 //使用forEach + Lambda表达式遍历（需要JDK1.8及以上版本）
