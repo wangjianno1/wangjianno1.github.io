@@ -51,3 +51,97 @@ Properties继承于Hashtable。Properties类表示了一个持久的属性集.�
 备注：窄虚线框代表的是“接口”；宽虚线框代表的是实现了部分方法的“抽象类”；实线框代表的是“类”；粗实线框代表的是日常常用的“类”。
 
 上图中有一点疑惑，水平的实心箭头的produces是什么含义？一个Collection的类可以产生一个Iterator的对象？
+
+# JAVA常用集合类
+
+常用的接口和类：
+
+（1）List接口
+
+有序、可重复。如ArrayList、LinkedList以及Vector等。
+
+（2）Set接口
+
+无序、不能重复。如HashSet以及TreeSet等。
+
+（3）Map接口
+
+键值对、键唯一、值不唯一。如HashMap、Hashtable以及TreeMap等。
+
+# 集合类的遍历操作
+
+集合类的遍历操作有如下几种方式：
+
+- 普通for循环，形如`for(int i=0; i<arr.size(); i++) {…}`
+- 增强for循环foreach，形如`for(Object i : arr) {…}`
+- 迭代器Iterator，形如`Iterator it = arr.iterator(); while(it.hasNext()) { Object o =it.next(); …}`
+
+List类型的集合类的遍历示例代码如下：
+
+```java
+List<String> list = new ArrayList<String>();
+list.add("aaa");
+list.add("bbb");
+list.add("ccc");
+//使用for循环遍历
+for (int index=0; index<list.size(); index++) {
+    String elem = list.get(index);
+    System.out.println(elem);
+}
+//使用增强for循环遍历
+for (String elem : list) {
+    System.out.println(elem);
+}
+//使用迭代器Iterator遍历
+Iterator iter = list.iterator();
+while (iter.hasNext()) {
+    Object obj = iter.next();
+    System.out.println(obj);
+}
+//使用forEach + Lambda表达式遍历（需要JDK1.8及以上版本）
+list.forEach(item -> System.out.println(item));
+```
+
+Map类型的集合类的遍历示例代码如下：
+
+```java
+Map<String, Integer> map = new HashMap<String, Integer>();
+map.put("zhangsan", 23);
+map.put("lisi", 43);
+map.put("wangwu", 32);
+//遍历Map的key值
+for (Object key : map.keySet()) {
+    System.out.println(key);
+}
+//遍历Map的value值
+for (Object value: map.values()) {
+    System.out.println(value);
+}
+//使用forEach + Lambda表达式遍历（需要JDK1.8及以上版本）
+map.forEach((k, v) -> {
+        System.out.println("key=" + k);
+        System.out.println("value=" + v);
+});
+```
+
+Set类型的集合类的遍历示例代码如下：
+
+```java
+Set<String> set = new HashSet<String>();
+set.add("beijing");
+set.add("shanghai");
+set.add("tianjin");
+set.add("chongqing");
+//使用增强for循环来遍历
+for (Object obj : set) {
+    System.out.println(obj);
+}
+//使用迭代器Iterator来遍历
+Iterator iter = set.iterator();
+while (iter.hasNext()) {
+    Object obj = iter.next();
+    System.out.println(obj);
+}
+//使用forEach + Lambda表达式遍历（需要JDK1.8及以上版本）
+set.forEach(item -> System.out.println(item));
+```
