@@ -15,7 +15,16 @@ BIND服务的进程名为named，主要的配置文件有：
 
 （1）named.conf
 
-bind的主配置文件，用来对bind服务的基本配置、zonefile的位置、权限等设置、zone和zonefile的对应关系等
+bind的主配置文件，用来对bind服务的基本配置、zonefile的位置、权限等设置、zone和zonefile的对应关系等。bind主配置文件named.conf的基本格式如下：
+
+```
+// 全局配置段
+options { ... };
+// 日志配置段
+logging { ... };
+// 区域配置段
+zone { ... };
+```
 
 （2）zone file
 
