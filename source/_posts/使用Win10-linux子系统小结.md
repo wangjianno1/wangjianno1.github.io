@@ -21,4 +21,4 @@ https://jingyan.baidu.com/article/5552ef47ef0b87518ffbc935.html
 
 在命令提示符中输入bash，即可进入linux子系统；在linux子系统的bash shell中输入exit，即可退出linux子系统，进入命令提示符中。
 
-备注：最好使用管理员身份运行命令提示符哦。默认以管理员身份运行cmd的方法参见https://jingyan.baidu.com/article/d2b1d102a391af5c7f37d44a.html
+备注：最好使用管理员身份运行命令提示符哦，如ping命令就需要以管理员身份运行cmd.exe，然后再进入bash子系统才可以使用ping命令，否则会提示没有icmp的权限而使用不了ping工具。默认以管理员身份运行cmd的方法参见https://jingyan.baidu.com/article/d2b1d102a391af5c7f37d44a.html
