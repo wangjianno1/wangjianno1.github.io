@@ -24,3 +24,8 @@ mysql> select * from user_msg limit 2\G;
 2 rows in set (0.02 sec)
 ```
 
+# MySQL的auto-rehash功能
+
+MySQL配置文件中有个auto-rehash的选项，auto-rehash是自动补全的意思，当我们在MySQL的命令行中输入SQL语句时，按TAB键就会帮我们自动补全表名或字段名。这个功能就像我们在Linux命令行里输入命令的时候，使用TAB键补全命令就好了。
+
+但是，这个功能在有些情况下会出现一些弊端，当我们打开数据库，即`use 数据库名;`时，会预读数据库信息。有时候由于数据库太大或者表数量太多，预读数据库信息将非常慢，很容易就卡住。在进入数据库时加`-A`选项可以解决这个问题，即执行`mysql -u root -p -A`命令即可。
