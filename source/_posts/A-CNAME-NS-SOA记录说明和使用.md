@@ -33,7 +33,7 @@ sina.com.cn.            5       IN      NS      ns1.sina.com.cn.
 
 （4）SOA记录
 
-如果有多台DNS服务器管理同一个域名，那么最好使用Master/Slave架构来进行搭建。既然采用这样的架构，按就需要声明被管理的zone file是如何进行传输的，此时就需要SOA（Start Of Authority）的标志了。也就是说，在DNS的每个zone file中都会有SOA记录的。下面来举例说明SOA记录的格式及字段含义：
+SOA，Start of Authority，称为起始授权资源记录。如果有多台DNS服务器管理同一个域名，那么最好使用Master/Slave架构来进行搭建。既然采用这样的架构，按就需要声明被管理的zone file是如何进行传输的，此时就需要SOA（Start Of Authority）的标志了。也就是说，在DNS的每个zone file中都会有SOA记录的。下面来举例说明SOA记录的格式及字段含义：
 
 ```
 cp.bat.com              IN SOA  ns.cp.bat.com. dnsadmin.sina.com. (
@@ -45,7 +45,7 @@ cp.bat.com              IN SOA  ns.cp.bat.com. dnsadmin.sina.com. (
                                 )
 ```
 
-备注：这里最开始的cp.bat.com可以用@符号来代替。
+备注：在zone file中，@是保留关键字，代表当前域名的意思。这里最开始的cp.bat.com可以用@符号来代替。
 
 SOA后面一共有七个参数，下面分别来介绍：
 
@@ -69,6 +69,11 @@ Slave会依据该数值来定期地从Master中下载zone file。在本例中设
 
 - 缓存时间（Minumum TTL）
 如果在zone file中，没有显式的指明TTL时，将会这个TTL设置为主。
+
+备注：当出现如下场景之一时，DNS服务器会返回SOA记录：
+
+- 当查询的类型不存在时，会在“AUTHORITY SECTION”返回SOA记录
+- 当查询的域名不存在时，会在“AUTHORITY SECTION”返回SOA记录
 
 # 使用CNAME的场景
 
