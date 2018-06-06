@@ -204,6 +204,8 @@ zone "example2.com" {
 };
 ```
 
+备注：forwarding这个特性通常用来做DNS劫持吧，如某公司有内部域名`example-inc.com`需要解析到内部IP地址，此时在公司机房的Local DNS上针对`example-inc.com`这个zone配置forwarding，将DNS请求转发到一套内部的DNS集群，然后由这个内部的DNS集群负责解析`example-inc.com`这个zone。因此`example-inc.com`这个域名，就不需要向外部的`.com`域上申请授权啦。
+
 （3）权威DNS服务器
 自己的理解是，所谓权威DNS服务是相对于cache-only DNS和forwards DNS来说的，cache-only DNS和forwards DNS本身并不提供相关域名的解析（若自身缓存中有解析记录则可以返回给dns客户端，但这不叫自身的解析）。而权威服务器是自身就能够解析域名，即zone file中配置了域名和IP的映射关系（也有CNAME或MX等记录）。
 
