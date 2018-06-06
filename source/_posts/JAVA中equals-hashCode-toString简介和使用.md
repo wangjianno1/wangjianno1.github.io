@@ -1,7 +1,7 @@
 ---
 title: JAVA中equals | hashCode | toString简介和使用
 date: 2018-06-06 15:41:17
-tags:
+tags: JAVA基础
 categories: JAVA
 ---
 

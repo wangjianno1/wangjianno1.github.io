@@ -1,7 +1,7 @@
 ---
 title: JAVA的序列化与反序列化机制
 date: 2018-06-04 16:20:38
-tags:
+tags: JAVA基础
 categories: JAVA
 ---
 
