@@ -95,6 +95,8 @@ mvn clean    #删除编译生成class字节码文件以及项目jar文件等等�
 mvn install  #安装项目jar包到本地仓库中，然后再其他项目中可以直接在pom.xml中引入该jar包
 ```
 
+备注：这里是`mvn [options] [<phase(s)>]`的命令执行格式。
+
 # 使用archetype插件创建maven项目的目录结构
 
 ```bash
