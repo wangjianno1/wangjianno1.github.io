@@ -18,6 +18,20 @@ Java提供了一种对象序列化的机制，该机制中，一个对象可以�
 
 类`ObjectInputStream`和`ObjectOutputStream`是高层次的数据流，它们包含反序列化和序列化对象的方法。`ObjectOutputStream`类用来序列化一个对象，即将一个对象序列化到一个文件中。需要注意的是，当序列化一个对象到文件时， 按照Java的标准约定，被序列化对象的文件的扩展名为`.ser`。
 
+# 序列化机制中serialVersionUID作用
+
+在进行对象序列号之前，我们需要在对象中增加一个`serialVersionUID`属性，因为Java的序列化机制是通过在运行时判断类的`serialVersionUID`来验证版本一致性的。在进行反序列化时，JVM会把传来的字节流中的`serialVersionUID`与本地相应实体（类）的`serialVersionUID`进行比较，如果相同就认为是一致的，可以进行反序列化，否则就会出现序列化版本不一致的异常。
+
+一般来说，定义serialVersionUID的方式有两种，分别为：
+
+（1）采用默认的`1L`，具体为`private static final long serialVersionUID = 1L;`
+
+（2）根据类名、接口名、成员方法及属性等来生成一个64位的哈希字段，例如`private static final long serialVersionUID = XXXL;`
+
+当你一个类实现了`Serializable`接口，如果没有显式地定义`serialVersionUID`，Eclipse会发出警告，告诉开发者去定义`serialVersionUID`属性 。在Eclipse中点击类中warning的图标一下，Eclipse就会自动给定两种生成的方式。如果不想定义它，在Eclipse的设置中关掉该特性。
+
+当实现`java.io.Serializable`接口的实体（类）没有显式地定义一个名为`serialVersionUID`的long型的变量，Java序列化机制会根据编译的class（它通过类名，方法名等诸多因素经过计算而得，理论上是一一映射的关系，也就是唯一的）自动生成一个`serialVersionUID`作为序列化版本比较用。这种情况下，如果class文件（类名，方法明等）没有发生变化（增加空格、换行或增加注释等等），就算再编译多少次，`serialVersionUID`也是不会变化的。
+
 # Java中对象的序列化和反序列化的代码范例
 
 ```java
