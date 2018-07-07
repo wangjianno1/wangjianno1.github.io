@@ -13,7 +13,7 @@ categories: JavaScript
 
 （2）ES6
 
-ES6既是一个历史名词，也是一个泛指，含义是5.1版以后的JavaScript的下一代标准，涵盖了ES2015、ES2016、ES2017等等，其中 ES20XX则是正式名称，特指该年发布的正式版本的语言标准。
+ES6既是一个历史名词，也是一个泛指，含义是5.1版以后的JavaScript的下一代标准，涵盖了ES2015、ES2016、ES2017等等，其中ES20XX则是正式名称，特指该年发布的正式版本的语言标准。ECMAScript 6.0，简称ES6，正式名称是《ECMAScript 2015标准》，是JavaScript语言的下一代标准，已经在2015年6月正式发布了，它的目标，是使得JavaScript语言可以用来编写复杂的大型应用程序，成为企业级开发语言。
 
 （3）TypeScript
 
