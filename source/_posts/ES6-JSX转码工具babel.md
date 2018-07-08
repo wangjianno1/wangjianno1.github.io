@@ -113,3 +113,4 @@ npm install --save-dev babel-preset-stage-3
 
 学习资料参考于：
 http://www.infoq.com/cn/news/2015/05/ES6-TypeScript
+http://www.ruanyifeng.com/blog/2016/01/babel.html
