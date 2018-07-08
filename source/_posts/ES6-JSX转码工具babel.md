@@ -28,11 +28,15 @@ input.map(function (item) {
 
 # babel的使用方法
 
-Babel有两种使用方式，如下：
+Babel有三种使用方式，如下：
 
-（1）直接安装babel的命令行工具，或结合webpack的babel-loader进行转码
+（1）直接安装babel的命令行工具
 
-（2）在浏览器中直接转码
+执行命令`npm install babel-cli -g`或`npm install babel-cli`即可安装babel的命令行工具。然后执行`babel test.js`就可以将我们编写的非原生JS代码转换成原生的JS代码啦，前提是要配置好`.babelrc`啦。
+
+（2）结合webpack的babel-loader进行转码
+
+（3）在浏览器中直接转码
 
 在浏览器中转码时，需要在HTML中做如下配置：
 
@@ -43,7 +47,7 @@ Babel有两种使用方式，如下：
 </script>
 ```
 
-备注：从Babel6.0开始，不再直接提供浏览器版本，而是要用构建工具构建出来。即需要使用第一种方式来使用Babel，因为直接在浏览器中转码，会增加浏览器的性能损耗。
+备注：从Babel 6.0开始，不再直接提供浏览器版本，而是要用构建工具构建出来。即需要使用第一种方式来使用Babel，因为直接在浏览器中转码，会增加浏览器的性能损耗。
 
 # babel工具在项目中基础配置
 
