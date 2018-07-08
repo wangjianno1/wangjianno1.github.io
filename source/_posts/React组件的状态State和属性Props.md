@@ -47,7 +47,7 @@ ReactDOM.render(
 setState(object nextState[, function callback])
 ```
 
-nextState，将要设置的新状态，该状态会和当前的state合并。也就是说如果`this.setState({xxoo: somedata})`设置state中xxoo字段，会合并原来的state，也就是在原来的state中多了一个xxoo字段。
+nextState，将要设置的新状态，该状态会和当前的state合并。也就是说如果`this.setState({xxoo: somedata})`设置state中xxoo字段，会合并原来的state，也就是在原来的state中多了一个xxoo字段。若this.state中已经有了xxoo字段，就会覆盖这个字段的对应的值。
 
 callback，可选参数，回调函数。该函数会在setState设置成功，且组件重新渲染后调用。
 
