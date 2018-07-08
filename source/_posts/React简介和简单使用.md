@@ -102,15 +102,5 @@ class Welcome extends React.Component {
 
 React package被拆分为react及react-dom两个package。其中react package中包含React.createElement、.createClass、.Component、.PropTypes以及.Children等这些API，而react-dom package中包含ReactDOM.render、.unmountComponentAtNode、.findDOMNode等这些API。一般来说，React项目是放在服务端转码成原生JS后再在浏览器端执行，当然React也可以直接在浏览器端解释执行，则react对应的是react.min.js，react-dom对应的是react-dom.min.js。
 
-# JSX
-JSX，全称是JavaScript XML，JSX是对JavaScript语法的扩展。JSX和CoffeeScript、TypeScript类似，它们最终被转换成JavaScript后被浏览器解释执行。可以说他们是JavaScript是语法糖。React WEB APP开发不一定要使用JSX，但一般建议使用。更简单来说，JSX并不是一个模板语言，是语法糖，JSX能够让开发者在JavaScript代码中直接编写HTML标签。举例来说：
-
-```javascript
-ReactDOM.render(
-    <h1>Hello, world!</h1>,
-    document.getElementById('example')
-);
-```
-
 参考资料来源于：
 https://github.com/ruanyf/jstraining/blob/master/docs/react.md （非常好的React技术栈的说明）
