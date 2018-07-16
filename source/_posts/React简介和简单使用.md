@@ -17,6 +17,8 @@ React的主要发展历程如下：
 2015.3 React Native发布，用React来编写跨平台的移动端应用，即使用React编写IOS，Android，Windows Phone应用
 ```
 
+当组件中的状态发生改变时，在内存中计算出（新的）DOM结构后与已有的DOM结构进行对比。实际上，这是非常昂贵的。因而React框架采取将真实DOM映射为虚拟DOM ，通过对比状态变化前后虚拟DOM的不同，计算出变化后再改变真实DOM结构，这个过程称为调和（reconciliation）。一定要注意这里的虚拟DOM的概念，是React更新UI的核心原理。
+
 备注：React是单向数据绑定，而AngularJS是双向绑定。
 
 # React的HelloWorld
