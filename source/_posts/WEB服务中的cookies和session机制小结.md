@@ -5,6 +5,10 @@ tags:
 categories: 杂货铺
 ---
 
+# 为什么需要cookies和session
+
+由于HTTP协议是无状态的协议，为了能够记住请求的状态，于是引入了Session和Cookie的机制，从而能够间接地实现让HTTP请求带有状态。
+
 # cookie机制
 
 （1）cookie机制简介
