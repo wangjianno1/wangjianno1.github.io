@@ -91,7 +91,15 @@ secure是cookie的安全标志，通过cookie直接包含一个secure单词来�
 
 session机制是一种服务器端的机制，服务器使用一种类似于散列表的结构（也可能就是使用散列表）来保存信息。
 
-当程序需要为某个客户端的请求创建一个session的时候，服务器首先检查这个客户端的请求里是否已包含了一个session标识（称为session id），如果已包含一个sessionid则说明以前已经为此客户端创建过session，服务器就按照sessionid把这个session检索出来使用（如果检索不到，可能会新建一个），如果客户端请求不包含sessionid，则为此客户端创建一个session并且生成一个与此session相关联的session id，sessionid的值应该是一个既不会重复，又不容易被找到规律以仿造的字符串，这个session id将被在本次响应中返回给客户端保存。 保存这个sessionid的方式可以采用cookie，这样在交互过程中浏览器可以自动的按照规则把这个标识发挥给服务器。一般这个cookie的名字都是类似于SEEESIONID，而。比如weblogic对于web应用程序生成的cookie，如`JSESSIONID=ByOK3vjFD75aPnrF7C2HmdnV6QZcEbzWoWiBYEnLerjQ99zWpBng!-145788764`，它的名字就是JSESSIONID。
+当程序需要为某个客户端的请求创建一个session的时候，服务器首先检查这个客户端的请求里是否已包含了一个session标识（称为session id），如果已包含一个sessionid则说明以前已经为此客户端创建过session，服务器就按照sessionid把这个session检索出来使用（如果检索不到，可能会新建一个），如果客户端请求不包含sessionid，则为此客户端创建一个session并且生成一个与此session相关联的session id，sessionid的值应该是一个既不会重复，又不容易被找到规律以仿造的字符串，这个session id将被在本次响应中返回给客户端保存。 保存这个sessionid的方式可以采用cookie，这样在交互过程中浏览器可以自动的按照规则把这个标识发挥给服务器。一般这个cookie的名字都是类似于SEEESIONID。比如weblogic对于web应用程序生成的cookie，如`JSESSIONID=ByOK3vjFD75aPnrF7C2HmdnV6QZcEbzWoWiBYEnLerjQ99zWpBng!-145788764`，它的名字就是JSESSIONID。
+
+session工作的主要过程如下：
+
+    （1）用户向服务器发送用户名和密码。
+    （2）服务器验证通过后，在当前对话（session）里面保存相关数据，比如用户角色、登录时间等等。
+    （3）服务器向用户返回一个session_id，写入用户的Cookie。
+    （4）用户随后的每一次请求，都会通过Cookie，将session_id传回服务器。
+    （5）服务器收到session_id，找到前期保存的数据，由此得知用户的身份。
 
 简单来说，WEB服务器会为每一个客户端创建一个session，web应用可以将一些信息保存到session中，然后WEB服务器生成一个session id传给客户端，然后客户端带着这个session id去请求WEB服务器，WEB服务器根据客户端的session id来找到对应的session对象，并获取其中的信息。
 
