@@ -69,12 +69,12 @@ class A extends React.Component {
 
 // 内层组件D的定义
 class D extends React.Component {
-    render() {
-        <div>{this.context.user}</div>
-    }
-
     contextTypes = {
         user: React.PropTypes.object
+    }
+
+    render() {
+        <div>{this.context.user}</div>
     }
 }
 ```
