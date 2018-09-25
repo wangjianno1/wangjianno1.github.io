@@ -103,6 +103,8 @@ session工作的主要过程如下：
 
 简单来说，WEB服务器会为每一个客户端创建一个session，web应用可以将一些信息保存到session中，然后WEB服务器生成一个session id传给客户端，然后客户端带着这个session id去请求WEB服务器，WEB服务器根据客户端的session id来找到对应的session对象，并获取其中的信息。
 
+备注：sessionid使用Cookie机制存储，有一定的不安全性，即用户在浏览器中通过修改sessionid，就可以冒充其他用户啦。
+
 # cookie和session机制的区别与联系
 
 举例来说，某家咖啡店有喝5杯咖啡免费赠一杯咖啡的优惠，这时就需要某种方式来纪录某位顾客的消费数量。有下面的几种方案：
