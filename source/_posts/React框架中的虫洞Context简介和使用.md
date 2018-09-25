@@ -1,5 +1,5 @@
 ---
-title: ReaReact框架中的虫洞Context简介和使用
+title: React框架中的虫洞Context简介和使用
 date: 2018-09-24 02:03:48
 tags:
 categories: ReactJS
