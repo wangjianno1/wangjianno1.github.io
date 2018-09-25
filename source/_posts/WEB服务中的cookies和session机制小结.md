@@ -89,7 +89,9 @@ secure是cookie的安全标志，通过cookie直接包含一个secure单词来�
 
 # session机制
 
-session机制是一种服务器端的机制，服务器使用一种类似于散列表的结构（也可能就是使用散列表）来保存信息。
+## session机制原理
+
+在计算机中，尤其是在网络应用中，称为“会话控制”。 每个用户（浏览器）首次与WEB服务器建立连接时，就会产生一个Session，同时服务器会分配一个SessionId给用户的浏览器。我们可以用浏览器开发者工具查看cookies中，会看到有类似于SessionId的cookie，当然不同的语言或WEB服务器这个key是不一样的，例如有ASP.Net_SessionId、JSESSIONID以及SESSION等等。服务端通过这个Sessionid就可以很容易获取到session状态中各种信息。大家都知道HTTP是无状态请求，但是有了Session仿佛又让HTTP请求变得有状态。这里一定要注意的是，Sessionid是一个特殊的cookie，它是与Session相关的，是真正维系客户端和服务端的桥梁。session机制是一种服务器端的机制，服务器使用一种类似于散列表的结构（也可能就是使用散列表）来保存信息。
 
 当程序需要为某个客户端的请求创建一个session的时候，服务器首先检查这个客户端的请求里是否已包含了一个session标识（称为session id），如果已包含一个sessionid则说明以前已经为此客户端创建过session，服务器就按照sessionid把这个session检索出来使用（如果检索不到，可能会新建一个），如果客户端请求不包含sessionid，则为此客户端创建一个session并且生成一个与此session相关联的session id，sessionid的值应该是一个既不会重复，又不容易被找到规律以仿造的字符串，这个session id将被在本次响应中返回给客户端保存。 保存这个sessionid的方式可以采用cookie，这样在交互过程中浏览器可以自动的按照规则把这个标识发挥给服务器。一般这个cookie的名字都是类似于SEEESIONID。比如weblogic对于web应用程序生成的cookie，如`JSESSIONID=ByOK3vjFD75aPnrF7C2HmdnV6QZcEbzWoWiBYEnLerjQ99zWpBng!-145788764`，它的名字就是JSESSIONID。
 
@@ -102,6 +104,16 @@ session工作的主要过程如下：
     （5）服务器收到session_id，找到前期保存的数据，由此得知用户的身份。
 
 简单来说，WEB服务器会为每一个客户端创建一个session，web应用可以将一些信息保存到session中，然后WEB服务器生成一个session id传给客户端，然后客户端带着这个session id去请求WEB服务器，WEB服务器根据客户端的session id来找到对应的session对象，并获取其中的信息。
+
+## HTTP Session管理机制
+
+（1）非共享Session
+
+单体WEB服务端应用自己维护所有的Session，这个Session是不共享的，只有请求到这个单体的WEB应用服务器进程才能访问到Session。以JAVA WEB应用来说，使用Tomcat/Jetty这样的Servlet容器，它们会将我们的Session进行管理，也即放入JVM内存到当中。
+
+（2）共享Session
+
+以Java WEB应用来说，实现Session共享的方案很多，其中一种常用的就是使用Tomcat/Jetty等服务器提供的Session共享功能，将Session的内容统一存储在一个数据库（如MySQL）或缓存（如Redis）中。另一种实现Session共享的方案，不依赖于Servlet容器，而是Web应用代码层面的实现，直接在已有项目基础上加入Spring Session框架来实现Session统一存储在Redis中。如果你的Web应用是基于Spring框架开发的，只需要对现有项目进行少量配置，即可将一个单机版的Web应用改为一个分布式应用，由于不基于Servlet容器，所以可以随意将项目移植到其他容器。
 
 备注：sessionid使用Cookie机制存储，有一定的不安全性，即用户在浏览器中通过修改sessionid，就可以冒充其他用户啦。
 
