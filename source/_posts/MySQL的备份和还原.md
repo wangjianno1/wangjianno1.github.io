@@ -40,3 +40,11 @@ categories: 数据库
 ```bash
 select * from websites into outfile '/tmp/output';
 ```
+
+另外，也可以使用如下方式将查询结果存入文本文件，效果同into outfile，且不需要登录数据库哦。
+
+```
+mysql -uroot -p -Ddbname -e "select * from websites limit 4" > /tmp/output
+mysql -uroot -p -e "show tables" > /tmp/output
+mysql -uroot -p -Ddbname -e "show tables" > /tmp/output
+```
