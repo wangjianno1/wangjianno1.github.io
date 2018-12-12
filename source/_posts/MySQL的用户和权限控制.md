@@ -105,14 +105,14 @@ set password for 'wahaha'@'10.12.21.23' = PASSWORD('guest123');
 
 ```bash
 grant all privileges on . to 'wahaha'@'%';  #该句中的%表示允许从所有主机上用wahaha用户去连接mysql服务器
-grant all privileges on . to 'whaha'@'10.12.21.23'; #该句表示授权从10.12.21.23主机上使用wahaha用户去连接mysql服务器
+grant all privileges on . to 'wahaha'@'10.12.21.23'; #该句表示授权从10.12.21.23主机上使用wahaha用户去连接mysql服务器
 ```
 
 备注：
 
 A）使用grant语句后，记得使用`flush privileges`命令让其生效
 
-B）当使用上面的语句授权时，发现nova账号的密码被重置了。是不是从不同机器上客户端用同一个账号连接Mysql服务器，使用的密码是不一样的。
+B）当使用上面的语句授权时，发现wahaha账号的密码被重置了。是不是从不同机器上客户端用同一个账号连接Mysql服务器，使用的密码是不一样的。
 
 C）部署phpMyAdmin时，需要为部署phpMyAdmin的服务器授权客户端来源权限。
 
