@@ -22,6 +22,8 @@ show binary logs;   #同show master logs一样的效果
 
 # 查看master状态，即最后(最新)一个binlog日志文件的文件名称，及其最后一个操作事件的End Position值
 
+在主库上执行如下命令：
+
 ```bash
 show master status;
 ```

@@ -23,7 +23,7 @@ mysql二进制日志binlog可以说是MySQL最重要的日志了，它记录了�
 
 （2）二进制日志文件
 
-文件名后缀为.00000*，记录数据库所有的DDL和DML（除了数据查询语句）语句事件。缺省路径为/var/lib/mysql/mysql-bin.000001.
+文件名后缀为`.00000*`，记录数据库所有的DDL和DML（除了数据查询语句）语句事件。缺省路径为`/var/lib/mysql/mysql-bin.000001`。
 
 # mysql binlog日志格式
 
@@ -65,13 +65,13 @@ MySQL默认使用基于语句的复制，当基于语句的复制会引发问题
 
 （1）主库中的每一个事务在操作数据后，主库会将该操作dump出来，写入到二进制文件binlog中，binlog其实就是一系列的数据库操作内容。
 
-（2）从库的IO进程连接上主库，并请求从指定日志文件的指定位置（或者从最开始的日志）之后的日志内容。
+（2）从库的IO线程连接上主库，并请求从指定日志文件的指定位置（或者从最开始的日志）之后的日志内容。
 
-（3）主库接收到来自从库的IO进程的请求后，负责复制的IO进程会根据请求信息读取日志指定位置之后的日志信息，返回给从库的IO进程。返回信息中除了日志所包含的信息之外，还包括本次返回的信息已经到主库端的binlog文件的名称以及binlog的位置。
+（3）主库接收到来自从库的IO线程的请求后，负责复制的IO线程会根据请求信息读取日志指定位置之后的日志信息，返回给从库的IO线程。返回信息中除了日志所包含的信息之外，还包括本次返回的信息已经到主库端的binlog文件的名称以及binlog的位置。
 
-（4）从库的IO进程接收到信息后，将接收到的日志内容依次添加到从库的relay-log文件的最末端，并将读取到的主库的binlog的文件名和位置记录到master-info文件中，以便在下一次读取的时候能够清楚的告诉主库“我需要从某个binlog的哪个位置开始往后的日志内容，请发给我”。
+（4）从库的IO线程接收到信息后，将接收到的日志内容依次添加到从库的relay-log文件的最末端，并将读取到的主库的binlog的文件名和位置记录到master-info文件中，以便在下一次读取的时候能够清楚的告诉主库“我需要从某个binlog的哪个位置开始往后的日志内容，请发给我”。
 
-（5）从库的SQL进程检测到relay-log中新增加了内容后，会马上解析relay-log的内容，并将其在从库中回放执行。
+（5）从库的SQL线程检测到relay-log中新增加了内容后，会马上解析relay-log的内容，并将其在从库中回放执行。
 
 # 基于binlog的mysql主从复制的配置
 
@@ -101,10 +101,10 @@ grant replication slave on *.* to 'dba'@'192.168.3.%';
 
 （4）配置slave，连接到master
 
-在master和slave都配置好后，只需要把slave指向master即可。需要执行change master to命令，如下：
+在master和slave都配置好后，只需要把slave指向master即可。需要在从库上执行`change master to`命令，如下：
 
 ```bash
-change master to master_host='10.1.6.159',master_port=3306,master_user='rep',master_password='123456';
+change master to master_host='10.1.6.159',master_port=3306,master_user='dba',master_password='123456';
 ```
 
 备注：master_host指定的是master库所在的机器ip，master_user和master_password是第（2）步中在master端建立的复制用户和密码。
@@ -118,7 +118,7 @@ change master to master_host='192.168.3.100',master_port=3306,master_user='dba',
 对于mysql 5.7+及MariaDB来说，支持“多源复制”架构，使用`change master to`命令时，需要明确当前slave的名称，执行命令范例如下：
 
 ```bash
-change master 'xx_db' to master_host='10.27.102.202',master_user='rep',master_password='123456',master_log_file='mysql.000006',master_log_pos=238976927;    #其中xx_db是“多源复制”中某一个slave IO线程
+change master 'xx_db' to master_host='10.27.102.202',master_user='dba',master_password='123456',master_log_file='mysql.000006',master_log_pos=238976927;    #其中xx_db是“多源复制”中某一个slave IO线程
 ```
 
 （5）启动slave，也即启动从库的IO线程和SQL线程。
@@ -150,6 +150,8 @@ slave端的控制参数有`--replicate-do-db/--replicate-ignore-db/--replicate-d
 （1）LinkedIn的DataBus项目
 
 （2）Alibaba的canal项目
+
+（3）Baidu的Fountain DAS项目（未开源）
 
 # mysql主从复制的闲杂知识
 
