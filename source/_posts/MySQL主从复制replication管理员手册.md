@@ -30,6 +30,20 @@ show master status;
 
 ![](/images/mysqlrep_2_2.png)
 
+# 查看主库master的所有从库
+
+在主库master上执行如下命令，可以查看master的所有从库：
+
+```
+select * from information_schema.processlist as p where p.command = 'Binlog Dump';
+```
+
+或者
+
+```
+show slave hosts;
+```
+
 # 刷新binlog日志，自此刻开始产生一个新编号的binlog日志文件
 
 ```bash
