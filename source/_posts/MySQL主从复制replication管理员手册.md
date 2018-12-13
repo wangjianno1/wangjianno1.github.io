@@ -7,13 +7,13 @@ categories: 数据库
 
 # 查看master库的binlog是否开启
 
-```bash
+```sql
 show variables like 'log_%';
 ```
 
 # 查看master的所有binlog文件的名称和大小
 
-```bash
+```sql
 show master logs; 
 show binary logs;   #同show master logs一样的效果
 ```
@@ -24,7 +24,7 @@ show binary logs;   #同show master logs一样的效果
 
 在主库上执行如下命令：
 
-```bash
+```sql
 show master status;
 ```
 
@@ -34,31 +34,31 @@ show master status;
 
 在主库master上执行如下命令，可以查看master的所有从库：
 
-```
+```sql
 select * from information_schema.processlist as p where p.command = 'Binlog Dump';
 ```
 
 或者
 
-```
+```sql
 show slave hosts;
 ```
 
 # 刷新binlog日志，自此刻开始产生一个新编号的binlog日志文件
 
-```bash
+```sql
 flush logs;
 ```
 
 # 重置（清空）所有binlog日志
 
-```bash
+```sql
 reset master;
 ```
 
 # 查看当前有哪些线程在运行，排查有问题的操作动作
 
-```bash
+```sql
 show processlist;
 show full processlist;   #加上full选项后，可以在Info字段查看完成的sql语句，否则只显示前100个字符
 ```
@@ -80,7 +80,7 @@ show full processlist;   #加上full选项后，可以在Info字段查看完成�
 
 # 使用show binlog events命令来读取并解析binlog日志
 
-```bash
+```sql
 show binlog events\G;    #查询并解析第一个(最早)的binlog日志内容
 show binlog events in 'mysql-bin.000021'\G;    #指定查询mysql-bin.000021这个binlog文件的内容
 show binlog events in 'mysql-bin.000021' from 8224\G; #指定查询mysql-bin.000021这个binlog文件，从8224这个pos点开始查看
@@ -96,15 +96,15 @@ Pos:204,End_log_pos:365表示，该event是记录在mysql-bin.000001文件的第
 
 # 使用mysqlbinlog /path/to/mysql-binlog-file工具来读取并解析binlog日志
 
-```bash
+```sql
 mysqlbinlog /var/lib/mysql/mysql-bin.000001
 ```
 
 # 通过show slave status命令查看从库的同步状态
 
-在Slave节点上执行如下命令，
+在slave节点上执行如下命令，
 
-```bash
+```sql
 show slave status\G;
 ```
 
@@ -130,18 +130,18 @@ show slave status\G;
 	Relay_Log_Space        #所有原有的中继日志结合起来的总大小
 	Seconds_Behind_Master  #本字段是Slave数据库实例“落后”Master数据库多少的一个指示（即延迟，单位为秒）
 
-备注：在日常mysql数据运维中，我们需要判断主从复制的状态是否正常。通常来说，只需要Slave_IO_Running参数和Slave_SQL_Running参数都为Yes的情况下，并且Seconds_Behind_Master延迟小于一定数值的时候，我们就可以认定mysql主从是同步的。
+备注：在日常MySQL数据运维中，我们需要判断主从复制的状态是否正常。通常来说，只需要Slave_IO_Running参数和Slave_SQL_Running参数都为Yes的情况下，并且Seconds_Behind_Master延迟小于一定数值的时候，我们就可以认定mysql主从是同步的。
 
-另外，对于mysql 5.7+及MariaDB来说，它们支持“多源复制”，也即是“多主库对应一个从库”的复制结构，那么对于slave库来说，同时会从多个主库上复制数据，也即有多个Slave IO线程和SQL线程，那么直接执行show slave status会返回为空，此时可以执行如下命令来查看slave的同步状态：
+另外，对于MySQL 5.7+及MariaDB来说，它们支持“多源复制”，也即是“多主库对应一个从库”的复制结构，那么对于slave库来说，同时会从多个主库上复制数据，也即有多个Slave IO线程和SQL线程，那么直接执行`show slave status`会返回为空，此时可以执行如下命令来查看slave的同步状态：
 
-```bash
+```sql
 show all slaves status \G;      #查看所有slave的复制状态，也是在Slave节点上执行
 show slave 'xx_db' status \G;   #仅查看某一个slave的复制状态，也是在Slave节点上执行
 ```
 
 # 关闭或启动slave IO线程或SQL线程
 
-```bash
+```sql
 start slave;          #启动slave
 stop slave;           #停止slave
 start slave 'xx_db';  #对于mysql 5.7+及MariaDB来说，支持“多源复制”，可以启动指定Connection_name的slave
@@ -152,23 +152,23 @@ stop slave 'xx_db';   #对于mysql 5.7+及MariaDB来说，支持“多源复制�
 
 我们使用`change master to`命令来配置主从同步关系，假设我们不仅想停止主从同步，而且想删除这种主从同步的关系。可以使用如下的操作的方法：
 
-```bash
+```sql
 stop slave;       #停掉slave的同步
 reset slave all;  #删除主从同步的配置，然后执行show slave status;将看不到这个同步任务
 ```
 
 备注：如果使用`reset slave`仅仅会重置主动同步的状态，并没有删除主从同步的配置哦。
 
-对于mysql 5.7+及MariaDB来说，支持“多源复制”，我们想停掉某一个slave的方式如下：
+对于在MySQL 5.7+及MariaDB来说，支持“多源复制”，我们想停掉某一个slave的方式如下：
 
-```bash
+```sql
 stop slave 'xx_db';
 reset slave all 'xx_db';   #如果是MariaDB，需要执行reset slave 'xx_db' all命令哦
 ```
 
 # 其他闲杂知识
 
-在mysql5.7+中增加了很多的表，用来对主从同步复制进行管理，即在performance_schema数据库中以replication_开头的一些数据库表。
+在MySQL 5.7+中增加了很多的表，用来对主从同步复制进行管理，即在`performance_schema`数据库中以`replication_`开头的一些数据库表。
 
 
 学习资料参考于：
