@@ -37,14 +37,14 @@ categories: 数据库
 
 使用into outfile子句，可以将查询结果，写入到一个文本文件中，文件的格式也可以自定义。然后可以使用脚本语言来处理这个文件哦。
 
-```bash
+```sql
 select * from websites into outfile '/tmp/output';
 ```
 
 另外，也可以使用如下方式将查询结果存入文本文件，效果同into outfile，且不需要登录数据库哦。
 
-```
+```bash
 mysql -uroot -p -Ddbname -e "select * from websites limit 4" > /tmp/output
-mysql -uroot -p -e "show tables" > /tmp/output
+mysql -uroot -p -e "show databases" > /tmp/output
 mysql -uroot -p -Ddbname -e "show tables" > /tmp/output
 ```
