@@ -74,6 +74,7 @@ curl -I -H "Host:www.example.com" http://10.16.34.23/
 curl https://www.example.com -x 10.16.34.23:443
 curl -k "https://www.example.com"
 curl -s "http://www.sohu.com" -w 'httpcode:%{http_code};timetotal:%{time_total}' -o /dev/null
+curl -I -H "Host:www.sohu.com" http://[2409:8c00:3001::3]:80 -g
 ```
 
 备注：狭义地说，curl像是一个浏览器，但是比浏览器的支持的东西要多，因为它不仅支持HTTP协议，还支持其他很多的协议。
