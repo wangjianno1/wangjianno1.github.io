@@ -86,3 +86,4 @@ update t_goods set status=2,version=version+1 where id=#{id} and version=#{versi
 
 学习资料参考于：
 https://www.hollischuang.com/archives/934
+https://mp.weixin.qq.com/s/gWR1-511SAwVAHrtGrsZ8g
