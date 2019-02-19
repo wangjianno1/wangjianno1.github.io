@@ -162,6 +162,14 @@ ipvsadm的一些常用命令操作范例如下：
 
 备注：Scheduler=rr是对RS的调度算法为Round Robin轮叫算法。Forward=Route表示使用的是直接路由Direct Routing工作模式。ActiveConn是处于ESTABLISHED状态的TCP连接数。InActConn是指除了ESTABLISHED以外的，所有的其它状态的TCP连接。有一点需要注意的是，从LVS里看的ActiveConn会比在真实机上通过netstat看到的ESTABLISHED一般会多一些。这是因为LVS自身有一个默认超时时间。可以用`ipvsadm -L --timeout`查看，默认是`900 120 300`（分别是TCP/TCPFIN/UDP的超时时间）。也就是说一条TCP的连接经过LVS后，LVS会把这条记录保存15分钟，而不管这条连接是不是已经失效。
 
+（5）`ipvsadm -Ln --rate`
+
+查看LVS转发速率相关指标。命令执行效果如下：
+
+![](/images/linux_lvs_1_5.png)
+
+其中，CPS表示每秒连接数，InPPS表示每秒入包个数，OutPPS表示每秒出包个数，InBPS表示每秒入流量（单位字节），OutBPS表示每秒出流量（单位字节）。
+
 # LVS集群的高可用性
 
 LVS集群的高可用性体现在两个方面：
