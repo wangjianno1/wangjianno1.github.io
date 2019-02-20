@@ -43,7 +43,7 @@ NAPT是使用最普遍的一种转换方式，它又包含三种转换方式，�
 
 （2）LVS SNAT模式，需要打阿里的SNAT patch包
 
-（3）dpdk-lvs SNAT模式
+（3）DPDK-LVS SNAT模式
 
 学习资料参考于：
 https://blog.csdn.net/hzhsan/article/details/45038265
