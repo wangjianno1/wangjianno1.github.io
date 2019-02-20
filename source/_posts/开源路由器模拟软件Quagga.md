@@ -28,7 +28,7 @@ Quagga可以模拟很多的路由协议，如BGP、OSPF、OSPFv6、RIP以及RIPn
 
 其中zebra是Quagga的核心守护进程，负责内核接口和静态路由。bgpd、ospfd以及ospf6d等守护进程就是用来模拟具体路由协议算法的。当bgpd、ospfd以及ospf6d等守护进程学习到了新的路由规则，就会调用zebra来更新系统的路由表。我们可以通过`service start xxxd`来启动其中的任一个守护进程。
 
-# 使用Quagga配置支持ospf协议的路由器
+# 使用Quagga配置支持OSPF协议的路由器
 
 ![](/images/network_ospf_1_1.png)
 
@@ -60,7 +60,7 @@ ip address 172.17.1.1/24
 description to-site-B-LAN
 ```
 
-（2）配置ospf
+（2）配置OSPF
 
 在site-A-PTR上配置`/etc/quagga/ospfd.conf`如下：
 
