@@ -1,7 +1,7 @@
 ---
 title: DPDK与DPVS技术原理与应用
 date: 2019-02-18 16:39:16
-tags:
+tags: DPVS
 categories: SRE
 ---
 
@@ -16,6 +16,8 @@ DPDK核心组件由一系列库函数和驱动组成，为高性能数据包处�
 ![](/images/sre_dpvs_1_1.png)
 
 直白地说，DPDK绕过了Linux内核协议栈，处在用户空间下的DPDK应用程序直接使用硬件驱动的接口来收发报文。类似于DPDK，PF_RING和Netmap等工具也实现了类似的功能。有了DPDK，就可以让服务器的数据包转发或数据包处理能力大大地提升了。
+
+在dpdk中有一个igb_uio模块，是关于网卡的驱动模块。
 
 # DPVS技术简介
 
