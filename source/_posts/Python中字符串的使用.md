@@ -158,5 +158,6 @@ madlib1 = "I {verb} the {object} off the {place}".format(verb="took", object="ch
 madlib2 = "I {} the {} off the {}".format("took", "cheese", "table")
 ```
 
+
 学习资料参考于：
 http://blog.xiayf.cn/2013/01/26/python-string-format/
