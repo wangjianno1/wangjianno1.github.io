@@ -5,7 +5,7 @@ tags:
 categories: Python
 ---
 
-1.字符串的定义
+# 字符串的定义
 
 ```python
 if __name__ == "__main__":
@@ -139,3 +139,24 @@ var16 : this world is beautiful!!
 （2）指定字符串为raw string
 
 举例来说，`text = r"\tHello World!!!"`，r指明该字符串为raw string，即字符串中有特殊字符，也当做普通字符来看。在本例中\t就是一个转义字符，但是加上r后，它就是两个普通字符。
+
+# 格式化字符串
+
+（1）用%格式化字符串
+
+其中%前面为字符串模板，%后面为元组，用于替换前面的格式占位符。
+
+```python
+str1 = "%saaaaaaaaaaa%s" % ("start", "end")
+print str1
+```
+
+（2）使用str.format()格式化字符串
+
+```python
+madlib1 = "I {verb} the {object} off the {place}".format(verb="took", object="cheese", place="table")
+madlib2 = "I {} the {} off the {}".format("took", "cheese", "table")
+```
+
+学习资料参考于：
+http://blog.xiayf.cn/2013/01/26/python-string-format/
