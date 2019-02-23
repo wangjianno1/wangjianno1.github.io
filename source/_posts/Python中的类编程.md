@@ -83,3 +83,53 @@ __metaclass__ = type   #使用新式类
 ```python
 class MyClass(object): #继承类object
 ```
+
+# Python类中的装饰器`@staticmethod`和`@classmethod`
+
+代码范例如下：
+
+```python
+class A(object):
+    bar = 1
+
+    def foo(self):
+        print 'foo'
+
+    @staticmethod
+    def static_foo():
+        print 'static_foo'
+        print A.bar
+
+    @classmethod
+    def class_foo(cls):
+        print 'class_foo'
+        print cls.bar
+        cls().foo()
+
+A.static_foo()
+A.class_foo()
+```
+
+程序输出结果为：
+
+    static_foo
+    1
+    class_foo
+    1
+    foo
+
+`@staticmethod`和`@classmethod`都可以直接`类名.方法名()`或者`实例名.方法名()`来调用。
+
+![](/images/python_class_1_1.png)
+
+（1）`@staticmethod`
+
+不需要表示自身对象的`self`和自身类的`cls`参数，就跟使用函数一样。
+
+（2）`@classmethod`
+
+也不需要`self`参数，但第一个参数需要是表示自身类的`cls`参数。
+
+如果在`@staticmethod`中要调用到这个类的一些属性方法，只能直接`类名.属性名`或`类名.方法名`。
+
+而`@classmethod`因为持有`cls`参数，可以来调用类的属性，类的方法，实例化对象等，避免硬编码。
