@@ -7,7 +7,7 @@ categories: Python
 
 # Pyhton中多进程编程方式
 
-（1）os.fork()
+## os.fork()
 
 Python的os模块封装了常见的系统调用，其中就包括fork，可以在Python程序中轻松创建子进程，例程如下：
 
@@ -29,11 +29,11 @@ else:
     I (6221) just created a child process (6222).
     I am child process (6222) and my parent is 6221.
 
-普通的函数调用，调用一次，返回一次，但是fork()调用一次，返回两次，因为操作系统自动把当前进程（称为父进程）复制了一份（称为子进程），然后，分别在父进程和子进程内返回。子进程永远返回0，而父进程返回子进程的ID。这样做的理由是，一个父进程可以fork出很多子进程，所以，父进程要记下每个子进程的ID，而子进程只需要调用getppid()就可以拿到父进程的ID。
+普通的函数调用，调用一次，返回一次，但是`fork()`调用一次，返回两次，因为操作系统自动把当前进程（称为父进程）复制了一份（称为子进程），然后，分别在父进程和子进程内返回。**子进程永远返回0，而父进程返回子进程的ID**。这样做的理由是，一个父进程可以fork出很多子进程，所以，父进程要记下每个子进程的ID，而子进程只需要调用`getppid()`就可以拿到父进程的ID。
 
-值得注意的是，由于Windows没有fork调用，上面的python代码在Windows上无法运行。
+值得注意的是，由于Windows没有fork调用，上面的Python代码在Windows上无法运行。
 
-（2）multiprocessing.Process
+## multiprocessing.Process
 
 multiprocessing模块就是跨平台版本的多进程模块。multiprocessing模块提供了一个Process类来代表一个进程对象。例程如下：
 
@@ -61,9 +61,9 @@ if __name__=='__main__':
     Run child process test (26657)...
     Child process end.
 
-创建子进程时，只需要传入一个执行函数和函数的参数，创建一个Process实例，用start()方法启动，这样创建进程比fork()还要简单。join()方法可以等待子进程结束后再继续往下运行，通常用于进程间的同步。
+创建子进程时，只需要传入一个执行函数和函数的参数，创建一个Process实例，用`start()`方法启动，这样创建进程比`fork()`还要简单。`join()`方法可以等待子进程结束后再继续往下运行，通常用于进程间的同步。
 
-（3）multiprocessing.Pool
+## multiprocessing.Pool
 
 如果要启动大量的子进程，可以用进程池的方式批量创建子进程。例程如下：
 
@@ -110,7 +110,7 @@ All subprocesses done.
 对Pool对象调用join()方法会等待所有子进程执行完毕，调用join()之前必须先调用close()，调用close()之后就不能继续添加新的Process了。
 请注意输出的结果，task 0，1，2，3是立刻执行的，而task 4要等待前面某个task完成后才执行，这是因为Pool的的大小是4，因此，最多同时执行4个进程。如果Pool(5)那么就可以同时执行5个子进程。
 
-（4）subprocess
+## subprocess
 
 subprocess模块可以让我们非常方便地启动一个子进程，然后控制其输入和输出。下面的例子演示了如何在Python代码中运行命令`nslookup www.python.org`，这和命令行直接运行的效果是一样的：
 
