@@ -7,7 +7,7 @@ categories: Python
 
 # logging 简介
 
-Python的logging package提供了通用的日志系统，可以方便第三方模块或者是应用使用。这个模块提供不同的日志级别，并可以采用不同的方式记录日志，比如文件，HTTP GET/POST，SMTP，Socket等，甚至可以自己实现具体的日志记录方式。
+Python的logging package提供了通用的日志系统，可以方便第三方模块或应用使用。这个模块提供不同的日志级别，并可以采用不同的方式记录日志，比如文件，HTTP GET/POST，SMTP，Socket等，甚至可以自己实现具体的日志记录方式。
 
 logging包中定义了Logger、Formatter、Handler和Filter等重要的类，除此之外还有config模块。
 
@@ -15,7 +15,7 @@ Logger是日志对象，直接提供日志记录操作的接口。
 
 Formatter定义日志的记录格式及内容。
 
-Handler定义日志写入的目的地，你可以把日志保存成本地文件，也可以每个小时写一个日志文件，还可以把日志通过socket传到别的机器上。python提供了十几种实用handler，比较常用的有StreamHandler,BaseRotatingHandler,SocketHandler,DatagramHandler,SMTPHandler等。我们可以通过Logger对象的addHandler()方法，将log输出到多个目的地。
+Handler定义日志写入的目的地，你可以把日志保存成本地文件，也可以每个小时写一个日志文件，还可以把日志通过socket传到别的机器上。Python提供了十几种实用handler，比较常用的有StreamHandler，BaseRotatingHandler，SocketHandler，DatagramHandler及SMTPHandler等。我们可以通过Logger对象的addHandler()方法，将log输出到多个目的地。
 
 # logging包使用
 
@@ -23,7 +23,7 @@ Handler定义日志写入的目的地，你可以把日志保存成本地文件�
 
 （1）logging.getLogger()
 
-如果getLogging中不带参数，那么返回的是名称为root的Logger对象，如果带参数，那么就以该参数为名称的Logger对象。同名称的Logger对象是一样的。
+如果getLogger()中不带参数，那么返回的是名称为root的Logger对象，如果带参数，那么就以该参数为名称的Logger对象。同名称的Logger对象是一样的。
 
 （2）logging.basicConfig()
 
@@ -198,4 +198,4 @@ if __name__ == "__main__":
         exit(1)
 ```
 
-备注：exception()方法能够完整的打印异常的堆栈信息。error()方法只会打印参数传入的信息。按照官方文档的介绍，logging是线程安全的，也就是说，在一个进程内的多个线程同时往同一个文件写日志是安全的。但是多个进程往同一个文件写日志是不安全的。
+备注：exception()方法能够完整地打印异常的堆栈信息。error()方法只会打印参数传入的信息。按照官方文档的介绍，logging是线程安全的，也就是说，在一个进程内的多个线程同时往同一个文件写日志是安全的。但是多个进程往同一个文件写日志是不安全的。

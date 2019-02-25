@@ -88,7 +88,7 @@ pip是安装，管理Python包的工具。它是对easy_install的一种增强�
 
 （2）所有安装的包会被跟踪，所以你可以知道为什么他们被安装，同时可以卸载
 
-（3）无需使用egg文件。但是pip有Wheel(`*.whl`)格式的包，`*.whl`文件有一点与`*.egg`文件相似，实际上它们都是"伪装"的`*.zip`文件。如果将`*.wh`l和`*.egg`文件的扩展名修改为`*.zip`，你就可以使用zip应用程序打开它，并且可以查看它包含的文件和文件夹
+（3）无需使用egg文件。但是pip有Wheel(`*.whl`)格式的包，`*.whl`文件有一点与`*.egg`文件相似，实际上它们都是“伪装”的`*.zip`文件。如果将`*.whl`和`*.egg`文件的扩展名修改为`*.zip`，你就可以使用zip应用程序打开它，并且可以查看它包含的文件和文件夹
 
 使用方式简单：
 
@@ -108,9 +108,9 @@ pip --proxy=http://10.16.20.12:3128 search django  #为pip设置代理
 
 # 总结
 
-（1）Distutils、setuptools以及Distribute都是python中打包安装的模块，使用它们需要编写setup.py文件，通过`python setup.py ***`来完成打包、安装以及上传pypi等功能。easy_install以及pip都是一个脚本而已，他们可以从pypi仓库中下载安装python模块，它们与原始的`python setup.py install`相比，pip和easy_install将所有依赖的模块也一起安装了。
+（1）Distutils、setuptools以及Distribute都是Python中打包安装的模块，使用它们需要编写setup.py文件，通过`python setup.py ***`来完成打包、安装以及上传pypi等功能。easy_install以及pip都是一个脚本而已，他们可以从PyPI仓库中下载安装Python模块，它们与原始的`python setup.py install`相比，pip和easy_install将所有依赖的模块也一起安装了。
 
-（2）一般我们在Python项目中，需要引入第三方模块，有两种方式（以yaml模块为例）：一种是使用`python setup.py install`或者`easy_install yaml`或者`pip install yaml`将yaml模块安装到python缺省的第三方库安装路径lib/site-packages目录中。一种是使用`python setup.py build`生成模块的构建文件，然后将build目录下生成的模块目录拷贝到项目目录中，这样将项目部署其他机器上时，就不用再去安装环境了。
+（2）一般我们在Python项目中，需要引入第三方模块，有两种方式（以yaml模块为例）：一种是使用`python setup.py install`或者`easy_install yaml`或者`pip install yaml`将yaml模块安装到Python缺省的第三方库安装路径lib/site-packages目录中。另一种是使用`python setup.py build`生成模块的构建文件，然后将build目录下生成的模块目录拷贝到项目目录中，这样将项目部署其他机器上时，就不用再去安装环境了。
 
 参考学习资料：
 http://blog.yangyubo.com/2012/07/27/python-packaging/
