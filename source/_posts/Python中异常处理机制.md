@@ -30,7 +30,7 @@ finally:                       #不管是否有异常，finally语句一定执�
 （2）except语句的写法
 
 ```python
-except (ZeroDivisionError, TypeError, NameError): #一个except语句可以多种类型的异常
+except (ZeroDivisionError, TypeError, NameError): #一个except语句可以捕获多种类型的异常
 except (ZeroDivisionError, TypeError) as ex:      #推荐此种写法
 except Exception, ex:
 except:
@@ -45,4 +45,4 @@ except Exception:
 
 # 用户自定义类
 
-用户可以自定义异常类，自定义异常类要继承Exception或其子类
+用户可以自定义异常类，自定义异常类要继承Exception或其子类。

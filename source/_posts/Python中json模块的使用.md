@@ -19,7 +19,7 @@ json.JSONEncoder()
 
 ![](/images/python_json_1_1.png)
 
-（2）将json对象转换成python数据类型-decode
+（2）将json对象转换成Python数据类型-decode
 
 ```python
 json.load()
