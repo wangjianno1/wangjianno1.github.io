@@ -51,7 +51,7 @@ if __name__ == '__main__':
     unittest.main()
 ```
 
-备注：首先定义一个unittest.TestCase子类，其中定义一些以test开头的方法，方法名最好和要测试的方法名一样，比如`testsqrt()`，表示测试的是sqrt方法。
+备注：首先定义一个unittest.TestCase子类，其中定义一些以test开头的方法，方法名最好和要测试的方法名一样，比如`testSqrt()`，表示测试的是sqrt方法。
 
 在上面的例子，执行`unittest.main()`方法时，unittest框架会实例化所有unittest.TestCase的子类，并且运行所有以test开头命名的方法。例子中使用的断言语句是failUnless，其实unittest框架中有很多的断言函数。
 
@@ -59,7 +59,7 @@ if __name__ == '__main__':
 
 # Python源代码检查工具
 
-PyChecker和PyLint是两个可以检查python源代码的工具。它们都需要单独的安装。且有两种方式来使用它们，一种是将它们作为命令行工具来使用；一种是将它们嵌入到代码中进行检查。
+PyChecker和PyLint是两个可以检查Python源代码的工具。它们都需要单独的安装。且有两种方式来使用它们，一种是将它们作为命令行工具来使用；一种是将它们嵌入到代码中进行检查。
 
 # Python程序性能检测工具
 
