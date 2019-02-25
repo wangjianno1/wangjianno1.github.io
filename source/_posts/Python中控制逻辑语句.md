@@ -16,13 +16,13 @@ else:
     statement
 ```
 
-备注，if语句可以组成Python的三元表达式：
+备注，if语句也可以组成Python的三元表达式，如下：
 
 ```python
 z = x if expr else y
 ```
 
-如上语句表示如果expr为True，三元表示式返回x，否则返回y
+如上语句表示如果expr为True，三元表达式返回x，否则返回y。有点类似C/C++语言中`bool?a:b`表达式，但Python中并没有问号表达式。
 
 # while循环语句
 
