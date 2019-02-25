@@ -14,7 +14,7 @@ python -m profile xxx.py
 
 备注：建议使用cProfile就好了，cProfile会更高效，因为它是用C开发的。
 
-# 使用pdb调试python程序
+# 使用pdb调试Python程序
 
 ```bash
 python -m pdb xxx.py
@@ -41,4 +41,24 @@ python -m pyftpdlib -u wahaha -P test  #启动一个需要使用账号wahaha，�
 ```bash
 cat data.json | python -m json.tool
 python -m json.tool data.json
+```
+
+# 查看Python解释器的目录
+
+```bash
+whereis python
+which python
+```
+
+# 查看Python的安装目录
+
+```python
+import sys
+print sys.prefix
+```
+
+# 快速启动一个Python进程
+
+```bash
+echo 'while True: pass' | python &
 ```
