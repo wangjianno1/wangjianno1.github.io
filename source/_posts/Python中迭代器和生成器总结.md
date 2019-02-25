@@ -30,7 +30,7 @@ print it.next()
 print it.next()
 ```
 
-其中`iter()`方法获取了list的迭代器对象
+其中`iter()`方法获取了list的迭代器对象。
 
 自定义迭代器的举例：
 
@@ -86,13 +86,13 @@ it = repeater(42)
 
 print type(it)
 print it.next()  #亦可以使用print it.send(None)
-print it.send('Hello, Gays!!!')
+print it.send('Hello, Guys!!!')
 ```
 
 返回结果如下：
 
     <type 'generator'>
     42
-    Hello, Gays!!!
+    Hello, Guys!!!
 
 备注：Python中可以使用生成器来实现Python协程编程。当然，还可以使用第三方的库来实现Python协程编程。
