@@ -19,7 +19,7 @@ def func_name(parameter1, parameter2, ...):
 例子：
 
 ```python
-def printhello(personname):
+def print_hello(personname):
     return "Hello," + personname + "!"
 ```
 
