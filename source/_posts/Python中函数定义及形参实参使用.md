@@ -94,7 +94,7 @@ if __name__ == '__main__':
 我们通常用这两种可变参数来使函数收集参数，所有我们经常会见到一种函数的定义：
 
 ```python
-def func(fargs, *args, **kwargs)  #其中fagus是普通参数，*args和*kwargs用来收集不定量的形参
+def func(fargs, *args, **kwargs)  #其中fargs是普通参数，*args和*kwargs用来收集不定量的形参
     pass
 ```
 
