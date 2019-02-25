@@ -39,9 +39,9 @@ json模块提供了一种很简单的方式来编码和解码JSON数据，其中
 import json
 
 data = {
-    'name' : 'ACME',
-    'shares' : 100,
-    'price' : 542.23
+    'name': 'ACME',
+    'shares': 100,
+    'price': 542.23
 }
 
 json_str = json.dumps(data)  #将python对象转换成json对象
@@ -53,9 +53,9 @@ data = json.loads(json_str)  #将json对象转换成python对象
 ```python
 # Writing JSON data
 with open('data.json', 'w') as f:
-    json.dump(data, f)   #将python对象装换成json对象并持久化到文件中
+    json.dump(data, f)   #将Python对象转换成json对象并持久化到文件中
 
 # Reading data back
 with open('data.json', 'r') as f:
-    data = json.load(f)  #将文件中的json对象转换成python对象
+    data = json.load(f)  #将文件中的json对象转换成Python对象
 ```

@@ -20,8 +20,8 @@ spouse:
 children:
   - name: Jimmy Smith
     age: 15
-  - name1: Jenny Smith
-    age1: 12
+  - name: Jenny Smith
+    age: 12
 ```
 
 （3）编写解析yaml文件的Python程序test.py
