@@ -28,7 +28,7 @@ Python中的module和package是Python模块编程的体现，以及实现命名�
 ```python
 import module_name     #module_name.foo()表示调用module_name中foo函数
 import package_name    #如果package_name中__init__.py文件中导入了具体模块module_name,那么可以用package_name.module_name来使用module_name中的功能，否则是不行的
-import package_name.module_name          #package_name.module_name.foo()  表示使用module_name中的foo函数
+import package_name.module_name          #package_name.module_name.foo()表示使用module_name中的foo函数
 from package_name import module_name     #module_name.foo()表示使用module_name的foo函数
 from package_name.module_name import foo #直接使用foo()就可以啦
 ```
@@ -37,9 +37,9 @@ from package_name.module_name import foo #直接使用foo()就可以啦
 
 # module和package中的一些特殊的变量
 
-（1）module中的`__main__`变量
+（1）module中的`__name__`变量
 
-当使用import导入module时，该变量就是模块名或文件名（不带后缀哦）；当直接执行module的.py文件时，`__main__`变量就是`__main__`。
+当使用import导入module时，该`__name__`变量就是模块名或文件名（不带后缀哦）；当直接执行module的.py文件时，`__name__`变量就是`__main__`。
 
 （2）package中的`__init__`变量
 
