@@ -44,7 +44,7 @@ def cube(x):
 print map(cube, range(1, 11))  #输出结果为[1, 8, 27, 64, 125, 216, 343, 512, 729, 1000]
 ```
 
-reduce函数
+# reduce函数
 
 `reduce(function, sequence, starting_value)`对sequence中的item顺序迭代调用function，如果有starting_value，还可以作为初始值调用，例如可以用来对List求和：
 
