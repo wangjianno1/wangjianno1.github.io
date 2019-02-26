@@ -19,15 +19,15 @@ categories: Python
 
 （2）virtualenv的使用
 
-执行`virtualenv my-env`创建一个名称为my-env的Python虚拟环境；
+执行`virtualenv my-env`创建一个名称为my-env的Python虚拟环境。
 
-执行`source my-env/bin/activate`命令激活my-env Python虚拟环境，并进入python虚拟环境，然后可以干各种操作。注意这时终端提示符有变化，但是可以切换到任何目录中执行，而不局限于在my-env目录中；
+执行`source my-env/bin/activate`命令激活my-env Python虚拟环境，并进入Python虚拟环境，然后可以干各种操作。注意这时终端提示符有变化，但是可以切换到任何目录中执行，而不局限于在my-env目录中。
 
 执行`deactivate`命令，即可退出my-env Python虚拟环境，需要注意的是，virtualenv虚拟环境退出后，在虚拟环境中启动的服务进程，并不会退出哦。
 
 备注：
 
-我们在创建Python虚拟环境时，可以指定虚拟环境要使用的Python版本，命令如下（使用-p参数指明python解释器的路径就好了）：
+我们在创建Python虚拟环境时，可以指定虚拟环境要使用的Python版本，命令如下（使用-p参数指明Python解释器的路径就好了）：
 
 ```bash
 virtualenv -p /usr/bin/python2.7 ENV2.7  #创建python2.7的虚拟环境
@@ -64,9 +64,9 @@ source /usr/local/bin/virtualenvwrapper.sh
 （3）virtualenvwrapper的常用工具命令
 
 ```bash
-mkvirtualenv [环境名]  #创建基本环境，也可以通过-p /usr/bin/python3.4等参数来指定虚拟环境中python版本
-rmvirtualenv [环境名]  #删除环境
-workon [环境名]        #激活环境
-deactivate             #退出环境
+mkvirtualenv [环境名] #创建基本环境，也可以通过-p /usr/bin/python3.4等参数来指定虚拟环境中python版本
+rmvirtualenv [环境名] #删除环境
+workon [环境名]       #激活环境
+deactivate           #退出环境
 workon 或者 lsvirtualenv -b  #列出所有环境
 ```
