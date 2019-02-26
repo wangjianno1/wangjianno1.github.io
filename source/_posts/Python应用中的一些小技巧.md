@@ -20,7 +20,7 @@ python -m profile xxx.py
 python -m pdb xxx.py
 ```
 
-详细内容参见http://blog.csdn.net/wangjianno2/article/details/51708697
+详细内容参见[《Python中DEBUG调试模块PDB使用》](https://wangjianno1.github.io/2019/02/26/Python%E4%B8%ADDEBUG%E8%B0%83%E8%AF%95%E6%A8%A1%E5%9D%97PDB%E4%BD%BF%E7%94%A8/)
 
 # 使用Python快速启动HTTP服务器
 
