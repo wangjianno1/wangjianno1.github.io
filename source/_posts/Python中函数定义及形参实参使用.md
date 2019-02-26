@@ -163,3 +163,25 @@ def foo()
 
 实例2首先定义函数`bar()`，然后再次定义`foo()`函数，此时`bar()`和`foo()`完全独立的两个函数，再次`foo()`函数内调用`bar()`；
 其实实例1和实例2中的嵌套作用是一样只是两种不同的表现形式。
+
+# Python匿名函数
+
+在Python中，关键字lambda是用来创建匿名函数的，其语法格式为：
+
+    lambda [arg1[, arg2, ... argN]]: expression
+
+使用举例：
+
+```python
+#法一
+fun = lambda x,y:x+y
+print fun(1,2)              #输出结果为3
+
+#法二
+print (lambda x,y:x+y)(1,2) #输出结果为3
+ 
+#上面法一和法二相当于
+def func_1(x, y):
+    return x + y
+print func_1(1, 2)
+```
