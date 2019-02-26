@@ -13,11 +13,13 @@ PhantomJS是一个基于webkit的没有界面的浏览器，也就是它可以�
 
 # Linux下使用selenium+PhantomJS截取网页
 
-（1）到https://bitbucket.org/ariya/phantomjs/downloads/页面上下载linux下二进制PhantomJS程序，放入/usr/local/bin或配置到环境变量中。
+（1）安装PhantomJS
+
+到`https://bitbucket.org/ariya/phantomjs/downloads/`页面上下载linux下二进制PhantomJS程序，放入/usr/local/bin或配置到环境变量中。
 
 若是Windows平台，则需要下载windows下的二进制文件，并配置到系统环境变量PATH中。
 
-备注：在linux平台上不要到http://phantomjs.org上下载，下载下来的二进制文件在执行时会报缺少so库的错误。
+备注：在linux平台上不要到`http://phantomjs.org`上下载，下载下来的二进制文件在执行时会报缺少so库的错误。
 
 （2）安装selenium
 
