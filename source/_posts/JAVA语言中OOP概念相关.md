@@ -18,7 +18,7 @@ categories: JAVA
 成员方法/实例方法
 类方法/静态方法
 重载overload
-覆盖override
+覆盖/覆写override
 ```
 
 # 构造方法
