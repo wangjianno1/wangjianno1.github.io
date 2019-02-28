@@ -99,9 +99,10 @@ pip search package_name      #搜索python包
 pip download package_name        #下载python包，并下载package_name依赖的python包
 pip freeze > requirements.txt    #将当前系统中所有通过pip安装的python包的名称及版本信息，到处到requirements.txt文件中
 pip install -r requirements.txt  #pip根据文件requirements.txt列出的python包及版本，来安装python包
-pip list            #查看系统中安装的python包列表
-pip install -U pip  #升级pip自身
+pip list                         #查看系统中安装的python包列表
+pip install -U pip               #升级pip自身
 pip --proxy=http://10.16.20.12:3128 search django  #为pip设置代理
+pip install package_name[extra]  #安装名称为package_name的包，且带上extra相关的功能扩展，如pip install splinter[django]表示安装splinter包，并带上django相关的功能扩展，注意并不是安装了splinter和django两个包哦
 ```
 
 另外，可以使用-i选项从指定的PyPI源中下载并安装Python模块。
