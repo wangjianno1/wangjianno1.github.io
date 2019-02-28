@@ -37,8 +37,7 @@ urlpatterns = [
 ]
 ```
 
-备注：在上述例子中，需要在testapp这个app中定义一个urls.py文件，然后在urls.py文件中定义urlpatterns变量。另外包含了include外部路由的url()对象，正则表达式部分一定要是斜杠(/)结尾哦。django会将http请求的url截断掉匹配的部分（上述例子中就会截断掉api/hostname/），然后将剩余的部分交给testapp.urls这个外部路由规则继续处理。举例来说，用户访问的url为http://ip:port/api/hostname/update，那么会截断掉api/hostname/部分，剩下的update交给testapp.urls来处理。
-
+备注：在上述例子中，需要在testapp这个app中定义一个urls.py文件，然后在urls.py文件中定义urlpatterns变量。另外包含了include外部路由的url()对象，正则表达式部分一定要是斜杠(/)结尾哦。django会将http请求的url截断掉匹配的部分（上述例子中就会截断掉api/hostname/），然后将剩余的部分交给testapp.urls这个外部路由规则继续处理。举例来说，用户访问的url为`http://ip:port/api/hostname/update`，那么会截断掉api/hostname/部分，剩下的update交给testapp.urls来处理。
 
 学习内容参考于：
 https://docs.djangoproject.com/en/1.11/topics/http/urls/

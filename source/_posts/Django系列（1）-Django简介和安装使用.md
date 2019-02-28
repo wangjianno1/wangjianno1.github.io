@@ -39,27 +39,27 @@ pip install Django==1.11.2
 
 （2）源码安装
 
-下载pytz 2017.2 版本；下载Django 1.11.2版本。分别解压，然后通过python setup.py install先安装pytz，再安装Django即可。二者被安装到lib/python2.7/site-packages目录中。
+下载pytz 2017.2 版本；下载Django 1.11.2版本。分别解压，然后通过`python setup.py install`先安装pytz，再安装Django即可。二者被安装到lib/python2.7/site-packages目录中。
 
-备注：使用python -m django --version命令查看是否安装成功
+备注：使用`python -m django --version`命令查看是否安装成功
 
 # 创建Django web project
 
-安装完django之后，就拥有django-admin工具命令了，该工具可以用来创建项目、创建APP等等。可以执行执行django-admin help查看其支持的子命令。
+安装完django之后，就拥有django-admin工具命令了，该工具可以用来创建项目、创建APP等等。可以执行执行`django-admin help`查看其支持的子命令。
 
 （1）创建Django web项目
 
-执行命令django-admin startproject testproject命令，创建一个名称为testproject的WEB项目。在当前目录自动生成如下目录结构：
+执行命令`django-admin startproject testproject`命令，创建一个名称为testproject的WEB项目。在当前目录自动生成如下目录结构：
 
 ![django工程目录结构](/images/django_1_1.png)
 
 其中各个文件的作用简单说明如下：
 
-	manage.py #与项目进行交互的命令工具集，例如启动服务器、数据库操作、Django Shell等等。可以执行python manage.py来查看其支持的子命令。例如python manage.py runserver
-	wsgi.py   #Python应用和WEB服务器的通信协议
-	urls.py   #url路由
+	manage.py   #与项目进行交互的命令工具集，例如启动服务器、数据库操作、Django Shell等等。可以执行python manage.py来查看其支持的子命令。例如python manage.py runserver
+	wsgi.py     #Python应用和WEB服务器的通信协议
+	urls.py     #url路由
 	settings.py #项目的总配置文件，里面包括了数据库、web应用、时间等各种配置，非常重要
-	__init__.py  #包的__init__.py，说明我们的项目目录是一个python package，可以被import导入哦
+	__init__.py #包的__init__.py，说明我们的项目目录是一个python package，可以被import导入哦
 
 （2）启动web server
 
@@ -71,7 +71,7 @@ pip install Django==1.11.2
 
 （3）测试
 
-在浏览器中输入http://ip:port即可访问。效果如下：
+在浏览器中输入`http://ip:port`即可访问。效果如下：
 
 ![django helloworld页面](/images/django_1_2.png)
 
@@ -79,7 +79,7 @@ pip install Django==1.11.2
 
 创建app的过程大致为：
 
-首先执行命令python manage.py startapp testapp创建一个名称为testapp的应用，然后添加应用名到setting中的INSTALLED_APPS里面，最后是编写app的具体的业务逻辑以及配置url路由等。
+首先执行命令`python manage.py startapp testapp`创建一个名称为testapp的应用，然后添加应用名到setting中的INSTALLED_APPS里面，最后是编写app的具体的业务逻辑以及配置url路由等。
 
 备注：Django官网演示的demo是将app目录和manage.py，以及project目录是同级，其实app的目录可以放到任何位置，所有怎么组织一个基于Django项目的目录结构是很灵活的。
 
@@ -97,4 +97,3 @@ pip install Django==1.11.2
 # Django中project和app的区别
 
 Django有project和app两个概念。project的范畴是整个项目工程，包含一些全局配置，这些配置构成一个全局的运行平台。app代表的是project一个相对独立的功能模块，业务逻辑都在各个app中。
-
