@@ -100,9 +100,8 @@ JVM搜索类的方式和顺序为：Bootstrap，Extension，User。
 如下为启动一个ElasticSearch java进程的虚拟机启动参数：
 
 ```
-/opt/itc/jdk1.8.0_112/bin/java -Xms2g -Xmx2g -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSInitiatingOccupancyOnly -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -server -Xss1m -Djava.awt.headless=true -Dfile.encoding=UTF-8 -Djna.nosys=true -Djdk.io.permissionsUseCanonicalPath=true -Dio.netty.noUnsafe=true -Dio.netty.noKeySetOptimization=true -Dio.netty.recycler.maxCapacityPerThread=0 -Dlog4j.shutdownHookEnabled=false -Dlog4j2.disable.jmx=true -Dlog4j.skipJansi=true -XX:+HeapDumpOnOutOfMemoryError -Des.path.home=/opt/itc/elasticsearch -cp /opt/itc/elasticsearch/lib/elasticsearch-5.3.0.jar:/opt/itc/elasticsearch/lib/* org.elasticsearch.bootstrap.Elasticsearch -d
+/home/work/jdk1.8.0_112/bin/java -Xms2g -Xmx2g -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSInitiatingOccupancyOnly -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -server -Xss1m -Djava.awt.headless=true -Dfile.encoding=UTF-8 -Djna.nosys=true -Djdk.io.permissionsUseCanonicalPath=true -Dio.netty.noUnsafe=true -Dio.netty.noKeySetOptimization=true -Dio.netty.recycler.maxCapacityPerThread=0 -Dlog4j.shutdownHookEnabled=false -Dlog4j2.disable.jmx=true -Dlog4j.skipJansi=true -XX:+HeapDumpOnOutOfMemoryError -Des.path.home=/home/work/elasticsearch -cp /home/work/elasticsearch/lib/elasticsearch-5.3.0.jar:/home/work/elasticsearch/lib/* org.elasticsearch.bootstrap.Elasticsearch -d
 ```
-
 
 学习资料参考于：
 https://my.oschina.net/dodojava/blog/23640

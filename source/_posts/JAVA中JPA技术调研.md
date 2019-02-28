@@ -7,7 +7,7 @@ categories: JAVA
 
 # JPA简介
 
-JPA，英文全称为Java Persistence API，它定义了一系列对象持久化的标准，目前实现这一规范的产品有Hibernat、TopLink以及Mybatis等等。说白了，JPA是对象关系映射ORM框架的一套标准，所有的具体的ORM框架都要遵循这套标准去实现。
+JPA，英文全称为Java Persistence API，它定义了一系列对象持久化的标准，目前实现这一规范的产品有Hibernate、TopLink以及Mybatis等等。说白了，JPA是对象关系映射ORM框架的一套标准，所有的具体的ORM框架都要遵循这套标准去实现。
 
 # JAVA JPA技术整体组织结构
 

@@ -90,7 +90,7 @@ class MyException extends Exception {
 
 # 使用throws/throw关键字
 
-如果一个方法没有捕获一个检查性异常，那么该方法必须使用throws关键字来声明。throws关键字放在方法签名的尾部。也可以使用 throw关键字抛出一个异常，无论它是新实例化的还是刚捕获到的。格式如下：
+如果一个方法没有捕获一个检查性异常，那么该方法必须使用throws关键字来声明。throws关键字放在方法签名的尾部。也可以使用throw关键字抛出一个异常，无论它是新实例化的还是刚捕获到的。格式如下：
 
 ```java
 import java.io.*;

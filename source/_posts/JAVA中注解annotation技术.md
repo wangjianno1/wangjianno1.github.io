@@ -19,15 +19,15 @@ JAVA内置了三种标准注解和四种元注解。
 
 三种标准注解如下：
 
-（1）@Override
+（1）`@Override`
 
 表示当前的方法定义将覆盖超类中的方法。如果不小心拼写错误，或者方法签名对不上被覆盖的方法，编译器就会发出错误提示。
 
-（2）@Deprecated
+（2）`@Deprecated`
 
 如果程序员使用了被@Deprecated注解的元素，编译器会发出警告信息。
 
-（3）@SuppressWarnings
+（3）`@SuppressWarnings`
 
 使用@SuppressWarnings可以关闭不当的编译器警告信息。举例来说：
 
@@ -39,7 +39,7 @@ JAVA内置了三种标准注解和四种元注解。
 
 JAVA还提供了四种元注解，专门用来的负责创建新注解的注解。如下：
 
-（1）@Target
+（1）`@Target`
 
 @Target表示该注解可以用于什么地方，可能的ElementType参数包括，
 
@@ -53,7 +53,7 @@ PARAMETER：参数声明
 TYPE：类、接口或enum声明
 ```
 
-（2）@Retention
+（2）`@Retention`
 
 表示在什么级别下保存该注解信息，可选的RetentionType参数有：
 
@@ -63,11 +63,11 @@ CLASS：在class字节码阶段依然保存注解信息。代码执行时，会�
 RUNTIME：JVM在代码运行期也保留注解，因此可以通过反射机制读取注解的信息
 ```
 
-（3）@Documented
+（3）`@Documented`
 
 将此注解包含在JAVA DOC文档中。
 
-（4）Inherited
+（4）`@Inherited`
 
 允许子类继承父类中的注解。
 

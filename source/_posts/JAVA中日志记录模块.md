@@ -9,7 +9,7 @@ categories: JAVA
 
 ![](/images/java_syntax_14_1.png)
 
-备注：其中log4j，logback以及slf4j都是有一个人开发而成，他就是Ceki Gülcü.
+备注：其中log4j，logback以及slf4j都是由一个人开发而成，他就是Ceki Gülcü.
 
 
 学习资料参考于：
