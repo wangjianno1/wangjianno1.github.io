@@ -30,4 +30,5 @@ django-rest-framework
 在全局的settings.py中配置LOGGING变量。
 
 # django项目目录布局的最佳实践
-http://blog.tmackan.com/2016/09/12/2016-09-12/
+
+参见[《Django项目布局最佳实践》](http://blog.tmackan.com/2016/09/12/2016-09-12/)
