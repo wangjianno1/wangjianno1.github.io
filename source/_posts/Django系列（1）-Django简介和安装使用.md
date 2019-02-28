@@ -9,21 +9,41 @@ categories: Django
 
 Python下有许多款不同的Web框架。Django是重量级选手中最有代表性的一位。许多网站和APP都基于Django。 Django是一个开放源代码的Web应用框架，由Python写成。Django遵守BSD版权，初次发布于2005年7月, 并于2008年9月发布了第一个正式版本1.0。Django的优势如下：
 
-#### 快速web开发
+（1）快速web开发
 
-python web框架
+Python web框架。
 
-#### 大量内置应用
+（2）大量内置应用
 
-例如后台管理系统admin、用户认证系统auth、会话系统sessions等等
+例如后台管理系统admin、用户认证系统auth、会话系统sessions等等。
 
-#### 安全性高
+（3）安全性高
 
-提供表单验证、SQL注入、跨站点访问等支持
+提供表单验证、SQL注入、跨站点访问等支持。
 
-#### 易于扩展
+（4）易于扩展
 
-引入APP的概念，以APP来扩展WEB项目
+引入APP的概念，以APP来扩展WEB项目。
+
+# Django内部工作流程
+
+![django工作流程图](/images/django_1_4.png)
+
+    1.用户通过浏览器请求一个页面的url
+    2.请求到达Request Middlewares（中间件），中间件对request做一些预处理或者直接response请求
+    3.URLConf通过urls.py文件和请求的URL找到相应的View（视图）
+    4.View Middlewares被访问，它同样可以对request做一些处理或者直接返回response
+    5.调用View中的函数
+    6.View中的方法可以选择性的通过Models访问底层的数据
+    7.所有的Model-to-DB的交互都是通过manager完成的
+    8.如果需要，Views可以使用一个特殊的Context（上下文处理器）
+    9.Context被传给Template（存放前段文件）用来生成页面
+        a.Template使用Filters和Tags去渲染输出
+        b.输出被返回到View
+        c.HTTPResponse被发送到Response Middlewares
+        d.任何Response Middlewares都可以丰富response或者返回一个完全不同的response
+        e.Response返回到浏览器，呈现给用户
+
 
 # Django的安装
 
@@ -59,7 +79,7 @@ pip install Django==1.11.2
 	wsgi.py     #Python应用和WEB服务器的通信协议
 	urls.py     #url路由
 	settings.py #项目的总配置文件，里面包括了数据库、web应用、时间等各种配置，非常重要
-	__init__.py #包的__init__.py，说明我们的项目目录是一个python package，可以被import导入哦
+	__init__.py #包的__init__.py，说明我们的项目目录是一个python package，可以被import导入
 
 （2）启动web server
 
