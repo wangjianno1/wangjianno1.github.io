@@ -37,6 +37,14 @@ JAVA技术体系包括如下几个部分：
 
 备注：可见JDK是JRE的超集。
 
-3.JAVA技术栈的技能图谱
+# JDK与JRE区别
+
+JRE，Java Runtime Environment，是Java运行时环境，包含了Java虚拟机以及Java基础类库等，是使用Java语言编写的程序运行所需要的软件环境，是提供给想运行Java程序的用户使用的。
+
+JDK，Java Development Kit，是Java开发工具包，是程序员使用Java语言编写Java程序所需的开发工具包，是提供给程序员使用的。JDK包含了JRE，同时还包含了编译Java源码的编译器javac，还包含了很多Java程序调试和分析的工具，如jconsole，jvisualvm等工具软件，另外，还包含了Java程序编写所需文档和demo例子程序。
+
+如果你需要运行Java程序，只需安装JRE就可以了。如果你需要编写Java程序，需要安装JDK。
+
+# JAVA技术栈的技能图谱
 
 ![](/images/java_syntax_1_2.png)
