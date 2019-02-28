@@ -11,9 +11,9 @@ Django的url路由过程如下：
 
 （1）django通过settings.py中ROOT_URLCONF参数来确定url根路由文件。一般都是project_name/project_name/urls.py。
 
-（2）django在根路由文件中，读取urlpatterns变量（urlpatterns变量是包含了django.conf.urls.url()实例的list，每一个url实例是url和回调函数的映射）。
+（2）django在根路由文件中，读取urlpatterns变量（urlpatterns变量是包含了`django.conf.urls.url()`实例的list，每一个url实例是url和回调函数的映射）。
 
-（3）django按照urlpatterns列表中元素的先后顺序进行匹配，直到第一个匹配的django.conf.urls.url()实例。
+（3）django按照urlpatterns列表中元素的先后顺序进行匹配，直到第一个匹配的`django.conf.urls.url()`实例。
 
 （4）匹配后，分两种情况，如果url()实例的回调部分是一个普通的view函数，则直接执行该函数即可。如果url()实例的回调部分是一个include定义的外部urlconf规则，那么会将url路由交给外部的urlconf继续路由处理。
 

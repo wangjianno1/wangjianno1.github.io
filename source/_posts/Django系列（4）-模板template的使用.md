@@ -41,10 +41,10 @@ TEMPLATES = [
 
 备注：
 
-	BACKEND：配置django使用哪种模板引擎，目前支持django.template.backends.django.DjangoTemplates和django.template.backends.jinja2.Jinja2两种。
-	DIRS：配置django在哪些目录中查找模板，查找顺序和DIRS元组的元素顺序一致。
-	APP_DIRS：引擎是否在已安装APP（的目录）内查找模板源文件。配置为true或false。
-	OPTIONS：传递给该模板引擎（backend）的其他参数。不同的引擎，可用的参数不一样。
+	BACKEND：配置django使用哪种模板引擎，目前支持django.template.backends.django.DjangoTemplates和django.template.backends.jinja2.Jinja2两种
+	DIRS：配置django在哪些目录中查找模板，查找顺序和DIRS元组的元素顺序一致
+	APP_DIRS：引擎是否在已安装APP（的目录）内查找模板源文件。配置为true或false
+	OPTIONS：传递给该模板引擎（backend）的其他参数。不同的引擎，可用的参数不一样
 
 （2）编写模板文件
 

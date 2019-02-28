@@ -17,6 +17,7 @@ view函数是编写在app_name/views.py中的普通函数，然后再url路由�
 from django.http import Http404
 from django.shortcuts import render
 from polls.models import Poll
+
 def getDetailInfo(request, poll_id):
     try:
         p = Poll.objects.get(pk=poll_id)
