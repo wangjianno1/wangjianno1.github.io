@@ -34,9 +34,9 @@ yum install python-dev
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'xblog',  ##数据库名称
+        'NAME': 'xblog',         #数据库名称
         'USER': 'root',
-        'PASSWORD': 'password',  ##安装mysql数据库时，输入的root用户的密码
+        'PASSWORD': 'password',  #安装mysql数据库时，输入的root用户的密码
         'HOST': '127.0.0.1',
     }   
 }
