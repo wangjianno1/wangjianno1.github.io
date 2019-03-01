@@ -27,6 +27,8 @@ public class Object {
 
 `equals()`方法用来判断两个对象是否“相等”，在`Object`中`equals()`方法中是判断两个对象的引用是否相等，开发者可以在自定义类中根据具体需求覆写`equals()`方法。
 
+例如，String类中就重写了`equals()`方法，重写后的`equals()`方法用来判断两个字符串的内容是否相等。
+
 # hashCode()
 
 `hashCode()`方法返回该对象的哈希码值。支持此方法是为了提高哈希表（例如 `java.util.Hashtable`提供的哈希表）的性能。关于`hashCode()`有几点注意事项：

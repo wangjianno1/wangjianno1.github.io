@@ -17,8 +17,8 @@ final在Java中是一个保留的关键字，可以声明成员变量、方法�
 private static final User user = new User("zhangsan", 30);
 
 public static void main(String[] args) {
-    user.setName("lisi");    // 修改final常量的内部状态是没有问题的
-    user = new User("wangwu", 31);   //修改final常量的引用指向则编译器会报错
+    user.setName("lisi");          //修改final常量的内部状态是没有问题的
+    user = new User("wangwu", 31); //修改final常量的引用指向则编译器会报错
     System.out.println(user.getName());
 }
 ```
@@ -61,7 +61,6 @@ class CheapPersonalLoan extends PersonalLoan {  //此处试图继承一个final�
 - final关键字提高了性能。JVM和Java应用都会缓存final变量。
 - final变量可以安全的在多线程环境下进行共享，而不需要额外的同步开销。
 - 使用final关键字，JVM会对方法、变量及类进行优化。
-
 
 学习资料参考于：
 http://www.importnew.com/7553.html

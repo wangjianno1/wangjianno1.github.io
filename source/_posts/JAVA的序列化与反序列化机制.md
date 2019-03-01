@@ -11,10 +11,10 @@ Java提供了一种对象序列化的机制，该机制中，一个对象可以�
 
 在JAVA中，一个对象要想被序列化和反序列化，则必须满足两个条件：
 
-- 该类必须实现 java.io.Serializable 对象。
+- 该类必须实现java.io.Serializable接口。
 - 该类的所有属性必须是可序列化的。如果有一个属性不是可序列化的，则该属性必须注明是短暂（transient）的。
 
-# ObjectInputStream 与 ObjectOutputStream
+# ObjectInputStream与ObjectOutputStream
 
 类`ObjectInputStream`和`ObjectOutputStream`是高层次的数据流，它们包含反序列化和序列化对象的方法。`ObjectOutputStream`类用来序列化一个对象，即将一个对象序列化到一个文件中。需要注意的是，当序列化一个对象到文件时， 按照Java的标准约定，被序列化对象的文件的扩展名为`.ser`。
 
