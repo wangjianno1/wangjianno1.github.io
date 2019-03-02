@@ -7,11 +7,11 @@ categories: JAVA
 
 # JAVA虚拟机的发展史
 
-实际上，目前有很多JAVA虚拟机的实现，有sun公司开发的，也有其他公司开发的商业JAVA虚拟机。比较出名的有：
+实际上，目前有很多JAVA虚拟机的实现，有Sun公司开发的，也有其他公司开发的商业JAVA虚拟机。比较出名的有：
 
-（1）Sun Classic/Exact VM
+（1）Sun Classic / Exact VM
 
-它是sun公司最早开发的JVM版本。
+它是Sun公司最早开发的JVM版本。
 
 （2）Sun HotSpot VM
 
