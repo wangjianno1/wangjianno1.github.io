@@ -7,7 +7,7 @@ categories: JAVA
 
 # jar工具及JAR文件
 
-jar是随JDK安装的，是JDK中自带的一个工具，在 JDK安装目录下的bin目录中，Windows下文件名为jar.exe，Linux下文件名jar。jar是一个归档和压缩工具，jar工具是基于zip和zlib创建出来的。使用jar工具打包压缩出来的文件称为JAR文件，即Java Archive File。顾名思义，它的应用是与Java息息相关的，是Java的一种文档格式。JAR文件非常类似ZIP文件，准确地说，它就是ZIP文件。JAR文件与ZIP文件唯一的区别就是在JAR文件的内容中，包含了一个META-INF目录，且该目录下有一个名称为MANIFEST.MF的文件，这个目录和文件是在使用jar工具生成JAR文件时自动创建的。
+jar是随JDK安装的，是JDK中自带的一个工具，在JDK安装目录下的bin目录中，Windows下文件名为jar.exe，Linux下文件名为jar。jar是一个归档和压缩工具，jar工具是基于zip和zlib创建出来的。使用jar工具打包压缩出来的文件称为JAR文件，即Java Archive File。顾名思义，它的应用是与Java息息相关的，是Java的一种文档格式。JAR文件非常类似ZIP文件，准确地说，它就是ZIP文件。JAR文件与ZIP文件唯一的区别就是在JAR文件的内容中，包含了一个META-INF目录，且该目录下有一个名称为MANIFEST.MF的文件，这个目录和文件是在使用jar工具生成JAR文件时自动创建的。
 
 JAR文件包的扩展名是`.jar`，在Windows平台上，我们直接可以将JAR文件的扩展名改成.zip，然后使用WinRAR工具打开。
 
@@ -72,7 +72,7 @@ M  #不产生所有项的清单（MANIFEST）文件，此参数会忽略-m参数
 
 # 使用jar工具创建可执行jar文件
 
-（1）编写java代码，并使用javac编译
+（1）编写Java代码，并使用javac编译
 
 （2）创建MANIFEST.MF文件
 

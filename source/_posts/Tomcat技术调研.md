@@ -13,11 +13,11 @@ Java servlet容器。
 
 （1）server.xml
 
-tomcat的主配置文件，包含service、connectors、engine、realm、valve、hosts等组件。比如tomcat监听的http端口就是该文件中配置的。
+Tomcat的主配置文件，包含service、connectors、engine、realm、valve、hosts等组件。比如Tomcat监听的http端口就是该文件中配置的。
 
 （2）web.xml
 
-遵循Servlet规范标准的配置文件，用于配置servlet，并为所有的Web应用程序提供包括MIME映射等默认配置信息。如下为web.xml中关于一个servlet的配置举例：
+遵循Servlet规范标准的配置文件，用于配置Servlet，并为所有的Web应用程序提供包括MIME映射等默认配置信息。如下为web.xml中关于一个Servlet的配置举例：
 
 ```bash
 <servlet>
@@ -34,7 +34,7 @@ tomcat的主配置文件，包含service、connectors、engine、realm、valve�
 </servlet-mapping>
 ```
 
-然后，在地址栏中输入http://localhost:8080/web-App/aaa/xxx就可以访问了。
+然后，在地址栏中输入`http://localhost:8080/web-App/aaa/xxx`就可以访问了。
 
 （3）tomcat-user.xml
 
@@ -42,7 +42,7 @@ Realm认证时用到的相关角色、用户和密码等信息；Tomcat自带的
 
 （4）catalina.policy
 
-java相关的安全策略配置文件，在系统资源级别上提供访问控制的能力。
+Java相关的安全策略配置文件，在系统资源级别上提供访问控制的能力。
 
 （5）catalina.properties
 
@@ -58,7 +58,7 @@ Tomcat通过自己内部实现的JAVA日志记录器来记录操作相关的日�
 
 # Tomcat的安装
 
-前提声明：本次安装使用的是apache-tomcat-9.0.2和jdk1.8
+前提声明，本次安装使用的是apache-tomcat-9.0.2和JDK 1.8。
 
 （1）JDK环境配置
 
@@ -68,9 +68,9 @@ Tomcat通过自己内部实现的JAVA日志记录器来记录操作相关的日�
 
 ![](/images/tomcat_1_1.png)
 
-（3）解压tomcat的tarball即可，不需要编译安装的哦。
+（3）解压Tomcat的tarball即可，不需要编译安装的哦。
 
-（4）启动tomcat
+（4）启动Tomcat
 
 ```bash
 cd ${TOMCAT_HOME} && ./bin/startup.sh         #启动tomcat
@@ -87,12 +87,11 @@ cd ${TOMCAT_HOME} && ./bin/catalina.sh stop   #关闭tomcat
 
 # 关于Tomcat的端口配置
 
-tomcat的端口是在${TOMCAT_HOME}/conf/server.xml中配置，在server.xml有多个地方配置端口，它们的含义各不相同，具体如下：
+Tomcat的端口是在`${TOMCAT_HOME}/conf/server.xml`中配置，在server.xml有多个地方配置端口，它们的含义各不相同，具体如下：
 
 （1）Server元素中端口配置
-	<Server port="8005" shutdown="SHUTDOWN">
 
-port用来指定一个端口，这个端口负责监听关闭tomcat的请求；shutdown用来指定向端口发送的命令字符串。当我们kill tomcat进程时，就会向该端口发送shutdown指令。
+如`<Server port="8005" shutdown="SHUTDOWN">`，port用来指定一个端口，这个端口负责监听关闭tomcat的请求；shutdown用来指定向端口发送的命令字符串。当我们kill tomcat进程时，就会向该端口发送shutdown指令。
 
 （2）Connector元素中端口配置
 <Connector>元素代表与客户程序实际交互的组件，它负责接收客户请求，以及向客户返回响应结果。一个server.xml会有多个<Connector>的配置，一般来说有：
@@ -105,7 +104,7 @@ port用来指定一个端口，这个端口负责监听关闭tomcat的请求；s
 <Connector port="8009" protocol="AJP/1.3" redirectPort="8443" />
 ```
 
-备注：一般来说，可以通过protocol这个字段来判断这个Connector监听的端口是用来提供什么服务的。比如说protocol="HTTP/1.1"说明这个端口是用来提供HTTP服务的。
+备注：一般来说，可以通过protocol这个字段来判断这个Connector监听的端口是用来提供什么服务的。比如说`protocol="HTTP/1.1"`说明这个端口是用来提供HTTP服务的。
 
 # Tomcat的闲杂知识
 

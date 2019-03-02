@@ -7,7 +7,7 @@ categories: JAVA
 
 # jps
 
-jps，JVM Process Status Tool，该命令显示系统内所有的HotSpot虚拟机JVM进程，也即Java进程啦。另外，jps可以通过RMI协议查看开了RMI服务的远程虚拟机进程状态。
+jps，全称为JVM Process Status Tool，该命令显示系统内所有的HotSpot虚拟机JVM进程，也即Java进程啦。另外，jps可以通过RMI协议查看开了RMI服务的远程虚拟机进程状态。
 
 命令行参数选项说明如下：
 
@@ -18,7 +18,7 @@ jps，JVM Process Status Tool，该命令显示系统内所有的HotSpot虚拟�
 -v  #输出传入JVM的参数
 ```
 
-备注：Java程序启动以后，会在`/tmp`目录下生成一个`hsperfdata_${USER}`的文件夹，这个文件夹的文件，就是以java进程的pid命名。使用jps查看当前进程的时候，其实就是把`/tmp/hsperfdata_${USER}`中的文件名遍历一遍之后输出。如果`/tmp/hsperfdata_${USER}`的文件所有者和文件所属用户组与启动进程的用户不一致的话，在进程启动之后，就没有权限写`/tmp/hsperfdata_${USER}`，所以`/tmp/hsperfdata_${USER}`是一个空文件夹，那么执行jps命令也就没有任何显示。这一点需要注意。
+备注：Java程序启动以后，会在`/tmp`目录下生成一个`hsperfdata_${USER}`的文件夹，这个文件夹的文件，就是以Java进程的pid命名。使用jps查看当前进程的时候，其实就是把`/tmp/hsperfdata_${USER}`中的文件名遍历一遍之后输出。如果`/tmp/hsperfdata_${USER}`的文件所有者和文件所属用户组与启动进程的用户不一致的话，在进程启动之后，就没有权限写`/tmp/hsperfdata_${USER}`，所以`/tmp/hsperfdata_${USER}`是一个空文件夹，那么执行jps命令也就没有任何显示。这一点需要注意。
 
 # jstat
 

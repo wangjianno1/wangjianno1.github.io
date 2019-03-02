@@ -11,7 +11,7 @@ categories: JAVA
 
 ![](/images/java_spi_1_1.png)
 
-当接口属于实现方时，实现方提供了接口和具体实现类，然后再调用方通过引用接口来达到调用该实现类的功能。这中模式就是我们经常所说的API。
+当接口属于实现方时，实现方提供了接口和具体实现类，然后调用方通过引用接口来达到调用该实现类的功能。这中模式就是我们经常所说的API。
 
 当接口属于调用方时，我们就将其称为SPI（全称为Service Provider Interface）。
 
@@ -37,7 +37,7 @@ SPI全称为(Service Provider Interface)，是JDK内置的一种服务提供发�
 
 ```java
 String url = "jdbc:xxxx://xxxx:xxxx/xxxx";
-Connection conn = DriverManager.getConnection(url,username,password);
+Connection conn = DriverManager.getConnection(url, username, password);
 ```
 
 这里就涉及到使用Java的SPI扩展机制来查找相关具体驱动实例类了，但从直观上来看，并不能看到有关SPI机制相关的代码，其实被封装在了DriverManager中。DriverManager是JDK中的实现，用来获取数据库连接，在DriverManager中有一个静态代码块如下：
@@ -111,7 +111,7 @@ while(driversIterator.hasNext()) {
 }
 ```
 
-在遍历的时候，首先调用`driversIterator.hasNext()`方法，这里会搜索classpath下以及jar包中所有的`META-INF/services`目录下的`java.sql.Driver`文件，并找到文件中的实现类的名字，此时并没有实例化具体的实现类。然后是调用`driversIterator.next();`方法，此时就会根据驱动名字具体实例化各个实现类了。现在驱动就被找到并实例化了。
+在遍历的时候，首先调用`driversIterator.hasNext()`方法，这里会搜索classpath下以及jar包中所有的`META-INF/services`目录下的`java.sql.Driver`文件，并找到文件中的实现类的名字，此时并没有实例化具体的实现类。然后是调用`driversIterator.next()`方法，此时就会根据驱动名字具体实例化各个实现类了。现在驱动就被找到并实例化了。
 
 当我们在测试项目中添加了两个jar包，`mysql-connector-java-6.0.6.jar`和`postgresql-42.0.0.0.jar`，跟踪到`DriverManager`中之后，可以看到此时迭代器中有两个驱动，mysql和postgresql的都被加载了。有关两个驱动都加载了，JDBC会有一定的方法来判断使用哪一个驱动。
 
@@ -119,7 +119,7 @@ while(driversIterator.hasNext()) {
 
 # SPI的具体实现者需要遵循的SPI规则
 
-已`java.sql.Driver`的MySQL厂商实现`mysql-connector-java-5.1.44.jar`为例来说，需要在META-INF/services目录下创建一个名字为接口全限定名的文件，即`java.sql.Driver`文件，文件内容是具体的实现名字，如下：
+以`java.sql.Driver`的MySQL厂商实现`mysql-connector-java-5.1.44.jar`为例来说，需要在META-INF/services目录下创建一个名字为接口全限定名的文件，即`java.sql.Driver`文件，文件内容是具体的实现名字，如下：
 
     com.mysql.jdbc.Driver
     com.mysql.fabric.jdbc.FabricMySQLDriver
