@@ -25,21 +25,28 @@ Eclipse是基于Java的可扩展开发平台，所以安装Eclipse前你需要�
 
 Eclipse的透视图是一个包含一系列视图和内容编辑器的可视容器。
 
-# Eclipse工程的JAVA构建路径（java build path）设置
+# Eclipse工程的JAVA构建路径Build Path
 
-Java构建路径用于在编译Java项目时找到依赖的类，包括以下几项：
+Build Path是指定Java工程所包含的资源属性集合。在一个成熟的Java工程中，不仅仅有自己编写的源代码，还需要引用系统运行库（JRE）、第三方的功能扩展库、工作空间中的其他工程，甚至外部的类文件，所有这些资源都是被这个工程所依赖的，并且只有被引用后，才能够将该工程编译成功，而Build Path就是用来配置和管理对这些资源的引用的。Build Path一般包括：
 
-（1）源码包
+    JRE运行库
+    第三方的功能扩展库（`*.jar`格式文件）
+    其他的工程
+    其他的源代码或Class文件
 
-（2）项目相关的jar包及类文件
-
-（3）项目引用的的类库
-
-在JAVA项目工程右键菜单中选择“Build Path”，即可打开Java构建路径设置窗口，如下：
+`右键点击项目>>Properties>>Java Build Path`即可打开Java构建路径设置窗口，如下：
 
 ![](/images/eclipse_1_2.png)
 
-引用jar包可以在Libraries选项卡中完成，在Libraries选项卡中我们可以通过点击`Add JARs`来添加Eclipse工作空间中存在的jar包或点击`External JARs`来引入其他文件中的jar包。
+其中，
+
+    Source选项，指定工程自身的源代码文件或配置文件。
+    Projects选项，可以添加、编辑、移除当前项目所依赖的项目。
+    Libraries选项，可以添加、编辑、移除当前项目所依赖的库文件。
+    Order and Export选项，可以为当前项目已经添加进来的库进行排序，也可以设置当前项目导出时，库文件是否也跟随项目导出。
+
+例如引用jar包可以在Libraries选项卡中完成，在Libraries选项卡中我们可以通过点击`Add JARs`来添加Eclipse工作空间中存在的jar包或点击`External JARs`来引入其他文件中的jar包。
+
 另外，在Libraries选项卡选择`Add Library`按钮，可以修改项目所使用的JRE版本哦。
 
 # Eclipse插件安装
@@ -67,13 +74,37 @@ Eclipse插件安装有如下几种方式：
 	Ctrl+Shift+t     #查找工作空间（Workspace）构建路径中的可找到Java类文件
 	Ctrl+Alt+UP/DOWN #复制当前行
 
-# eclipse的python开发环境配置
+# Eclipse的Project Facets设定
+
+在项目上右击点击Properties，选择Project Facets选项，会出现Project Facets设定界面如下：
+
+![](/images/eclipse_1_4.png)
+
+Project Facets可理解为项目的特性，主流 IDE (Eclipse IDEA) 都提供了facet的配置。在Eclipse中，新建的Java Project都有一个默认的Java facet，那么Eclipse就只提供JavaSE项目支持，当你需要将该项目升级为Java web项目时，可以为项目添加Dynamic Web Module（就是一个支持Web的facet），这样Eclipse就会将项目结构调整为带有WebContent or WebRoot目录的标准结构且添加 deployment descriptor（web.xml）并调整默认的classpath，同时，如果你要用到javascript，可以对应地添加javascript facet，这样Eclipse就会为项目添加JavaScript相关的支持（构建、校验、提示等等），如果你的项目用到了Hibernate，则可以添加Jpa facet来让Eclipse提供对应的功能支持等等。尤其在Eclipse中创建Maven的web项目时，常会用到上面的配置，给项目添加动态web功能。
+
+# Eclipse Problems试图
+
+点击`Windows->Show View->Problems`会打开Eclipse的Problems窗体，如下：
+
+![](/images/eclipse_1_5.png)
+
+当我们Eclipse中的工程上出现“红叉”，但是又没有明确地提示错误信息时，我们就可以打开Eclipse的Problems窗体，查看详细的错误信息。
+
+# Maven WEB应用部署到本地Tomcat的方式
+
+（1）将webapps中的文件收到copy到Tomcat的webapps目录
+
+（2）使用Eclipse的export功能，导出为WAR包，并将WAR包copy到webapps目录
+
+（3）使用MyEclipse插件自动部署到本地Tomcat中
+
+# Eclipse的Python开发环境配置
 
 （1）本机上安装Python，将Python配置到PATH环境变量中
 
 （2）安装Eclipse，并安装PyDev插件即可
 
-# eclipse中的一些闲杂知识
+# Eclipse中的一些闲杂知识
 
 （1）点击Windows | Show View | Progress即可打开Eclipse Progress窗格，效果如下：
 
