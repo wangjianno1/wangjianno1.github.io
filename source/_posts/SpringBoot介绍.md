@@ -38,7 +38,9 @@ SpringBoot主要特点有化繁为简，简化配置；下一代框架，技术�
 
 Maven项目的pom.xml中，添加了org.springframework.boot:spring-boot-maven-plugin插件后，当运行`mvn package`命令进行打包时，会将SpringBoot应用打包成一个可以直接运行的JAR文件，即使用`java -jar`命令就可以直接运行。
 
-一般的Maven项目的打包命令，不会把依赖的jar包也打包进去的，只是会放在jar包的同目录下，能够引用就可以了，但是spring-boot-maven-plugin插件，会将依赖的jar包全部打包进去。比如下面这个jar包的BOOT/INF/lib目录下面就包含了所有依赖的jar包。
+一般的Maven项目的打包命令，不会把依赖的jar包也打包进去的，只是会放在jar包的同目录下，能够引用就可以了，但是spring-boot-maven-plugin插件，会将依赖的jar包全部打包进去。比如下面这个jar包的`BOOT-INF/lib`目录下面就包含了所有依赖的jar包：
+
+![](/images/springboot_info_1_2.png)
 
 （2）spring-boot-starter-web
 
