@@ -2,7 +2,7 @@
 title: JAVA中JPA技术调研
 date: 2018-01-31 00:11:57
 tags: JAVA基础
-categories: JAVA
+categories: SSM/SSH
 ---
 
 # JPA简介
