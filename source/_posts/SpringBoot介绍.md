@@ -7,7 +7,9 @@ categories: SpringBoot
 
 # SpringBoot简介
 
-Spring Boot是由Pivotal团队提供的全新框架，其设计目的是用来简化新Spring应用的初始搭建以及开发过程。该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化的配置。通过这种方式，Spring Boot致力于在蓬勃发展的快速应用开发领域（rapid application development）成为领导者。也就是说，Spring Boot是为了简化Spring开发而生，主要思想是降低spring的入门，使得新手可以以最快的速度让程序在spring框架下跑起来。
+SpringBoot是这几年微服务概念流行后，Pivotal团队开发的一套快速开发Spring应用的框架。它本身并不提供Spring框架的核心特性以及扩展功能，只是用于快速、敏捷地开发新一代基于Spring框架的应用程序。也就是说，它并不是用来替代Spring的解决方案，而是和Spring框架紧密结合用于提升Spring开发者体验的工具。同时它集成了大量常用的第三方库配置（例如Jackson，JDBC,，Mongo，Redis及Mail等等），SpringBoot应用中这些第三方库几乎可以零配置的开箱即用（out-of-the-box），大部分的SpringBoot应用都只需要非常少量的配置代码，开发者能够更加专注于业务逻辑。从概念上说，SpringBoot需要使用到Spring框架的各个部分，并且对它们进行了大量的默认约定配置。
+
+简单来说，SpringBoot是Spring技术的全家桶哦。也就是说，SpringBoot是为了简化Spring开发而生，主要思想是降低Spring的入门，使得新手可以以最快的速度让程序在Spring框架下跑起来。
 
 另外，SpringBoot与SpringMVC二者没有必然关系，SpringBoot在WEB MVC这块使用的还是SpringMVC框架。
 
