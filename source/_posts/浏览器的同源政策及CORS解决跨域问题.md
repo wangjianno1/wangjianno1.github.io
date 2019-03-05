@@ -2,7 +2,7 @@
 title: 浏览器的同源政策及CORS解决跨域问题
 date: 2018-02-04 15:46:54
 tags:
-categories: 杂货铺
+categories: 大前端
 ---
 
 # 浏览器的同源政策

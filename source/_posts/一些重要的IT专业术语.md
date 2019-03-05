@@ -5,22 +5,6 @@ tags:
 categories: 杂货铺
 ---
 
-# scale-up/scale-down
-
-scale-up/scale-down表示纵向扩缩容，指调整机器资源的Quota，比如增大或减少CPU/MEM等的分配。
-
-scale-up是纵向扩容，scale-down是纵向缩容。
-
-# scale-in/scale-out
-
-scale-in/scale-out表示横向扩缩容，指调整实例数，比如增大或减少机器数。
-
-scale-in是横向缩容，scale-out是横向扩容。
-
-# auto-scaling
-
-自动扩缩容。
-
 # QPS
 
 QPS，Query Per Second，指的是每秒查询率。
@@ -58,3 +42,31 @@ Daily Active Users，日活跃用户数，去除重复的用户。
 # UGC
 
 UGC，User Generated Content，也就是用户生成内容的意思。UGC的概念最早起源于互联网领域，即用户将自己原创的内容通过互联网平台进行展示或者提供给其他用户。UGC是伴随着以提倡个性化为主要特点的Web2.0概念兴起的。
+
+# UX
+
+UX，User experience design，用户体验设计。
+
+# sign-in/sign-out/sign-up
+
+sign-out，相当于exit，退出账户登录。
+
+sign-in，相当于login，登录账户。
+
+sign-up，注册账户。
+
+# scale-up/scale-down
+
+scale-up/scale-down表示纵向扩缩容，指调整机器资源的Quota，比如增大或减少CPU/MEM等的分配。
+
+scale-up是纵向扩容，scale-down是纵向缩容。
+
+# scale-in/scale-out
+
+scale-in/scale-out表示横向扩缩容，指调整实例数，比如增大或减少机器数。
+
+scale-in是横向缩容，scale-out是横向扩容。
+
+# auto-scaling
+
+自动扩缩容。

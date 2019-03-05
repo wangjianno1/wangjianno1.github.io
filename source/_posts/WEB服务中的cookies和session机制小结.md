@@ -2,7 +2,7 @@
 title: WEB服务中的cookies和session机制小结
 date: 2018-05-23 17:23:50
 tags:
-categories: 杂货铺
+categories: 大前端
 ---
 
 # 为什么需要cookies和session
