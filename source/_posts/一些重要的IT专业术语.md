@@ -47,6 +47,26 @@ UGC，User Generated Content，也就是用户生成内容的意思。UGC的概�
 
 UX，User experience design，用户体验设计。
 
+# PUE
+
+PUE，Power Usage Effectiveness，是评价数据中心能源效率的指标，是数据中心消耗的所有能源与IT负载使用的能源之比。说白了，就是一个数据中心的总能耗与有价值的消耗的比值。PUE值越接近于1，表示一个数据中心的绿色化程度越高。当前，国外先进的数据中心机房PUE值通常小于2，而我国的大多数数据中心的PUE值在2-3之间。
+
+# DCIE
+
+DCIE，Data Center Infrastructure Efficiency，与PUE成反比。
+
+# SLA
+
+SLA，Service-Level Agreement，中文名称为服务等级协议。SLA是关于网络服务供应商和客户间的一份合同，其中定义了服务类型、服务质量和客户付款等术语。说白了，就是我对客户提供的服务质量的承诺。
+
+# UPS
+
+UPS，Uninterruptible Power System，称为不间断电源。
+
+UPS将蓄电池与主机相连接，通过主机逆变器等模块电路将直流电转换成市电的系统设备。当市电输入正常时，UPS将市电稳压后供应给负载使用，此时的UPS就是一台交流市电稳压器，同时它还向机内电池充电；当市电中断（事故停电）时，UPS立即将电池的直流电能，通过逆变零切换转换的方法向负载继续供应220V交流电，使负载维持正常工作并保护负载软、硬件不受损坏。UPS设备通常对电压过高或电压过低都能提供保护。
+
+![](/images/hardware_ups_1_1.png)
+
 # sign-in/sign-out/sign-up
 
 sign-out，相当于exit，退出账户登录。
