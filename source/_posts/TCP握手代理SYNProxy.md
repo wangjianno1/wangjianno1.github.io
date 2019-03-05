@@ -29,4 +29,4 @@ Client与Server之间传输数据。
 
 SYNProxy清理资源，释放TCP连接。
 
-备注：SYNProxy可以有效解决SYNFlood攻击问题。
+备注：SYNProxy可以有效解决SYNFlood攻击问题。关于SYNFlood知识参见[《SYNFlood攻击简介》](https://wangjianno1.github.io/2019/03/05/SYNFlood%E6%94%BB%E5%87%BB%E7%AE%80%E4%BB%8B/)
