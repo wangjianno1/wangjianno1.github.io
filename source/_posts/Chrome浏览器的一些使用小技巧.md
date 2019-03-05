@@ -73,7 +73,7 @@ TTFB，全称为Time To First Byte，是最初的网络请求被发起到从服�
 
 ![](/images/chrome_1_8.png)
 
-# chrome的chrome://***功能
+# chrome的`chrome://***`功能
 
 在Chrome地址栏中输入chrome://chrome-urls/，即可以看到各种`chrome://***`，例如：
 
