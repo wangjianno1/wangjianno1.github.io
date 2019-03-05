@@ -127,6 +127,16 @@ ETag/If-None-Match -> Last-Modified/If-Modified-Since
 
 备注：强缓存的优先级高于协商缓存，也就是说只有本地强缓存策略失效后，才会考虑向考虑向后端询问协商。
 
+# 其他闲杂知识
+
+（1）HTTP响应头Date和Age
+
+HTTP响应头中的Date和Age的含义：
+
+![](/images/httpcache_1_4.png)
+
+Date是服务器返回本次HTTP响应的时间，而Last-Modified表示对应的资源在服务器端最后被修改的时间点，注意二者的区别哦； Age的存在暗示你访问的服务器不是源服务器，而是一台缓存服务器，Age的大小表示这个资源已经“存活了”多长时间（也即资源被缓存了多长时间），所以这个值不会大于源服务器设置的最大缓存时间`Cache-Control: max-age=****`。
+
 学习资料参考于：
 https://juejin.im/post/5a673af06fb9a01c927ed880
 http://blog.wpjam.com/m/last-modified-etag-expires-cache-control/
