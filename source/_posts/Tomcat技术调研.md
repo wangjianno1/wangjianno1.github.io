@@ -7,7 +7,13 @@ categories: JAVA技术栈
 
 # Tomcat简介
 
-Java servlet容器。
+Java servlet容器。Tomcat的主要的目录结构如下：
+
+    bin，存放tomcat的启停脚本等
+    conf，Tomcat的全局配置文件
+    lib，Tomcat依赖的jar文件
+    webapps，WEB应用的部署目录
+    logs，Tomcat输出日志的目录
 
 # Tomcat一些配置文件
 
@@ -105,6 +111,22 @@ Tomcat的端口是在`${TOMCAT_HOME}/conf/server.xml`中配置，在server.xml�
 ```
 
 备注：一般来说，可以通过protocol这个字段来判断这个Connector监听的端口是用来提供什么服务的。比如说`protocol="HTTP/1.1"`说明这个端口是用来提供HTTP服务的。
+
+# Tomcat的WEB应用的部署方法
+
+## 静态部署
+
+静态部署有三种方法：
+
+（1）直接将web应用放到webapps目录下
+
+（2）通过`$TOMCAT_HOME/conf/server.xml`文件配置web应用的存放路径，此时web应用就不需要放到`$TOMCAT_HOME/webapps`中
+
+（3）在`$TOMCAT_HOME/conf/`目录下新建`Catalina\localhost`目录，然后创建一个和web应用同名的xml文件，xml内容中指定web应用的存放路径
+
+## 动态部署
+
+通过Tomcat自动的管理平台来实现动态部署。
 
 # Tomcat的闲杂知识
 
