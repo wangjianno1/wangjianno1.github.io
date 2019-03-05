@@ -5,7 +5,6 @@ tags:
 categories: Nginx
 ---
 
-
 # Nginx配置文件结构
 
 Nginx的配置文件分为如下几个部分：
