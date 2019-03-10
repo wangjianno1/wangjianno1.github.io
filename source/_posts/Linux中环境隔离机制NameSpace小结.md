@@ -1,0 +1,40 @@
+---
+title: Linux中环境隔离机制NameSpace小结
+date: 2019-03-10 11:58:29
+tags:
+categories: Virtualization
+---
+
+# NameSpace简介
+
+Linux NameSpace是Linux提供的一种内核级别环境隔离的方法。不知道你是否还记得很早以前的Unix有一个叫chroot的系统调用（通过修改根目录把用户jail到一个特定目录下），chroot提供了一种简单的隔离模式，chroot内部的文件系统无法访问外部的内容。Linux NameSpace在此基础上，提供了对UTS、IPC、mount、PID、network、User等的隔离机制。
+
+    PID NameSpace
+    NET NameSpace
+    IPC NameSpace
+    MNT NameSpace，类似于chroot
+    UTS NameSpace
+    user NameSpace
+
+# NameSpace的具体实现
+
+当调用clone时，设定了CLONE_NEWPID，就会创建一个新的PID NameSpace，clone出来的新进程将成为NameSpace里的第一个进程。一个PID NameSpace为进程提供了一个独立的PID环境，PID NameSpace内的PID将从1开始，在NameSpace内调用fork，vfork或clone都将产生一个在该NameSpace内独立的PID。新创建的NameSpace里的第一个进程在该NameSpace内的PID将为1，就像一个独立的系统里的init进程一样。该NameSpace内的孤儿进程都将以该进程为父进程，当该进程被结束时，该NameSpace内所有的进程都会被结束。PID NameSpace是层次性，新创建的NameSpace将会是创建该NameSpace的进程属于的NameSpace的子NameSpace。子NameSpace中的进程对于父NameSpace是可见的，一个进程将拥有不止一个PID，而是在所在的NameSpace以及所有直系祖先NameSpace中都将有一个PID。系统启动时，内核将创建一个默认的PID NameSpace，该NameSpace是所有以后创建的NameSpace的祖先，因此系统所有的进程在该NameSpace都是可见的。
+
+当调用clone时，设定了CLONE_NEWIPC，就会创建一个新的IPC NameSpace，clone出来的进程将成为NameSpace里的第一个进程。一个IPC NameSpace有一组System V IPC objects标识符构成，这标识符有IPC相关的系统调用创建。在一个IPC NameSpace里面创建的IPC object对该NameSpace内的所有进程可见，但是对其他NameSpace不可见，这样就使得不同NameSpace之间的进程不能直接通信，就像是在不同的系统里一样。当一个IPC NameSpace被销毁，该NameSpace内的所有IPC object会被内核自动销毁。
+
+PID NameSpace和IPC NameSpace可以组合起来一起使用，只需在调用clone时，同时指定CLONE_NEWPID和CLONE_NEWIPC，这样新创建的NameSpace既是一个独立的PID空间又是一个独立的IPC空间。不同NameSpace的进程彼此不可见，也不能互相通信，这样就实现了进程间的隔离。
+
+当调用clone时，设定了CLONE_NEWNS，就会创建一个新的mount NameSpace。每个进程都存在于一个mount NameSpace里面，mount NameSpace为进程提供了一个文件层次视图。如果不设定这个flag，子进程和父进程将共享一个mount NameSpace，其后子进程调用mount或umount将会影响到所有该NameSpace内的进程。如果子进程在一个独立的mount NameSpace里面，就可以调用mount或umount建立一份新的文件层次视图。该flag配合pivot_root系统调用，可以为进程创建一个独立的目录空间。
+
+当调用clone时，设定了CLONE_NEWNET，就会创建一个新的Network NameSpace。一个Network NameSpace为进程提供了一个完全独立的网络协议栈的视图。包括网络设备接口，IPv4和IPv6协议栈，IP路由表，防火墙规则，sockets等等。一个Network NameSpace提供了一份独立的网络环境，就跟一个独立的系统一样。一个物理设备只能存在于一个Network NameSpace中，可以从一个NameSpace移动另一个NameSpace中。虚拟网络设备(virtual network device)提供了一种类似管道的抽象，可以在不同的NameSpace之间建立隧道。利用虚拟化网络设备，可以建立到其他NameSpace中的物理设备的桥接。当一个Network NameSpace被销毁时，物理设备会被自动移回init Network NameSpace，即系统最开始的NameSpace。
+
+当调用clone时，设定了CLONE_NEWUTS，就会创建一个新的UTS NameSpace。一个UTS NameSpace就是一组被uname返回的标识符。新的UTS NameSpace中的标识符通过复制调用进程所属的NameSpace的标识符来初始化。Clone出来的进程可以通过相关系统调用改变这些标识符，比如调用sethostname来改变该NameSpace的hostname。这一改变对该NameSpace内的所有进程可见。CLONE_NEWUTS和CLONE_NEWNET一起使用，可以虚拟出一个有独立主机名和网络空间的环境，就跟网络上一台独立的主机一样。
+
+以上所有clone flag都可以一起使用，为进程提供了一个独立的运行环境。LXC正是通过在clone时设定这些flag，为进程创建一个有独立PID，IPC，FS，Network，UTS空间的container。一个container就是一个虚拟的运行环境，对container里的进程是透明的，它会以为自己是直接在一个系统上运行的。
+
+一个container就像传统虚拟化技术里面的一台安装了OS的虚拟机，但是开销更小，部署更为便捷。
+
+参考资料来源于：
+http://www.cnblogs.com/lisperl/archive/2012/05/03/2480316.html
+http://coolshell.cn/articles/17010.html
+http://coolshell.cn/articles/17029.html
