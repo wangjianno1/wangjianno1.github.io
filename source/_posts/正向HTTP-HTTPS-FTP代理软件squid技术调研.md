@@ -47,6 +47,12 @@ squid的配置文件为/etc/squid/squid.conf，该配置文件主要有如下几
 
 （5）其他的一些日志类的配置
 
+# squid层级配置
+
+在负责的网络环境中，我们可能要使用多个squid服务器构建一个squid集群，squid集群中可以有父子关系、兄弟关系。使用squid层级时，我们还可以定义squid A将某些流量转发给squid B，某些流量直接转发到目标服务器，或者所有流量都由squid B转发。这些主要用到squid的cache_peer、cache_peer_access、always_direct等配置指令。
+
+![](/images/squid_1_2.png)
+
 # squid的access日志格式
 
 ![](/images/squid_1_1.png)
