@@ -18,7 +18,7 @@ categories: 数据库
 
 （1）user表
 
-user表是MySQL中最重要的一个权限表，记录允许连接到服务器的账号信息，里面的权限是全局级的。user表的信息有用户列、权限列、安全列和资源控制列。 这个表示中有Host、User、Password三个字段，
+user表是MySQL中最重要的一个权限表，记录允许连接到服务器的账号信息，里面的权限是全局级的。user表的信息有用户列、权限列、安全列和资源控制列。这个表中有Host、User、Password三个字段，如下：
 
 	Host表示远程主机，即MySQL客户端的ip，表示从该Host上用指定的User和Password才可以登录数据库
 	User表示用户名
@@ -42,25 +42,25 @@ host表中存储了某个主机对某个数据库有什么操作权限。
 
 （1）直接在mysql库中user表中添加记录来创建新用户并授权
 
-```bash
+```sql
 insert into user(host, user, password, select_priv, insert_priv, update_priv) VALUES('10.12.21.23', 'wahaha', PASSWORD('guest123'), 'Y', 'Y', 'Y');
 ```
 
 （2）使用grant命令创建新用户并授权
 
-```bash
-grant all privileges on *.* to 'wahaha'@'10.12.21.23' identified by 'password';
+```sql
+grant all privileges on *.* to 'wahaha'@'10.12.21.23' identified by 'guest123';
 ```
 
 或如下授予部分权限：
 
-```bash
+```sql
 grant select, insert, update, delete, create, drop on *.* to 'wahaha'@'10.12.21.23' identified by 'guest123';
 ```
 
 （3）使用create user命令
 
-```bash
+```sql
 create user wahaha identified by 'guest123';
 ```
 
@@ -76,7 +76,7 @@ mysql安装后，root账户的密码默认是空，即不需要密码就可以�
 mysqladmin -u root password "guest123";
 ```
 
-上述命令表示将root的密码修改成guest123.
+上述命令表示将root的密码修改成guest123。
 
 （2）直接修改MySQL中系统db mysql中user表
 
@@ -93,7 +93,7 @@ mysql> exit;
 
 （3）使用set命令（这个很赞哦）
 
-```bash
+```sql
 set password for 'wahaha'@'10.12.21.23' = PASSWORD('guest123');
 ```
 
@@ -103,9 +103,9 @@ set password for 'wahaha'@'10.12.21.23' = PASSWORD('guest123');
 
 如果远程主机上client连接MySQL提示“ #1130 - Host ‘localhost’ is not allowed to connect to this MySQL server”表示不允许从当前机器上连接mysql服务器，需要使用GRANT授权，命令如下：
 
-```bash
-grant all privileges on . to 'wahaha'@'%';  #该句中的%表示允许从所有主机上用wahaha用户去连接mysql服务器
-grant all privileges on . to 'wahaha'@'10.12.21.23'; #该句表示授权从10.12.21.23主机上使用wahaha用户去连接mysql服务器
+```sql
+grant all privileges on . to 'wahaha'@'%';  --该句中的%表示允许从所有主机上用wahaha用户去连接mysql服务器
+grant all privileges on . to 'wahaha'@'10.12.21.23'; --该句表示授权从10.12.21.23主机上使用wahaha用户去连接mysql服务器
 ```
 
 备注：
