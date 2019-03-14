@@ -63,7 +63,7 @@ MySQL 5.6之前，undo表空间位于共享表空间的回滚段中，共享表�
 
 # 二进制日志（binary log）
 
-用于主从复制。在主从复制中，从库利用主库上的binlog进行重播，实现主从同步。用于数据库的基于时间点的还原。具体参见《MySQL主从复制replication原理及配置》。执行命令`show variables like 'log_bin';`可以查看二进制日志是否开启：
+用于主从复制。在主从复制中，从库利用主库上的binlog进行重播，实现主从同步。用于数据库的基于时间点的还原。具体参见[《MySQL主从复制replication原理及配置》](https://wangjianno1.github.io/2018/02/02/MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6replication%E5%8E%9F%E7%90%86%E5%8F%8A%E9%85%8D%E7%BD%AE/)。执行命令`show variables like 'log_bin';`可以查看二进制日志是否开启：
 
 ![](/images/mysql_log_1_4.png)
 
