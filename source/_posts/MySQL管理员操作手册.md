@@ -126,7 +126,7 @@ truncate table some_table;  /*删除表中所有记录*/
 
 delete和truncate语句都可以删除表中记录。delete配合where子句可以删除符合条件的记录，但是truncate只能删除表中所有的记录。delete删除记录的操作是可回滚的，而truncate删除的记录是不可以回滚的。truncate删除记录的效率要高于delete语句。delete和truncate语句都不删除表的定义，但是drop table语句会删除表的定义。
 
-如果一个表中有自增字段，使用`truncate table some_table;`和没有where子句的`delete from some_table;`删除所有记录后，这个自增字段将起始值恢复成1。如果你不想这样做的话，可以在delete语句中加上永真的where子句，如`where 1`或`where true`。
+如果一个表中有自增字段，使用`truncate table some_table`和没有where子句的`delete from some_table`删除所有记录后，这个自增字段将起始值恢复成1。如果你不想这样做的话，可以在delete语句中加上永真的where子句，如`where 1`或`where true`。
 
 （8）where子句
 
@@ -138,10 +138,10 @@ select * from some_table where id='12' and author='wahaha';
 
 （9）where子句中嵌套like子句
 
-SQL like子句中使用百分号%字符来表示任意字符，类似于UNIX或正则表达式中的星号`*`。 如果没有使用百分号%，like子句与等号=的效果是一样的。如下为查找author字段以haha为结尾的所有记录：
+SQL like子句中使用百分号`%`字符来表示任意字符，类似于UNIX或正则表达式中的星号`*`。 如果没有使用百分号`%`，like子句与等号`=`的效果是一样的。如下为查找author字段以haha为结尾的所有记录：
 
 ```sql
-select * from some_table where author like '*haha';
+select * from some_table where author like '%haha';
 ```
 
 （10）对结果集排序order by子句
