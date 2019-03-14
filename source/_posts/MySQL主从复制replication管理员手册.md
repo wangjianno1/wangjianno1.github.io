@@ -15,7 +15,7 @@ show variables like 'log_%';
 
 ```sql
 show master logs; 
-show binary logs;   #同show master logs一样的效果
+show binary logs;   --同show master logs一样的效果
 ```
 
 ![](/images/mysqlrep_2_1.png)
@@ -60,7 +60,7 @@ reset master;
 
 ```sql
 show processlist;
-show full processlist;   #加上full选项后，可以在Info字段查看完成的sql语句，否则只显示前100个字符
+show full processlist;   --加上full选项后，可以在Info字段查看完成的sql语句，否则只显示前100个字符
 ```
 
 ![](/images/mysqlrep_2_3.png)
@@ -76,16 +76,16 @@ show full processlist;   #加上full选项后，可以在Info字段查看完成�
 	state    #显示使用当前连接的sql语句的状态
 	info     #显示这个sql语句，因为长度有限，所以长的sql语句就显示不全，但是一个判断问题语句的重要依据
 
-备注：我们可以执行命令`mysqladmin processlist;`或直接查询`information_schema.processlist`表来查看同样的内容。
+备注：我们可以执行命令`mysqladmin processlist`或直接查询`information_schema.processlist`表来查看同样的内容。
 
 # 使用show binlog events命令来读取并解析binlog日志
 
 ```sql
-show binlog events\G;    #查询并解析第一个(最早)的binlog日志内容
-show binlog events in 'mysql-bin.000021'\G;    #指定查询mysql-bin.000021这个binlog文件的内容
-show binlog events in 'mysql-bin.000021' from 8224\G; #指定查询mysql-bin.000021这个binlog文件，从8224这个pos点开始查看
-show binlog events in 'mysql-bin.000021' from 8224 limit 10\G;   #指定查询mysql-bin.000021这个binlog文件，从8224这个pos点开始查起，查询10条
-show binlog events in 'mysql-bin.000021' from 8224 limit 2,10\G;    #指定查询mysql-bin.000021这个binlog文件，从8224这个pos点开始查起，偏移2行，查询10条
+show binlog events\G;    --查询并解析第一个(最早)的binlog日志内容
+show binlog events in 'mysql-bin.000021'\G;    --指定查询mysql-bin.000021这个binlog文件的内容
+show binlog events in 'mysql-bin.000021' from 8224\G; --指定查询mysql-bin.000021这个binlog文件，从8224这个pos点开始查看
+show binlog events in 'mysql-bin.000021' from 8224 limit 10\G;   --指定查询mysql-bin.000021这个binlog文件，从8224这个pos点开始查起，查询10条
+show binlog events in 'mysql-bin.000021' from 8224 limit 2,10\G;    --指定查询mysql-bin.000021这个binlog文件，从8224这个pos点开始查起，偏移2行，查询10条
 ```
 
 举例来说，
@@ -96,7 +96,7 @@ Pos:204,End_log_pos:365表示，该event是记录在mysql-bin.000001文件的第
 
 # 使用mysqlbinlog /path/to/mysql-binlog-file工具来读取并解析binlog日志
 
-```sql
+```bash
 mysqlbinlog /var/lib/mysql/mysql-bin.000001
 ```
 
@@ -135,17 +135,17 @@ show slave status\G;
 另外，对于MySQL 5.7+及MariaDB来说，它们支持“多源复制”，也即是“多主库对应一个从库”的复制结构，那么对于slave库来说，同时会从多个主库上复制数据，也即有多个Slave IO线程和SQL线程，那么直接执行`show slave status`会返回为空，此时可以执行如下命令来查看slave的同步状态：
 
 ```sql
-show all slaves status \G;      #查看所有slave的复制状态，也是在Slave节点上执行
-show slave 'xx_db' status \G;   #仅查看某一个slave的复制状态，也是在Slave节点上执行
+show all slaves status \G;      --查看所有slave的复制状态，也是在Slave节点上执行
+show slave 'xx_db' status \G;   --仅查看某一个slave的复制状态，也是在Slave节点上执行
 ```
 
 # 关闭或启动slave IO线程或SQL线程
 
 ```sql
-start slave;          #启动slave
-stop slave;           #停止slave
-start slave 'xx_db';  #对于mysql 5.7+及MariaDB来说，支持“多源复制”，可以启动指定Connection_name的slave
-stop slave 'xx_db';   #对于mysql 5.7+及MariaDB来说，支持“多源复制”，可以停止指定Connection_name的slave
+start slave;          --启动slave
+stop slave;           --停止slave
+start slave 'xx_db';  --对于mysql 5.7+及MariaDB来说，支持“多源复制”，可以启动指定Connection_name的slave
+stop slave 'xx_db';   --对于mysql 5.7+及MariaDB来说，支持“多源复制”，可以停止指定Connection_name的slave
 ```
 
 # 删除主从配置的设置
@@ -153,17 +153,17 @@ stop slave 'xx_db';   #对于mysql 5.7+及MariaDB来说，支持“多源复制�
 我们使用`change master to`命令来配置主从同步关系，假设我们不仅想停止主从同步，而且想删除这种主从同步的关系。可以使用如下的操作的方法：
 
 ```sql
-stop slave;       #停掉slave的同步
-reset slave all;  #删除主从同步的配置，然后执行show slave status;将看不到这个同步任务
+stop slave;       --停掉slave的同步
+reset slave all;  --删除主从同步的配置，然后执行show slave status将看不到这个同步任务
 ```
 
-备注：如果使用`reset slave`仅仅会重置主动同步的状态，并没有删除主从同步的配置哦。
+备注：如果使用`reset slave`仅仅会重置主从同步的状态，并没有删除主从同步的配置。而`reset slave all`则会删除主从同步配置。
 
 对于在MySQL 5.7+及MariaDB来说，支持“多源复制”，我们想停掉某一个slave的方式如下：
 
 ```sql
 stop slave 'xx_db';
-reset slave all 'xx_db';   #如果是MariaDB，需要执行reset slave 'xx_db' all命令哦
+reset slave all 'xx_db';   --如果是MariaDB，需要执行reset slave 'xx_db' all命令哦
 ```
 
 # 其他闲杂知识
