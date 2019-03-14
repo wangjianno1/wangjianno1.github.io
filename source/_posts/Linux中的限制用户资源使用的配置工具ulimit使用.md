@@ -59,19 +59,22 @@ ulimit -f 2048        #限制进程可以创建的最大文件大小为2048block
 
 备注：当然，退出终端，会话结束，bash退出，ulimit设定的限制也就不存在了。
 
-（2）修改系统的/etc/security/limits.conf和/etc/security/limits.d/*配置文件
+（2）修改系统的`/etc/security/limits.conf`和`/etc/security/limits.d/*`配置文件
 
-/etc/security/limits和/etc/security/limits.d/*文件是linux PAM（插入式认证模块，Pluggable Authentication Modules）中pam_limits.so的配置文件。pam_limits.so先加载/etc/security/limits.conf，如果/etc/security/limits.d/目录下还有配置文件的话，也会被加载一起分析。这就意味/etc/security/limits.d/里面的文件里面的配置会覆盖/etc/security/limits.conf的配置。通过修改/etc/security/limits.conf和/etc/security/limits.d/*文件不仅能限制指定用户的资源使用，还能限制指定组的资源使用。该文件的每一行都是对限定的一个描述，格式如下：
+`/etc/security/limits`和`/etc/security/limits.d/*`文件是linux PAM（插入式认证模块，Pluggable Authentication Modules）中pam_limits.so的配置文件。pam_limits.so先加载`/etc/security/limits.conf`，如果`/etc/security/limits.d/`目录下还有配置文件的话，也会被加载一起分析。这就意味`/etc/security/limits.d/`里面的文件里面的配置会覆盖`/etc/security/limits.conf`的配置。通过修改`/etc/security/limits.conf`和`/etc/security/limits.d/*`文件不仅能限制指定用户的资源使用，还能限制指定组的资源使用。该文件的每一行都是对限定的一个描述，格式如下：
  
 	<domain> <type> <item> <value>
 
-其中domain表示用户或者组的名字，还可以使用*作为通配符。type可以有两个值，soft和hard。item则表示需要限定的资源，可以有很多候选值，如stack，cpu，nofile等等，分别表示最大的堆栈大小，占用的cpu时间，以及打开的文件数。通过添加对应的一行描述，则可以产生相应的限制。例如：
+其中domain表示用户或者组的名字，还可以使用`*`作为通配符。type可以有两个值，soft和hard。item则表示需要限定的资源，可以有很多候选值，如stack，cpu，nofile等等，分别表示最大的堆栈大小，占用的cpu时间，以及打开的文件数。通过添加对应的一行描述，则可以产生相应的限制。例如：
 
 	* hard noflle 100       #该行配置语句限定了任意用户所能创建的最大文件数是100
 	apache hard noflle 100  #限定了apache用户所能创建的最大文件数是100
 
-备注：有时我们对整个系统的资源使用做一个总的限制，这时候可能需要修改/proc下的配置文件，例如/proc/sys/kernel/pid_max，/proc/sys/net/ipv4/ip_local_port_range 等等。因此，这也是在Linux平台上的一种资源限制方式。
+备注：修改了/etc/security/limits.conf配置文件后，配置会直接生效，不用重启系统哦。
 
+# ulimit与sysctl
+
+使用ulimit只是对某个用户或用户组所使用系统资源进行限制。有时候，我们需要对整个系统或内核上的进行资源限制，这时我们可以选择借助systrl工具修改内核参数来达到这个目的，举例来说，内核参数`fs.file-max`代表系统范围内所有进程可打开的文件句柄的数量限制，内核参数`fs.nr_open`表示单个进程打开文件句柄数上限。
 
 学习资料参考于：
 https://www.ibm.com/developerworks/cn/linux/l-cn-ulimit/
