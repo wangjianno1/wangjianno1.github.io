@@ -1,5 +1,5 @@
 ---
-title: Linux运行时动态调整内核参数工具sysctl工具
+title: Linux运行时动态调整内核参数工具sysctl小结
 date: 2019-03-14 12:19:01
 tags:
 categories: Linux
@@ -39,6 +39,7 @@ sysctl -a                           #查看所有可读变量
 sysctl kernel.hostname              #查看指定变量的设置，输出为key=value形式
 sysctl -n kernel.hostname           #查看指定变量的设置，只输出变量的值
 sysctl -w kernel.hostname=testhost  #修改的是内存中的主机名
+sysctl -p                           #将sysctl.conf中的内核参数配置信息加载并应用到系统上
 ```
 
 学习资料来源于：
