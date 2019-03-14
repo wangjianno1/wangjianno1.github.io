@@ -17,7 +17,7 @@ MySQL索引的建立对于mysql的高效运行是很重要的，索引可以大�
 
 （1）创建普通索引
 
-```bash
+```sql
 create index index_name on some_table(column_name);
 alter table some_table add index index_name(column_name);
 create table some_table (
@@ -31,7 +31,7 @@ create table some_table (
 
 与普通索引类似，不同的是，索引列的值必须唯一，但允许有空值。如果是组合索引，则列值的组合必须唯一。
 
-```bash
+```sql
 create unique index index_name on some_table(column_name);
 alter table some_table add unique index index_name(column_name);
 create table some_table (
@@ -43,16 +43,15 @@ create table some_table (
 
 （3）删除索引
 
-```bash
+```sql
 drop index some_index on some_table;
 ```
 
 （4）查看指定数据库表上的所有索引
 
-```bash
+```sql
 show index from some_table;
 ```
-
 
 学习资料参考于：
 http://www.runoob.com/mysql/mysql-index.html

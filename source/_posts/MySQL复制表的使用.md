@@ -15,7 +15,7 @@ categories: 数据库
 
 （1）复制表的结构
 
-执行`show create table websites \G`;可以查看已有表的创建命令，如下：
+执行`show create table websites \G`可以查看已有表的创建命令，如下：
 
 ![](/images/mysqlreptable_1_1.png)
 

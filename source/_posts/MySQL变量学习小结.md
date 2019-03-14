@@ -43,30 +43,30 @@ categories: 数据库
 
 （1）查看一个全局变量的值
 
-```bash
+```sql
 select @@global.sort_buffer_size;
 show global variables like 'sort_buffer_size';
 ```
 
 （2）查看一个session变量的值
 
-```bash
+```sql
 select @@sort_buffer_size;
 select @@session.sort_buffer_size;
 show session variables like 'sort_buffer_size';
-show variables like 'sort_buffer_size';    #show variables缺省显示的是session变量
+show variables like 'sort_buffer_size';    --show variables缺省显示的是session变量
 ```
 
 （3）设置一个全局变量的值
 
-```bash
+```sql
 set global sort_buffer_size=value;
 set @@global.sort_buffer_size=value;
 ```
 
 （4）设置一个session变量的值
 
-```bash
+```sql
 set session sort_buffer_size=value;
 set @@session.sort_buffer_size=value;
 set sort_buffer_size=value;
@@ -74,12 +74,11 @@ set sort_buffer_size=value;
 
 # MySQL变量操作命令举例
 
-```bash
+```sql
 show variables like '%isolation%';
 show session variables like '%isolation%';
 show global variables like '%isolation%';
 ```
-
 
 学习资料参考于：
 http://blog.csdn.net/leshami/article/details/39585253

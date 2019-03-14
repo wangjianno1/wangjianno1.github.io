@@ -17,7 +17,7 @@ mysql的配置文件有：
 
 或
 
-	{mysql安装目录}/etc/my.cnf
+	${mysql安装目录}/etc/my.cnf
 
 在.cnf配置文件中，分为几个配置组，例如[client]， [mysqld]，[mysqld_safe]等等，分别的作用如下：
 

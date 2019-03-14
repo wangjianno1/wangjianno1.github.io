@@ -13,7 +13,7 @@ MySQL临时表在需要保存一些临时数据时是非常有用的。临时表
 
 （1）创建临时表
 
-```bash
+```sql
 create temporary table some_table (
   product_name VARCHAR(50) NOT NULL,
   total_sales DECIMAL(12,2) NOT NULL DEFAULT 0.00,
@@ -24,13 +24,13 @@ create temporary table some_table (
 
 （2）往临时表中插入数据
 
-```bash
+```sql
 insert info some_table (product_name, total_sales, avg_unit_price, total_units_sold) values ('cucumber', 100.25, 90, 2);
 ```
 
 （3）从临时表中查询数据
 
-```bash
+```sql
 select * from some_table;
 ```
 
