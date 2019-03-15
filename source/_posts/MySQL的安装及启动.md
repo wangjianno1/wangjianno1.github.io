@@ -18,7 +18,7 @@ categories: 数据库
 
 （1）下载RPM格式的源码包
 
-下载地址为：https://dev.mysql.com/get/Downloads/MySQL-5.6/MySQL-5.6.35-1.rhel5.src.rpm
+下载地址为：[MySQL-5.6](https://dev.mysql.com/get/Downloads/MySQL-5.6/MySQL-5.6.35-1.rhel5.src.rpm)
 
 （2）解压源码包
 
@@ -26,7 +26,7 @@ categories: 数据库
 
 （3）安装cmake工具
 
-到http://www.cmake.org 官网上下载cmake工具，然后使用`./configure && make && make install`安装到系统中
+到`http://www.cmake.org`官网上下载cmake工具，然后使用`./configure && make && make install`安装到系统中
 
 （4）生成MySQL的makefile文件
 
@@ -85,7 +85,7 @@ a）直接启动方式
 
 值得注意的是，刚安装的MySQL数据库的超级账号root是没有密码的，因此可以直接使用`./bin/mysql -h127.0.0.1 -uroot`来登录。如果需要从远程主机上登录，则需要授权后才可以。
 
-# yum安装
+# YUM安装
 
 （1）安装
 
@@ -95,4 +95,4 @@ a）直接启动方式
 
 直接执行命令`/etc/init.d/mysqld start`或`service mysqld start`即可。
 
-备注：`yum install mysql-server`不仅会安装mysql服务器，而且会安装mysql客户端等工具。若只想安装mysql客户端而已，可以执行`yum install mysql`命令即可。另外，在centos7之后，在yum源里面就没有mysql的资源了，可以使用mariadb来代替，即执行`yum install mariadb-server mariadb`即可。
+备注：`yum install mysql-server`不仅会安装mysql服务器，而且会安装mysql客户端等工具。若只想安装mysql客户端而已，可以执行`yum install mysql`命令即可。另外，在centos7之后，在yum源里面就没有mysql的资源了，可以使用mariadb来代替，即执行`yum install mariadb-server mariadb`即可。若确实需要在centos7之后版本上安装MySQL，可以改变系统的YUM源（包含了MySQL的）就可以啦。
