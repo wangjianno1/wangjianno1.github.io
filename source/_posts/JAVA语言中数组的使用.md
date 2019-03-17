@@ -28,7 +28,8 @@ arrayRefVar = new dataType[arraySize];
 ```java
 dataType[] arrayRefVar = new dataType[arraySize];
 dataType arrayRefVar[] = new dataType[arraySize];
-dataType arrayRefVar[] = {value0, value1, ..., valuek};
+dataType arrayRefVar[] = { value0, value1, ..., valuek };
+dataType arrayRefVar[] = new dataType[] { value0, value1, ..., valuek };
 ```
 
 # 举例来说
@@ -37,8 +38,10 @@ dataType arrayRefVar[] = {value0, value1, ..., valuek};
 int size = 10;
 
 // 定义数组
-double[] myList = new double[size];
-myList[0] = 5.6;
-myList[1] = 4.5;
-myList[2] = 3.3;
+double[] myArr = new double[size];
+myArr[0] = 5.6;
+myArr[1] = 4.5;
+myArr[2] = 3.3;
+
+myArr.length;  // 获取数组的长度
 ```
