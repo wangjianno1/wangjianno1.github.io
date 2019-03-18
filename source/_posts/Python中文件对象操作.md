@@ -11,7 +11,7 @@ Python中的文件对象提供了三种读取方法，即read/readline/readlines
 
 # read函数
 
-read方法一次读取整个文件，返回值是字符串。举例来说：
+read()方法不带参数时，一次将整个文件读取到内存中，返回值是字符串。当read()方法带参数时，一次只会读取参数指定的字节数。举例来说：
 
 ```python
 #read不带参数，表示一下读取文件中所有内容，返回字符串
@@ -29,7 +29,7 @@ print out_2
 
 # readline函数
 
-readline方法一次读取文件对象中的一行内容，返回值是字符串。可以配合for循环使用，每一次循环，读取一行内容。适用于文件比较大，内存比较小，不能一次将整个文件读入内存的情况，使用readline就比较好。
+readline()方法一次读取文件对象中的一行内容，返回值是字符串。可以配合for循环使用，每一次循环，读取一行内容。适用于文件比较大，内存比较小，不能一次将整个文件读入内存的情况，使用readline就比较好。
 
 ```python
 file_obj = open('data.txt')
@@ -42,7 +42,7 @@ file_obj.close()
 
 # readlines函数
 
-readlines方法一度读取整个文件，返回值是列表list。返回值是list，当然可以使用for循环啦。
+readlines()方法一次将整个文件读取到内存中，返回值是列表list，文件中每一行对应列表list中的一个元素。因返回值是list，可以使用for循环遍历内容啦。
 
 ```python
 file_obj = open('data.txt')
