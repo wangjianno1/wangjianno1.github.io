@@ -53,5 +53,12 @@ drop index some_index on some_table;
 show index from some_table;
 ```
 
+# 聚集索引与非聚集索引
+
+聚集索引是指数据库表行中数据的物理存储顺序与键值的逻辑（索引）顺序相同。一个表只能有一个聚集索引，因为一个表的物理顺序只有一种情况，所以，对应的聚集索引只能有一个。如果某索引不是聚集索引，则表中的行物理顺序与索引顺序不匹配，与非聚集索引相比，聚集索引有着更快的检索速度。
+
+InnoDB支持聚集索引，而MyISAM不支持聚集索引。MySQL数据表中的自增id字段上就是聚集索引哦。
+
 学习资料参考于：
 http://www.runoob.com/mysql/mysql-index.html
+https://mp.weixin.qq.com/s/tvfieCo_W_pLQwpLofwT9A
