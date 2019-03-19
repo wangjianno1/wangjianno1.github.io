@@ -23,7 +23,7 @@ salt-minion是SaltStack需要管理的客户端安装组件，会主动去连接
 
 # salt-master和salt-minion的安装
 
-下面以Centos6为例来说明：
+下面以CentOS6为例来说明：
 
 （1）安装EPEL YUM源
 
@@ -38,7 +38,7 @@ yum -y install salt-master
 service salt-master start
 ```
 
-备注：salt-master启动之后会监听两个端口，一个是ret_port，该端口负责接收来自salt-minion发送过来的结果，默认4506端口；另一个是publish_port，该端口是saltstack的消息发布系统，默认4505端口。当salt-minion启动时会自动连接到配置文件中定义的master地址ret_port端口进行连接认证。
+备注：salt-master启动之后会监听两个端口，一个是ret_port，该端口负责接收来自salt-minion发送过来的结果，默认4506端口；另一个是publish_port，该端口是saltstack的消息发布系统，默认4505端口。
 
 （3）安装并启动salt客户端salt-minion
 
@@ -49,7 +49,9 @@ echo 10.252.137.141 > /etc/salt/minion_id   #个人习惯使用IP，默认主机
 service salt-minion start
 ```
 
-备注：salt-master和salt-minion最好是同一个yum仓库源，不然会出现奇怪的问题啦。
+当salt-minion启动时会自动连接到配置文件中定义的master地址ret_port端口进行连接认证。
+
+备注：salt-master和salt-minion最好是同一个YUM仓库源，不然会出现奇怪的问题啦。
 
 # salt-master/salt-minion的配置文件
 
@@ -68,7 +70,7 @@ salt-master/salt-minion的配置文件都在/etc/salt/目录中。
 
 # salt-master和salt-minion间认证
 
-salt-minion在第一次启动时，会在/etc/salt/pki/minion/（该路径在/etc/salt/minion里面设置）下自动生成minion.pem（private key）和 minion.pub（public key），然后将minion.pub发送给salt-master。salt-master在接收到salt-minion的public key后，通过salt-key命令accept salt-minion public key，这样在salt-master的/etc/salt/pki/master/minions下的将会存放以minion id命名的public key，然后salt-master就能对salt-minion发送指令了。即salt-master使用salt-minion的private key来加密指令发送给salt-minion来实现安全通信的。
+salt-minion在第一次启动时，会在/etc/salt/pki/minion/（该路径在/etc/salt/minion里面设置）下自动生成minion.pem（private key）和 minion.pub（public key），然后将minion.pub发送给salt-master。salt-master在接收到salt-minion的public key后，通过salt-key命令accept salt-minion public key，这样在salt-master的/etc/salt/pki/master/minions下的将会存放以minion id命名的public key，然后salt-master就能对salt-minion发送指令了。即salt-master使用salt-minion的public key来加密指令发送给salt-minion来实现安全通信的。
 
 在salt-master端关于认证相关的命令有：
 
