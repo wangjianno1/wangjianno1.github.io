@@ -121,9 +121,7 @@ SaltStack有很多的执行模块，一部分的模块列表如下：
 
 # salt-master/salt-minion运行日志
 
-salt-master的运行日志在/var/log/salt/master；
-
-salt-minion的运行日志在/var/log/salt/minion。
+salt-master的运行日志在`/var/log/salt/master`；salt-minion的运行日志在`/var/log/salt/minion`。
 
 # salt-master端的一些常用工具命令
 
@@ -150,7 +148,7 @@ salt-key -A -y   #同意接收所有没有接收的salt-minion公钥
 
 # SaltStack与Ansible的比较
 
-Ansible、SaltStack都是基于python开发的，Ansible基于ssh协议传输数据，SaltStack使用消息队列zeroMQ传输数据。从网上数据来看，SaltStack比ansible快大约40倍。对比Ansible，SaltStack缺点是需要安装客户端。为了速度建议选择SaltStack。
+Ansible、SaltStack都是基于Python开发的，Ansible基于SSH协议传输数据，SaltStack使用消息队列ZeroMQ传输数据。从网上数据来看，SaltStack比Ansible快大约40倍。对比Ansible，SaltStack缺点是需要安装客户端。为了速度建议选择SaltStack。
 
 学习资料参考于：
 https://www.ibm.com/developerworks/cn/opensource/os-devops-saltstack-in-cloud/index.html
