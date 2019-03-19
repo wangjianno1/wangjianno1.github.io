@@ -7,9 +7,9 @@ categories: SaltStack
 
 # SaltStack State机制简介
 
-state，中文为状态，可以简单理解为，我们希望salt-minion要达到什么样的状态，比如说装什么软件、配置成什么样、服务是该运行还是该停止等等状态。我们定义了state，然后让salt-minions去执行，则我们的salt-minion就会成为我们在state中定义的那个状态了。
+state，中文为状态，可以简单理解为，我们希望salt-minion要达到什么样的状态，比如说装什么软件、配置成什么样、服务是该运行还是该停止等等。我们定义了state，然后让所有的salt-minion去执行，则我们的salt-minion就会成为我们在state中定义的那个状态了。
 
-简单来说，salt-master指导salt-minion干活，无外乎两种方式。一种是通过远程执行命令，另外一种方式就是saltstack state了。saltstack state可以理解为按照一定的逻辑把命令组织成脚本，就像linux里面的shell脚本一样。显而易见，有组织有纪律的state干起活来肯定比远程执行一个命令要高效得多。
+简单来说，salt-master指导salt-minion干活，无外乎两种方式。一种是通过远程执行命令，另外一种方式就是saltstack state了。saltstack state可以理解为按照一定的逻辑把命令组织成脚本，就像Linux里面的shell脚本一样。显而易见，有组织有纪律的state干起活来肯定比远程执行一个命令要高效得多。
 
 # `*.sls`文件
 

@@ -13,7 +13,7 @@ Grains是SaltStack组件中非常重要的组件之一，因为我们在做配�
 
 # Grains组件的使用
 
-Grains信息时需要在salt-minion端来配置，既可以在主配置文件/etc/salt/minion中配置，也可以在/etc/salt/grains中配置。下面分别举例来说明：
+Grains信息是需要在salt-minion端来配置，既可以在主配置文件/etc/salt/minion中配置，也可以在/etc/salt/grains中配置。下面分别举例来说明：
 
 （1）在/etc/salt/minion中配置Grains信息
 
@@ -42,4 +42,4 @@ password:
 
 需要注意的是，/etc/salt/grains不需要grains这个最上层的key。若/etc/salt/minion和/etc/salt/grains存在相同的Grains Key，则只会生效/etc/salt/minion中的信息。
 
-通过上面的配置，就可以在salt-master端通过`salt 'minion_id' grains.items`来查看指定salt-minion的Grains信息。另外，可以通过Grains定义的属性来识别满足条件的机器，如`salt -G roles:webserver cmd.run 'hostname'`在所有的Grains role为nginx的机器上执行hostname命令。若salt-minion上Grains信息变更了，需要在salt-master执行`salt '*' saltutil.refresh_modules`使之生效。
+通过上面的配置，就可以在salt-master端通过`salt 'minion_id' grains.items`来查看指定salt-minion的Grains信息。另外，可以通过Grains定义的属性来识别满足条件的机器，如`salt -G roles:webserver cmd.run 'hostname'`在所有的Grains role为webserver的机器上执行hostname命令。若salt-minion上Grains信息变更了，需要在salt-master执行`salt '*' saltutil.refresh_modules`使之生效。
