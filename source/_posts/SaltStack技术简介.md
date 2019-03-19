@@ -150,5 +150,7 @@ salt-key -A -y   #同意接收所有没有接收的salt-minion公钥
 
 Ansible、SaltStack都是基于Python开发的，Ansible基于SSH协议传输数据，SaltStack使用消息队列ZeroMQ传输数据。从网上数据来看，SaltStack比Ansible快大约40倍。对比Ansible，SaltStack缺点是需要安装客户端。为了速度建议选择SaltStack。
 
+网络上有人测试过SaltStack与Ansible的性能数据。测试场景是对1000台服务器执行相同的操作所消耗的时间，基于SSH协议的Ansible耗时85s左右，基于ZeroMQ的SaltStack耗时2s左右。
+
 学习资料参考于：
 https://www.ibm.com/developerworks/cn/opensource/os-devops-saltstack-in-cloud/index.html
