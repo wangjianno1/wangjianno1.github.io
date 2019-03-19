@@ -13,11 +13,13 @@ puppet、chef、ansible以及saltstack都是同类性质的工具平台。
 
 # SaltStack架构
 
-在SaltsStack架构中服务端叫作Master，客户端叫作Minion，都是以守护进程的模式运行。一直监听配置文件中定义的ret_port（saltstack客户端与服务端通信的端口，负责接收客户端发送过来的结果，默认4506端口）和publish_port（saltstack的消息发布系统，默认4505端口）的端口。salt-minion在启动时，会自动生成一套密钥，包含私钥和公钥。之后将公钥发送给服务器端，服务器端验证并接受公钥，以此来建立可靠且加密的通信连接，同时通过消息队列ZeroMQ在客户端与服务端之间建立消息发布连接。
+在SaltsStack架构中服务端叫作Master，客户端叫作Minion，都是以守护进程的模式运行。salt-master一直监听配置文件中定义的ret_port（saltstack客户端与服务端通信的端口，负责接收客户端发送过来的结果，默认4506端口）和publish_port（saltstack的消息发布系统，默认4505端口）的端口。salt-minion在启动时，会自动生成一套密钥，包含私钥和公钥。之后将公钥发送给服务器端，服务器端验证并接受公钥，以此来建立可靠且加密的通信连接，同时通过消息队列ZeroMQ在客户端与服务端之间建立消息发布连接。
 
 ![](/images/saltstack_1_1.png)
 
 salt-minion是SaltStack需要管理的客户端安装组件，会主动去连接salt-master端，并从salt-master端得到资源状态信息，同步资源管理信息。salt-master作为控制中心运行在主机服务器上，负责salt命令运行和资源状态的管理。ZeroMQ是一款开源的消息队列软件，用于在salt-minion端与salt-master端建立系统通信桥梁。
+
+需要注意的是，ZeroMQ并非RocketMQ这样的消息队列。ZeroMQ仅仅就是一个消息队列库，有点像socket一样的东西，但比socket要高级。
 
 # salt-master和salt-minion的安装
 
