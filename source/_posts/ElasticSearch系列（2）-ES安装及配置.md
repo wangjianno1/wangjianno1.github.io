@@ -11,7 +11,7 @@ categories: ELKStack
 
 （1）安装Java JDK并配置CLASSPATH,PATH,JAVA_HOME环境变量
 
-（2）到ES官网https://www.elastic.co/downloads/elasticsearch上下载ES的zip包，解压即可。
+（2）到ES官网`https://www.elastic.co/downloads/elasticsearch`上下载ES的zip包，解压即可。
 
 （3）启动
 
@@ -19,11 +19,11 @@ categories: ELKStack
 
 （4）测试
 
-在浏览器中输入http://x.x.x.x:9200，即可看到：
+在浏览器中输入`http://x.x.x.x:9200`，即可看到：
 
 ![](/images/elasticsearch_2_1.png)
 
-备注：如果在远程主机上访问http://x.x.x.x:9200，需要在${ES_HOME}/config/elasticsearch.yml中将network.host的配置打开，且将后面ip修改为0.0.0.0
+备注：如果在远程主机上访问`http://x.x.x.x:9200`，需要在${ES_HOME}/config/elasticsearch.yml中将network.host的配置打开，且将后面ip修改为0.0.0.0
 
 # ElasticSearch的常见配置项
 
@@ -122,7 +122,7 @@ chown -R elasticsearch:elasticsearch ~/prod/elasticsearch-2.4.0
 su elasticsearch && ./bin/elasticsearch    #加上-d，将在后台启动
 ```
 
-（2）无法使用http://192.168.65.239:9200/来测试，需要修改config/elasticsearch.yml中network.host: 192.168.0.1，改成network.host: 0.0.0.0
+（2）无法使用`http://192.168.65.239:9200/`来测试，需要修改config/elasticsearch.yml中network.host: 192.168.0.1，改成network.host: 0.0.0.0
 
 （3）出现failed to resolve local host, fallback to loopback错误，因为hostname没有在/etc/hosts中，需要将机器名追加到/etc/hosts中127.0.0.1这一行的后面
 

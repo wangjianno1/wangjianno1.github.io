@@ -41,8 +41,8 @@ ElasticSearch不仅仅是Lucene，并且也不仅仅只是一个全文搜索引�
 
 和关系型数据库对比一下概念：
 
-	Relational DB -> Databases -> Tables -> Rows      -> Columns
-	ElasticSearch -> Indices   -> Types  -> Documents -> Fields
+	Relational DB :: Databases -> Tables -> Rows      -> Columns
+	ElasticSearch :: Indices   -> Types  -> Documents -> Fields
 
 ![](/images/elasticsearch_1_2.png)
 
@@ -226,4 +226,4 @@ node.ingest为true，缺省即为true，它能够在索引之前预处理文档�
 
 （5）Tribe node（部落节点）
 
-通过tribe.*配置，是一种特殊类型的协调节点，它连接多个集群，接受同事对多个集群的查询和操作。
+通过`tribe.*`配置，是一种特殊类型的协调节点，它连接多个集群，接受同事对多个集群的查询和操作。
