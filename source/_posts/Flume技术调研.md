@@ -57,7 +57,7 @@ Flume具有如下的特性：
 
 （1）Flume下载和安装
 
-在https://flume.apache.org/download.html中下载apache flume二进制版本，解压到目标目录即可。
+在`https://flume.apache.org/download.html`中下载Apache Flume二进制版本，解压到目标目录即可。
 
 （2）Flume配置
 
@@ -132,11 +132,10 @@ Flume中拦截器的作用就是对于event中header的部分可以按需塞入�
 
 （1）flume source文件正则的使用
 
-在flume1.7.0的TAILDIR Source中通过正则来匹配数据源文件，例如`agent.sources.r2.filegroups.f1  =  /root/prod/test-env/input-data/messages(.*)?`，如果修改文件的文件名，flume也认为是一个新文件，从而导致数据被重复搜集的问题。有blog反馈这个问题是bug，如https://kknews.cc/other/enx3mk4.html，需要注意下这个问题
+在flume1.7.0的TAILDIR Source中通过正则来匹配数据源文件，例如`agent.sources.r2.filegroups.f1  =  /root/prod/test-env/input-data/messages(.*)?`，如果修改文件的文件名，flume也认为是一个新文件，从而导致数据被重复搜集的问题。有blog反馈这个问题是bug，如`https://kknews.cc/other/enx3mk4.html`，需要注意下这个问题。
 
-（2）当我们使用`agent.sources.r2.filegroups.f1  =  /root/prod/test-env/input-data/messages`的绝对路径来匹配文件时，无论我们使用move+touch，或者copy+置空的方式来切割日志文件，flume都能正常收集messages文件中日志内容。
+（2）当我们使用`agent.sources.r2.filegroups.f1  =  /root/prod/test-env/input-data/messages`的绝对路径来匹配文件时，无论我们使用`move+touch`，或者`copy+置空`的方式来切割日志文件，flume都能正常收集messages文件中日志内容。
 
 # Flume自定义Interceptor的开发
 
 待补充
-
