@@ -44,3 +44,5 @@ salt-minion向salt-master发送了公钥，并请求salt-master进行认证。
 （2）`salt/minion/*/start`
 
 某台salt-minion启动了，如salt/minion/6000006049/start代表了minion id为6000006049的salt-minion启动了。
+
+备注：我们可以定义自定义Event事件哦，这个非常有用。如在salt-minion执行命令`salt-call event.send /my/test/event '{"data": "my event test"}'`，即发出了一个`/my/test/event`的自定义Event事件。

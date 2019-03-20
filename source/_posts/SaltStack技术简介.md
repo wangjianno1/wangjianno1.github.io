@@ -76,7 +76,7 @@ salt-minion在第一次启动时，会在/etc/salt/pki/minion/（该路径在/et
 
 ```bash
 salt-key -L     #查看salt-master当前公钥认证情况
-salt-key -A -y  #同意接收所有没有接收的salt-minion公钥
+salt-key -A -y  #同意接受所有没有接受的salt-minion公钥
 ```
 
 # salt-master执行命令
