@@ -144,7 +144,9 @@ salt-key -A -y   #同意接收所有没有接收的salt-minion公钥
 
 # salt-minion端的一些常用工具命令
 
-待补充
+（1）salt-call
+
+用于在salt-minion上执行一个模块函数，如`salt-call event.send *`产生一个事件Event。
 
 # SaltStack与Ansible的比较
 
