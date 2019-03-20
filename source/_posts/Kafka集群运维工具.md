@@ -51,7 +51,7 @@ rpm -ivh sbt-0.13.15.rpm
 
 B）下载kafka-manager源文件，并解压
 
-在Github地址：https://github.com/yahoo/kafka-manager上下载项目源码，假设为kafka-manager-master.zip，解压缩并将目录重命名为kafka-manager。
+在Github地址：`https://github.com/yahoo/kafka-manager`上下载项目源码，假设为kafka-manager-master.zip，解压缩并将目录重命名为kafka-manager。
 
 C）使用sbt构建kafka-manager源文件
 

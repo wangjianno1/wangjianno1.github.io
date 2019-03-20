@@ -92,7 +92,7 @@ echo stat | nc 192.168.65.239 2182
 
 （1）下载zookeeper二进制安装文件
 
-在http://zookeeper.apache.org/releases.html页面下载zookeeper稳定的版本（本次部署测试用的是zookeeper-3.4.10）。解压之后，可以将目录名称命名为zookeeper-node-1
+在`http://zookeeper.apache.org/releases.html`页面下载zookeeper稳定的版本（本次部署测试用的是zookeeper-3.4.10）。解压之后，可以将目录名称命名为zookeeper-node-1
 
 （2）配置zookeeper zookeeper-node-1
 
@@ -234,8 +234,9 @@ zookeeper支持像conf/stat这样四个字母左右组成的命令，我们称�
 还有其他的一些4字命令，不一一列出来。
 
 # JMX
-jconsole
-jps
+
+    jconsole
+    jps
 
 # zookeeper监控平台的搭建和使用
 
@@ -247,12 +248,12 @@ netflix公司开发的，可以通过exhibitor来管理zookeeper集群，例如�
 
 用来监控zookeeper节点所在服务器的CPU/MEM/NET等信息
 
-（3）ambari 监控zookeeper
+（3）ambari监控zookeeper
 
 # zookeeper集群的最佳实践
 
 （1）一个具有3个节点的zookeeper集群可以支持12-13w QPS的压力
 
-（2）zookeeper集群中，如果有超过一半节点是正常的，那么整个zookeeper集群就可以对外提供服务。否则集群停止对外服务。所以zookeeper集群最好使用奇数个节点，比如3,5,7个节点。比如一个集群有4个节点，因为超过半数才正常，所有该集群也只允许一个节点挂掉。
+（2）zookeeper集群中，如果有超过一半节点是正常的，那么整个zookeeper集群就可以对外提供服务。否则集群停止对外服务。所以zookeeper集群最好使用奇数个节点，比如3，5，7个节点。比如一个集群有4个节点，因为超过半数才正常，所有该集群也只允许一个节点挂掉。
 
 （3）使用jps命令可以查看zookeeper的进程名，进程名为QuorumPeerMain
