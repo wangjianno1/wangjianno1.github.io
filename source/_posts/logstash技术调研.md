@@ -90,7 +90,7 @@ logstash有四类插件，如下
 	filters —— 过滤的插件
 	outputs —— 输出的插件
 
-可以在https://github.com/logstash-plugins查看一些logstash的插件
+可以在`https://github.com/logstash-plugins`查看一些logstash的插件
 
 # logstash各种插件的使用
 
@@ -100,7 +100,7 @@ grok用于将任意的文本进行结构化处理。grok是目前logstash中将�
 
 其中SANTAX是用于匹配目标文本的模式的名称，SEMANTIC是我们用来自定义这个被匹配文本的字段名称。例如，%{IP:client_ip}就能够匹配IP地址，并将该字段命名为client_ip.
 
-grok有120多种默认的模式，可以到https://github.com/logstash-plugins/logstash-patterns-core/tree/master/patterns上查看。当然了我们也可以自定义自己的模式，自定义模式有两种方式，一种是类似(?<field_name>the pattern here)，例如(?<queue_id>[0-9A-F]{10,11})，其中queue_id是自定义模式名，后面是正则匹配。另一种是在logstash的安装目录中创建一个patterns目录，然后在其中创建一些文件，文件内容类似于POSTFIX_QUEUEID [0-9A-F]{10,11}，然后在grok插件中可以使用该模式。
+grok有120多种默认的模式，可以到`https://github.com/logstash-plugins/logstash-patterns-core/tree/master/patterns`上查看。当然了我们也可以自定义自己的模式，自定义模式有两种方式，一种是类似`(?<field_name>the pattern here)`，例如`(?<queue_id>[0-9A-F]{10,11})`，其中queue_id是自定义模式名，后面是正则匹配。另一种是在logstash的安装目录中创建一个patterns目录，然后在其中创建一些文件，文件内容类似于`POSTFIX_QUEUEID [0-9A-F]{10,11}`，然后在grok插件中可以使用该模式。
 
 如果数据源的格式不统一，我们可以在grok中定义多个正则规则，举例如下：
 
