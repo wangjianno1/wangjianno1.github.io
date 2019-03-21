@@ -149,7 +149,7 @@ term表示精确匹配，即我们的搜索词不会被切词。举例来说，�
 
 # ElasticSearch中的映射Mapping
 
-在ES中，索引具有一定的数据结构，称为映射(mapping)或者模式定义(schema definition)。一个映射定义了所有有哪些字段，每个字段的数据类型以及字段被Elasticsearch处理的方式等。
+在ES中，索引具有一定的数据结构，称为映射(mapping)或者模式定义(schema definition)。一个映射定义了索引有哪些字段，每个字段的数据类型以及字段被Elasticsearch处理的方式等。
 
 （1）ES支持的字段数据类型
 
