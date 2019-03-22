@@ -17,7 +17,7 @@ categories: Python
 
 # Python中的协程是用关键字yield来实现的
 
-在Python中，包含yield表达式的函数是特殊的函数，叫做生成器函数(generator function)，被调用时将返回一个迭代器（iterator），调用时可以使用next或send(msg)。它的用法与return相似，区别在于它会记住上次迭代的状态，继续执行。如下用来说明生成器函数和普通的函数的区别：
+在Python中，包含yield表达式的函数是特殊的函数，叫做生成器函数(generator function)，被调用时将返回一个迭代器（iterator），调用时可以使用next或send(msg)。它的用法与return相似，**区别在于它会记住上次迭代的状态，继续执行**。关于生成器可以参见[《Python中迭代器和生成器总结》](https://wangjianno1.github.io/2019/02/24/Python%E4%B8%AD%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E7%94%9F%E6%88%90%E5%99%A8%E6%80%BB%E7%BB%93/)。如下用来说明生成器函数和普通的函数的区别：
 
 ```python
 def func():
@@ -79,7 +79,7 @@ c.close()
 [PRODUCER] Consumer return: 200 OK
 ```
 
-在上面中执行`c = consumer()`时，consumer函数并没用直接执行，而是直接返回一个迭代器并赋给变量c。当调用`c.send(None)`（或`c.next()`），就会触发consumer函数执行，执行到`yield r`后释放CPU控制权，返回调用处，并将`r`作为返回值传递给调用处。然后后面再执行`c.send(n)`时，就会再次进入到`yield r`代码处，此时不会执行`yield r`，而是将send函数的参数值直接作为`yield r`的返回值赋给变量n。
+在上面中执行`c = consumer()`时，consumer函数并没用直接执行，而是直接返回一个迭代器并赋给变量c。当调用`c.send(None)`（或`c.next()`），就会触发consumer函数执行，执行到`yield r`后释放CPU控制权，返回调用处，并将`r`作为返回值传递给调用处。然后后面再执行`c.send(n)`时，就会再次进入到`yield r`代码处，此时不会执行`yield r`表达式，而是将send函数的参数值直接作为`yield r`表达式的计算结果赋给了变量n。
 
 在consumer函数中`yield r`是一个表达式，当在consumer中执行到这个函数时，会将yield后面紧跟的值返回给调用者，并等待`send(msg)`中的msg值，将msg作为yield表达式的返回值。
 
