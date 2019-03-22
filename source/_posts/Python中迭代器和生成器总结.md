@@ -99,4 +99,13 @@ print it.send('Hello, Guys!!!')
     42
     Hello, Guys!!!
 
+另外，除了上面使用生成器函数来构造生成器外，还可以使用生成器表达式来构造生成器，代码举例如下：
+
+```python
+squares = (x**2 for x in range(5)) #形如列表推导式，但是将中括号换成了小括号
+
+for square in squares:
+    print square
+```
+
 备注：Python中可以使用生成器来实现Python协程编程。当然，还可以使用第三方的库来实现Python协程编程。
