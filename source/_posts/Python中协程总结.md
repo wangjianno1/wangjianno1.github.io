@@ -79,7 +79,7 @@ c.close()
 [PRODUCER] Consumer return: 200 OK
 ```
 
-在上面中执行`c = consumer()`时，consumer函数并没用直接执行，而是直接返回一个迭代器并赋给c。当调用`c.send(None)`（或`c.next()`），就会触发consumer函数执行，执行到`yield r`后释放CPU控制权，返回调用处。然后后面在执行了`c.send(n)`后，就会再次进入到`yield r`代码处，此时不会在执行`yield r`，而是将send函数的参数值直接作为`yield r`的返回值赋给变量n。
+在上面中执行`c = consumer()`时，consumer函数并没用直接执行，而是直接返回一个迭代器并赋给变量c。当调用`c.send(None)`（或`c.next()`），就会触发consumer函数执行，执行到`yield r`后释放CPU控制权，返回调用处，并将`r`作为返回值传递给调用处。然后后面再执行`c.send(n)`时，就会再次进入到`yield r`代码处，此时不会执行`yield r`，而是将send函数的参数值直接作为`yield r`的返回值赋给变量n。
 
 在consumer函数中`yield r`是一个表达式，当在consumer中执行到这个函数时，会将yield后面紧跟的值返回给调用者，并等待`send(msg)`中的msg值，将msg作为yield表达式的返回值。
 
