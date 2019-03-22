@@ -9,6 +9,16 @@ categories: Python
 
 Python中的文件对象提供了三种读取方法，即read/readline/readlines。
 
+# 直接迭代
+
+因文件对象是一个实现了`__iter__()`和`next()`方法的迭代器，因此我们可以直接使用for循环来遍历文件内容，一次只读取文件内容的一行，并非将整个文件一次性加载到内存当中，代码如下：
+
+```python
+file_obj = open('./data.txt')
+for line in file_obj:
+    print line
+```
+
 # read函数
 
 read()方法不带参数时，一次将整个文件读取到内存中，返回值是字符串。当read()方法带参数时，一次只会读取参数指定的字节数。举例来说：
