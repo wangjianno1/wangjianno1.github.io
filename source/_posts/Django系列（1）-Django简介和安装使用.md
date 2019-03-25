@@ -29,6 +29,8 @@ Python web框架。
 
 ![django工作流程图](/images/django_1_4.png)
 
+我的理解，上图中Request Middlewares，View Middlewares以及Response Middlewares其实就指的是各个中间件的process_request、process_view以及process_response等等函数。
+
     1.用户通过浏览器请求一个页面的url
     2.请求到达Request Middlewares（中间件），中间件对request做一些预处理或者直接response请求
     3.URLConf通过urls.py文件和请求的URL找到相应的View（视图）
