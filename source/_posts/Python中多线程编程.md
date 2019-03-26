@@ -97,6 +97,8 @@ GIL，Global Interpreter Lock，中文为全局解释器锁。在Python语言的
 
 因GIL的存在，我们说Python的多线程是伪多线程。GIL直接导致CPython不能利用物理多核的性能加速运算。那为什么会有这样的设计呢？我猜想应该还是历史遗留问题。多核CPU在1990年代还属于类科幻，Guido van Rossum在创造Python的时候，也想不到他的语言有一天会被用到很可能1000+个核的CPU上面，一个全局锁搞定多线程安全在那个时代应该是最简单经济的设计了。简单而又能满足需求，那就是合适的设计。
 
+一般说来，**Python多线程不适合CPU密集型操作的任务，适合IO操作密集型的任务**。因为某个线程CPU计算比较多时，会导致其他线程获取到CPU时间会变少。而当线程是IO操作密集时，线程会定时释放CPU时间，让其他线程得以被调度执行。
+
 学习资料参考于：
 https://blog.csdn.net/wangjianno2/article/details/51930215
 http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143192823818768cd506abbc94eb5916192364506fa5d000
