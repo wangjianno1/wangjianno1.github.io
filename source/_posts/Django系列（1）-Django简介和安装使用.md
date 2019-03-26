@@ -7,7 +7,7 @@ categories: Django
 
 # Django简介
 
-Python下有许多款不同的Web框架。Django是重量级选手中最有代表性的一位。许多网站和APP都基于Django。 Django是一个开放源代码的Web应用框架，由Python写成。Django遵守BSD版权，初次发布于2005年7月, 并于2008年9月发布了第一个正式版本1.0。Django的优势如下：
+Python下有许多款不同的Web框架。Python WEB框架通常包含WSGI Server和WEB Framework两个部分。WSGI Server其实就是HTTP Server，它主要实现WSGI协议，用来和WEB Framework对接，使得socket层对请求的处理与Framework层对请求的处理分离开来，这样Framework就不用关心底层的实现。Django是重量级选手中最有代表性的一位。许多网站和APP都基于Django。 Django是一个开放源代码的Web应用框架，由Python写成。Django遵守BSD版权，初次发布于2005年7月, 并于2008年9月发布了第一个正式版本1.0。Django的优势如下：
 
 （1）快速web开发
 
@@ -119,3 +119,11 @@ pip install Django==1.11.2
 # Django中project和app的区别
 
 Django有project和app两个概念。project的范畴是整个项目工程，包含一些全局配置，这些配置构成一个全局的运行平台。app代表的是project一个相对独立的功能模块，业务逻辑都在各个app中。
+
+# 关于Django和Tornado的区别
+
+我们知道，Python WEB框架包括WSGI Server和WSGI APP两部分。Django的WSGI Server是基于wsgiref.simple_server而来的。而Tornado的WSGI Server是基于epoll IO复用技术从头实现的，是一套异步应用服务器。因此，从功能上来看，Django有大而全的特点；从处理并发上来看，Tornado支持异步server，有优异的并发处理能力。
+
+学习资料参考于：
+http://python.jobbole.com/85296/
+https://juejin.im/entry/58c613762f301e006bc6d700
