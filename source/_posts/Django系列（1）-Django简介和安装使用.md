@@ -124,6 +124,21 @@ Django有project和app两个概念。project的范畴是整个项目工程，包
 
 我们知道，Python WEB框架包括WSGI Server和WSGI APP两部分。Django的WSGI Server是基于wsgiref.simple_server而来的。而Tornado的WSGI Server是基于epoll IO复用技术从头实现的，是一套异步应用服务器。因此，从功能上来看，Django有大而全的特点；从处理并发上来看，Tornado支持异步server，有优异的并发处理能力。
 
+wsgiref是Python自带的模块，第三方WSGI Server有werkzeug、gunicorn以及gevent等，如下是wsgiref用法的一个小例子：
+
+```python
+from wsgiref.simple_server import make_server
+
+def application(environ, start_response):
+    start_response('200 OK', [('Content-Type', 'text/html')])
+    return [b'<h1>Hello, web!</h1>']
+
+if __name__ == '__main__':
+    httpd = make_server('', 9999, application)
+    print("Serving HTTP on port 9999...")
+    httpd.serve_forever()
+```
+
 学习资料参考于：
 http://python.jobbole.com/85296/
 https://juejin.im/entry/58c613762f301e006bc6d700
