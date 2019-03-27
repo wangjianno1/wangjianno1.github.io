@@ -158,6 +158,30 @@ madlib1 = "I {verb} the {object} off the {place}".format(verb="took", object="ch
 madlib2 = "I {} the {} off the {}".format("took", "cheese", "table")
 ```
 
+# 其他一些字符串操作
+
+（1）序列的通用操作
+
+参见[《Python中序列的通用操作》](https://wangjianno1.github.io/2019/02/22/Python%E4%B8%AD%E5%BA%8F%E5%88%97%E7%9A%84%E9%80%9A%E7%94%A8%E6%93%8D%E4%BD%9C/)
+
+（2）字符串切割
+
+```python
+str1 = 'ab,cde,fgh,ijk'
+print(str1.split(','))  #输出结果为['ab', 'cde', 'fgh', 'ijk']
+```
+
+（3）字符串大小写转换
+
+```python
+str1 = 'Hello World'
+print str.upper()       #输出HELLO WORLD
+print str.lower()       #输出hello world
+```
+
+（4）字符串去空格
+
+rstrip()删除字符串末尾的空格，lstrip()删除字符串开头的空格，strip()在字符串上执行lstrip()和rstrip()。
 
 学习资料参考于：
 http://blog.xiayf.cn/2013/01/26/python-string-format/
