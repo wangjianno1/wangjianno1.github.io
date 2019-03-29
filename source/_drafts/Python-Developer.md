@@ -120,3 +120,49 @@ if __name__ == '__main__':
 
     traverse_dir_with_depth(dirname, 1)
 ```
+
+# 链表
+
+定义二叉树的节点，如下：
+
+```python
+class Node(object):
+    def __init__(self, data, lchild, rchild):
+        self.data = data
+        self.lchild = lchild
+        self.rchild = rchild
+```
+
+```python
+class BinaryTree(object):
+    def __init__(self, root):
+        self.root = root
+
+    def add_node(self, node):
+        pass
+
+    def del_node(self, node):
+        pass
+```
+
+定义线性链表的节点，如下：
+
+```python
+class Node(object):
+    def __init__(self, data, next):
+        self.data = data
+        self.next = next
+```
+
+```python
+class LinkedList(object):
+    def __init__(self, head):
+        self.head = head
+
+    def add_node(self, node):
+        self.head.next = node
+        pass
+
+    def del_node(self, node):
+        pass
+```

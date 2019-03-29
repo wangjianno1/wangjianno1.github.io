@@ -45,6 +45,7 @@ print elements[:]       #copy出一个新的elements列表
 print elements[-3:-1]   #输出[8, 9]
 print elements[0:10:2]  #输出[1, 3, 5, 7, 9]
 print elements[10:0:-2] #输出[10, 8, 6, 4, 2]
+print elements[::-1]    #输出[10, 9, 8, 7, 6, 5, 4, 3, 2, 1]，相当于翻转了列表
 ```
 
 # 加

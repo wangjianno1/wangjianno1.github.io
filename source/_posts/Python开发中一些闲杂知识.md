@@ -27,10 +27,18 @@ python中没有null，但是None。python中None的含义和其他语言中null�
 
 ```python
 a = 4
-a++  //不合法
-a--  //不合法
+a++     #不合法
+a--     #不合法
+a += 1  #合法
+a -= 2  #合法
 ```
 
 # `*.py`和`*.pyw`异同
 
 直接双击`*.py`文件运行Python文件，会出现一个类似于DOS的窗口。而直接双击`*.pyw`文件运行Python文件就不会出现这个DOS窗口。
+
+# 一些Pythonic例子
+
+```python
+a, b = b, a  #交换两个变量的值
+```
