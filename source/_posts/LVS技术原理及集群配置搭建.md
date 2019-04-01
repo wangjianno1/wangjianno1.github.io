@@ -63,7 +63,7 @@ VS/NAT技术实施关键点，**DS和RS要在同一个VLAN，且RS的缺省网�
 
 （2）VS/TUN工作模式
 
-VS/TUN, 全称为Virtual Server via IP Tunneling。VS/TUN模式类似于VPN的方式，使用网络分层的原理，在从客户端发来的数据包的基础上，封装一个新的IP头标记（不完整的IP头，只有目的IP部）发给RS，RS收到后，先把DR发过来的数据包的头给解开，还原其数据包原样，处理后，直接返回给客户端，而不需要再经过DR。需要注意的是，由于REALSERVER需要对DR发过来的数据包进行还原，也就是说必须支持IPTUNNEL协议。所以，在RS的内核中，必须编译支持IPTUNNEL这个选项。IPTUNNEL也在Networking Options里面。
+VS/TUN, 全称为Virtual Server via IP Tunneling。VS/TUN模式类似于VPN的方式，使用网络分层的原理，在从客户端发来的数据包的基础上，封装一个新的IP头标记（不完整的IP头，只有目的IP部）发给RS，RS收到后，先把DR发过来的数据包的头给解开，还原其数据包原样，处理后，直接返回给客户端，而不需要再经过DR。需要注意的是，由于RealServer需要对DR发过来的数据包进行还原，也就是说必须支持IPTUNNEL协议。所以，在RS的内核中，必须编译支持IPTUNNEL这个选项。IPTUNNEL也在Networking Options里面。
 
 简单来说，采用NAT技术时，由于请求和响应报文都必须经过调度器地址重写，**当客户请求越来越多时，调度器的处理能力将成为瓶颈**。为了解决这个问题，调度器把请求报文通过IP隧道转发至真实服务器，而真实服务器将响应直接返回给客户，所以调度器只处理请求报文。由于一般网络服务应答比请求报文大许多，采用VS/TUN技术后，集群系统的最大吞吐量可以提高10倍。
 
