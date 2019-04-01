@@ -7,9 +7,9 @@ categories: Python
 
 # parallel-ssh
 
-pssh是一个python编写可以在多台服务器上执行命令的工具，同时支持拷贝文件，是同类工具中很出色的。为方便操作，使用前请在各个服务器上配置好密钥认证访问。parallel-ssh有pssh/pscp/pslurp/pnuke/prsync几个命令行工具。
+pssh是一个Python编写可以在多台服务器上执行命令的工具，同时支持拷贝文件，是同类工具中很出色的。为方便操作，使用前请在各个服务器上配置好密钥认证访问。parallel-ssh有pssh/pscp/pslurp/pnuke/prsync几个命令行工具。
 
-项目地址: parallel-ssh（https://code.google.com/p/parallel-ssh/）
+项目地址: [parallel-ssh](https://code.google.com/p/parallel-ssh/)
 
 # parallel-ssh安装
 
@@ -38,12 +38,12 @@ pscp传输文件到多个hosts，类似scp。命令使用举例如下：
 
 ```bash
 #将本地当前目录中的foo.txt文件，远程拷贝到目标主机的/home/work/目录下
-pscp -h hosts.txt foo.txt /home/work/foo.txt   
+pscp -h hosts.txt foo.txt /home/work/foo.txt
 ```
 
 （3）pslurp
 
-pslurp从多台远程机器拷贝文件到本地 。
+pslurp从多台远程机器拷贝文件到本地。
 
 （4）pnuke
 
@@ -60,7 +60,6 @@ prsync使用rsync协议从本地计算机同步到远程主机 。命令使用�
 ```bash
 prsync -r -h hosts.txt -l irb2 foo /home/irb2/foo
 ```
-
 
 学习资料参考于：
 http://kumu-linux.github.io/blog/2013/08/12/pssh/
