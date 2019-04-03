@@ -19,7 +19,7 @@ React组件本质上是一个状态机，输入确定，则输出一定确定。
 
 ```javascript
 getDefaultProps()
-getInititalState()
+getInitialState()
 componentWillMount()
 render  //render函数中只能访问this.props和this.state，只能有一个顶层组件，不允许修改状态和DOM输出
 componentDidMount
