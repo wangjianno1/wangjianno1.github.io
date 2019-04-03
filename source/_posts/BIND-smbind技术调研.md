@@ -81,7 +81,7 @@ zone "example1.com" {
 };
 ```
 
-在zone中类型type可以是hint、master、slave以及orward。特殊符号`@`是DNS配置中的保留关键字，表示当前域的名称，在上述的例子`db/example1.com.zone`配置中，可以使用`@`表示`example1.com`。在zone file中还有一些特殊参数：
+在zone中类型type可以是hint、master、slave以及forward。特殊符号`@`是DNS配置中的保留关键字，表示当前域的名称，在上述的例子`db/example1.com.zone`配置中，可以使用`@`表示`example1.com`。在zone file中还有一些特殊参数：
 
 ```
 @TTL    #设置zone file中每一条记录的TTL值
@@ -130,7 +130,7 @@ b）slave定期地比较本地配置文件的序号（或称为版本号）与ma
 
 （1）cache-only DNS服务器
 
-如果某个DNS服务器只有.这个zone file（root dns），我们称这种没有自己公共的DNS数据库的服务器称为cache-only DNS服务器。也就是这种DNS服务器只有缓存查找的功能，它自身并没有任何域名和IP正反解的配置文件。
+如果某个DNS服务器只有`.`这个zone file（root dns），我们称这种没有自己公共的DNS数据库的服务器称为cache-only DNS服务器。也就是这种DNS服务器只有缓存查找的功能，它自身并没有任何域名和IP正反解的配置文件。
 
 cache-only DNS的配置举例如下：
 
@@ -186,7 +186,7 @@ m.root-servers.net.     447968  IN      AAAA    2001:dc3::35
 
 （2）forwarding DNS服务器
 
-有些DNS服务器可能连.这个zone file都没有，而是通过forwarding配置将域名解析请求转发给其他的DNS服务器，我们称这种DNS服务器为forwarding DNS服务器。
+有些DNS服务器可能连`.`这个zone file都没有，而是通过forwarding配置将域名解析请求转发给其他的DNS服务器，我们称这种DNS服务器为forwarding DNS服务器。
 
 forwarding DNS服务器的配置举例如下：
 

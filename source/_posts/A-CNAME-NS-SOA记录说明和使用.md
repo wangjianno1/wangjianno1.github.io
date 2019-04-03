@@ -33,7 +33,7 @@ sina.com.cn.            5       IN      NS      ns1.sina.com.cn.
 
 （4）SOA记录
 
-SOA，Start of Authority，称为起始授权资源记录。如果有多台DNS服务器管理同一个域名，那么最好使用Master/Slave架构来进行搭建。既然采用这样的架构，按就需要声明被管理的zone file是如何进行传输的，此时就需要SOA（Start Of Authority）的标志了。也就是说，在DNS的每个zone file中都会有SOA记录的。下面来举例说明SOA记录的格式及字段含义：
+SOA，Start of Authority，称为起始授权资源记录。如果有多台DNS服务器管理同一个域名，那么最好使用Master/Slave架构来进行搭建。既然采用这样的架构，那就需要声明被管理的zone file是如何进行传输的，此时就需要SOA（Start Of Authority）的标志了。也就是说，在DNS的每个zone file中都会有SOA记录的。下面来举例说明SOA记录的格式及字段含义：
 
 ```
 cp.bat.com              IN SOA  ns.cp.bat.com. dnsadmin.sina.com. (
@@ -65,7 +65,7 @@ Slave会依据该数值来定期地从Master中下载zone file。在本例中设
 如果由于某些因素导致Slave无法对Master实现连接，那么在依据该数值再去尝试连接到Master服务器。在本例中设置的是600，表示Slave连接Master失败，则会尝试每隔10分钟就去重新尝试连接Master，若在某次重试时连接成功，则会再次恢复到Refresh设置的更新频率。
 
 - 失效时间（Expire）
-如果Slave连接Master一直失败，一直到Expire设置的时间时，那么Slave将不在继续尝试连接，并且尝试删除这个zone file的信息。如本例中设置的1209600，表示连续2week Slave都连不上Master，那么Slave将不在尝试且会删除zone file，也就是在Slave上是解析不了这个域名了，很危险哦。
+如果Slave连接Master一直失败，一直到Expire设置的时间时，那么Slave将不在继续尝试连接，并且尝试删除这个zone file的信息。如本例中设置的1209600，表示连续2week Slave都连不上Master，那么Slave将不再尝试去连接Master，且会删除zone file，也就是在Slave上是解析不了这个域名了，很危险哦。
 
 - 缓存时间（Minumum TTL）
 如果在zone file中，没有显式的指明TTL时，将会这个TTL设置为主。
@@ -87,6 +87,6 @@ Slave会依据该数值来定期地从Master中下载zone file。在本例中设
 
 众所周知，国内很多域名注册机构的DNS服务器解析生效速度很慢，这便给很多人带来了麻烦，当网站需要更换IP或其他必须对域名重新解析的时候，如果存在大量网站，第一麻烦就是多域名的解析问题，我们可以通过第一条技巧轻松解决!但对于生效速度，通过普通的解析估计我们就无法解决了。
 
-其实，我们可以通过使用域名的别名(CNAME)另类使用达到加速解析的目的。首先我们最好选择一个主域名如：qqya.com，将该域名转移到国外(推荐：ENom)注册商平台下，解析速度与国内的注册商可不是一个两个等级的差别了，然后将其他的相关域名使用CNME记录：(`www.abc.com.`)切记最后有一英文状态下的“句号”。
+其实，我们可以通过使用域名的别名(CNAME)另类使用达到加速解析的目的。首先我们最好选择一个主域名如：qqya.com，将该域名转移到国外(推荐：ENom)注册商平台下，解析速度与国内的注册商可不是一个两个等级的差别了，然后将其他的相关域名使用CNAME记录：(`www.abc.com.`)切记最后有一英文状态下的“句号”。
 
 以后当需要更换域名解析的时候，只需要变动`abc.com`，立即解决了所有问题，因为你其他的域名都已经跟随你的`abc.com`域名了，只要你解析了`abc.com`，其他也都相应变化，不再担心国内解析慢的问题了。
