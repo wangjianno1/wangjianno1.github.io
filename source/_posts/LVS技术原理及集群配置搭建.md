@@ -81,7 +81,7 @@ VS/DR技术实施关键点，**DS和RS要在同一个VLAN，且RS上lo网口上�
 
 还有一点需要注意的是，**DS上有一个连接Hash表中记录每一个连接，当某一个连接的下一个报文到达时，从连接Hash表中可以Hash算出原来的RS机器啦**。
 
-另外，alibaba/lvs项目增加了FULLNAT模式，不同于VS/NAT模式，DS和RS可以跨VLAN，且RS不需要连接外网，更灵活一些。
+另外，alibaba/lvs项目增加了FULLNAT模式，不同于VS/NAT模式，DS和RS可以跨VLAN，且RS不需要连接外网，更灵活一些，但是RS响应包需要经过DS。
 
 # LVS的IPVS模块的八种负载调度算法
 
