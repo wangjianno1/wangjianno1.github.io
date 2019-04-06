@@ -7,11 +7,19 @@ categories: 数据库
 
 # MySQL登录
 
+（1）利用TCP/IP连接，客户端和服务端可以在不同的机器上
+
 ```bash
-./bin/mysql -h12.45.23.41 -uwahaha -p
+mysql -h12.45.23.41 -uwahaha -p
 ```
 
 然后输入用户密码，若无密码，直接回车即可。
+
+（2）利用Unix域套接字来连接，客户端和服务端要在同一台机器上
+
+```bash
+mysql -S /var/lib/mysql/mysql.sock -uroot -p
+```
 
 # 查看基础信息
 

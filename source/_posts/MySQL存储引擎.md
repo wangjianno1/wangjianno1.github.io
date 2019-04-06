@@ -52,7 +52,7 @@ NDB引擎可以实现MySQL Cluster，分布式MySQL集群。
 | 特性 | InnoDB | MyISAM | MEMORY | ARCHIVE |
 | ---- | ----- | ------- | ------ | ------- |
 | 存储限制(Storage limits) | 64TB | No | YES | No |
-| 支持事物(Transactions) | Yes | No | No | No |
+| 支持事务(Transactions) | Yes | No | No | No |
 | 锁机制(Locking granularity) | 行锁 | 表锁 | 表锁 | 行锁 |
 | B树索引(B-tree indexes) | Yes | Yes | Yes | No |
 | T树索引(T-tree indexes) | No | No | No | No |
