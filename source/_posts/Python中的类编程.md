@@ -36,7 +36,7 @@ if __name__ == "__main__":
 
 备注：
 
-（1）成员方法的第一个参数必须是`self`，表示对象自身。当在一个成员方法调用该类的成员变量或其他成员方法时，必须带上`self`关键字，这和JAVA中的this是有区别的，在JAVA中是可以带上this，也可以不带上this。
+（1）成员方法的第一个参数必须是`self`，表示对象自身。**当在一个成员方法调用该类的成员变量或其他成员方法时，必须带上`self`关键字，这和JAVA中的this是有区别的，在JAVA中是可以带上this，也可以不带上this**。
 
 （2）Python支持多继承，书写形式为`class Rectangle(Shape, Color)`，表示Rectangle有两个父类（Shape和Color）。如果在Shape和Color有一个相同的成员，按照继承书写的先后顺序，前面的父类覆写后面的父类，即Shape类中的方法覆写Color类。
 

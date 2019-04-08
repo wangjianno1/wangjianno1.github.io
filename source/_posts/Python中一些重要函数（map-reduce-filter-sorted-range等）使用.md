@@ -33,6 +33,20 @@ range(start, end, scan):
     >>> range(-5)
     []
 
+# enumerate函数
+
+enumerate函数用于将一个可遍历的数据对象（如列表、元组或字符串）组合为一个enumerate枚举对象，同时列出数据和数据下标，一般用在for循环当中。举例来说：
+
+```python
+seasons = ['Spring', 'Summer', 'Fall', 'Winter']
+
+print enumerate(seasons)        #输出<enumerate object at 0x7f83e4c45550>
+print list(enumerate(seasons))  #输出[(0, 'Spring'), (1, 'Summer'), (2, 'Fall'), (3, 'Winter')]
+
+for index, season in enumerate(seasons):
+    print index, season
+```
+
 # map函数
 
 `map(function, sequence)`对sequence中的item依次执行function(item)，执行结果组成一个List返回。举例如下：
