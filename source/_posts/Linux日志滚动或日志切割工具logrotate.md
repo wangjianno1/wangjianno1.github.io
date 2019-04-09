@@ -32,12 +32,12 @@ logrotate -vf /etc/logrotate.conf
 
 # logrotate的配置
 
-logrotate是linux系统默认安装的工具，logrotate的配置文件是/etc/logrotate.conf和/etc/logrotate.d/*，其中/etc/logrotate.conf是logrotate的主要的配置文件，/etc/logrotate.d/是一个目录，该目录里的所有文件都会被include指令加入/etc/logrotate.conf中。/etc/logrotate.d/目录可以放入一些我们针对某些日志单独配置的切割配置。/etc/logrotate.d/中会以/etc/logrotate.conf中配置作为默认值，另外，/etc/logrotate.d/中配置会覆盖/etc/logrotate.conf的配置。
+logrotate是linux系统默认安装的工具，logrotate的配置文件是`/etc/logrotate.conf`和`/etc/logrotate.d/*`，其中`/etc/logrotate.con`是logrotate的主要的配置文件，`/etc/logrotate.d/`是一个目录，该目录里的所有文件都会被include指令加入`/etc/logrotate.conf`中。`/etc/logrotate.d/`目录可以放入一些我们针对某些日志单独配置的切割配置。`/etc/logrotate.d/`中会以`/etc/logrotate.conf`中配置作为默认值，另外，`/etc/logrotate.d/`中配置会覆盖`/etc/logrotate.conf`的配置。
 
 如下为logrotate.conf的一些重要配置指令：
 
 ```bash
-compress                  # 通过gzip 压缩转储以后的日志
+compress                  # 通过gzip压缩转储以后的日志
 nocompress                # 不做gzip压缩处理
 copytruncate              # 用于还在打开中的日志文件，把当前日志备份并截断；是先拷贝再清空的方式，拷贝和清空之间有一个时间差，可能会丢失部分日志数据
 nocopytruncate            # 备份日志文件不过不截断
