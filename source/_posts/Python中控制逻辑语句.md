@@ -44,8 +44,15 @@ for word in words:
 
 ```python
 citys = ['beijing', 'shanghai', 'chongqin', 'tianjin']
+
 for city in citys:
     print city
+
+for i in range(len(citys)):
+    print citys[i]
+
+for i, num in enumerate(nums):
+    print i, num
 ```
 
 （2）遍历字典
