@@ -86,7 +86,7 @@ vrrp_instance VI_1 {
 }
 ```
 
-备注：如上是一个VRRP的配置，该实例是BACKUP节点，还需要再另外台机器上配置MASTER节点，这样才能达到IP漂移的效果。
+备注：如上是一个VRRP的配置，该实例是BACKUP节点，还需要再另外台机器上配置MASTER节点，这样才能达到IP漂移的效果。作为Master/Slave架构的keepalived，主备都正常时，是由priority来决定的，谁的priority值大，就由谁来做主节点。当vrrp_instance中包含了自定义的健康检查脚本并包含了weight，那么主备的角色是由priority加weight的和值来决定的，谁大就由谁来做主。需要注意的是，主备角色与state设置没有任何关系。
 
 ## LVS配置段
 
