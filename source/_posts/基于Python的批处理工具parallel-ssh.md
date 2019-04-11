@@ -39,6 +39,7 @@ pscp传输文件到多个hosts，类似scp。命令使用举例如下：
 ```bash
 #将本地当前目录中的foo.txt文件，远程拷贝到目标主机的/home/work/目录下
 pscp -h hosts.txt foo.txt /home/work/foo.txt
+pscp -h hosts.txt -l root foo.txt /home/work/foo.txt #指定root用户
 ```
 
 （3）pslurp
