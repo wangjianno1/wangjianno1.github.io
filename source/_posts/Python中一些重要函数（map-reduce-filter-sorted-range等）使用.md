@@ -11,7 +11,7 @@ range函数可创建一个有一定规则的整数列表，函数原型如下：
 
 ```python
 range(start, end, scan):
-    //...
+    #...
 ```
 
 形参含义如下：
@@ -22,6 +22,8 @@ range(start, end, scan):
 
 举例来说：
 
+    >>> range(5)
+    [0, 1, 2, 3, 4]
     >>> range(0, 5)
     [0, 1, 2, 3, 4]
     >>> range(5)
