@@ -23,6 +23,8 @@ TCP是三次握手建立通信双方的连接，四次握手断开通信双方�
 
 一次HTTP请求完成以后TCP连接能关闭吗？在HTTP/1.0中默认使用TCP短连接，也就是说，浏览器和WEB服务器每进行一次HTTP操作，就建立一次TCP连接，请求结束后就中断TCP连接。而从HTTP/1.1起，默认使用的是TCP长连接，用以保持连接特性。如果是HTTP/1.0，要使用TCP长连接的话，需要在HTTP Request Header中加入`Connetion:keep-alive`。
 
+![](/images/network_keepalive_1_4.jpg)
+
 在使用TCP长连接的情况下，当一个网页打开完成后，客户端和服务器之间用于传输HTTP数据的TCP连接不会关闭，客户端再次访问这个服务器时，会继续使用这一条已经建立的连接。Keep-Alive不会永久保持连接，它有一个保持时间，可以在不同的WEB服务器软件（如Apache）中设定这个时间。实现TCP长连接需要浏览器和WEB服务器都支持TCP长连接。
 
 TCP短连接下多个HTTP请求（同一个域名下的资源请求）的访问过程如下：
