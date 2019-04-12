@@ -90,3 +90,19 @@ scale-in是横向缩容，scale-out是横向扩容。
 # auto-scaling
 
 自动扩缩容。
+
+# fan-in/fan-out
+
+扇入和扇出原本是电子技术中电子元件及其输入端和输出端的结构。
+
+（1）扇入
+
+扇入表示一个模块被多个模块调用。如下：
+
+![](/images/fan_in_out_1_1.png)
+
+（2）扇出
+
+扇出表示一个模块调用多个模块。如下：
+
+![](/images/fan_in_out_1_2.png)
