@@ -39,9 +39,13 @@ Monthly Active Users，月活跃用户数，去除重复的用户。
 
 Daily Active Users，日活跃用户数，去除重复的用户。
 
-# UGC
+# UGC/PCG/OGC
 
 UGC，User Generated Content，也就是用户生成内容的意思。UGC的概念最早起源于互联网领域，即用户将自己原创的内容通过互联网平台进行展示或者提供给其他用户。UGC是伴随着以提倡个性化为主要特点的Web2.0概念兴起的。
+
+PGC，Professionally Generated Content，其含义为专业生产内容。
+
+OGC，Occupationally Generated Content，其含义为品牌生产内容。
 
 # UX
 
