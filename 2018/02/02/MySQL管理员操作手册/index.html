@@ -107,18 +107,18 @@
   <meta name="keywords" content="MySQL,">
 
 
-<meta name="description" content="MySQL登录（1）利用TCP/IP连接，客户端和服务端可以在不同的机器上 1mysql -h12.45.23.41 -uwahaha -p 然后输入用户密码，若无密码，直接回车即可。 （2）利用Unix域套接字来连接，客户端和服务端要在同一台机器上 1mysql -S /var/lib/mysql/mysql.sock -uroot -p 查看基础信息123456789show database">
+<meta name="description" content="MySQL登录（1）利用TCP/IP连接，客户端和服务端可以在不同的机器上 12mysql -h12.45.23.41 -uwahaha -pmysql -h12.45.23.41 -P3345 -uwahaha -p   #非标准的3306端口 然后输入用户密码，若无密码，直接回车即可。 （2）利用Unix域套接字来连接，客户端和服务端要在同一台机器上 1mysql -S /var/lib/my">
 <meta name="keywords" content="MySQL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL管理员操作手册">
 <meta property="og:url" content="http://wangjianno1.github.io/2018/02/02/MySQL管理员操作手册/index.html">
 <meta property="og:site_name" content="老坛の菜园子">
-<meta property="og:description" content="MySQL登录（1）利用TCP/IP连接，客户端和服务端可以在不同的机器上 1mysql -h12.45.23.41 -uwahaha -p 然后输入用户密码，若无密码，直接回车即可。 （2）利用Unix域套接字来连接，客户端和服务端要在同一台机器上 1mysql -S /var/lib/mysql/mysql.sock -uroot -p 查看基础信息123456789show database">
+<meta property="og:description" content="MySQL登录（1）利用TCP/IP连接，客户端和服务端可以在不同的机器上 12mysql -h12.45.23.41 -uwahaha -pmysql -h12.45.23.41 -P3345 -uwahaha -p   #非标准的3306端口 然后输入用户密码，若无密码，直接回车即可。 （2）利用Unix域套接字来连接，客户端和服务端要在同一台机器上 1mysql -S /var/lib/my">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-25T04:09:59.485Z">
+<meta property="og:updated_time" content="2019-05-27T15:13:49.867Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL管理员操作手册">
-<meta name="twitter:description" content="MySQL登录（1）利用TCP/IP连接，客户端和服务端可以在不同的机器上 1mysql -h12.45.23.41 -uwahaha -p 然后输入用户密码，若无密码，直接回车即可。 （2）利用Unix域套接字来连接，客户端和服务端要在同一台机器上 1mysql -S /var/lib/mysql/mysql.sock -uroot -p 查看基础信息123456789show database">
+<meta name="twitter:description" content="MySQL登录（1）利用TCP/IP连接，客户端和服务端可以在不同的机器上 12mysql -h12.45.23.41 -uwahaha -pmysql -h12.45.23.41 -P3345 -uwahaha -p   #非标准的3306端口 然后输入用户密码，若无密码，直接回车即可。 （2）利用Unix域套接字来连接，客户端和服务端要在同一台机器上 1mysql -S /var/lib/my">
 
 
 
@@ -408,7 +408,7 @@
 
       
         <h1 id="MySQL登录"><a href="#MySQL登录" class="headerlink" title="MySQL登录"></a>MySQL登录</h1><p>（1）利用TCP/IP连接，客户端和服务端可以在不同的机器上</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -h12.45.23.41 -uwahaha -p</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql -h12.45.23.41 -uwahaha -p</span><br><span class="line">mysql -h12.45.23.41 -P3345 -uwahaha -p   <span class="comment">#非标准的3306端口</span></span><br></pre></td></tr></table></figure>
 <p>然后输入用户密码，若无密码，直接回车即可。</p>
 <p>（2）利用Unix域套接字来连接，客户端和服务端要在同一台机器上</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -S /var/lib/mysql/mysql.sock -uroot -p</span><br></pre></td></tr></table></figure>

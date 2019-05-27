@@ -702,11 +702,11 @@ mysql中使用\G格式化输出使用mysql的client工具，如select * from use
         
           
           MySQL登录（1）利用TCP/IP连接，客户端和服务端可以在不同的机器上
-1mysql -h12.45.23.41 -uwahaha -p
+12mysql -h12.45.23.41 -uwahaha -pmysql -h12.45.23.41 -P3345 -uwahaha -p   #非标准的3306端口
 然后输入用户密码，若无密码，直接回车即可。
 （2）利用Unix域套接字来连接，客户端和服务端要在同一台机器上
 1mysql -S /var/lib/mysql/mysql.sock -uroot -p
-查看基础信息123456789show databases;                         /*查看所有数据库*/use db_name;
+查看基础信息123456789show datab
           ...
           <!--noindex-->
           <div class="post-button text-center">
