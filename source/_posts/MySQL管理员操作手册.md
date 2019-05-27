@@ -11,6 +11,7 @@ categories: 数据库
 
 ```bash
 mysql -h12.45.23.41 -uwahaha -p
+mysql -h12.45.23.41 -P3345 -uwahaha -p   #非标准的3306端口
 ```
 
 然后输入用户密码，若无密码，直接回车即可。
