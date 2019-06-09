@@ -125,6 +125,8 @@ $server_name         #就是虚机的server_name
 $proxy_add_x_forwarded_for   #该变量等于nginx收到的请求的X-Forwarded-For请求头内容，加上$remote_addr。也就是将请求来源的IP追加到X-Forwarded-For请求头的尾部，并用逗号分开
 ```
 
+备注：remote_addr代表客户端的IP，但它的值不是由客户端提供的，而是服务端根据客户端的IP来指定的，当你的浏览器访问某个网站时，假设中间没有任何代理，那么网站的WEB服务器（Nginx/Apache等）就会把remote_addr设为你的机器IP，如果你用了某个代理，那么你的浏览器会先访问这个代理，然后再由这个代理转发到网站，这样web服务器就会把remote_addr设为这台代理机器的IP。对于使用了多层代理时，服务端要想获取到真实用户的IP，是通过proxy_add_x_forwarded_for变量来获取的啦。
+
 # Nginx的最佳配置实践
 
 （1）在实际安装部署Nginx时，要遵循按需安装模块的原则。需要某一个模块则安装，不需要则不要安装。因为每一个被安装的模块都可能会消耗资源，影响Nginx的性能。
