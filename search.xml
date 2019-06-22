@@ -4,6 +4,82 @@
   
     
     <entry>
+      <title>Mac上抓取移动设备iPhone数据包</title>
+      <link href="/2019/06/22/Mac%E4%B8%8A%E6%8A%93%E5%8F%96%E7%A7%BB%E5%8A%A8%E8%AE%BE%E5%A4%87iPhone%E6%95%B0%E6%8D%AE%E5%8C%85/"/>
+      <url>/2019/06/22/Mac%E4%B8%8A%E6%8A%93%E5%8F%96%E7%A7%BB%E5%8A%A8%E8%AE%BE%E5%A4%87iPhone%E6%95%B0%E6%8D%AE%E5%8C%85/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Mac抓取移动设备数据包"><a href="#Mac抓取移动设备数据包" class="headerlink" title="Mac抓取移动设备数据包"></a>Mac抓取移动设备数据包</h1><p>在Mac上抓取iPhone手机上的数据包，前提条件是，iPhone上的数据包要经过Mac电脑。一般来说，使用Mac抓取iPhone数据包有如下三种方式：</p><ul><li>代理软件</li><li>Mac共享网络</li><li>远程虚拟接口RVI</li></ul><h1 id="代理软件"><a href="#代理软件" class="headerlink" title="代理软件"></a>代理软件</h1><p>在Mac上搭建HTTP代理软件，然后在手机上网络设置代理请求到Mac电脑，通常来说，可以使用代理软件有Charles、Flidder for Mono以及Andiparos等，它们在Mac上建立HTTP代理服务器。</p><h1 id="Mac上WiFi热点共享"><a href="#Mac上WiFi热点共享" class="headerlink" title="Mac上WiFi热点共享"></a>Mac上WiFi热点共享</h1><p>使用Mac的网络共享功能将Mac的网络通过WiFi共享给iPhone连接。简单来说，就是在Mac上建立WiFi热点，然后手机联系该热点。对于网络共享的方式还要求Mac本身的网络不能使用WiFi，而且在iPhone上只能使用WiFi连接，无法抓取到xG（2G/3G/4G）网络包。</p><p>备注：Mac也可以通过蓝牙的方式，共享网络给iPhone手机，不过好像网络很慢的。</p><h1 id="手机USB连接Mac"><a href="#手机USB连接Mac" class="headerlink" title="手机USB连接Mac"></a>手机USB连接Mac</h1><p>苹果在iOS 5中新引入了远程虚拟接口（Remote Virtual Interface，RVI）的特性，可以在Mac中建立一个虚拟网络接口来作为iOS设备的网络栈，这样所有经过iOS设备的流量都会经过此虚拟接口。此虚拟接口只是监听iOS设备本身的协议栈，但并没有将网络流量中转到Mac本身的网络连接上（前两种方式都需要iPhone通过Mac的网络上网，该方式不需要哦），所有网络连接都是iOS设备本身的，与Mac电脑本身联不联网或者联网类型无关。iOS设备本身可以为任意网络类型（WiFi/xG），这样在Mac电脑上使用任意抓包工具（tcpdump/WireShark/CPA）抓取RVI接口上的数据包就实现了对iPhone的抓包。具体步骤如下：</p><p>（1）iPhone手机通过USB接口连接到电脑上</p><p>（2）在Mac上为iPhone手机设置一个远程虚拟接口</p><p>使用<code>rvictl -s &lt;UDID&gt;</code>命令为iPhone手机新建远程虚拟接口，其中UDID代表连接到Mac电脑的设备ID，可以通过<code>iTunes-&gt;Summary</code>或者<code>Xcode-&gt;Organizer-&gt;Devices</code>获取iPhone的UDID。创建成功后，在终端通过ifconfig命令可以看到多了一个rvi0接口。当有多个iOS设备连接Mac时，依次是rvi1、rvi2等等。</p><p>使用<code>rvictl -l</code>命令可以列出所有挂接的远程虚拟接口。</p><p>使用<code>rvictl -x</code>命令可以删除指定的远程虚拟接口。</p><p>备注：Mac电脑中若没有rvictl命令工具，安装Xcode就好啦。</p><p>（3）启动WireShark监听步骤（2）中为iPhone设备新建的远程虚拟接口</p><p>（4）手机打开APP上网</p><p>学习资料参考于：<br><a href="https://blog.csdn.net/phunxm/article/details/38590561" target="_blank" rel="noopener">https://blog.csdn.net/phunxm/article/details/38590561</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Network </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>网络抓包工具之tcpdump</title>
+      <link href="/2019/06/22/%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85%E5%B7%A5%E5%85%B7%E4%B9%8Btcpdump/"/>
+      <url>/2019/06/22/%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85%E5%B7%A5%E5%85%B7%E4%B9%8Btcpdump/</url>
+      
+        <content type="html"><![CDATA[<h1 id="tcpdump简介"><a href="#tcpdump简介" class="headerlink" title="tcpdump简介"></a>tcpdump简介</h1><p>tcpdump可以根据使用者的定义对网络上的数据包进行截获并分析。tcpdump可以将网络中传送的数据包的“头”完全截获下来提供分析。它支持针对网络层、协议、主机、网络或端口的过滤，并提供and、or、not等逻辑语句来帮助你去掉无用的信息。</p><h1 id="tcpdump的使用方法"><a href="#tcpdump的使用方法" class="headerlink" title="tcpdump的使用方法"></a>tcpdump的使用方法</h1><p>（1）使用格式</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump [options] [-i 网络接口] [-w 数据包dump到的目标文件] [-c 监听次数] [-r dump出来的文件] [数据包筛选规则]</span><br></pre></td></tr></table></figure><p>（2）重要的选项</p><pre><code>-i           #指定要监听的网络接口，如eth0，eth1，lo等。若指定为any，表示监听所有的网卡接口-nn          #直接以ip和port显示，而非主机名或服务名称-w filename  #将监听所得的数据包存储到文件中-r filename  #从指定tcpdump出来的文件中读取dump文件-c num       #指定监听的数据包数，如果不指定-c，那么tcpdump会持续不断的监听</code></pre><h1 id="使用举例"><a href="#使用举例" class="headerlink" title="使用举例"></a>使用举例</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#监听eth0接口</span></span><br><span class="line">tcpdump -i eth0 -nn</span><br><span class="line"><span class="comment">#监听eth0接口且满足“port为21的数据包”的筛选规则</span></span><br><span class="line">tcpdump -i eth0 -nn <span class="string">'port 21'</span></span><br><span class="line"><span class="comment">#监听eth0接口且满足“port为22且源主机为192.168.1.101的数据包”的筛选规则</span></span><br><span class="line">tcpdump -i eth0 -nn <span class="string">'port 22 and src host 192.168.1.101'</span></span><br><span class="line"><span class="comment">#只抓取所有网卡的icmp协议数据包，并直接打印到终端上，也可以只抓取tcp/udp/arp等</span></span><br><span class="line">tcpdump -nni any <span class="string">'icmp'</span></span><br><span class="line"><span class="comment">#抓取网卡eth0的数据包，并输出到wireshark.cap文件中</span></span><br><span class="line">tcpdump -nni eth0 -w wireshark.cap</span><br></pre></td></tr></table></figure><h1 id="闲杂"><a href="#闲杂" class="headerlink" title="闲杂"></a>闲杂</h1><p>WireShark是图形化的数据包抓取工具，和tcpdump实现的功能是一致的。使用tcpdump的-w选项将tcpdump的输出到一个cap命名的文件中，然后用WireShark打开该文件，则可以用WireShark分析tcpdump抓取的数据包。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Network </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>网络抓包工具之WireShark</title>
+      <link href="/2019/06/22/%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85%E5%B7%A5%E5%85%B7%E4%B9%8BWireShark/"/>
+      <url>/2019/06/22/%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85%E5%B7%A5%E5%85%B7%E4%B9%8BWireShark/</url>
+      
+        <content type="html"><![CDATA[<h1 id="WireShark简介"><a href="#WireShark简介" class="headerlink" title="WireShark简介"></a>WireShark简介</h1><p>WireShark，前称Ethereal，是当今世界最流行的网络协议嗅探、抓包和分析工具，它使我们得以窥探网络上流动的数据及其协议细节。网络管理员使用WireShark来检测网络问题；网络安全工程师使用WireShark来检查网络安全相关问题；开发者可以使用WireShark来开发调试新的通信协议；普通使用者可以使用WireShark来学习网络协议栈相关的知识。</p><h1 id="tcpdump与WireShark关系"><a href="#tcpdump与WireShark关系" class="headerlink" title="tcpdump与WireShark关系"></a>tcpdump与WireShark关系</h1><p>tcpdump是命令行界面CUI，WireShark是图形用户界面GUI，WireShark相对tcpdump而言，界面更友好、功能更强大。</p><p>Unix平台（包括Mac OS）下的WireShark是基于libpcap实现的，Window平台下的WireShark则是基于winpcap实现的。libpcap，Packet Capture Libray，即数据包捕获函数库，源于tcpdump项目。最开始是由tcpdump中剥离出的抓包、过滤、capture file的读写代码提炼而成，现在也是由tcpdump项目的开发组织tcpdump.org维护。</p><p>捕获抓包机制是在数据链路层增加一个旁路处理（并不干扰系统自身的网络协议栈的处理），对发送和接收的数据包通过Unix内核做过滤和缓冲处理，最后直接传递给上层应用程序。一个包的捕捉分为三个主要部分，包括面向底层包捕获、面向中间层的数据包过滤和面向应用层的用户接口。</p><p>libpcap作为捕捉网络数据包的库，它是一个独立于系统的用户级API接口，为底层网络检测提供了一个可移植的框架。</p><p>鉴于WireShark和tcpdump都共同使用libpcap作为其底层抓包的库，可以用WireShark打开tcpdump抓包保存的pcap文件进行分析。</p><p>WireShark使用详细参考：<br><a href="https://www.cnblogs.com/TankXiao/archive/2012/10/10/2711777.html" target="_blank" rel="noopener">https://www.cnblogs.com/TankXiao/archive/2012/10/10/2711777.html</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Network </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>多平台抓包工具Charles</title>
+      <link href="/2019/06/22/%E5%A4%9A%E5%B9%B3%E5%8F%B0%E6%8A%93%E5%8C%85%E5%B7%A5%E5%85%B7Charles/"/>
+      <url>/2019/06/22/%E5%A4%9A%E5%B9%B3%E5%8F%B0%E6%8A%93%E5%8C%85%E5%B7%A5%E5%85%B7Charles/</url>
+      
+        <content type="html"><![CDATA[<h1 id="多平台抓包工具Charles简介"><a href="#多平台抓包工具Charles简介" class="headerlink" title="多平台抓包工具Charles简介"></a>多平台抓包工具Charles简介</h1><p>Charles是在Windows/Mac/Linux多平台下常用的网络封包截取工具，尤其在做移动开发项目时，为了调试与服务器端的网络通讯协议，常常需要截取网络封包来分析，而Charles就是一个很好的抓包分析工具。</p><p>Charles是收费软件，可以免费试用30天。试用期过后，未付费的用户仍然可以继续使用，但是每次使用时间不能超过30分钟，并且启动时将会有10秒种的延时。因此，该付费方案对广大用户还是相当友好的，即使你长期不付费，也能使用完整的软件功能。只是当你需要长时间进行封包调试时，会因为Charles强制关闭而遇到影响。</p><p>Charles通过将自己设置成系统的网络访问代理服务器，使得所有的网络访问请求都通过它来完成，从而实现了网络封包的截取和分析。简单来说，Charles可以理解为一个HTTP/HTTPS的代理服务器。Charles主要的功能包括：</p><ul><li>截取HTTP和HTTPS网络封包</li><li>支持重发网络请求，方便后端调试</li><li>支持修改网络请求参数</li><li>支持网络请求的截获并动态修改</li><li>支持模拟慢速网络</li></ul><h1 id="Charles的几种代理模式"><a href="#Charles的几种代理模式" class="headerlink" title="Charles的几种代理模式"></a>Charles的几种代理模式</h1><h2 id="HTTP正向代理"><a href="#HTTP正向代理" class="headerlink" title="HTTP正向代理"></a>HTTP正向代理</h2><p>（1）普通代理</p><p>若HTTP请求到达Charles代理时，有Charles向服务端发起HTTP请求，并将HTTP响应数据返回给客户端。这种情况下，因为HTTP都是明文的，Charles代理就能捕获所有的HTTP请求报文。</p><p><img src="/images/charles_1_1.png" alt></p><p>（2）隧道代理</p><p>HTTP客户端通过HTTP CONNECT方法请求“隧道代理”创建一条到达任意目标服务器和端口的TCP连接，并对客户端和服务器之间的后继数据进行盲转发（无脑转发）。</p><p><img src="/images/charles_1_2.png" alt></p><p>假如我通过代理访问A网站，浏览器首先通过CONNECT请求，让代理创建一条到A网站的TCP连接；一旦TCP连接建好，代理无脑转发后续流量即可。所以这种代理，理论上适用于任意基于TCP的应用层协议，HTTPS网站使用的TLS协议当然可以使用这种方式啦。这也是这种代理为什么被称为隧道的原因。对于HTTPS来说，客户端透过代理直接跟服务端进行TLS握手协商密钥，所以依然是安全的。</p><p>当HTTPS请求到达Charles时，Charles只能抓取到HTTP的CONNECT报文，并不能获取到HTTPS报文的任何内容。</p><h2 id="SOCKS代理"><a href="#SOCKS代理" class="headerlink" title="SOCKS代理"></a>SOCKS代理</h2><p>待补充。</p><h2 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h2><p>待补充。</p><h2 id="HTTPS-SSL代理（HTTPS中间人攻击）"><a href="#HTTPS-SSL代理（HTTPS中间人攻击）" class="headerlink" title="HTTPS/SSL代理（HTTPS中间人攻击）"></a>HTTPS/SSL代理（HTTPS中间人攻击）</h2><p>由于普通代理和隧道代理中，我们无法获取HTTPS报文的详细信息，因此我们可以开启Charles的SSL代理模式，这种Charles就相当于一个攻击中间人，来获取HTTPS的报文信息。首先浏览器或手机需要安装并信任Charles签发的CA根证书。浏览器或手机与Charles之间建立SSL连接，使用的是Charles自己签发的假证书。然后Charles和服务端也建立SSL连接，使用的是真实的后端服务发过来的证书。</p><p>在这种情况下，Charles就可以截获HTTPS详细的报文信息。</p><p>HTTPS/SSL代理配置详细过程如下（客户端为iOS，Charles部署在MAC电脑上）：</p><p>（1）将Charles自签发的根证书安装到移动设备iOS上</p><p>在Charles上点击<code>Help-&gt;SSL Proxying-&gt;Install Charles Root Certificate on Mobile Device or Remote Browser…</code>这时会弹出一个对话框，如下：</p><p><img src="/images/charles_1_3.png" alt></p><p>我们在IOS的Safari浏览器中输入<code>chls.pro/ssl</code>或<code>http://charlesproxy.com/getssl将证书安装到IOS上</code>。</p><p>（2）在IOS上信任新证书</p><p>首先在<code>设置-&gt;通用-&gt;描述文件与设备管理</code>中，安装刚刚下载的证书描述文件。然后在<code>设置-&gt;通用-&gt;关于本机-&gt;证书信任设置</code>中信任Charles的根证书。</p><p><img src="/images/charles_1_4.png" alt></p><p>（3）在Charles的<code>Proxy-&gt;SSL Proxying Settings</code>中勾选Enable SSL Proxying，然后添加要抓取的域名和端口：</p><p><img src="/images/charles_1_5.png" alt></p><p>（4）在IOS的无线局域网中设置代理即可大功告成。</p><p>学习资料参考于：<br><a href="https://blog.devtang.com/2015/11/14/charles-introduction/" target="_blank" rel="noopener">https://blog.devtang.com/2015/11/14/charles-introduction/</a><br><a href="https://bigzuo.github.io/2018/12/15/nginx-https-forward-proxy/" target="_blank" rel="noopener">https://bigzuo.github.io/2018/12/15/nginx-https-forward-proxy/</a><br><a href="https://www.jianshu.com/p/a83b19a36a8b" target="_blank" rel="noopener">https://www.jianshu.com/p/a83b19a36a8b</a><br><a href="https://imququ.com/post/web-proxy.html" target="_blank" rel="noopener">https://imququ.com/post/web-proxy.html</a><br><a href="https://www.jianshu.com/p/468e2905a3e1" target="_blank" rel="noopener">https://www.jianshu.com/p/468e2905a3e1</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Network </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>HTTP常见状态码说明</title>
       <link href="/2019/06/09/HTTP%E5%B8%B8%E8%A7%81%E7%8A%B6%E6%80%81%E7%A0%81%E8%AF%B4%E6%98%8E/"/>
       <url>/2019/06/09/HTTP%E5%B8%B8%E8%A7%81%E7%8A%B6%E6%80%81%E7%A0%81%E8%AF%B4%E6%98%8E/</url>
@@ -2884,7 +2960,7 @@
       <link href="/2018/07/08/CSS%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F/"/>
       <url>/2018/07/08/CSS%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F/</url>
       
-        <content type="html"><![CDATA[<h1 id="外部样式表"><a href="#外部样式表" class="headerlink" title="外部样式表"></a>外部样式表</h1><p>外部样式表就是将CSS的内容定义在一个单独的文件中，这样就可以使用同一个CSS样式表来控制多个HTML文档。然后HTML文档使用<code>&lt;link&gt;</code>标签链接到外部样式表。 <code>&lt;link&gt;</code>标签在HTML文档的头部：</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">type</span>=<span class="string">"text/css"</span> <span class="attr">href</span>=<span class="string">"mystyle.css"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br></pre></td></tr></table></figure><h1 id="内部样式表"><a href="#内部样式表" class="headerlink" title="内部样式表"></a>内部样式表</h1><p>当单个文档需要特殊的样式时，就应该使用内部样式表。你可以使用<code>&lt;style&gt;</code>标签在文档头部定义内部样式表，像如下方式：</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">hr &#123;color:sienna;&#125;</span></span><br><span class="line"><span class="undefined">p &#123;margin-left:20px;&#125;</span></span><br><span class="line"><span class="undefined">body &#123;background-image:url("images/back40.gif");&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br></pre></td></tr></table></figure><h1 id="内联样式"><a href="#内联样式" class="headerlink" title="内联样式"></a>内联样式</h1><p>内联样式，就是在HTML标签内使用样式<code>style</code>属性，<code>style</code>属性可以包含任何CSS属性。如下例子是用来控制段落的颜色和左外边距：</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">style</span>=<span class="string">"color:sienna;margin-left:20px"</span>&gt;</span>This is a paragraph.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure><h1 id="各种使用方式的优先级"><a href="#各种使用方式的优先级" class="headerlink" title="各种使用方式的优先级"></a>各种使用方式的优先级</h1><p>当一个HTML文档同时使用了外部样式表、内部样式表和内联样式。这时候各个样式表会合并成一个样式，假设样式表1中定义了<code>a</code>元素，样式表2中定义了<code>b</code>元素上，那么最终的<code>a</code>和<code>b</code>都会得到控制。但是如果不同的样式表对同一个元素进行了重复的定义，那么就会使用样式表的优先级来覆盖，优先级为<code>内联样式 &gt; 内部样式表 &gt; 外部样式表 &gt; 浏览器缺省值</code>，也就是内联样式的优先级最大。</p>]]></content>
+        <content type="html"><![CDATA[<h1 id="外部样式表"><a href="#外部样式表" class="headerlink" title="外部样式表"></a>外部样式表</h1><p>外部样式表就是将CSS的内容定义在一个单独的文件中，这样就可以使用同一个CSS样式表来控制多个HTML文档。然后HTML文档使用<code>&lt;link&gt;</code>标签链接到外部样式表。 <code>&lt;link&gt;</code>标签在HTML文档的头部：</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">type</span>=<span class="string">"text/css"</span> <span class="attr">href</span>=<span class="string">"mystyle.css"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br></pre></td></tr></table></figure><h1 id="内部样式表"><a href="#内部样式表" class="headerlink" title="内部样式表"></a>内部样式表</h1><p>当单个文档需要特殊的样式时，就应该使用内部样式表。你可以使用<code>&lt;style&gt;</code>标签在文档头部定义内部样式表，像如下方式：</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css"><span class="selector-tag">hr</span> &#123;<span class="attribute">color</span>:sienna;&#125;</span></span><br><span class="line"><span class="css"><span class="selector-tag">p</span> &#123;<span class="attribute">margin-left</span>:<span class="number">20px</span>;&#125;</span></span><br><span class="line"><span class="css"><span class="selector-tag">body</span> &#123;<span class="attribute">background-image</span>:<span class="built_in">url</span>(<span class="string">"images/back40.gif"</span>);&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br></pre></td></tr></table></figure><h1 id="内联样式"><a href="#内联样式" class="headerlink" title="内联样式"></a>内联样式</h1><p>内联样式，就是在HTML标签内使用样式<code>style</code>属性，<code>style</code>属性可以包含任何CSS属性。如下例子是用来控制段落的颜色和左外边距：</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">style</span>=<span class="string">"color:sienna;margin-left:20px"</span>&gt;</span>This is a paragraph.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure><h1 id="各种使用方式的优先级"><a href="#各种使用方式的优先级" class="headerlink" title="各种使用方式的优先级"></a>各种使用方式的优先级</h1><p>当一个HTML文档同时使用了外部样式表、内部样式表和内联样式。这时候各个样式表会合并成一个样式，假设样式表1中定义了<code>a</code>元素，样式表2中定义了<code>b</code>元素上，那么最终的<code>a</code>和<code>b</code>都会得到控制。但是如果不同的样式表对同一个元素进行了重复的定义，那么就会使用样式表的优先级来覆盖，优先级为<code>内联样式 &gt; 内部样式表 &gt; 外部样式表 &gt; 浏览器缺省值</code>，也就是内联样式的优先级最大。</p>]]></content>
       
       
       <categories>
