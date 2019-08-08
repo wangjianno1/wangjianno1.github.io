@@ -115,7 +115,7 @@
 <meta property="og:description" content="基于BT协议的P2P技术组成基于BT协议的文件分发系统由以下几个实体构成： （1）一个Web服务器 用于保存种子文件，供P2P网络中的下载者下载。 （2）一个种子文件（.torrent文件） .torrent文件使用B encode表示，整个是一个字典数据结构，它有多个key值，包括一些是可选的，这里介绍最关键的几个键值对： info：存储资源文件的元信息     piece length">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://wangjianno1.github.io/images/bittorrent_1_1.png">
-<meta property="og:updated_time" content="2019-06-23T09:48:28.707Z">
+<meta property="og:updated_time" content="2019-08-08T08:23:13.074Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="P2P技术BitTorrent协议">
 <meta name="twitter:description" content="基于BT协议的P2P技术组成基于BT协议的文件分发系统由以下几个实体构成： （1）一个Web服务器 用于保存种子文件，供P2P网络中的下载者下载。 （2）一个种子文件（.torrent文件） .torrent文件使用B encode表示，整个是一个字典数据结构，它有多个key值，包括一些是可选的，这里介绍最关键的几个键值对： info：存储资源文件的元信息     piece length">
@@ -423,7 +423,7 @@ announce：描述tracker服务器的URL
 <p>name/path比较笼统的说，就是具体文件的信息。因为BitTorrent协议允许将数个文件和文件夹作为一个BitTorrent下载进行发布，因此下载方可以根据需要勾选某一些下载文件。注意，这里将数个文件也砍成一个数据流，因此一个piece如果在文件边界上，可能包含不同文件的信息。</p>
 <p>announce保存的是tracker服务器的URL，也就是客户端拿到.torrent文件首先要访问的服务器，在一些扩展协议中，announce可以保存多个tracker服务器作为备选。</p>
 <p>（3）一个Tracker服务器</p>
-<p>Tracker服务器，又称索引服务器。Tracker服务器核心功能记录了哪些下载者有资源可以下载，并提供给其他下载者。</p>
+<p>Tracker服务器，又称索引服务器，其实也算是P2P的调度服务器。Tracker服务器核心功能记录了哪些下载者有资源可以下载，并提供给其他下载者。</p>
 <p>（4）一个原始文件提供者</p>
 <p>（5）一个或多个下载者</p>
 <h1 id="BT协议分享过程"><a href="#BT协议分享过程" class="headerlink" title="BT协议分享过程"></a>BT协议分享过程</h1><p><img src="/images/bittorrent_1_1.png" alt></p>
