@@ -101,5 +101,11 @@ BT客户端根据Tracker服务器提供的Peers信息，直接去与这些Peers�
 
 备注：一般说来，下载者和WEB服务器使用HTTP/FTP协议进行种子文件的获取与上传。下载者和Tracker服务器之间是通过HTTP协议。下载者和下载者之间是通过BT协议，也就是TCP/UDP协议来进行数据的传输。
 
+# 其他问题
+
+（1）P2P打洞问题
+
+（2）.......
+
 学习资料参考于：
 https://blog.azard.me/2015/10/24/introduction-to-bittorrent/
