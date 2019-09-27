@@ -19,6 +19,14 @@ Charles通过将自己设置成系统的网络访问代理服务器，使得所�
 + 支持网络请求的截获并动态修改
 + 支持模拟慢速网络
 
+# Charles使用流程
+
+（1）在Mac/Windows上安装Charles工具，并启动。然后在`help->Local Address`查看Charles监听的IP和Port。
+
+（2）在无线网络或WiFi中配置代理。
+
+（3）在手机上发起各种网络访问，然后就可以在Charles看到被截获的各种数据包。
+
 # Charles的几种代理模式
 
 ## HTTP正向代理
