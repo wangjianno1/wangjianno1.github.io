@@ -119,7 +119,7 @@
 <meta property="og:image" content="http://wangjianno1.github.io/images/charles_1_3.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/charles_1_4.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/charles_1_5.png">
-<meta property="og:updated_time" content="2019-06-22T14:57:40.179Z">
+<meta property="og:updated_time" content="2019-09-27T05:30:49.761Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="多平台抓包工具Charles">
 <meta name="twitter:description" content="多平台抓包工具Charles简介Charles是在Windows/Mac/Linux多平台下常用的网络封包截取工具，尤其在做移动开发项目时，为了调试与服务器端的网络通讯协议，常常需要截取网络封包来分析，而Charles就是一个很好的抓包分析工具。 Charles是收费软件，可以免费试用30天。试用期过后，未付费的用户仍然可以继续使用，但是每次使用时间不能超过30分钟，并且启动时将会有10秒种的延时">
@@ -422,6 +422,9 @@
 <li>支持网络请求的截获并动态修改</li>
 <li>支持模拟慢速网络</li>
 </ul>
+<h1 id="Charles使用流程"><a href="#Charles使用流程" class="headerlink" title="Charles使用流程"></a>Charles使用流程</h1><p>（1）在Mac/Windows上安装Charles工具，并启动。然后在<code>help-&gt;Local Address</code>查看Charles监听的IP和Port。</p>
+<p>（2）在无线网络或WiFi中配置代理。</p>
+<p>（3）在手机上发起各种网络访问，然后就可以在Charles看到被截获的各种数据包。</p>
 <h1 id="Charles的几种代理模式"><a href="#Charles的几种代理模式" class="headerlink" title="Charles的几种代理模式"></a>Charles的几种代理模式</h1><h2 id="HTTP正向代理"><a href="#HTTP正向代理" class="headerlink" title="HTTP正向代理"></a>HTTP正向代理</h2><p>（1）普通代理</p>
 <p>若HTTP请求到达Charles代理时，有Charles向服务端发起HTTP请求，并将HTTP响应数据返回给客户端。这种情况下，因为HTTP都是明文的，Charles代理就能捕获所有的HTTP请求报文。</p>
 <p><img src="/images/charles_1_1.png" alt></p>
@@ -805,7 +808,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#多平台抓包工具Charles简介"><span class="nav-number">1.</span> <span class="nav-text">多平台抓包工具Charles简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Charles的几种代理模式"><span class="nav-number">2.</span> <span class="nav-text">Charles的几种代理模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP正向代理"><span class="nav-number">2.1.</span> <span class="nav-text">HTTP正向代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SOCKS代理"><span class="nav-number">2.2.</span> <span class="nav-text">SOCKS代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反向代理"><span class="nav-number">2.3.</span> <span class="nav-text">反向代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTPS-SSL代理（HTTPS中间人攻击）"><span class="nav-number">2.4.</span> <span class="nav-text">HTTPS/SSL代理（HTTPS中间人攻击）</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#多平台抓包工具Charles简介"><span class="nav-number">1.</span> <span class="nav-text">多平台抓包工具Charles简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Charles使用流程"><span class="nav-number">2.</span> <span class="nav-text">Charles使用流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Charles的几种代理模式"><span class="nav-number">3.</span> <span class="nav-text">Charles的几种代理模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP正向代理"><span class="nav-number">3.1.</span> <span class="nav-text">HTTP正向代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SOCKS代理"><span class="nav-number">3.2.</span> <span class="nav-text">SOCKS代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反向代理"><span class="nav-number">3.3.</span> <span class="nav-text">反向代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTPS-SSL代理（HTTPS中间人攻击）"><span class="nav-number">3.4.</span> <span class="nav-text">HTTPS/SSL代理（HTTPS中间人攻击）</span></a></li></ol></li></ol></div>
             
 
           </div>
