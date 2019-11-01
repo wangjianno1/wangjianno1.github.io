@@ -115,7 +115,8 @@
 <meta property="og:description" content="基于BT协议的P2P技术组成基于BT协议的文件分发系统由以下几个实体构成： （1）一个Web服务器 用于保存种子文件，供P2P网络中的下载者下载。 （2）一个种子文件（.torrent文件） .torrent文件使用B encode表示，整个是一个字典数据结构，它有多个key值，包括一些是可选的，这里介绍最关键的几个键值对： info：存储资源文件的元信息     piece length">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://wangjianno1.github.io/images/bittorrent_1_1.png">
-<meta property="og:updated_time" content="2019-08-08T08:28:34.788Z">
+<meta property="og:image" content="http://wangjianno1.github.io/images/bittorrent_1_2.png">
+<meta property="og:updated_time" content="2019-11-01T12:51:16.134Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="P2P技术BitTorrent协议">
 <meta name="twitter:description" content="基于BT协议的P2P技术组成基于BT协议的文件分发系统由以下几个实体构成： （1）一个Web服务器 用于保存种子文件，供P2P网络中的下载者下载。 （2）一个种子文件（.torrent文件） .torrent文件使用B encode表示，整个是一个字典数据结构，它有多个key值，包括一些是可选的，这里介绍最关键的几个键值对： info：存储资源文件的元信息     piece length">
@@ -458,6 +459,8 @@ port
 <p>BT客户端根据Tracker服务器提供的Peers信息，直接去与这些Peers客户端连接，下载相应的分片，当某些分片下载完成后，也会被Tracker记录下来，后面其他的BT客户端也会从连接本客户端，从而本客户端也称为了资源分享者。</p>
 <p>备注：一般说来，下载者和WEB服务器使用HTTP/FTP协议进行种子文件的获取与上传。下载者和Tracker服务器之间是通过HTTP协议。下载者和下载者之间是通过BT协议，也就是TCP/UDP协议来进行数据的传输。</p>
 <h1 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h1><p>（1）P2P打洞问题</p>
+<p>我们知道，在P2P网络中，没有Peer点所处的网络都不太一样，有的是在NAT服务后面，有的是在公网环境中。要想做到Peer到Peer的数据分享和传输，就必须让Peer和Peer能够建立网络连接。这个在P2P技术领域里面就叫做“打洞穿透”。</p>
+<p><img src="/images/bittorrent_1_2.png" alt></p>
 <p>（2）…….</p>
 <p>学习资料参考于：<br><a href="https://blog.azard.me/2015/10/24/introduction-to-bittorrent/" target="_blank" rel="noopener">https://blog.azard.me/2015/10/24/introduction-to-bittorrent/</a></p>
 
