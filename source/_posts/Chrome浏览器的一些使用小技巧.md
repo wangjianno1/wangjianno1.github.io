@@ -85,3 +85,11 @@ TTFB，全称为Time To First Byte，是最初的网络请求被发起到从服�
 
 ![](/images/chrome_1_10.png)
 
+# chrome关闭HTTP/2
+
+新版本的Chrome是默认开启HTTP/2，只要服务端支持HTTP/2，那么通信将使用HTTP/2。但有时我们测试的时候，期望Chrome关闭HTTP/2，而是使用HTTP/1.1。在MAC环境下，在终端中执行如下命令：
+
+`/Applications/Google Chrome.app/Contents/MacOS/Google Chrome -disable-http2`
+
+记得先要将已经运行的Chrome浏览器进程关闭干净。
+
