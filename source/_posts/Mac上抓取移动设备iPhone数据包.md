@@ -39,6 +39,10 @@ categories: Network
 
 备注：Mac电脑中若没有rvictl命令工具，安装Xcode就好啦。
 
+![](/images/itunes_1_1.png)
+
+![](/images/itunes_1_2.png)
+
 （3）启动WireShark监听步骤（2）中为iPhone设备新建的远程虚拟接口
 
 （4）手机打开APP上网
