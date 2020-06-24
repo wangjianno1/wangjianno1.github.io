@@ -45,8 +45,13 @@ http {
     server {
         #服务器监听的端口
         listen 80;
+        #定义虚拟主机
+        server_name www.domain1.com;
         #对URL进行匹配
         location / {
+            ……
+        }
+        location /cde {
             ……
         }
     }
@@ -54,8 +59,13 @@ http {
     server {
         #服务器监听的端口
         listen 80;
+        #定义虚拟主机
+        server_name www.domain2.com;
         #对URL进行匹配
         location / {
+            ……
+        }
+        location /abc {
             ……
         }
     }
