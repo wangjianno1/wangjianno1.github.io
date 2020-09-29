@@ -114,10 +114,12 @@
 <meta property="og:site_name" content="老坛の菜园子">
 <meta property="og:description" content="curl简介简单来说，curl是一个用url方式，来和服务器进行文件传输和下载的工具。它不仅仅支持HTTP协议，还支持了其他的众多的协议，例如DICT/FILE/FTP/FTPS/Gopher/HTTP/HTTPS/IMAP/IMAPS/LDAP/LDAPS/POP3/POP3S/RTMP等。 curl工具格式和选项格式： 1curl [options] [URL...] 重要选项： 123456">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-06-15T07:27:49.054Z">
+<meta property="og:image" content="http://wangjianno1.github.io/images/curl_1_1.png">
+<meta property="og:updated_time" content="2020-09-28T13:00:47.439Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux中curl命令的使用">
 <meta name="twitter:description" content="curl简介简单来说，curl是一个用url方式，来和服务器进行文件传输和下载的工具。它不仅仅支持HTTP协议，还支持了其他的众多的协议，例如DICT/FILE/FTP/FTPS/Gopher/HTTP/HTTPS/IMAP/IMAPS/LDAP/LDAPS/POP3/POP3S/RTMP等。 curl工具格式和选项格式： 1curl [options] [URL...] 重要选项： 123456">
+<meta name="twitter:image" content="http://wangjianno1.github.io/images/curl_1_1.png">
 
 
 
@@ -429,6 +431,14 @@
 <p>（5）第五种</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -d <span class="string">"@data.json"</span> -H <span class="string">"Content-Type: application/json"</span> -X POST http://localhost:3000/data</span><br></pre></td></tr></table></figure>
 <p>备注：将json格式的数据单独放入文件，然后通过<code>-d &quot;@filename&quot;</code>来引入。</p>
+<h1 id="curl的一些其他问题"><a href="#curl的一些其他问题" class="headerlink" title="curl的一些其他问题"></a>curl的一些其他问题</h1><p>在使用curl做POST的时候，当要POST的数据大于1024字节的时候，curl并不会直接就发起POST请求，而是会分为两步：</p>
+<p>（1）发送一个请求，包含一个Expect:100-continue，询问Server使用愿意接受数据</p>
+<p>（2）接收到Server返回的100-continue应答以后，才把数据POST给Server</p>
+<p>这是libcurl的行为。具体的RFC相关描述：<a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec8.html#sec8.2.3" target="_blank" rel="noopener">http://www.w3.org/Protocols/rfc2616/rfc2616-sec8.html#sec8.2.3</a></p>
+<p>于是，这样就有了一个问题，并不是所有的Server都会正确应答100-continue，比如lighttpd，就会返回417 “Expectation Failed”，则会造成逻辑出错。</p>
+<p>要解决的办法也挺容易：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl_setopt($ch, CURLOPT_HTTPHEADER, array(&apos;Expect:&apos;));</span><br><span class="line">// Disable Expect: header (lighttpd does not support it)</span><br></pre></td></tr></table></figure>
+<p><img src="/images/curl_1_1.png" alt></p>
 <p>学习资料参考于：<br><a href="https://gist.github.com/subfuzion/08c5d85437d5d4f00e58" target="_blank" rel="noopener">https://gist.github.com/subfuzion/08c5d85437d5d4f00e58</a><br><a href="http://www.ruanyifeng.com/blog/2011/09/curl.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2011/09/curl.html</a></p>
 
       
@@ -789,7 +799,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#curl简介"><span class="nav-number">1.</span> <span class="nav-text">curl简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#curl工具格式和选项"><span class="nav-number">2.</span> <span class="nav-text">curl工具格式和选项</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#curl使用的例子"><span class="nav-number">3.</span> <span class="nav-text">curl使用的例子</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于使用curl命令的-d参数携带HTTP-request的请求体request-body一些问题"><span class="nav-number">4.</span> <span class="nav-text">关于使用curl命令的-d参数携带HTTP request的请求体request body一些问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#curl简介"><span class="nav-number">1.</span> <span class="nav-text">curl简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#curl工具格式和选项"><span class="nav-number">2.</span> <span class="nav-text">curl工具格式和选项</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#curl使用的例子"><span class="nav-number">3.</span> <span class="nav-text">curl使用的例子</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于使用curl命令的-d参数携带HTTP-request的请求体request-body一些问题"><span class="nav-number">4.</span> <span class="nav-text">关于使用curl命令的-d参数携带HTTP request的请求体request body一些问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#curl的一些其他问题"><span class="nav-number">5.</span> <span class="nav-text">curl的一些其他问题</span></a></li></ol></div>
             
 
           </div>
