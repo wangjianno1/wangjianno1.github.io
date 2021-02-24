@@ -122,7 +122,7 @@
 <meta property="og:image" content="http://wangjianno1.github.io/images/network_tcp_1_6.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/network_tcp_1_7.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/network_tcp_1_8.png">
-<meta property="og:updated_time" content="2019-06-15T07:27:49.076Z">
+<meta property="og:updated_time" content="2021-02-24T16:44:49.103Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="传输层协议之TCP协议">
 <meta name="twitter:description" content="TCP协议特点TCP，Transmission Control Protocol，传输控制协议。TCP是TCP/IP体系中非常复杂的一个协议。TCP协议的主要特点有： （1）TCP是面向连接的运输层协议 应用程序在使用TCP协议发送应用数据之前，必须先建立TCP连接。在传送数据完毕后，必须释放已经建立的TCP连接。这就是说，应用进程之间的通信好像在“打电话”，通话前要先拨号建立连接，通话结束后要挂">
@@ -428,6 +428,13 @@
 <p><img src="/images/network_tcp_1_1.png" alt></p>
 <p>需要注意的是，TCP面向字节流的特点，并不是说一个TCP报文只包含一个字节的应用层数据啦。TCP会根据对端给出的窗口值和当前网络拥塞的程度来决定一个报文段应包含多少个字节。</p>
 <p>正是因为TCP是面向字节流的，会对应用层交下来的数据包进行“拆包”和“合包”，从某种程度来说，会破坏应用层数据的语义结构，接收方应用程序就可能理解不了收到的数据包。简单举例来说，应用程序A向B发送了三条语句，分别为“我是谁？”、“我在哪里？”及“我要干什么？”，经过TCP的“拆包”和“合包”优化，在接收方B会收到二个TCP数据包，内容分别为“我是谁？我在”，“哪里？我要干什么？”，那么接收方就无法正确的解析出数据。我们称<strong>这种问题为“TCP粘包”</strong>。因此当我们的应用程序使用TCP作为传输层协议时，需要处理好“TCP粘包”问题，如在应用层增加消息边界，或者为应用每个消息指定消息长度。需要注意的是，HTTP报文是使用TCP协议来通信的，但并没有“TCP粘包”问题，因为HTTP报文自身就有一定的报文结构，所以接收方能够正确解析出HTTP报文。</p>
+<h1 id="TCP-UDP协议通信中的X元组"><a href="#TCP-UDP协议通信中的X元组" class="headerlink" title="TCP/UDP协议通信中的X元组"></a>TCP/UDP协议通信中的X元组</h1><p>（1）四元组</p>
+<pre><code>源IP地址、目的IP地址、源端口、目的端口
+</code></pre><p>（2）五元组</p>
+<pre><code>源IP地址、目的IP地址、协议号、源端口、目的端口
+</code></pre><p>（3）七元组</p>
+<pre><code>源IP地址、目的IP地址、协议号、源端口、目的端口、服务类型、接口索引
+</code></pre><p>其中协议号指的是协议类型，一般是协议蔟中的传输层协议，比如TCP是6，UDP是17；也可能是网络层协议，比如ICMP是1；也可能是应用层协议，比如OSPF是89。目的主机收到网络数据包后，根据协议号确定送给哪个模块（TCP/UDP/ICMP…）来处理，送给TCP/UDP模块的报文再根据端口号确定送给哪个应用程序来处理。</p>
 <h1 id="TCP协议的报文格式"><a href="#TCP协议的报文格式" class="headerlink" title="TCP协议的报文格式"></a>TCP协议的报文格式</h1><p><img src="/images/network_tcp_1_2.png" alt></p>
 <h1 id="TCP的可靠传输"><a href="#TCP的可靠传输" class="headerlink" title="TCP的可靠传输"></a>TCP的可靠传输</h1><p>TCP发送的报文段是交给IP层传送的，但IP层只能提供尽最大努力服务，也就是说，TCP下面的网络所提供的是不可靠的传输。因此TCP必须采用适当的措施才能使得两个运输层之间的通信变得可靠。TCP为了保证可靠传输，提供了如下三种可选的方案。</p>
 <p>（1）停止等待协议</p>
@@ -810,7 +817,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP协议特点"><span class="nav-number">1.</span> <span class="nav-text">TCP协议特点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP协议的报文格式"><span class="nav-number">2.</span> <span class="nav-text">TCP协议的报文格式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP的可靠传输"><span class="nav-number">3.</span> <span class="nav-text">TCP的可靠传输</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP的流量控制"><span class="nav-number">4.</span> <span class="nav-text">TCP的流量控制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP的拥塞控制"><span class="nav-number">5.</span> <span class="nav-text">TCP的拥塞控制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP三次握手连接与四次握手释放"><span class="nav-number">6.</span> <span class="nav-text">TCP三次握手连接与四次握手释放</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP协议特点"><span class="nav-number">1.</span> <span class="nav-text">TCP协议特点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP-UDP协议通信中的X元组"><span class="nav-number">2.</span> <span class="nav-text">TCP/UDP协议通信中的X元组</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP协议的报文格式"><span class="nav-number">3.</span> <span class="nav-text">TCP协议的报文格式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP的可靠传输"><span class="nav-number">4.</span> <span class="nav-text">TCP的可靠传输</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP的流量控制"><span class="nav-number">5.</span> <span class="nav-text">TCP的流量控制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP的拥塞控制"><span class="nav-number">6.</span> <span class="nav-text">TCP的拥塞控制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP三次握手连接与四次握手释放"><span class="nav-number">7.</span> <span class="nav-text">TCP三次握手连接与四次握手释放</span></a></li></ol></div>
             
 
           </div>
