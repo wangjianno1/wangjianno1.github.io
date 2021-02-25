@@ -107,12 +107,12 @@
   <meta name="keywords" content="Hexo, NexT">
 
 
-<meta name="description" content="开放授权OAuthOAuth，Open Authorization，中文名是开放授权。OAUTH协议为用户资源的授权提供了一个安全的、开放而又简易的标准。与以往的授权方式不同之处是OAuth的授权不会使第三方触及到用户的帐号信息（如用户名与密码），即第三方无需使用用户的用户名与密码就可以申请获得该用户资源的授权，因此OAuth是安全的。 通俗的讲，OAuth是为解决不同公司的不同产品实现登陆的一种">
+<meta name="description" content="开放授权OAuthOAuth，Open Authorization，中文名是开放授权。OAuth协议为用户资源的授权提供了一个安全的、开放而又简易的标准。与以往的授权方式不同之处是OAuth的授权不会使第三方触及到用户的帐号信息（如用户名与密码），即第三方无需使用用户的用户名与密码就可以申请获得该用户资源的授权，因此OAuth是安全的。 通俗的讲，OAuth是为解决不同公司的不同产品实现登陆的一种">
 <meta property="og:type" content="article">
 <meta property="og:title" content="用户体系及用户访问控制HTTP Authorization|OAuth|JWT|SSO等">
 <meta property="og:url" content="http://wangjianno1.github.io/2019/04/12/用户体系及用户访问控制HTTP-Authorization-OAuth-JWT-SSO等/index.html">
 <meta property="og:site_name" content="老坛の菜园子">
-<meta property="og:description" content="开放授权OAuthOAuth，Open Authorization，中文名是开放授权。OAUTH协议为用户资源的授权提供了一个安全的、开放而又简易的标准。与以往的授权方式不同之处是OAuth的授权不会使第三方触及到用户的帐号信息（如用户名与密码），即第三方无需使用用户的用户名与密码就可以申请获得该用户资源的授权，因此OAuth是安全的。 通俗的讲，OAuth是为解决不同公司的不同产品实现登陆的一种">
+<meta property="og:description" content="开放授权OAuthOAuth，Open Authorization，中文名是开放授权。OAuth协议为用户资源的授权提供了一个安全的、开放而又简易的标准。与以往的授权方式不同之处是OAuth的授权不会使第三方触及到用户的帐号信息（如用户名与密码），即第三方无需使用用户的用户名与密码就可以申请获得该用户资源的授权，因此OAuth是安全的。 通俗的讲，OAuth是为解决不同公司的不同产品实现登陆的一种">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://wangjianno1.github.io/images/http_auth_1_1.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/http_auth_1_2.png">
@@ -120,10 +120,10 @@
 <meta property="og:image" content="http://wangjianno1.github.io/images/http_auth_1_4.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/http_auth_1_5.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/http_auth_1_6.png">
-<meta property="og:updated_time" content="2019-06-15T07:27:49.081Z">
+<meta property="og:updated_time" content="2021-02-25T13:25:26.383Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="用户体系及用户访问控制HTTP Authorization|OAuth|JWT|SSO等">
-<meta name="twitter:description" content="开放授权OAuthOAuth，Open Authorization，中文名是开放授权。OAUTH协议为用户资源的授权提供了一个安全的、开放而又简易的标准。与以往的授权方式不同之处是OAuth的授权不会使第三方触及到用户的帐号信息（如用户名与密码），即第三方无需使用用户的用户名与密码就可以申请获得该用户资源的授权，因此OAuth是安全的。 通俗的讲，OAuth是为解决不同公司的不同产品实现登陆的一种">
+<meta name="twitter:description" content="开放授权OAuthOAuth，Open Authorization，中文名是开放授权。OAuth协议为用户资源的授权提供了一个安全的、开放而又简易的标准。与以往的授权方式不同之处是OAuth的授权不会使第三方触及到用户的帐号信息（如用户名与密码），即第三方无需使用用户的用户名与密码就可以申请获得该用户资源的授权，因此OAuth是安全的。 通俗的讲，OAuth是为解决不同公司的不同产品实现登陆的一种">
 <meta name="twitter:image" content="http://wangjianno1.github.io/images/http_auth_1_1.png">
 
 
@@ -413,18 +413,18 @@
       
 
       
-        <h1 id="开放授权OAuth"><a href="#开放授权OAuth" class="headerlink" title="开放授权OAuth"></a>开放授权OAuth</h1><p>OAuth，Open Authorization，中文名是开放授权。OAUTH协议为用户资源的授权提供了一个安全的、开放而又简易的标准。与以往的授权方式不同之处是OAuth的授权不会使第三方触及到用户的帐号信息（如用户名与密码），即第三方无需使用用户的用户名与密码就可以申请获得该用户资源的授权，因此OAuth是安全的。</p>
+        <h1 id="开放授权OAuth"><a href="#开放授权OAuth" class="headerlink" title="开放授权OAuth"></a>开放授权OAuth</h1><p>OAuth，Open Authorization，中文名是开放授权。OAuth协议为用户资源的授权提供了一个安全的、开放而又简易的标准。与以往的授权方式不同之处是OAuth的授权不会使第三方触及到用户的帐号信息（如用户名与密码），即第三方无需使用用户的用户名与密码就可以申请获得该用户资源的授权，因此OAuth是安全的。</p>
 <p>通俗的讲，OAuth是为解决不同公司的不同产品实现登陆的一种简便授权方案，通常这些授权服务都是由大客户网站提供的，如QQ，新浪微博，人人网等。而使用这些服务的客户可能是大客户网站，也可能是小客户网站。使用OAuth授权的好处是，在为用户提供某些服务时，可减少或避免因用户懒于注册而导致的用户流失问题。</p>
-<p>OAuth是一个关于授权（authorization）的开放网络标准，在全世界得到广泛应用，目前的版本是2.0版。作为互联网用户，我们很容易就看到有关OAuth的授权认证，例如我们登录某个网站或APP时，往往我们可以用第三方的平台的账户和密码（QQ、淘宝、百度或者新浪微博等账号体系）来登录。在这种情况下，该网站和APP就不需要维护一套用户体系，只需要使用一些大平台提供的OAuth服务就可以啦，透过OAuth可以获取一些用户基本的信息。</p>
+<p>OAuth是一个关于授权（Authorization）的开放网络标准，在全世界得到广泛应用，目前的版本是2.0版。作为互联网用户，我们很容易就看到有关OAuth的授权认证，例如我们登录某个网站或APP时，往往我们可以用第三方的平台的账户和密码（QQ、淘宝、百度或者新浪微博等账号体系）来登录。在这种情况下，该网站和APP就不需要维护一套用户体系，只需要使用一些大平台提供的OAuth服务就可以啦，透过OAuth可以获取一些用户基本的信息。</p>
 <h1 id="HTTP-Authorization-Header"><a href="#HTTP-Authorization-Header" class="headerlink" title="HTTP Authorization Header"></a>HTTP Authorization Header</h1><p>在HTTP Authentication是一种用来允许网页浏览器或其他客户端程序在请求时提供用户名和口令形式的身份凭证的一种登录验证方式。如HTTP Basic Authorization的请求格式，在HTTP的请求头中加入字段格式是<code>Authorization: Basic base64(username:password)</code>，如下：</p>
 <p><img src="/images/http_auth_1_1.png" alt></p>
-<p>显然这种是不安全的，很容易被第三方截获用户名和密码。当然是用https协议就可以避免这个问题啦，因为https会将http header/body都加密，第三方截取了https数据包也解密不了啦。</p>
+<p>显然这种是不安全的，很容易被第三方截获用户名和密码。当然是用https协议就可以避免这个问题啦，因为HTTPS会将HTTP Header/Body都加密，第三方截取了HTTPS数据包也解密不出来啦。</p>
 <p>当访问一个需要HTTP Basic Authentication的URL的时候，如果你没有提供用户名和密码，服务器就会返回401。在发送请求的时候添加HTTP Basic Authentication认证信息到请求中，有如下几种方法：</p>
 <p>（1）直接在浏览器中打开，浏览器会弹出表单，提示你输入用户名和密码。当填写完成并提交后，浏览器会自动将用户名和密码组装到HTTP Authorization Header中，发送给服务端。</p>
-<p>（2）在请求头中添加Authorization：Authorization: “Basic 用户名和密码的base64加密字符串”</p>
+<p>（2）在请求头中添加Authorization请求头，即<code>Authorization: &quot;Basic 用户名和密码的base64加密字符串&quot;</code></p>
 <p><img src="/images/http_auth_1_2.png" alt></p>
-<p>（3）在url中添加用户名和密码，形如：</p>
-<pre><code>http://userName:password@api.minicloud.com.cn/statuses/friends_timeline.xml
+<p>（3）在URL中添加用户名和密码，形如：</p>
+<pre><code>http://username:password@api.minicloud.com.cn/statuses/friends_timeline.xml
 </code></pre><h1 id="JWT"><a href="#JWT" class="headerlink" title="JWT"></a>JWT</h1><p>（1）JWT简介</p>
 <p>JSON Web Token，简写JWT，是目前最流行的HTTP认证解决方案。我们知道HTTP session会将sessionid存储到客户端Cookie中，所以会面临两个问题，一个是浏览器禁用Cookie，另一个是若后端是多实例的架构，就涉及到session共享问题。而JWT可以解决这里面的一些问题。JWT将客户端的信息完全存储到浏览器端，服务器不需要保存session数据了，所有数据都保存在客户端，每次请求都将数据发回服务器。</p>
 <p>（2）JWT原理</p>
