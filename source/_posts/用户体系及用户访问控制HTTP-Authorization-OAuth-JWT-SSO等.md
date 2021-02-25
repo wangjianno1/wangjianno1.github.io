@@ -7,11 +7,11 @@ categories: 大前端
 
 # 开放授权OAuth
 
-OAuth，Open Authorization，中文名是开放授权。OAUTH协议为用户资源的授权提供了一个安全的、开放而又简易的标准。与以往的授权方式不同之处是OAuth的授权不会使第三方触及到用户的帐号信息（如用户名与密码），即第三方无需使用用户的用户名与密码就可以申请获得该用户资源的授权，因此OAuth是安全的。
+OAuth，Open Authorization，中文名是开放授权。OAuth协议为用户资源的授权提供了一个安全的、开放而又简易的标准。与以往的授权方式不同之处是OAuth的授权不会使第三方触及到用户的帐号信息（如用户名与密码），即第三方无需使用用户的用户名与密码就可以申请获得该用户资源的授权，因此OAuth是安全的。
 
 通俗的讲，OAuth是为解决不同公司的不同产品实现登陆的一种简便授权方案，通常这些授权服务都是由大客户网站提供的，如QQ，新浪微博，人人网等。而使用这些服务的客户可能是大客户网站，也可能是小客户网站。使用OAuth授权的好处是，在为用户提供某些服务时，可减少或避免因用户懒于注册而导致的用户流失问题。
 
-OAuth是一个关于授权（authorization）的开放网络标准，在全世界得到广泛应用，目前的版本是2.0版。作为互联网用户，我们很容易就看到有关OAuth的授权认证，例如我们登录某个网站或APP时，往往我们可以用第三方的平台的账户和密码（QQ、淘宝、百度或者新浪微博等账号体系）来登录。在这种情况下，该网站和APP就不需要维护一套用户体系，只需要使用一些大平台提供的OAuth服务就可以啦，透过OAuth可以获取一些用户基本的信息。
+OAuth是一个关于授权（Authorization）的开放网络标准，在全世界得到广泛应用，目前的版本是2.0版。作为互联网用户，我们很容易就看到有关OAuth的授权认证，例如我们登录某个网站或APP时，往往我们可以用第三方的平台的账户和密码（QQ、淘宝、百度或者新浪微博等账号体系）来登录。在这种情况下，该网站和APP就不需要维护一套用户体系，只需要使用一些大平台提供的OAuth服务就可以啦，透过OAuth可以获取一些用户基本的信息。
 
 # HTTP Authorization Header
 
@@ -19,19 +19,19 @@ OAuth是一个关于授权（authorization）的开放网络标准，在全世�
 
 ![](/images/http_auth_1_1.png)
 
-显然这种是不安全的，很容易被第三方截获用户名和密码。当然是用https协议就可以避免这个问题啦，因为https会将http header/body都加密，第三方截取了https数据包也解密不了啦。
+显然这种是不安全的，很容易被第三方截获用户名和密码。当然是用https协议就可以避免这个问题啦，因为HTTPS会将HTTP Header/Body都加密，第三方截取了HTTPS数据包也解密不出来啦。
 
 当访问一个需要HTTP Basic Authentication的URL的时候，如果你没有提供用户名和密码，服务器就会返回401。在发送请求的时候添加HTTP Basic Authentication认证信息到请求中，有如下几种方法：
 
 （1）直接在浏览器中打开，浏览器会弹出表单，提示你输入用户名和密码。当填写完成并提交后，浏览器会自动将用户名和密码组装到HTTP Authorization Header中，发送给服务端。
 
-（2）在请求头中添加Authorization：Authorization: "Basic 用户名和密码的base64加密字符串"
+（2）在请求头中添加Authorization请求头，即`Authorization: "Basic 用户名和密码的base64加密字符串"`
 
 ![](/images/http_auth_1_2.png)
 
-（3）在url中添加用户名和密码，形如：
+（3）在URL中添加用户名和密码，形如：
 
-    http://userName:password@api.minicloud.com.cn/statuses/friends_timeline.xml
+    http://username:password@api.minicloud.com.cn/statuses/friends_timeline.xml
 
 # JWT
 
