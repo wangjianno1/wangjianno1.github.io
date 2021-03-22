@@ -49,7 +49,7 @@ def foo(familyname='wang', givenname='hao'):
     return familyname + givenname
 ```
 
-备注：对于默认形参，在调用函数时，可以不传递实参哦。
+备注：对于默认形参，在调用函数时，可以不传递实参。
 
 # Python中可变参数
 
