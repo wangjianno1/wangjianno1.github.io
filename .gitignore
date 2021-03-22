@@ -7,6 +7,5 @@ public/
 .deploy*/
 package-lock.json
 commit.sh
-deploy_github_pages.sh
 bootstrap.sh
 
