@@ -7,7 +7,7 @@ categories: Virtualization
 
 # cgroup简介
 
-cgroup是control groups的缩写，是Linux内核提供的一种可以限制、记录、隔离进程组（process groups）所使用的物力资源（如CPU、Memory及I/O等等）的机制。cgroups也是LXC为实现虚拟化所使用的资源管理手段。
+cgroup是control groups的缩写，是Linux内核提供的一种可以限制、记录、隔离进程组（process groups）所使用的物理资源（如CPU、Memory及I/O等等）的机制。cgroups也是LXC为实现虚拟化所使用的资源管理手段。
 
 cgroup提供了一个cgroup虚拟文件系统，作为进行分组管理和各子系统设置的用户接口。要使用cgroup，必须挂载cgroup文件系统。这时通过挂载选项指定使用哪个子系统。
 
