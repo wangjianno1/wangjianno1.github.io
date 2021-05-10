@@ -124,7 +124,7 @@
 <meta property="og:image" content="http://wangjianno1.github.io/images/maven_1_7.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/maven_1_8.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/maven_1_9.png">
-<meta property="og:updated_time" content="2019-06-15T07:27:49.051Z">
+<meta property="og:updated_time" content="2021-05-10T09:56:59.982Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA项目构建工具Maven技术调研">
 <meta name="twitter:description" content="Maven简介Apache Maven是一个软件（特别是Java软件）项目管理及自动构建工具，由Apache软件基金会所提供。基于项目对象模型（POM）概念，Maven利用一小段描述信息来管理一个项目的构建、报告和文档等。Maven也可被用于构建和管理各种项目，例如C#，Ruby，Scala和其他语言编写的项目。Maven曾是Jakarta项目的子项目，现为由Apache软件基金会主持的独立Apa">
@@ -425,7 +425,7 @@
 <p>首先新建环境变量M2_HOME，值为Maven的部署路径；然后修改系统PATH变量，增加%M2_HOME/bin</p>
 <p>（4）测试验证</p>
 <p>在Windows的cmd中输入<code>mvn -v</code>即可。</p>
-<h1 id="Maven管理的项目的目录结构"><a href="#Maven管理的项目的目录结构" class="headerlink" title="Maven管理的项目的目录结构"></a>Maven管理的项目的目录结构</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">|-src</span><br><span class="line">    |-main</span><br><span class="line">        |-java</span><br><span class="line">            |-package <span class="comment">#即用户的自己的代码，例如com.sohu.adslmon等</span></span><br><span class="line">        |-resources   <span class="comment">#存放一些配置文件或静态资源文件，如模板文件、静态图片等</span></span><br><span class="line">            |-static</span><br><span class="line">            |-templates</span><br><span class="line">    |-<span class="built_in">test</span></span><br><span class="line">        |-java</span><br><span class="line">            |-package <span class="comment">#即用户的自己的代码</span></span><br><span class="line">        |-resources   <span class="comment">#存放测试需要用到的一些配置文件或静态资源文件，如模板文件、静态图片等</span></span><br><span class="line">            |-static</span><br><span class="line">            |-templates</span><br><span class="line">|-pom.xml     <span class="comment">#Maven的项目管理配置文件</span></span><br></pre></td></tr></table></figure>
+<h1 id="Maven管理的项目的目录结构"><a href="#Maven管理的项目的目录结构" class="headerlink" title="Maven管理的项目的目录结构"></a>Maven管理的项目的目录结构</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">|-src</span><br><span class="line">    |-main</span><br><span class="line">        |-java</span><br><span class="line">            |-package <span class="comment">#即用户的自己的代码，例如com.baidu.xxoomon等</span></span><br><span class="line">        |-resources   <span class="comment">#存放一些配置文件或静态资源文件，如模板文件、静态图片等</span></span><br><span class="line">            |-static</span><br><span class="line">            |-templates</span><br><span class="line">    |-<span class="built_in">test</span></span><br><span class="line">        |-java</span><br><span class="line">            |-package <span class="comment">#即用户的自己的代码</span></span><br><span class="line">        |-resources   <span class="comment">#存放测试需要用到的一些配置文件或静态资源文件，如模板文件、静态图片等</span></span><br><span class="line">            |-static</span><br><span class="line">            |-templates</span><br><span class="line">|-pom.xml     <span class="comment">#Maven的项目管理配置文件</span></span><br></pre></td></tr></table></figure>
 <h1 id="使用Maven进行项目开发的流程"><a href="#使用Maven进行项目开发的流程" class="headerlink" title="使用Maven进行项目开发的流程"></a>使用Maven进行项目开发的流程</h1><p>（1）按照Maven项目的目录结构创建目录</p>
 <p>（2）开发自己的代码</p>
 <p>（3）新建pom.xml文件，并配置</p>
@@ -436,7 +436,7 @@
 <p>（6）对项目进行打包</p>
 <p><code>mvn package</code></p>
 <h1 id="Maven中的一些概念"><a href="#Maven中的一些概念" class="headerlink" title="Maven中的一些概念"></a>Maven中的一些概念</h1><p>（1）坐标</p>
-<p>坐标是由groupId，artifactId及version等组成。其中groupId为组织名，一般是“公司域名的反写+项目名”，例如com.sohu.adslmon。artifaceId为项目模块在组织中的标识，一般为“项目名-模块名”，例如adslmon-api。</p>
+<p>坐标是由groupId，artifactId及version等组成。其中groupId为组织名，一般是“公司域名的反写+项目名”，例如com.baidu.xxoomon。artifaceId为项目模块在组织中的标识，一般为“项目名-模块名”，例如xxoomon-api。</p>
 <p>（2）仓库</p>
 <p>仓库分为本地仓库和远程仓库两个。</p>
 <ul>
