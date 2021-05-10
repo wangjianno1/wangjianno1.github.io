@@ -30,7 +30,7 @@ Apache Maven是一个软件（特别是Java软件）项目管理及自动构建�
 |-src
     |-main
         |-java
-            |-package #即用户的自己的代码，例如com.sohu.adslmon等
+            |-package #即用户的自己的代码，例如com.baidu.xxoomon等
         |-resources   #存放一些配置文件或静态资源文件，如模板文件、静态图片等
             |-static
             |-templates
@@ -67,7 +67,7 @@ cd到Maven项目根目录，然后执行`mvn compile`。
 
 （1）坐标
 
-坐标是由groupId，artifactId及version等组成。其中groupId为组织名，一般是“公司域名的反写+项目名”，例如com.sohu.adslmon。artifaceId为项目模块在组织中的标识，一般为“项目名-模块名”，例如adslmon-api。
+坐标是由groupId，artifactId及version等组成。其中groupId为组织名，一般是“公司域名的反写+项目名”，例如com.baidu.xxoomon。artifaceId为项目模块在组织中的标识，一般为“项目名-模块名”，例如xxoomon-api。
 
 （2）仓库
 
