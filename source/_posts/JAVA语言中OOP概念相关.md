@@ -17,11 +17,14 @@ categories: JAVA
 类变量/静态变量
 成员方法/实例方法
 类方法/静态方法
+构造方法
 重载overload
 覆盖/覆写override
 ```
 
-# 构造方法
+# 具体说明
+
+1.构造方法
 
 每个类都有构造方法。如果没有显式地为类定义构造方法，Java编译器将会为该类提供一个默认构造方法。在创建一个对象的时候，至少要调用一个构造方法。构造方法的名称必须与类同名，一个类可以有多个构造方法。举例来说：
 
@@ -36,13 +39,63 @@ public class Puppy {
 }
 ```
 
-# 具体说明
-
-（1）成员变量
+2.成员变量/实例变量/成员属性
 
 成员变量是定义在类中，方法体之外的变量。这种变量在创建对象的时候实例化。成员变量可以被类中方法、构造方法和特定类的语句块访问。
 
-（2）类变量
+3.类变量/静态变量
 
 类变量也声明在类中，方法体之外，但必须声明为static类型。
+
+4.继承
+
+```java
+// 父类Animal
+public class Animal { 
+    private String name;  
+    private int id; 
+
+    public Animal(String myName, int myid) { 
+        name = myName; 
+        id = myid;
+    } 
+
+    public void eat(){ 
+        System.out.println(name+"正在吃"); 
+    }
+
+    public void sleep(){
+        System.out.println(name+"正在睡");
+    }
+
+    public void introduction() { 
+        System.out.println("大家好！我是"         + id + "号" + name + "."); 
+    } 
+}
+// 子类企鹅类
+public class Penguin extends Animal { 
+    public Penguin(String myName, int myid) { 
+        super(myName, myid); 
+    } 
+}
+
+// 子类老鼠类
+public class Mouse extends Animal { 
+    public Mouse(String myName, int myid) { 
+        super(myName, myid); 
+    } 
+}
+```
+
+关于继承的一些知识点：
+
+（1）继承可以使用extends关键字来实现继承，而且所有的类都是继承于java.lang.Object，当一个类没有extends关键字时，则默认继承object（这个类在java.lang包中，所以不需要import）祖先类。
+
+（2）在Java中，类的继承是单一继承，也就是说，一个子类只能拥有一个父类，所以extends只能继承一个类。
+
+（3）final关键字声明的类是不能被继承的，即最终类。
+
+```java
+final class 类名 {//类体}
+```
 
