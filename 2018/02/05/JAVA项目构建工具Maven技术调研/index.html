@@ -124,7 +124,7 @@
 <meta property="og:image" content="http://wangjianno1.github.io/images/maven_1_7.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/maven_1_8.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/maven_1_9.png">
-<meta property="og:updated_time" content="2021-05-10T09:56:59.982Z">
+<meta property="og:updated_time" content="2021-05-11T12:34:42.823Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA项目构建工具Maven技术调研">
 <meta name="twitter:description" content="Maven简介Apache Maven是一个软件（特别是Java软件）项目管理及自动构建工具，由Apache软件基金会所提供。基于项目对象模型（POM）概念，Maven利用一小段描述信息来管理一个项目的构建、报告和文档等。Maven也可被用于构建和管理各种项目，例如C#，Ruby，Scala和其他语言编写的项目。Maven曾是Jakarta项目的子项目，现为由Apache软件基金会主持的独立Apa">
@@ -502,7 +502,7 @@
 <p>在运行的时候依赖，在编译的时候不依赖 。</p>
 <p>备注：若不指明dependency的scope，则默认的依赖范围是compile.</p>
 <p>举例来说，如下为junit只在测试阶段使用该依赖，打包部署到生成环境时，则不会依赖junit包。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;depencencies&gt;</span><br><span class="line">  &lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;junit&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;junit&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;3.8.1&lt;/version&gt;</span><br><span class="line">  &lt;/dependency&gt;</span><br><span class="line">&lt;/depencencies&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;depencencies&gt;</span><br><span class="line">  &lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;junit&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;junit&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;3.8.1&lt;/version&gt;</span><br><span class="line">    &lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">  &lt;/dependency&gt;</span><br><span class="line">&lt;/depencencies&gt;</span><br></pre></td></tr></table></figure>
 <h1 id="Maven生命周期与插件"><a href="#Maven生命周期与插件" class="headerlink" title="Maven生命周期与插件"></a>Maven生命周期与插件</h1><h2 id="Maven的生命周期与插件关系"><a href="#Maven的生命周期与插件关系" class="headerlink" title="Maven的生命周期与插件关系"></a>Maven的生命周期与插件关系</h2><p>一个完整的项目构建过程通常包括清理、编译、测试、打包、集成测试、验证、部署等步骤，Maven从中抽取了一套完善的、易扩展的生命周期。Maven中的生命周期是一个抽象概念，并没有实际的实现。而具体任务是由插件来完成。</p>
 <h2 id="Maven生命周期"><a href="#Maven生命周期" class="headerlink" title="Maven生命周期"></a>Maven生命周期</h2><p>Maven定义了三套生命周期，分别是clean、default以及site。每个生命周期又包含了很多的阶段（phase）。三套生命周期相互独立，互不影响。但各个生命周期中的phase却是有执行顺序的，后面的phase依赖于前面的phase。执行某个phase时，其前面的phase会依顺序执行，但不会触发另外两套生命周期中的任何phase。</p>
 <p>（1）clean生命周期</p>
