@@ -309,6 +309,7 @@ ${project.build.finalName} #项目打包输出文件的名称，默认为${proje
     <groupId>junit</groupId>
     <artifactId>junit</artifactId>
     <version>3.8.1</version>
+    <scope>test</scope>
   </dependency>
 </depencencies>
 ```
