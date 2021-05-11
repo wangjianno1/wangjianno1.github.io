@@ -423,18 +423,18 @@ mvn [options] [<goal(s)>] [<phase(s)>]
             <activeByDefault>true</activeByDefault>
         </activation>
         <properties>
-            <profiles.proj.env>local</profiles.proj.active>
+            <profiles.proj.env>local</profiles.proj.env>
         </properties>
     <profile>
         <id>test</id>
         <properties>
-            <profiles.proj.active>test</profiles.proj.active>
+            <profiles.proj.env>test</profiles.proj.env>
         </properties>
     </profile>
     <profile>
         <id>production</id>
         <properties>
-            <profiles.proj.active>production</profiles.proj.active>
+            <profiles.proj.env>production</profiles.proj.env>
         </properties>
     </profile>
 </profiles>
