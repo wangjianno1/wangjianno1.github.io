@@ -588,6 +588,55 @@ xxoo-web是个web应用模块，在项目xxoo上点击右键，选择`new->proje
 
 那么在`maven package`子模块xxoo-web时，就会将xxoo-common的jar包xxoo-common-0.0.1-SNAPSHOT.jar，拷贝一份到xxoo-web的`target/xxoo-web/WEB-INF/lib`下，这样就会像使用第三方JAR包一样使用我们自己开发的JAR包模块啦。
 
+## Maven+SpringBoot项目多模块管理的最佳实践
+
+模块的拆分有两种方式，
+
+（1）按照MVC分层结构来拆分模块，结构如下：
+
+```
+|-xxoo
+    |-xxoo-common
+        |-pom.xml(jar)
+    |-xxoo-controller
+        |-pom.xml(war)
+    |-xxoo-service
+        |-pom.xml(jar)
+    |-xxoo-dao
+        |-pom.xml(jar)
+    |-pom.xml(pom)
+```
+
+（2）按照业务逻辑结构来拆分模块，结构如下：
+
+```
+|-xxoo
+    |-xxoo-common
+        |-pom.xml(jar)
+    |-xxoo-order
+        |-pom.xml(war)
+    |-xxoo-accout
+        |-pom.xml(war)
+    |-xxoo-pay
+        |-pom.xml(war)
+    |-pom.xml(pom)
+```
+
+网络上的一个项目结构参考如下：
+
+![](/images/maven_1_10.png)
+
+在实际的工程实践中，一定要注意，xxoo-common是一个抽离出来的工具库，其他模块会引用xxoo-common，假设xxoo-order依赖xxoo-common，因为xxoo-common是xxoo的字模块，maven继承了xxoo的pom.xml中的配置，那其实xxoo-common也是一个SpringBoot的项目，如果在xxoo的pom.xml中有如下的配置：
+
+```xml
+<plugin>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-maven-plugin</artifactId>
+</plugin>
+```
+
+那么xxoo-common也会继承这个配置，那么SpringBoot工程编译打包时，xxoo-common会生成两种jar包，一种是普通的jar，另一种是可执行jar。默认情况下，这两种jar的名称相同，在不做配置的情况下，普通的jar先生成，可执行jar后生成，造成可执行jar会覆盖普通的jar。而xxoo-order无法依赖xxoo-common工程的可执行jar，所以编译打包时，xxoo-order就会报出“程序包com.baidu.xxoo.common不存在”失败。当前想到的解决方式是把插件spring-boot-maven-plugin的配置挪到xxoo-order中，这样xxoo-common就不会继承到spring-boot-maven-plugin的插件。xxoo-common仅仅是一个普通的工具包，我们并不想编译成可执行的包哦。
+
 # 其他闲杂知识
 
 ## 关于`<packaging>...</packaging>`使用
