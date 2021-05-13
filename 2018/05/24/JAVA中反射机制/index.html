@@ -107,19 +107,19 @@
   <meta name="keywords" content="JAVA基础,">
 
 
-<meta name="description" content="Java的反射机制JAVA反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法；这种动态获取的信息以及动态调用对象的方法的功能称为Java语言的反射机制。　 JAVA中关于反射相关的类在java.lang.reflect包中。 获取Class对象Java中，每个类被加载之后，JVM就会为该类生成一个对应的Class对象，通过该Cla">
+<meta name="description" content="Java的反射Reflection机制JAVA反射机制是在运行状态中，对于任意一个类/对象，都能够知道这个类/对象的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法；这种动态获取的信息以及动态调用对象的方法的功能称为Java语言的反射机制。 在JAVA或一些JAVA框架中，都有很多的注解Annotation，注解的实现原理，一部分就是使用到了JAVA反射技术。举例来说，Spring中使">
 <meta name="keywords" content="JAVA基础">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JAVA中反射机制">
 <meta property="og:url" content="http://wangjianno1.github.io/2018/05/24/JAVA中反射机制/index.html">
 <meta property="og:site_name" content="老坛の菜园子">
-<meta property="og:description" content="Java的反射机制JAVA反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法；这种动态获取的信息以及动态调用对象的方法的功能称为Java语言的反射机制。　 JAVA中关于反射相关的类在java.lang.reflect包中。 获取Class对象Java中，每个类被加载之后，JVM就会为该类生成一个对应的Class对象，通过该Cla">
+<meta property="og:description" content="Java的反射Reflection机制JAVA反射机制是在运行状态中，对于任意一个类/对象，都能够知道这个类/对象的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法；这种动态获取的信息以及动态调用对象的方法的功能称为Java语言的反射机制。 在JAVA或一些JAVA框架中，都有很多的注解Annotation，注解的实现原理，一部分就是使用到了JAVA反射技术。举例来说，Spring中使">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_reflect_1_1.png">
-<meta property="og:updated_time" content="2019-06-15T07:27:49.047Z">
+<meta property="og:updated_time" content="2021-05-13T05:52:52.491Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA中反射机制">
-<meta name="twitter:description" content="Java的反射机制JAVA反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法；这种动态获取的信息以及动态调用对象的方法的功能称为Java语言的反射机制。　 JAVA中关于反射相关的类在java.lang.reflect包中。 获取Class对象Java中，每个类被加载之后，JVM就会为该类生成一个对应的Class对象，通过该Cla">
+<meta name="twitter:description" content="Java的反射Reflection机制JAVA反射机制是在运行状态中，对于任意一个类/对象，都能够知道这个类/对象的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法；这种动态获取的信息以及动态调用对象的方法的功能称为Java语言的反射机制。 在JAVA或一些JAVA框架中，都有很多的注解Annotation，注解的实现原理，一部分就是使用到了JAVA反射技术。举例来说，Spring中使">
 <meta name="twitter:image" content="http://wangjianno1.github.io/images/java_reflect_1_1.png">
 
 
@@ -409,7 +409,8 @@
       
 
       
-        <h1 id="Java的反射机制"><a href="#Java的反射机制" class="headerlink" title="Java的反射机制"></a>Java的反射机制</h1><p>JAVA反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法；这种动态获取的信息以及动态调用对象的方法的功能称为Java语言的反射机制。　</p>
+        <h1 id="Java的反射Reflection机制"><a href="#Java的反射Reflection机制" class="headerlink" title="Java的反射Reflection机制"></a>Java的反射Reflection机制</h1><p>JAVA反射机制是在运行状态中，对于任意一个类/对象，都能够知道这个类/对象的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法；这种动态获取的信息以及动态调用对象的方法的功能称为Java语言的反射机制。</p>
+<p>在JAVA或一些JAVA框架中，都有很多的注解Annotation，注解的实现原理，一部分就是使用到了JAVA反射技术。举例来说，Spring中使用@Bean注解来表示某个类是Bean对象，那么Spring在初始化时，会通过JAVA反射机制去搜索项目工程中的所有Class对象，是否包含了@Beaan注解，如果有则创建Bean的Java示例，并放到Spring容器中统一管理。</p>
 <p>JAVA中关于反射相关的类在<code>java.lang.reflect</code>包中。</p>
 <h1 id="获取Class对象"><a href="#获取Class对象" class="headerlink" title="获取Class对象"></a>获取Class对象</h1><p>Java中，每个类被加载之后，JVM就会为该类生成一个对应的Class对象，通过该Class对象就可以访问到JVM中的这个类。在Java中获取某个类的Class对象通常有如下三种方式：</p>
 <p>（1）Class.forName(String clazzName)</p>
@@ -421,7 +422,10 @@
 <p>备注：直白来说，获取到一个类的Class对象是使用反射机制的前提条件。</p>
 <h1 id="通过Class对象进行各种操作"><a href="#通过Class对象进行各种操作" class="headerlink" title="通过Class对象进行各种操作"></a>通过Class对象进行各种操作</h1><p>如下通过获取到Test类的Class对象之后，就可以进行很多反射相关的操作了。具体如下：</p>
 <p><img src="/images/java_reflect_1_1.png" alt></p>
-
+<h1 id="反射机制中的一些相关类"><a href="#反射机制中的一些相关类" class="headerlink" title="反射机制中的一些相关类"></a>反射机制中的一些相关类</h1><pre><code>Field类，用来表示Class对象中的成员变量/类变量
+Constructor类，用来表示Class对象中的构造函数
+Method类，用来表示Class对象中的成员方法/类方法
+</code></pre>
       
     </div>
     
@@ -786,7 +790,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java的反射机制"><span class="nav-number">1.</span> <span class="nav-text">Java的反射机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获取Class对象"><span class="nav-number">2.</span> <span class="nav-text">获取Class对象</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#通过Class对象进行各种操作"><span class="nav-number">3.</span> <span class="nav-text">通过Class对象进行各种操作</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java的反射Reflection机制"><span class="nav-number">1.</span> <span class="nav-text">Java的反射Reflection机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获取Class对象"><span class="nav-number">2.</span> <span class="nav-text">获取Class对象</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#通过Class对象进行各种操作"><span class="nav-number">3.</span> <span class="nav-text">通过Class对象进行各种操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#反射机制中的一些相关类"><span class="nav-number">4.</span> <span class="nav-text">反射机制中的一些相关类</span></a></li></ol></div>
             
 
           </div>
