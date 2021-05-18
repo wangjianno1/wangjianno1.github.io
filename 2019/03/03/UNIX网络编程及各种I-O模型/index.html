@@ -121,7 +121,7 @@
 <meta property="og:image" content="http://wangjianno1.github.io/images/unix_io_1_5.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/unix_io_1_6.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/unix_io_1_7.png">
-<meta property="og:updated_time" content="2019-06-15T07:27:49.072Z">
+<meta property="og:updated_time" content="2021-05-18T06:54:00.995Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="UNIX网络编程及各种I&#x2F;O模型">
 <meta name="twitter:description" content="UNIX网络编程概述在UNIX网络编程中，同时有大量的客户端连接到同一个服务器上时，服务端一般对每一个客户端请求fork出一个进程来响应处理，或者对每一个客户端创建出一个线程来响应处理。 最基础的TCP网络编程 （1）socket函数 socket()函数用于在客户端或服务端创建一个socket对象，sockect函数的定义如下： 12#include&amp;lt;sys/socket.h&amp;gt;int">
@@ -449,6 +449,8 @@
 <p>应用进程调用aio_read函数，给内核传递描述符、缓冲区指针、缓冲区大小和文件偏移，并告诉内核当整个操作完成时如何通知我们。aio_read系统调用立即返回，而且在等待I/O完成期间，我们的应用进程不被阻塞。</p>
 <h1 id="UNIX中五种I-O模型的异同"><a href="#UNIX中五种I-O模型的异同" class="headerlink" title="UNIX中五种I/O模型的异同"></a>UNIX中五种I/O模型的异同</h1><p><img src="/images/unix_io_1_7.png" alt></p>
 <p>前四种模型都会导致应用进程阻塞，我们称他们为“同步IO模型”，因为他们的真正I/O操作recvfrom会阻塞应用进程。只有第五种模型才是“异步IO模型”，因为自始至终都没有因为I/O操作导致应用进程被阻塞。</p>
+<h1 id="一点理解"><a href="#一点理解" class="headerlink" title="一点理解"></a>一点理解</h1><p>同步，异步，阻塞以及非阻塞等概念相对难理解。<br>、<br>所谓同步/异步是客户端和服务端之间交互的一种行为状态。同步就是在发出一个调用时，在没有得到结果之前，该调用就不返回，但是一旦调用返回，就得到返回值了。换句话说，就是由调用者主动等待这个调用的结果。而异步则是相反，调用在发出之后，这个调用就直接返回了，所以没有返回结果。换句话说，当一个异步过程调用发出后，调用者不会立刻得到结果。而是在调用发出后，被调用者通过状态信号来通知调用者，或通过回调函数处理这个调用。</p>
+<p>所谓阻塞/非阻塞是客户端一种调用发出后的一种状态。阻塞调用是指调用结果返回之前，调用者会被挂起，调用线程只有在得到结果之后才会返回。非阻塞调用指在不能立刻得到结果之前，该调用不会阻塞当前线程。</p>
 <p>学习资料参考于：<br>《UNIX网络编程卷1：套接字联网API》<br><a href="https://blog.csdn.net/wangjianno2/article/details/45609863" target="_blank" rel="noopener">https://blog.csdn.net/wangjianno2/article/details/45609863</a><br><a href="https://blog.csdn.net/wangjianno2/article/details/38157057" target="_blank" rel="noopener">https://blog.csdn.net/wangjianno2/article/details/38157057</a></p>
 
       
@@ -809,7 +811,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#UNIX网络编程概述"><span class="nav-number">1.</span> <span class="nav-text">UNIX网络编程概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最基础的TCP网络编程"><span class="nav-number">2.</span> <span class="nav-text">最基础的TCP网络编程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#UNIX的I-O模型"><span class="nav-number">3.</span> <span class="nav-text">UNIX的I/O模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#阻塞式I-O"><span class="nav-number">3.1.</span> <span class="nav-text">阻塞式I/O</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非阻塞式I-O"><span class="nav-number">3.2.</span> <span class="nav-text">非阻塞式I/O</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I-O复用（select和poll）"><span class="nav-number">3.3.</span> <span class="nav-text">I/O复用（select和poll）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#信号驱动式I-O（SIGIO）"><span class="nav-number">3.4.</span> <span class="nav-text">信号驱动式I/O（SIGIO）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异步I-O（POSIX的aio-系列函数）"><span class="nav-number">3.5.</span> <span class="nav-text">异步I/O（POSIX的aio_*系列函数）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#UNIX中五种I-O模型的异同"><span class="nav-number">4.</span> <span class="nav-text">UNIX中五种I/O模型的异同</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#UNIX网络编程概述"><span class="nav-number">1.</span> <span class="nav-text">UNIX网络编程概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最基础的TCP网络编程"><span class="nav-number">2.</span> <span class="nav-text">最基础的TCP网络编程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#UNIX的I-O模型"><span class="nav-number">3.</span> <span class="nav-text">UNIX的I/O模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#阻塞式I-O"><span class="nav-number">3.1.</span> <span class="nav-text">阻塞式I/O</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非阻塞式I-O"><span class="nav-number">3.2.</span> <span class="nav-text">非阻塞式I/O</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I-O复用（select和poll）"><span class="nav-number">3.3.</span> <span class="nav-text">I/O复用（select和poll）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#信号驱动式I-O（SIGIO）"><span class="nav-number">3.4.</span> <span class="nav-text">信号驱动式I/O（SIGIO）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异步I-O（POSIX的aio-系列函数）"><span class="nav-number">3.5.</span> <span class="nav-text">异步I/O（POSIX的aio_*系列函数）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#UNIX中五种I-O模型的异同"><span class="nav-number">4.</span> <span class="nav-text">UNIX中五种I/O模型的异同</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一点理解"><span class="nav-number">5.</span> <span class="nav-text">一点理解</span></a></li></ol></div>
             
 
           </div>
