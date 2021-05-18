@@ -89,7 +89,17 @@ public class Mouse extends Animal {
 
 关于继承的一些知识点：
 
-（1）继承可以使用extends关键字来实现继承，而且所有的类都是继承于java.lang.Object，当一个类没有extends关键字时，则默认继承object（这个类在java.lang包中，所以不需要import）祖先类。
+（1）继承可以使用extends关键字来实现继承，而且所有的类都是继承于java.lang.Object，当一个类没有extends关键字时，则默认继承Object（这个类在java.lang包中，所以不需要import）祖先类。Java Object类是所有类的父类，也就是说Java的所有类都继承了Object，子类可以使用Object的所有方法。Object类可以显式继承，也可以隐式继承，以下两种方式时一样的：
+
+```java
+// 显式继承
+public class Runoob extends Object {
+}
+
+//隐式继承
+public class Runoob {
+}
+```
 
 （2）在Java中，类的继承是单一继承，也就是说，一个子类只能拥有一个父类，所以extends只能继承一个类。
 
