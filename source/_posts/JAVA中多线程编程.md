@@ -37,6 +37,25 @@ public class Test {
 }
 ```
 
+也可以有更飒的写法如下：
+
+```java
+// 匿名内部类
+new Thread(new Runnable() {
+    @Override
+    public void run() {
+        System.out.println("Hello");
+        System.out.println("Jimmy");
+    }
+}).start();
+
+// Lambda匿名函数
+new Thread(() -> {
+    System.out.println("Hello");
+    System.out.println("Jimmy");
+}).start();
+```
+
 RunnableThread类通过实现Runnable接口，使得该类有了多线程类的特征。run()方法是多线程的执行体，多线程的业务代码在run方法里面。Thread类实际上也是实现了Runnable接口的类。在启动的多线程的时候，需要先通过Thread类的构造方法Thread(Runnable target)构造出对象，然后调用Thread对象的start()方法来运行多线程代码。
 
 实际上所有的多线程代码都是通过运行Thread的start()方法来运行的。因此，不管是扩展Thread类还是实现Runnable接口来实现多线程，最终还是通过Thread的对象的API来控制线程的，熟悉Thread类的API是进行多线程编程的基础。
@@ -88,9 +107,13 @@ Callable接口很像是Runnable接口的增强版，Callable接口提供了一�
 
 Callable接口是Java 5新增的接口，而且它不是Runnable接口的子接口，所以Callable对象不能直接作为Thread的target。Java 5提供了Future接口来代表Callable接口里call()方法的返回值，并为Future接口提供了一个FutureTask实现类，该实现类实现了Future接口，并实现了Runnable接口，所以使用FutureTask实现类的对象作为Thread类的target。
 
-# start()和run()区别
+# Thread类中start()/run()/join()区别
 
-start()是将线程从“新建状态”转换到“就绪状态”，就可以等待CPU来调度执行了。若直接调用线程的run()方法，那么就会将线程体的代码当成普通函数调用啦，并不会形成线程并CPU调度哦。
+start()开启线程，start()是将线程从“新建状态”转换到“就绪状态”，就可以等待CPU来调度执行了。
+
+run()方法会将线程体的代码当成普通函数调用啦，并不会创建线程并CPU调度哦。
+
+join()方法，阻塞当前线程，一直等待直到该线程死亡，可以指定等待指定时间内线程死亡，否则，一直在循环判断线程是否结束。
 
 # 多线程中的异常处理
 
