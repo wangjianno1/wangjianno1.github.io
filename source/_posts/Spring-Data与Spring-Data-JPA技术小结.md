@@ -123,5 +123,14 @@ JpaRepository继承了PagingAndSortingRepository，实现了JPA规范相关的�
 
 也是可以动态构造查询条件。
 
+# JDBC/JPA/Spring-Data-JPA三者区别和联系
+
+（1）JDBC是JDK中定义的数据驱动接口java.sql.Driver，但并没有具体的实现，具体的实现都是由不同的数据库厂商来提供的。主要是用在关系型数据库的场景。
+
+（2）JPA是Java定义的ORM框架的规范，实现是Hibernate等产品。
+
+（3）Spring Data JPA是对JPA ORM框架的进一步封装，让用户程序的DAO层开发更简单高效，只需要按照Spring Data JPA的规范书定义一些接口，然后Spring Data JPA会帮我们生产一些实现接口的具体方法。
+
+
 参考资料来源于：
 https://projects.spring.io/spring-data-jpa/
