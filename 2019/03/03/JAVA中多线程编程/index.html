@@ -107,18 +107,18 @@
   <meta name="keywords" content="Hexo, NexT">
 
 
-<meta name="description" content="JAVA多线程简介Java给多线程编程提供了内置的支持。 一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。 JAVA中线程的生命周期 JAVA创建多线程编程的方法Java提供了三种创建线程的方法。 通过实现Runnable接口的多线程123456789101112131415class RunnableThread implements Runna">
+<meta name="description" content="JAVA多线程简介Java给多线程编程提供了内置的支持。 一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。 一点说明，Java是单进程多线程模型，这个单进程就是JVM进程，在操作系统层面看到就是java或java.exe进程，Java貌似不能搞多进程编程，如果也可以通过Runtime.getRuntime().exec(&amp;quot;java xxx">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JAVA中多线程编程">
 <meta property="og:url" content="http://wangjianno1.github.io/2019/03/03/JAVA中多线程编程/index.html">
 <meta property="og:site_name" content="老坛の菜园子">
-<meta property="og:description" content="JAVA多线程简介Java给多线程编程提供了内置的支持。 一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。 JAVA中线程的生命周期 JAVA创建多线程编程的方法Java提供了三种创建线程的方法。 通过实现Runnable接口的多线程123456789101112131415class RunnableThread implements Runna">
+<meta property="og:description" content="JAVA多线程简介Java给多线程编程提供了内置的支持。 一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。 一点说明，Java是单进程多线程模型，这个单进程就是JVM进程，在操作系统层面看到就是java或java.exe进程，Java貌似不能搞多进程编程，如果也可以通过Runtime.getRuntime().exec(&amp;quot;java xxx">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_thread_1_1.png">
-<meta property="og:updated_time" content="2021-05-18T18:31:00.241Z">
+<meta property="og:updated_time" content="2021-05-19T06:50:17.107Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA中多线程编程">
-<meta name="twitter:description" content="JAVA多线程简介Java给多线程编程提供了内置的支持。 一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。 JAVA中线程的生命周期 JAVA创建多线程编程的方法Java提供了三种创建线程的方法。 通过实现Runnable接口的多线程123456789101112131415class RunnableThread implements Runna">
+<meta name="twitter:description" content="JAVA多线程简介Java给多线程编程提供了内置的支持。 一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。 一点说明，Java是单进程多线程模型，这个单进程就是JVM进程，在操作系统层面看到就是java或java.exe进程，Java貌似不能搞多进程编程，如果也可以通过Runtime.getRuntime().exec(&amp;quot;java xxx">
 <meta name="twitter:image" content="http://wangjianno1.github.io/images/java_thread_1_1.png">
 
 
@@ -409,6 +409,7 @@
 
       
         <h1 id="JAVA多线程简介"><a href="#JAVA多线程简介" class="headerlink" title="JAVA多线程简介"></a>JAVA多线程简介</h1><p>Java给多线程编程提供了内置的支持。 一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。</p>
+<p>一点说明，Java是单进程多线程模型，这个单进程就是JVM进程，在操作系统层面看到就是java或java.exe进程，Java貌似不能搞多进程编程，如果也可以通过<code>Runtime.getRuntime().exec(&quot;java xxx&quot;)</code>来创建新的进程，创建出来的也是JVM进程。</p>
 <h1 id="JAVA中线程的生命周期"><a href="#JAVA中线程的生命周期" class="headerlink" title="JAVA中线程的生命周期"></a>JAVA中线程的生命周期</h1><p><img src="/images/java_thread_1_1.png" alt></p>
 <h1 id="JAVA创建多线程编程的方法"><a href="#JAVA创建多线程编程的方法" class="headerlink" title="JAVA创建多线程编程的方法"></a>JAVA创建多线程编程的方法</h1><p>Java提供了三种创建线程的方法。</p>
 <h2 id="通过实现Runnable接口的多线程"><a href="#通过实现Runnable接口的多线程" class="headerlink" title="通过实现Runnable接口的多线程"></a>通过实现Runnable接口的多线程</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RunnableThread</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;  <span class="comment">//需要实现接口中run()方法</span></span><br><span class="line">        System.out.println(<span class="string">"RunnableThread.run() method invoking....."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        RunnableThread rt1 = newRunnableThread();</span><br><span class="line">        RunnableThread rt2 = newRunnableThread();</span><br><span class="line">        <span class="keyword">new</span> Thread(rt1, <span class="string">"实现Runnable接口的线程1"</span>).start();</span><br><span class="line">        <span class="keyword">new</span> Thread(rt2, <span class="string">"实现Runnable接口的线程2"</span>).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
