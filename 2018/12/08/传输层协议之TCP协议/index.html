@@ -122,7 +122,7 @@
 <meta property="og:image" content="http://wangjianno1.github.io/images/network_tcp_1_6.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/network_tcp_1_7.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/network_tcp_1_8.png">
-<meta property="og:updated_time" content="2021-05-19T18:18:45.772Z">
+<meta property="og:updated_time" content="2021-05-19T18:23:26.895Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="传输层协议之TCP协议">
 <meta name="twitter:description" content="TCP协议特点TCP，Transmission Control Protocol，传输控制协议。TCP是TCP/IP体系中非常复杂的一个协议。TCP协议的主要特点有： （1）TCP是面向连接的运输层协议 应用程序在使用TCP协议发送应用数据之前，必须先建立TCP连接。在传送数据完毕后，必须释放已经建立的TCP连接。这就是说，应用进程之间的通信好像在“打电话”，通话前要先拨号建立连接，通话结束后要挂">
@@ -438,9 +438,10 @@
 </code></pre><p>其中协议号指的是协议类型，一般是协议蔟中的传输层协议，比如TCP是6，UDP是17；也可能是网络层协议，比如ICMP是1；也可能是应用层协议，比如OSPF是89。目的主机收到网络数据包后，根据协议号确定送给哪个模块（TCP/UDP/ICMP…）来处理，送给TCP/UDP模块的报文再根据端口号确定送给哪个应用程序来处理。</p>
 <h1 id="TCP协议的报文格式"><a href="#TCP协议的报文格式" class="headerlink" title="TCP协议的报文格式"></a>TCP协议的报文格式</h1><p><img src="/images/network_tcp_1_2.png" alt></p>
 <p>（1）序号</p>
-<p>使用WireShark抓包就是seq=m，表示本次TCP报文的数据块的第一个字节的编号是m。例如一个TCP的seq是301，而携带的数据共用100个字节。这就表明，本报文段的数据的第一个字节的序号是301，最后一个字节的序号是400，也即接下来的报文的seq将是401。</p>
+<p>使用WireShark抓包就是<code>seq=m</code>，表示本次TCP报文的数据块的第一个字节的编号是m。例如一个TCP的seq是301，而携带的数据共用100个字节。这就表明，本报文段的数据的第一个字节的序号是301，最后一个字节的序号是400，也即接下来的报文的seq将是401。</p>
 <p>（2）确认号</p>
-<p>使用WireShark抓包就是ack=n，表示已经收到对端<code>[1～n-1]</code>范围的字节流，期望对端下次发过来的TCP报文的seq是n。</p>
+<p>使用WireShark抓包就是<code>ack=n</code>，表示已经收到对端<code>[1～n-1]</code>范围的字节流，期望对端下次发过来的TCP报文的seq是n。</p>
+<p>备注：使用WireShark抓包标记位是大写，注意区分，如SYN|ACK|FIN等。</p>
 <h1 id="TCP的可靠传输"><a href="#TCP的可靠传输" class="headerlink" title="TCP的可靠传输"></a>TCP的可靠传输</h1><p>TCP发送的报文段是交给IP层传送的，但IP层只能提供尽最大努力服务，也就是说，TCP下面的网络所提供的是不可靠的传输。因此TCP必须采用适当的措施才能使得两个运输层之间的通信变得可靠。TCP为了保证可靠传输，提供了如下三种可选的方案。</p>
 <p>（1）停止等待协议</p>
 <p>停止等待协议的粒度是分组。每发送完一个分组就停止发送，等待对方的ACK确认，在收到确认后再发送下一个分组。若发送方在超过一段时间仍然没有收到确认，就认为刚才发送的分组在网络上丢失了，因而重传这个分组，这个机制称为超时重传。</p>
