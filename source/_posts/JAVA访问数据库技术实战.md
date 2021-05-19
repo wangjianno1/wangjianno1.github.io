@@ -75,7 +75,7 @@ public class JDBCTest {
 }
 ```
 
-# 使用Spring框架中的JDBC子模块来访问数据库（JdbcTemplate）
+# 使用Spring Framework中的JDBC子模块来访问数据库（JdbcTemplate）
 
 （1）在pom.xml中添加Spring JDBC的依赖
 
@@ -125,6 +125,11 @@ public class HostNameDaoImpl implements HostNameDao {
 
 备注：使用JdbcTemplate模式是没有对象关系映射ORM的功能。
 
-# Spring Data JPA
+# 使用Hibernate等符合JPA规范的ORM框架
+
+参见[《Hibernate技术小结》](https://wangjianno1.github.io/2019/03/04/Hibernate%E6%8A%80%E6%9C%AF%E5%B0%8F%E7%BB%93/)
+
+# 使用Spring Data JPA
 
 参见[《Spring Data与Spring Data JPA技术小结》](https://wangjianno1.github.io/2019/03/04/Spring-Data%E4%B8%8ESpring-Data-JPA%E6%8A%80%E6%9C%AF%E5%B0%8F%E7%BB%93/)
+
