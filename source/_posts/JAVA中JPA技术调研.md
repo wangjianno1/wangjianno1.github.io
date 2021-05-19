@@ -7,7 +7,11 @@ categories: SSM/SSH
 
 # JPA简介
 
-JPA（Java Persistence API）是Sun官方提出的Java持久化规范。它为Java开发人员提供了一种对象/关联映射工具来管理Java应用中的关系数据。它的出现主要是为了简化现有的持久化开发工作和整合ORM技术，结束现在Hibernate，TopLink，JDO等ORM框架各自为营的局面。值得注意的是，JPA是在充分吸收了现有Hibernate，TopLink，JDO等ORM框架的基础上发展而来的，具有易于使用，伸缩性强等优点。JPA的总体思想和现有Hibernate，TopLink，JDO等ORM框架大体一致。总的来说，JPA包括以下3方面的技术：
+JPA（Java Persistence API）是Sun官方提出的Java持久化规范。它为Java开发人员提供了一种对象/关联映射工具来管理Java应用中的关系数据。它的出现主要是为了简化现有的持久化开发工作和整合ORM技术，结束现在Hibernate，TopLink，JDO等ORM框架各自为营的局面。值得注意的是，JPA是在充分吸收了现有Hibernate，TopLink，JDO等ORM框架的基础上发展而来的，具有易于使用，伸缩性强等优点。JPA的总体思想和现有Hibernate，TopLink，JDO等ORM框架大体一致。
+
+需要注意的是，虽然JPA最初打算用于关系/SQL型数据库，但是一些JPA实现已经扩展用于NoSQL数据存储，但JPA还主要是用于关系型数据库的场景。
+
+总的来说，JPA包括以下3方面的技术：
 
 （1）ORM映射元数据
 
