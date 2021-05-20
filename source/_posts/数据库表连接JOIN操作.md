@@ -51,11 +51,15 @@ categories: 数据库
 SELECT * FROM TableA a INNER JOIN TableB b ON a.name = b.name;       --INNER可以省略
 ```
 
+备注：TableA和TableB做完笛卡尔积之后，只有满足a.name = b.name的记录才是内连接的结果。
+
 （2）左连接
 
 ```sql
 SELECT * FROM TableA a LEFT OUTER JOIN TableB b ON a.name = b.name;  --OUTER可以省略
 ```
+
+备注：TableA和TableB做完笛卡尔积之后，除了满足a.name = b.name的记录是左连接的结果外，再加上TableA中没有被匹配上的记录（这块没有TableB的字段）。
 
 （3）右连接
 
@@ -63,11 +67,15 @@ SELECT * FROM TableA a LEFT OUTER JOIN TableB b ON a.name = b.name;  --OUTER可�
 SELECT * FROM TableA a RIGHT OUTER JOIN TableB b ON a.name = b.name; --OUTER可以省略
 ```
 
+备注：TableA和TableB做完笛卡尔积之后，除了满足a.name = b.name的记录是由连接的结果外，再加上TableB中没有被匹配上的记录（这块没有TableA的字段）。
+
 （4）全连接
 
 ```sql
 SELECT * FROM TableA a FULL OUTER JOIN TableB b ON a.name = b.name;  --OUTER可以省略
 ```
+
+备注：TableA和TableB做完笛卡尔积之后，除了满足a.name = b.name的记录是全连接的结果外，再加上TableA中没有被匹配上的记录（这块没有TableB的字段），再加上TableB中没有被匹配上的记录（这块没有TableA的字段）。
 
 另外，在JOIN操作的SQL语句后面还可以加上where从句，进一步过滤查询结果，举例如下：
 
