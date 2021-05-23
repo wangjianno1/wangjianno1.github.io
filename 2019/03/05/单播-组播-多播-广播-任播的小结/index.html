@@ -117,7 +117,7 @@
 <meta property="og:image" content="http://wangjianno1.github.io/images/network_unicast_1_1.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/network_multicast_1_1.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/network_broadcast_1_1.png">
-<meta property="og:updated_time" content="2019-06-15T07:27:49.078Z">
+<meta property="og:updated_time" content="2021-05-23T12:35:40.569Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="单播|组播(多播)|广播|任播的小结">
 <meta name="twitter:description" content="单播（unicast）单播是指封包在计算机网络的传输中，目的地址为单一目标的一种传输方式。它是现今网络应用最为广泛，通常所使用的网络协议或服务大多采用单播传输，例如一切基于TCP的协议。 在单播通信中，每次只有两个实体相互通信，发送端和接收端都是唯一确定的。在IPv4网络中，0.0.0.0到223.255.255.255属于单播地址。你对小月月喊“小月月”，那么只有小月月回过头来答应你。  组播（">
@@ -425,6 +425,7 @@
 </code></pre><h1 id="任播（anycast）"><a href="#任播（anycast）" class="headerlink" title="任播（anycast）"></a>任播（anycast）</h1><p>任播（anycast）是一种网络寻址和路由的策略，使得资料可以根据路由拓朴来决定送到“最近”或“最好”的目的地。</p>
 <p>在单播中，在发送者和接收者之间存在一一对应的关系。在广播和组播中，在发送者和接收者之间存在一对多的关系，发送者对应一群可以接收消息的节点。在任播中，在发送者和接收者之间存在一对多的关系，发送者对应一群接收节点，但在任何给定时间，只有其中之一可以接收到传送端发来的消息。</p>
 <p>在互联网中，通常使用边界网关协议来实现任播。作为老板，你在公司大喊一声“开发组的过来一个人”， 总会有一个人灰溜溜去响应， 挨批还是发钱啊？</p>
+<h1 id="一点闲杂"><a href="#一点闲杂" class="headerlink" title="一点闲杂"></a>一点闲杂</h1><p>单播/组播/广播/任播不仅仅是数据链路层（如广播域）的概念，在IP层也有这个概念，比如A类/B类/C类IP地址是单播地址，D类IP地址是多播地址。</p>
 <p>学习资料参考于：<br><a href="http://colobu.com/2014/10/21/udp-and-unicast-multicast-broadcast-anycast/" target="_blank" rel="noopener">http://colobu.com/2014/10/21/udp-and-unicast-multicast-broadcast-anycast/</a></p>
 
       
@@ -785,7 +786,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#单播（unicast）"><span class="nav-number">1.</span> <span class="nav-text">单播（unicast）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#组播（multicast）"><span class="nav-number">2.</span> <span class="nav-text">组播（multicast）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#广播（broadcast）"><span class="nav-number">3.</span> <span class="nav-text">广播（broadcast）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#任播（anycast）"><span class="nav-number">4.</span> <span class="nav-text">任播（anycast）</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#单播（unicast）"><span class="nav-number">1.</span> <span class="nav-text">单播（unicast）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#组播（multicast）"><span class="nav-number">2.</span> <span class="nav-text">组播（multicast）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#广播（broadcast）"><span class="nav-number">3.</span> <span class="nav-text">广播（broadcast）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#任播（anycast）"><span class="nav-number">4.</span> <span class="nav-text">任播（anycast）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一点闲杂"><span class="nav-number">5.</span> <span class="nav-text">一点闲杂</span></a></li></ol></div>
             
 
           </div>
