@@ -9,6 +9,8 @@ categories: JAVA
 
 ![](/images/java_obj_1_1.png)
 
+备注：POJO是DO/DTO/BO/VO的统称。
+
 # JavaBeans
 
 JavaBeans是Java中一种特殊的类，可以将多个对象封装到一个对象（bean）中。特点是可序列化，提供无参构造器，提供getter方法和setter方法访问对象的属性。名称中的“Bean”是用于Java的可重用软件组件的惯用叫法。

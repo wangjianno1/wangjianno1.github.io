@@ -77,3 +77,25 @@ com.sina.webo.as
 - 局部变量名
 
 局部变量名以`lowerCamelCase`风格编写，比起其它类型的名称，局部变量名可以有更为宽松的缩写。
+
+# Java编程规范的一些最佳实践
+
+（1）抽象类命名使用Abstract或Base开头。异常类命名使用Exception结尾。测试类命名以它要测试的类的名称开始，以Test结尾。
+
+（2）Service/DAO层方法命名规约：
+
+    获取单个对象的方法用get做前缀
+    获取多个对象的方法用list做前缀
+    获取统计值的方法用count做前缀
+    插入的方法用save/insert做前缀
+    删除的方法用remove/delete做前缀
+    修改的方法用update做前缀
+
+（3）领域模型命名规约
+
+    数据对象:xxxDO，xxx即为数据表名
+    数据传输对象:xxxDTO，xxx为业务领域相关的名称
+    展示对象:xxxVO，xxx一般为网页名称
+    POJO是DO/DTO/BO/VO的统称，禁止命名成xxxPOJO
+
+（4）不要使用一个常量类维护所有常量，按常量功能进行归类，分开维护。大而全的常量类，，不利于理解和维护。建议缓存相关常量放在类CacheConsts下；系统配置相关常量放在类ConfigConsts下。
