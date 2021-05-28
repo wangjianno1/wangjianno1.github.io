@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="老坛の菜园子">
 <meta property="og:description" content="类注释在import之后，class声明之前进行注释，格式如下： 12345678910/** * 这个类是用来产生随机数 * @author  zhangsan * @author  lisi * @see     java.lang.Object#toString() * @see     java.lang.StringBuffer * @version   1.2 */public cla">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-05-27T05:32:06.437Z">
+<meta property="og:updated_time" content="2021-05-27T06:56:16.817Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA开发中一些日常编程规范">
 <meta name="twitter:description" content="类注释在import之后，class声明之前进行注释，格式如下： 12345678910/** * 这个类是用来产生随机数 * @author  zhangsan * @author  lisi * @see     java.lang.Object#toString() * @see     java.lang.StringBuffer * @version   1.2 */public cla">
@@ -442,6 +442,20 @@
 <li>局部变量名</li>
 </ul>
 <p>局部变量名以<code>lowerCamelCase</code>风格编写，比起其它类型的名称，局部变量名可以有更为宽松的缩写。</p>
+<h1 id="Java编程规范的一些最佳实践"><a href="#Java编程规范的一些最佳实践" class="headerlink" title="Java编程规范的一些最佳实践"></a>Java编程规范的一些最佳实践</h1><p>（1）抽象类命名使用Abstract或Base开头。异常类命名使用Exception结尾。测试类命名以它要测试的类的名称开始，以Test结尾。</p>
+<p>（2）Service/DAO层方法命名规约：</p>
+<pre><code>获取单个对象的方法用get做前缀
+获取多个对象的方法用list做前缀
+获取统计值的方法用count做前缀
+插入的方法用save/insert做前缀
+删除的方法用remove/delete做前缀
+修改的方法用update做前缀
+</code></pre><p>（3）领域模型命名规约</p>
+<pre><code>数据对象:xxxDO，xxx即为数据表名
+数据传输对象:xxxDTO，xxx为业务领域相关的名称
+展示对象:xxxVO，xxx一般为网页名称
+POJO是DO/DTO/BO/VO的统称，禁止命名成xxxPOJO
+</code></pre><p>（4）不要使用一个常量类维护所有常量，按常量功能进行归类，分开维护。大而全的常量类，，不利于理解和维护。建议缓存相关常量放在类CacheConsts下；系统配置相关常量放在类ConfigConsts下。</p>
 
       
     </div>
@@ -807,7 +821,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#类注释"><span class="nav-number">1.</span> <span class="nav-text">类注释</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#方法注释"><span class="nav-number">2.</span> <span class="nav-text">方法注释</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#命名约定"><span class="nav-number">3.</span> <span class="nav-text">命名约定</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#类注释"><span class="nav-number">1.</span> <span class="nav-text">类注释</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#方法注释"><span class="nav-number">2.</span> <span class="nav-text">方法注释</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#命名约定"><span class="nav-number">3.</span> <span class="nav-text">命名约定</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java编程规范的一些最佳实践"><span class="nav-number">4.</span> <span class="nav-text">Java编程规范的一些最佳实践</span></a></li></ol></div>
             
 
           </div>
