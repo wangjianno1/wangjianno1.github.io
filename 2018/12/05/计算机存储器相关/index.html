@@ -115,7 +115,7 @@
 <meta property="og:description" content="存储介质的分类按照存储介质的原理可以分为如下几种： （1）磁表面存储器 磁表面存储介质是在金属或塑料基体的表面上涂上一层磁性材料作为记录介质，工作时磁层随磁载体高速运转，用磁头在磁层上进行读/写操作，故称为磁表面存储器。这类存储介质有磁鼓、磁带以及磁盘。 （2）光盘存储器 光盘存储器是应用激光在记录介质（磁光材料）上进行读/写的存储器。这类存储介质有光盘。 （3）半导体存储器 存储元件有半导体器件">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://wangjianno1.github.io/images/pc_storage_1_1.jpg">
-<meta property="og:updated_time" content="2019-06-15T07:27:49.082Z">
+<meta property="og:updated_time" content="2021-06-08T05:37:25.898Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="计算机存储器相关">
 <meta name="twitter:description" content="存储介质的分类按照存储介质的原理可以分为如下几种： （1）磁表面存储器 磁表面存储介质是在金属或塑料基体的表面上涂上一层磁性材料作为记录介质，工作时磁层随磁载体高速运转，用磁头在磁层上进行读/写操作，故称为磁表面存储器。这类存储介质有磁鼓、磁带以及磁盘。 （2）光盘存储器 光盘存储器是应用激光在记录介质（磁光材料）上进行读/写的存储器。这类存储介质有光盘。 （3）半导体存储器 存储元件有半导体器件">
@@ -420,6 +420,11 @@
 <p>B）ROM，只读存储器</p>
 <p>按ROM的原始定义，一旦注入原始信息即不能改变，但随着用户的需要，总希望任意修改ROM内的原始信息，ROM因此有很多种。ROM有MROM、PROM、EPROM、EEPROM、Flash Memory、SSD等。其中SSD使用的是Flash Memory。</p>
 <h1 id="计算机多级存储器结构"><a href="#计算机多级存储器结构" class="headerlink" title="计算机多级存储器结构"></a>计算机多级存储器结构</h1><p><img src="/images/pc_storage_1_1.jpg" alt></p>
+<h1 id="磁盘的顺序-随机读写"><a href="#磁盘的顺序-随机读写" class="headerlink" title="磁盘的顺序/随机读写"></a>磁盘的顺序/随机读写</h1><p>磁盘读取时间，由下面三个部分组成：</p>
+<pre><code>寻道时间，表示磁头在不同磁道之间移动的时间
+旋转延迟，表示在磁道找到时，中轴带动盘面旋转到合适的扇区开头处
+传输时间，表示盘面继续转动，实际读取数据的时间
+</code></pre><p>顺序读写可以大大减少寻道时间和旋转延迟。</p>
 
       
     </div>
@@ -779,7 +784,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#存储介质的分类"><span class="nav-number">1.</span> <span class="nav-text">存储介质的分类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#计算机多级存储器结构"><span class="nav-number">2.</span> <span class="nav-text">计算机多级存储器结构</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#存储介质的分类"><span class="nav-number">1.</span> <span class="nav-text">存储介质的分类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#计算机多级存储器结构"><span class="nav-number">2.</span> <span class="nav-text">计算机多级存储器结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#磁盘的顺序-随机读写"><span class="nav-number">3.</span> <span class="nav-text">磁盘的顺序/随机读写</span></a></li></ol></div>
             
 
           </div>
