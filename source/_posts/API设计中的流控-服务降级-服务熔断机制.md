@@ -9,7 +9,7 @@ categories: 微服务
 
 限流或流控指得是通过对并发访问/请求进行限速，或者对一个时间窗口内的请求进行限速来保护系统，一旦达到限制速率则可以拒绝服务、排队或等待、降级等处理。
 
-流控中主要涉及到两种算法，即漏桶算法和令牌桶算法。
+流控中主要涉及到几种算法，即固定时间窗口限流算法、滑动时间窗口限流算法、漏桶算法和令牌桶算法。目前使用较多的还是漏桶算法和令牌桶算法，尤其是令牌桶算法。
 
 （1）漏桶算法
 
@@ -44,5 +44,6 @@ categories: 微服务
 目前Netflix公司的开源组件Hystrix就已经对服务降级和服务熔断有了很好的支持。
 
 学习资料参考于：
+https://www.infoq.cn/article/qg2tx8fyw5vt-f3hh673
 https://www.jianshu.com/p/a59c13e70582
 http://www.voidcn.com/article/p-nrrhpwdv-bob.html
