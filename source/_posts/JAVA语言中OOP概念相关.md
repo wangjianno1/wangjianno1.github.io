@@ -19,7 +19,7 @@ categories: JAVA
 类方法/静态方法
 构造方法
 重载overload
-覆盖/覆写override
+覆盖/覆写/重写override
 ```
 
 # 具体说明
@@ -117,3 +117,50 @@ final class 类名 {
 
 ![](/images/java_oop_1_1.png)
 
+```java
+class Shape {
+    void draw() {}
+}
+ 
+class Circle extends Shape {
+    void draw() {
+        System.out.println("Circle.draw()");
+    }
+}
+ 
+class Square extends Shape {
+    void draw() {
+        System.out.println("Square.draw()");
+    }
+}
+ 
+class Triangle extends Shape {
+    void draw() {
+        System.out.println("Triangle.draw()");
+    }
+}
+
+//测试
+class Test() {
+    public static void main(String[] args) {
+        Shape shape1 = new Circle();
+        shape.draw();
+
+        Shape shape2 = new Square();
+        shape.draw();
+
+        Shape shape3 = new Triangle();
+        shape.draw();
+    }
+}
+```
+
+## 重载/覆写
+
+（1）覆写
+
+覆写（override）是子类对父类的允许访问的方法的实现过程进行重新编写，返回值和形参都不能改变。即外壳不变，核心重写！重写的好处在于子类可以根据需要，定义特定于自己的行为。也就是说子类能够根据需要实现父类的方法。
+
+（2）重载
+
+重载（overload）是在一个类里面，方法名字相同，而参数不同。返回类型可以相同也可以不同。每个重载的方法（或者构造函数）都必须有一个独一无二的参数类型列表。最常用的地方就是构造器的重载。
