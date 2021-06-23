@@ -71,6 +71,20 @@ RUNTIME：JVM在代码运行期也保留注解，因此可以通过反射机制�
 
 允许子类继承父类中的注解。
 
+# annotation作用
+
+（1）编译检查
+
+具有“让编译器进行编译检查的作用”。例如，@SuppressWarnings，@Deprecated和@Override都具有编译检查作用。
+
+（2）在反射中使用annotation
+
+在反射的Class/Method/Field中的函数中，有许多关于annotation相关的接口。这也意味着，我们可以在反射中解析并使用annotation，这一块很重要，很多annotation的功能就通过反射来实现。
+
+（3）根据annotation生成帮助文档
+
+通过给annotation注解加上@Documented标签，能使该annotation标签出现在javadoc中。
+
 # 自定义注解
 
 如下定义了一个名称为WaHaHa的注解（使用@interface关键字）：

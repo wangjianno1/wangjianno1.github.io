@@ -49,6 +49,30 @@ public class MammalInt implements Animal {
 }
 ```
 
+# 接口的继承
+
+关于接口的继承的两点。一是接口可以继承其他接口，和类的继承是一样的。二是接口可以多继承，即一个接口可以继承多个父接口（类的继承只能是单继承）。
+
+```java
+public interface Sports {
+    public void setHomeTeam(String name);
+    public void setVisitingTeam(String name);
+}
+
+public interface Football extends Sports {
+    public void homeTeamScored(int points);
+    public void visitingTeamScored(int points);
+    public void endOfQuarter(int quarter);
+}
+```
+
+在接口的多继承中extends关键字只需要使用一次，在其后跟着继承接口。
+
+```java
+public interface Hockey extends Sports, Event {
+}
+```
+
 # 抽象类与接口的区别
 
 （1）抽象类中的方法可以有方法体，就是能实现方法的具体功能，但是接口中的方法不行
@@ -58,5 +82,4 @@ public class MammalInt implements Animal {
 （3）接口中不能含有静态代码块以及静态方法（用static修饰的方法），而抽象类是可以有静态代码块和静态方法
 
 （4）一个类只能继承一个抽象类，而一个类却可以实现多个接口
-
 
