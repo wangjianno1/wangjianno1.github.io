@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="老坛の菜园子">
 <meta property="og:description" content="annotation注解简介注解是JDK1.5新增新技术。很多框架为了简化代码，都会提供一些注解。可以理解为插件，是代码级别的插件，在类的方法上写@XXX，就是在代码上插入了一个插件。注解不会也不能影响代码的实际逻辑，仅仅起到辅助性的作用。 注解分为内置注解（也称为元注解，JDK自带注解）和自定义注解（各种框架自带的注解或用户自定义的注解）。 备注：需要注意的是，注解本身做不了任何事情，和XML一">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-06-15T07:27:49.048Z">
+<meta property="og:updated_time" content="2021-06-22T09:16:32.175Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA中注解annotation技术">
 <meta name="twitter:description" content="annotation注解简介注解是JDK1.5新增新技术。很多框架为了简化代码，都会提供一些注解。可以理解为插件，是代码级别的插件，在类的方法上写@XXX，就是在代码上插入了一个插件。注解不会也不能影响代码的实际逻辑，仅仅起到辅助性的作用。 注解分为内置注解（也称为元注解，JDK自带注解）和自定义注解（各种框架自带的注解或用户自定义的注解）。 备注：需要注意的是，注解本身做不了任何事情，和XML一">
@@ -435,6 +435,12 @@
 <p>将此注解包含在JAVA DOC文档中。</p>
 <p>（4）<code>@Inherited</code></p>
 <p>允许子类继承父类中的注解。</p>
+<h1 id="annotation作用"><a href="#annotation作用" class="headerlink" title="annotation作用"></a>annotation作用</h1><p>（1）编译检查</p>
+<p>具有“让编译器进行编译检查的作用”。例如，@SuppressWarnings，@Deprecated和@Override都具有编译检查作用。</p>
+<p>（2）在反射中使用annotation</p>
+<p>在反射的Class/Method/Field中的函数中，有许多关于annotation相关的接口。这也意味着，我们可以在反射中解析并使用annotation，这一块很重要，很多annotation的功能就通过反射来实现。</p>
+<p>（3）根据annotation生成帮助文档</p>
+<p>通过给annotation注解加上@Documented标签，能使该annotation标签出现在javadoc中。</p>
 <h1 id="自定义注解"><a href="#自定义注解" class="headerlink" title="自定义注解"></a>自定义注解</h1><p>如下定义了一个名称为WaHaHa的注解（使用@interface关键字）：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(ElementType.METHOD)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.SOURCE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> WaHaHa &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -802,7 +808,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#annotation注解简介"><span class="nav-number">1.</span> <span class="nav-text">annotation注解简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JAVA语言内置的元注解"><span class="nav-number">2.</span> <span class="nav-text">JAVA语言内置的元注解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自定义注解"><span class="nav-number">3.</span> <span class="nav-text">自定义注解</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#annotation注解简介"><span class="nav-number">1.</span> <span class="nav-text">annotation注解简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JAVA语言内置的元注解"><span class="nav-number">2.</span> <span class="nav-text">JAVA语言内置的元注解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#annotation作用"><span class="nav-number">3.</span> <span class="nav-text">annotation作用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自定义注解"><span class="nav-number">4.</span> <span class="nav-text">自定义注解</span></a></li></ol></div>
             
 
           </div>
