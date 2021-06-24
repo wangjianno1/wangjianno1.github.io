@@ -116,7 +116,7 @@
 <meta property="og:description" content="复杂数据类型（1）枚举Enumeration 枚举（Enumeration）接口虽然它本身不属于数据结构,但它在其他数据结构的范畴里应用很广。 枚举（The Enumeration）接口定义了一种从数据结构中取回连续元素的方式。例如，枚举定义了一个叫nextElement 的方法，该方法用来得到一个包含多元素的数据结构的下一个元素。 （2）位集合BitSet 位集合类实现了一组可以单独设置和清除的">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_syntax_9_1.png">
-<meta property="og:updated_time" content="2019-06-15T07:27:49.047Z">
+<meta property="og:updated_time" content="2021-06-24T10:01:31.632Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA中容器类或集合类">
 <meta name="twitter:description" content="复杂数据类型（1）枚举Enumeration 枚举（Enumeration）接口虽然它本身不属于数据结构,但它在其他数据结构的范畴里应用很广。 枚举（The Enumeration）接口定义了一种从数据结构中取回连续元素的方式。例如，枚举定义了一个叫nextElement 的方法，该方法用来得到一个包含多元素的数据结构的下一个元素。 （2）位集合BitSet 位集合类实现了一组可以单独设置和清除的">
@@ -425,6 +425,7 @@
 <p>（7）属性Properties<br>Properties继承于Hashtable。Properties类表示了一个持久的属性集.属性列表中每个键及其对应值都是一个字符串。Properties类被许多Java类使用。例如，在获取环境变量时它就作为System.getProperties()方法的返回值。</p>
 <h1 id="集合类-容器类"><a href="#集合类-容器类" class="headerlink" title="集合类 | 容器类"></a>集合类 | 容器类</h1><p>在Java 2之前，Java是没有完整的集合框架的。它只有一些简单的可以自扩展的容器类，比如Vector，Stack，Hashtable等。这些容器类在使用的过程中由于效率问题饱受诟病，因此在Java 2中，Java设计者们进行了大刀阔斧的整改，重新设计，于是就有了现在的集合框架。需要注意的是，之前的那些容器类库并没有被弃用而是进行了保留，主要是为了向下兼容的目的，但我们在平时使用中还是应该尽量少用。</p>
 <p>在Java2中集合框架中的接口或类，我们称之为“集合类”或“容器类”。</p>
+<p>必须指出的是，虽然容器号称存储的是Java对象，但实际上并不会真正将Java对象放入容器中，只是在容器中保留这些对象的引用。也就是说，Java容器实际上包含的是引用变量，而这些引用变量指向了我们要实际保存的Java对象。</p>
 <h1 id="容器类的框架图"><a href="#容器类的框架图" class="headerlink" title="容器类的框架图"></a>容器类的框架图</h1><p>容器类的框架图如下：</p>
 <p><img src="/images/java_syntax_9_1.png" alt></p>
 <p>备注：窄虚线框代表的是“接口”；宽虚线框代表的是实现了部分方法的“抽象类”；实线框代表的是“类”；粗实线框代表的是日常常用的“类”。</p>
