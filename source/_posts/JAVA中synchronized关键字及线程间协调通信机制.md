@@ -47,9 +47,9 @@ synchronized(lock) {
 
 （3）调用obj.wait首先会把当前线程挂起，且释放synchronized的锁对象，其他线程可以抢占锁对象了，然后等待obj.notify/notifyAll来唤醒，唤醒之后重新抢占锁对象，获取到锁对象后，接着之前的挂起的语句继续执行
 
-（4）obj.notify唤醒一个被obj.wait挂起的线程，并释放锁对象
+（4）obj.notify唤醒一个被obj.wait挂起的线程，并释放锁对象，当前线程不会挂起
 
-（5）obj.notifyAll唤醒所有被obj.wait挂起的线程，并释放锁对象
+（5）obj.notifyAll唤醒所有被obj.wait挂起的线程，并释放锁对象，当前线程不会挂起
 
 代码举例如下：
 
