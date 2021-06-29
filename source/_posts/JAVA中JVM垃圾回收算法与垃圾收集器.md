@@ -134,8 +134,42 @@ G1收集器在后台维护了一个优先列表，每次根据允许的收集时
 
 # Minor GC、 Major GC、 Full GC
 
+## Minor GC
+
 Minor GC指对年轻代的堆内存进行垃圾回收。
+
+Minor GC触发条件是Eden区域满了。Minor GC的工作内容主要有：
+
+（1）将Eden中没有引用的对象直接被GC掉，其他还有引用的对象会复制到To Survivor区域。
+
+（2）会将From Survivor中还存活的对象，一部分复制到To Survivor，一部分满足条件（这个条件后面会说明）的对象复制到年老代。
+
+（3）From Survivor和To Survivor互换角色，From Survivor会变成To Survivor，To Survivor会变成From Survivor。
+经过一次Minor GC后，Eden区域被清空了，From Survivor会被清空，且会变成To Survivor。
+
+## Major GC
 
 Major GC指对年老代的堆内存进行垃圾回收。
 
-Full GC指即对年轻代又对年老代堆内存进行垃圾回收。
+## Full GC
+
+Full GC指即对年轻代又对年老代堆内存进行垃圾回收。Full GC时会同时进行Major GC和Minor GC。Full GC触发条件如下：
+
+（1）调用System.GC时，系统建议执行Full GC，但是不必然执行
+
+（2）老年代空间不足
+
+（3）方法去空间不足
+
+（4）通过Minor GC后进入老年代的平均大小大于老年代的可用内存
+
+## 一点补充
+
+Survivor中的对象进入年老代的满足如下条件之一即可：
+
+（1）部分对象会在From Survivor和To Survivor区域中复制来复制去，如此交换15次（由JVM参数MaxTenuringThreshold决定，这个参数默认是15），最终如果还是存活，就存入到老年代。
+
+（2）如果对象的大小大于Eden的二分之一会直接分配在年老代
+
+（3）动态年龄判断，大于等于某个年龄的对象超过了Survivor空间一半，这些大于等于某个年龄的对象直接进入老年代
+
