@@ -121,7 +121,7 @@
 <meta property="og:image" content="http://wangjianno1.github.io/images/unix_io_1_5.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/unix_io_1_6.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/unix_io_1_7.png">
-<meta property="og:updated_time" content="2021-05-18T07:04:58.610Z">
+<meta property="og:updated_time" content="2021-06-30T08:46:01.243Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="UNIX网络编程及各种I&#x2F;O模型">
 <meta name="twitter:description" content="UNIX网络编程概述在UNIX网络编程中，同时有大量的客户端连接到同一个服务器上时，服务端一般对每一个客户端请求fork出一个进程来响应处理，或者对每一个客户端创建出一个线程来响应处理。 最基础的TCP网络编程 （1）socket函数 socket()函数用于在客户端或服务端创建一个socket对象，sockect函数的定义如下： 12#include&amp;lt;sys/socket.h&amp;gt;int">
@@ -427,8 +427,12 @@
 <p>（4）listen函数</p>
 <p>listen函数将套接字的状态从CLOSED转换到LISTEN状态。</p>
 <p>（5）accept函数</p>
-<p>服务端调用，用于获取与客户端的连接，该函数会导致进程或线程阻塞，直至有客户端连接进来。accept函数定义如下：</p>
+<p>阻塞函数。服务端调用，用于获取与客户端的连接，该函数会导致进程或线程阻塞，直至有客户端连接进来。accept函数定义如下：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/socket.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">accept</span><span class="params">(<span class="keyword">int</span> sockfd, struct sockaddr * cliaddr, <span class="keyword">socklen_t</span> * addrlen)</span></span>;  <span class="comment">//若accept成功，则返回一个全新的文件描述符，代表着与客户端的网络连接</span></span><br></pre></td></tr></table></figure>
+<p>（6）read函数</p>
+<p>阻塞函数，直到read函数结束返回，才执行下一条代码。</p>
+<p>（7）write函数</p>
+<p>阻塞函数，直到write函数结束返回，才执行下一条代码。</p>
 <h1 id="UNIX的I-O模型"><a href="#UNIX的I-O模型" class="headerlink" title="UNIX的I/O模型"></a>UNIX的I/O模型</h1><p>UNIX下有5种I/O模型。</p>
 <h2 id="阻塞式I-O"><a href="#阻塞式I-O" class="headerlink" title="阻塞式I/O"></a>阻塞式I/O</h2><p>最流行的I/O模型是阻塞式I/O（blocking I/O）模型。</p>
 <p><img src="/images/unix_io_1_2.png" alt></p>
