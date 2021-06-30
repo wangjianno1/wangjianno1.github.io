@@ -85,7 +85,6 @@ public class Test {
 
 ```java
 class CallableImpl implements Callable<Integer> {
-    @Override
     public Integer call() throws Exception {
         System.out.println("CallableImpl.call() invoking.....");
         return new Integer(11);
@@ -98,6 +97,12 @@ public class Test {
         FutureTask<Integer> ft = new FutureTask<>(call);
         new Thread(ft, "Callable & Future Thread 1").start();
         new Thread(ft, "Callable & Future Thread 2").start();
+        try {
+            Integer o = ft.get(); // 通过FutureTask对象获取到线程执行的返回值
+            System.out.println(o);
+        } catch (Exception e) {
+            // to do sth.
+        }
     }
 }
 ```
@@ -108,6 +113,10 @@ Callable接口很像是Runnable接口的增强版，Callable接口提供了一�
     call()方法可以抛出异常
 
 Callable接口是Java 5新增的接口，而且它不是Runnable接口的子接口，所以Callable对象不能直接作为Thread的target。Java 5提供了Future接口来代表Callable接口里call()方法的返回值，并为Future接口提供了一个FutureTask实现类，该实现类实现了Future接口，并实现了Runnable接口，所以使用FutureTask实现类的对象作为Thread类的target。
+
+## 使用Executor框架中线程池来构建
+
+参见《JAVA Executor框架》（待写）
 
 # Thread类中start()/run()/join()区别
 
