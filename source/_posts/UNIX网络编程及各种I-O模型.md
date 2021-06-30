@@ -41,12 +41,20 @@ listen函数将套接字的状态从CLOSED转换到LISTEN状态。
 
 （5）accept函数
 
-服务端调用，用于获取与客户端的连接，该函数会导致进程或线程阻塞，直至有客户端连接进来。accept函数定义如下：
+阻塞函数。服务端调用，用于获取与客户端的连接，该函数会导致进程或线程阻塞，直至有客户端连接进来。accept函数定义如下：
 
 ```c
 #include<sys/socket.h>
 int accept(int sockfd, struct sockaddr * cliaddr, socklen_t * addrlen);  //若accept成功，则返回一个全新的文件描述符，代表着与客户端的网络连接
 ```
+
+（6）read函数
+
+阻塞函数，直到read函数结束返回，才执行下一条代码。
+
+（7）write函数
+
+阻塞函数，直到write函数结束返回，才执行下一条代码。
 
 # UNIX的I/O模型
 
