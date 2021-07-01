@@ -102,13 +102,17 @@ BeanFacotry是Spring中比较原始的Factory，如XMLBeanFactory就是一种典
 
 （1）AOP简介
 
-AOP，Aspect Oriented Programming，中文为面向切面的编程，通过预编译方式或运行期动态代理实现程序功能的统一维护的一种技术。主要的功能有日志记录、性能统计、安全控制、事务处理以及异常处理等等。举例来说：
+AOP，Aspect Oriented Programming，中文为面向切面的编程，通过预编译方式或运行期动态代理实现程序功能的统一维护的一种技术。AOP能够将那些与业务无关，却为业务模块所共同调用的逻辑或责任封装起来，便于减少系统的重复代码，降低模块间的耦合度，并有利于未来的可拓展性和可维护性，主要的功能有日志记录、性能统计、安全控制、事务处理以及异常处理等等。举例来说：
 
 ![](/images/java_spring_1_5.png)
 
 （2）AOP技术的实现方式
 
 AOP技术的实现方式有两种，一个是以AspectJ等为代表的预编译方式，一个是以Spring AOP，JbossAOP等为代表的运行期动态代理（JDK动态代理、CGLib动态代理）。
+
+Spring AOP是基于动态代理的，如果要代理的对象，实现了某个接口，那么Spring AOP会使用JDK Proxy，去创建代理对象，而对于没有实现接口的对象，就无法使用JDK Proxy去进行代理了，这时候Spring AOP会使用Cglib，这时候Spring AOP会使用Cglib生成一个被代理对象的子类来作为代理，如下图所示：
+
+![](/images/java_spring_1_7.png)
 
 （3）AOP技术中的一些基本概念
 
