@@ -115,7 +115,7 @@
 <meta property="og:description" content="JAVA多线程简介Java给多线程编程提供了内置的支持。 一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。 一点说明，Java是单进程多线程模型，这个单进程就是JVM进程，在操作系统层面看到就是java或java.exe进程，Java貌似不能搞多进程编程，如果也可以通过Runtime.getRuntime().exec(&amp;quot;java xxx">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_thread_1_1.png">
-<meta property="og:updated_time" content="2021-06-30T06:38:30.118Z">
+<meta property="og:updated_time" content="2021-06-30T10:01:30.122Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA中多线程编程">
 <meta name="twitter:description" content="JAVA多线程简介Java给多线程编程提供了内置的支持。 一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。 一点说明，Java是单进程多线程模型，这个单进程就是JVM进程，在操作系统层面看到就是java或java.exe进程，Java貌似不能搞多进程编程，如果也可以通过Runtime.getRuntime().exec(&amp;quot;java xxx">
@@ -426,7 +426,7 @@ call()方法可以抛出异常
 <h2 id="使用Executor框架中线程池来构建"><a href="#使用Executor框架中线程池来构建" class="headerlink" title="使用Executor框架中线程池来构建"></a>使用Executor框架中线程池来构建</h2><p>参见《JAVA Executor框架》（待写）</p>
 <h1 id="Thread类中start-run-join-区别"><a href="#Thread类中start-run-join-区别" class="headerlink" title="Thread类中start()/run()/join()区别"></a>Thread类中start()/run()/join()区别</h1><p>start()开启线程，start()是将线程从“新建状态”转换到“就绪状态”，就可以等待CPU来调度执行了。</p>
 <p>run()方法会将线程体的代码当成普通函数调用啦，并不会创建线程并CPU调度哦。</p>
-<p>join()方法，阻塞当前线程，一直等待直到该线程死亡，可以指定等待指定时间内线程死亡，否则，一直在循环判断线程是否结束。</p>
+<p>join()方法，阻塞当前线程，一直等待直到该线程死亡，可以指定等待指定时间内线程死亡，否则，一直在循环判断线程是否结束。也就是，在线程B中调用了线程A的join()方法，则直到线程A执行完毕后，才会继续执行线程B。</p>
 <h1 id="多线程中的异常处理"><a href="#多线程中的异常处理" class="headerlink" title="多线程中的异常处理"></a>多线程中的异常处理</h1><p>（1）在run()方法内处理异常</p>
 <p>我们知道Runnable和Thread的run()方法是不可以声明抛异常的，也就是线程中的代码抛出异常，就只能抛到run()方法，然后线程退出。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    ThreadTest tt = <span class="keyword">new</span> ThreadTest();</span><br><span class="line">    tt.start();</span><br><span class="line">&#125; <span class="keyword">catch</span>(Exception e) &#123;  <span class="comment">// 此处是没有意义的，不会捕获到任何异常</span></span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
