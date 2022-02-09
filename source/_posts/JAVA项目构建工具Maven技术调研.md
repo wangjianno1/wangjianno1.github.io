@@ -121,7 +121,7 @@ pom.xml的完整的标签和结构如下：
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
  
     <!-- The Basics -->
     <groupId>...</groupId>
@@ -168,7 +168,7 @@ pom.xml的完整的标签和结构如下：
     <groupId>公司域名反写+项目名</groupId>
     <artifactId>项目名-模块名</artifactId>
     <version>版本号</version>
-    <package>打包方式，默认为jar</package>
+    <packaging>打包方式，默认为jar</packaging>
     <name>项目描述名</name>
     <url>项目地址</url>
     <description>项目描述信息</description>
