@@ -91,7 +91,7 @@ maven的中央仓库是部署在国外的，国内访问有点慢。其实在国
 mvn compile  #编译项目，会在项目的根目录生成的target目录及生成字节码文件
 mvn test     #运行项目的测试用例
 mvn package  #打包生成项目的jar文件
-mvn clean    #删除编译生成class字节码文件以及项目jar文件等等，即mvn compile生成的target目录
+mvn clean    #删除编译生成class字节码文件以及项目jar文件等等，即删除由mvn compile命令生成的target目录
 mvn install  #安装项目jar包到本地仓库中，然后再其他项目中可以直接在pom.xml中引入该jar包
 ```
 
