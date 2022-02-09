@@ -1,35 +1,1376 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.2" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/my-favicon-32x32.ico?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/my-favicon-16x16.ico?v=6.0.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.0.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="Hexo, NexT">
+
+
+<meta name="description" content="TC内核模块及tc工具简介在传统的TCP/IP网络的路由器中，所有的IP数据包的传输都是采用FIFO（先进先出），尽最大努力传输的处理机制。在早期网络数据量和关键业务数据不多的时候，并没有体现出非常大的缺点，路由器简单的把数据报丢弃来处理拥塞。但是随着计算机网络的发展， 数据量的急剧增长，以及多媒体，VOIP数据等对延时要求高的应用的增加。路由器简单丢弃数据包的处理方法已经不再适合当前的网络。单纯">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux中流量控制内核模块Traffic Control及tc命令的学习">
+<meta property="og:url" content="http://wangjianno1.github.io/2018/02/24/Linux中流量控制内核模块Traffic-Control及tc命令的学习/index.html">
+<meta property="og:site_name" content="老坛の菜园子">
+<meta property="og:description" content="TC内核模块及tc工具简介在传统的TCP/IP网络的路由器中，所有的IP数据包的传输都是采用FIFO（先进先出），尽最大努力传输的处理机制。在早期网络数据量和关键业务数据不多的时候，并没有体现出非常大的缺点，路由器简单的把数据报丢弃来处理拥塞。但是随着计算机网络的发展， 数据量的急剧增长，以及多媒体，VOIP数据等对延时要求高的应用的增加。路由器简单丢弃数据包的处理方法已经不再适合当前的网络。单纯">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://wangjianno1.github.io/images/traffic_control_1_1.png">
+<meta property="og:updated_time" content="2022-02-09T07:40:43.934Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux中流量控制内核模块Traffic Control及tc命令的学习">
+<meta name="twitter:description" content="TC内核模块及tc工具简介在传统的TCP/IP网络的路由器中，所有的IP数据包的传输都是采用FIFO（先进先出），尽最大努力传输的处理机制。在早期网络数据量和关键业务数据不多的时候，并没有体现出非常大的缺点，路由器简单的把数据报丢弃来处理拥塞。但是随着计算机网络的发展， 数据量的急剧增长，以及多媒体，VOIP数据等对延时要求高的应用的增加。路由器简单丢弃数据包的处理方法已经不再适合当前的网络。单纯">
+<meta name="twitter:image" content="http://wangjianno1.github.io/images/traffic_control_1_1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://wangjianno1.github.io/2018/02/24/Linux中流量控制内核模块Traffic-Control及tc命令的学习/">
+
+
+  <title>Linux中流量控制内核模块Traffic Control及tc命令的学习 | 老坛の菜园子</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?8ff0b3da8786fc33df71f8ced9eebd5a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">老坛の菜园子</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">好记性不如乱笔头</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">37</span>
+              </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">28</span>
+              </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">313</span>
+              </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wangjianno1.github.io/2018/02/24/Linux中流量控制内核模块Traffic-Control及tc命令的学习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="锄禾小生">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="老坛の菜园子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux中流量控制内核模块Traffic Control及tc命令的学习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-24T15:54:24+08:00">2018-02-24</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="TC内核模块及tc工具简介"><a href="#TC内核模块及tc工具简介" class="headerlink" title="TC内核模块及tc工具简介"></a>TC内核模块及tc工具简介</h1><p>在传统的TCP/IP网络的路由器中，所有的IP数据包的传输都是采用FIFO（先进先出），尽最大努力传输的处理机制。在早期网络数据量和关键业务数据不多的时候，并没有体现出非常大的缺点，路由器简单的把数据报丢弃来处理拥塞。但是随着计算机网络的发展， 数据量的急剧增长，以及多媒体，VOIP数据等对延时要求高的应用的增加。路由器简单丢弃数据包的处理方法已经不再适合当前的网络。单纯的增加网络带宽也不能从根本上解决问题。所以网络的开发者们提出了服务质量的概念。概括的说：就是针对各种不同需求，提供不同服务质量的网络服务功能。提供QoS能力将是对未来IP网络的基本要求。Linux内核网络协议栈从2.2.x开始，就实现了对服务质量的支持模块，即从内核的层面支持QOS，具体的代码位于net/sched/目录。在linux里面，对这个内核功能模块的称呼是Traffic Control，简称TC。简单来说，TC就是Linux进行流量控制的工具。</p>
+<p>在Linux中，Traffic Control提供了一个tc命令工具，可以用来查看和配置Traffic Control内核模块。</p>
+<h1 id="流量控制的处理对象"><a href="#流量控制的处理对象" class="headerlink" title="流量控制的处理对象"></a>流量控制的处理对象</h1><p>Traffic Control内核模块通过三种对象来进行流量控制，分别是qdisc（排队规则）、class（类别）和filter（过滤器）。</p>
+<p>Traffic Control模块进行流量控制的基础是队列(qdisc)，每个网卡都与一个队列(qdisc)相联系，每当内核需要将报文分组从网卡发送出去，都会首先将该报文分组添加到该网卡所配置的队列中，由该队列决定报文分组的发送顺序。然后，内核会按照队列的顺序尽可能多地从qdisc里面取出数据包，把它们交给网络适配器驱动模块。</p>
+<p>有些队列的功能是非常简单的，它们对报文分组实行先来先走的策略，我们把这些简单的队列称为不可分类（Classless）的队列。而有些队列则功能复杂，会将不同的报文分组进行排队、分类，并根据不同的原则，以不同的顺序发送队列中的报文分组。为实现这样的功能，这些复杂的队列需要使用不同的过滤器(Filter)来把报文分组分成不同的类别(Class)，我们把这些复杂的队列称为可分类(Classiful)的队列。通常，要实现功能强大的流量控制，可分类的队列是必不可少的。因此，类别(Class)和过滤器(Filter)也是流量控制的另外两个重要的基本概念。</p>
+<p>下图是可分类队列的概念图：</p>
+<p><img src="/images/traffic_control_1_1.png" alt></p>
+<p>由上图可以看出，类别(Class)和过滤器(Filter)都是队列的内部结构，并且可分类的队列可以包含多个类别，同时，一个类别又可以进一步包含有子队列，或者子类别。所有进入该类别的报文分组可以依据不同的原则放入不同的子队列或子类别中，以此类推。而过滤器(Filter)是队列用来对数据报文进行分类的工具，它决定一个数据报文将被分配到哪个类别中。</p>
+<p>下面分别简单介绍下qdisc（排队规则）、class（类别）和filter（过滤器）：</p>
+<p>（1）qdisc</p>
+<p>qdisc，英文全称为queueing discipline。qdisc分成不可分类的qdisc和可分类的qdisc两种。</p>
+<p>不可分类的qdisc的有：</p>
+<ul>
+<li>[p|b]fifo</li>
+</ul>
+<p>使用最简单的qdisc，纯粹的先进先出。只有一个参数limit，用来设置队列的长度。pfifo是以数据包的个数为单位。bfifo是以字节数为单位。</p>
+<ul>
+<li>pfifo_fast</li>
+</ul>
+<p>在编译内核时，如果打开了高级路由器(Advanced Router)编译选项，pfifo_fast就是系统的标准QDISC。它的队列包括三个波段(band)。在每个波段里面，使用先进先出规则。而三个波段(band)的优先级也不相同，band 0的优先级最高，band 2的最低。如果band里面有数据包，系统就不会处理band 1里面的数据包，band 1和band 2之间也是一样。数据包是按照服务类型(Type of Service,TOS)被分配多三个波段(band)里面的。</p>
+<ul>
+<li>red</li>
+</ul>
+<p>red是Random Early Detection(随机早期探测)的简写。如果使用这种QDISC，当带宽的占用接近于规定的带宽时，系统会随机地丢弃一些数据包。它非常适合高带宽应用。</p>
+<ul>
+<li>sfq</li>
+</ul>
+<p>sfq是Stochastic Fairness Queueing的简写。它按照会话(session–对应于每个TCP连接或者UDP流)为流量进行排序，然后循环发送每个会话的数据包。</p>
+<ul>
+<li>tbf</li>
+</ul>
+<p>tbf是Token Bucket Filter的简写，适合于把流速降低到某个值。</p>
+<p>可分类的qdisc的有：</p>
+<ul>
+<li>CBQ</li>
+</ul>
+<p>CBQ是Class Based Queueing(基于类别排队)的缩写。它实现了一个丰富的连接共享类别结构，既有限制(shaping)带宽的能力，也具有带宽优先级管理的能力。带宽限制是通过计算连接的空闲时间完成的。空闲时间的计算标准是数据包离队事件的频率和下层连接(数据链路层)的带宽。</p>
+<ul>
+<li>HTB</li>
+</ul>
+<p>HTB是Hierarchy Token Bucket的缩写。通过在实践基础上的改进，它实现了一个丰富的连接共享类别体系。使用HTB可以很容易地保证每个类别的带宽，虽然它也允许特定的类可以突破带宽上限，占用别的类的带宽。HTB可以通过TBF(Token Bucket Filter)实现带宽限制，也能够划分类别的优先级。</p>
+<ul>
+<li>PRIO</li>
+</ul>
+<p>PRIO QDisc不能限制带宽，因为属于不同类别的数据包是顺序离队的。使用PRIO QDisc可以很容易对流量进行优先级管理，只有属于高优先级类别的数据包全部发送完毕，才会发送属于低优先级类别的数据包。为了方便管理，需要使用iptables或者ipchains处理数据包的服务类型(Type Of Service,ToS)。</p>
+<p>（2）Class</p>
+<p>（3）Filter</p>
+<h1 id="流量控制对象的命名规则"><a href="#流量控制对象的命名规则" class="headerlink" title="流量控制对象的命名规则"></a>流量控制对象的命名规则</h1><p>所有的qdisc、类和过滤器都有ID。ID可以手工设置，也可以有内核自动分配。ID由一个主序列号和一个从序列号组成，两个数字用一个冒号分开。 </p>
+<p>（1）qdisc</p>
+<p>一个qdisc会被分配一个主序列号，叫做句柄(handle)，然后把从序列号作为类的命名空间。句柄采用像10:这样的表达方式。 备注队列的从序号默认是0，所以一般可以省略从序列号，例如队列1:和1:0其实是等价的。</p>
+<p>（2）类(CLASS)</p>
+<p>在同一个qdisc里面的类分享这个qdisc的主序列号，但是每个类都有自己的从序列号，叫做类识别符(classid)。</p>
+<p>（3）过滤器(FILTER)</p>
+<p>过滤器的ID有三部分，只有在对过滤器进行散列组织才会用到。详情请参考tc-filters手册页。</p>
+<h1 id="tc工具配置的基本步骤"><a href="#tc工具配置的基本步骤" class="headerlink" title="tc工具配置的基本步骤"></a>tc工具配置的基本步骤</h1><p>在Linux中，流量控制都是通过TC这个工具来完成的。通常，要对网卡进行流量控制的配置，需要进行如下的步骤：</p>
+<p>（1）为网卡配置一个队列</p>
+<p>（2）在该队列上建立分类</p>
+<p>（3）根据需要建立子队列和子分类</p>
+<p>（4）为每个分类建立过滤器</p>
+<p>我的理解是，filter圈定满足一定规则的所有数据包，然后将这些数据包引入到某一个类Class中（class中会设定非常多的流量控制策略），然后会关联到一个队列qdisc中（qdisc中实现一些数据包排队的算法）</p>
+<h1 id="tc命令的使用方法"><a href="#tc命令的使用方法" class="headerlink" title="tc命令的使用方法"></a>tc命令的使用方法</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">tc qdisc  [ add | change | replace | link ] dev DEV [ parent qdisc-id | root ] [ handle qdisc-id ] qdisc [ qdisc  specific parameters ]</span><br><span class="line">tc class [ add | change | replace ] dev DEV parent qdisc-id [ classid class-id ] qdisc [ qdisc  specific  parameters ]</span><br><span class="line">tc filter  [ add | change | replace ] dev DEV [ parent qdisc-id | root ] protocol protocol prio priority filtertype [ filtertype specific parameters ] flowid flow-id</span><br><span class="line">tc [ FORMAT ] qdisc show [ dev DEV ]</span><br><span class="line">tc [ FORMAT ] class show dev DEV</span><br><span class="line">tc filter show dev DEV</span><br><span class="line">tc [ -force ] [ -OK ] -b[atch] [ filename ]</span><br></pre></td></tr></table></figure>
+<p>常用的命令举例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">tc qdisc list dev eth0        <span class="comment">#查看指定网卡eth0上的所有队列qdisc</span></span><br><span class="line">tc class list dev eth0        <span class="comment">#查看指定网卡eth0上的所有过滤器class</span></span><br><span class="line">tc filter list dev eth0       <span class="comment">#查看指定网卡eth0上的所有过滤器filter</span></span><br><span class="line">tc -s -d qdisc show dev eth0  <span class="comment">#查看指定网卡eth0的qdisc的详细的工作状态，其中-s表示统计数据，-d表示详细内容</span></span><br><span class="line">tc -s -d class show dev eth0  <span class="comment">#查看指定网卡eth0的class的详细的工作状态，其中-s表示统计数据，-d表示详细内容</span></span><br><span class="line">tc -s -d filter show dev eth0 <span class="comment">#查看指定网卡eth0的filter的详细的工作状态，其中-s表示统计数据，-d表示详细内容</span></span><br></pre></td></tr></table></figure>
+<h1 id="tc进行流量控制的举例"><a href="#tc进行流量控制的举例" class="headerlink" title="tc进行流量控制的举例"></a>tc进行流量控制的举例</h1><p>假设eth0出口有100mbit/s的带宽，分配给WWW、E-mail和Telnet三种数据流量，其中分配给WWW的带宽为40Mbit/s，分配给Email的带宽为40Mbit/s，分配给Telnet的带宽为20Mbit/S。这里，我们以HTB队列为例，来讲述tc工具的使用，详细步骤如下：</p>
+<p>（1）创建HTB队列</p>
+<p>首先，需要为网卡eth0配置一个HTB队列，使用下列命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tc qdisc add dev eth0 root handle 1: htb default 11</span><br></pre></td></tr></table></figure>
+<p>备注：命令中的”add”表示要添加qdisc；“dev eth0”表示要操作的网卡为eth0；“root”表示为网卡eth0添加的是一个根队列；“handle 1:”表示队列的句柄为1:0；“htb”表示要添加的队列为HTB队列；命令最后的“default 11”是htb特有的队列参数，意思是所有未分类的流量都将分配给类别1:11。</p>
+<p>（2）为根队列创建相应的类别</p>
+<p>可以利用下面这三个命令为根队列1:0创建三个class类别，分别是1:11、1:12和1:13，它们分别占用40、40和20Mbit/s的带宽。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tc class add dev eth0 parent 1: classid 1:11 htb rate 40mbit ceil 40mbit   <span class="comment">#创建class，类识别符为1:11，其中1是与父qdisc的主序号一致</span></span><br><span class="line">tc class add dev eth0 parent 1: classid 1:12 htb rate 40mbit ceil 40mbit   <span class="comment">#创建class，类识别符为1:12，其中1是与父qdisc的主序号一致</span></span><br><span class="line">tc class add dev eth0 parent 1: classid 1:13 htb rate 20mbit ceil 20mbit  <span class="comment">#创建class，类识别符为1:13，其中1是与父qdisc的主序号一致</span></span><br></pre></td></tr></table></figure>
+<p>备注：命令中，“parent 1:”表示类别class的父亲为根队列1: ；“classid 1:11”表示创建一个标识为1:11的类别；“rate 40mbit”表示系统将为该类别确保带宽40mbit；“ceil 40mbit”表示该类别的最高可占用带宽为40mbit。</p>
+<p>（3）为各个类别设置过滤器</p>
+<p>由于需要将WWW、E-mail、Telnet三种流量分配到三个类别，即上述1:11、1:12和1:13，因此，需要创建三个过滤器，如下面的三个命令:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tc filter add dev eth0 protocol ip parent 1:0 prio 1 u32 match ip dport 80 0xffff flowid 1:11</span><br><span class="line">tc filter add dev eth0 protocol ip parent 1:0 prio 1 u32 match ip dport 25 0xffff flowid 1:12</span><br><span class="line">tc filter add dev eth0 protocol ip parent 1:0 prio 1 u32 match ip dport 23 oxffff flowid 1:13</span><br></pre></td></tr></table></figure>
+<p>备注：“protocol ip”表示该过滤器应该检查报文分组的协议字段；“prio 1”表示它们对报文处理的优先级是相同的，对于不同优先级的过滤器，系统将按照从小到大的优先级顺序来执行过滤器，对于相同的优先级，系统将按照命令的先后顺序执行；“u32”说明这几个过滤器用到了u32选择器（命令中u32后面的部分）来匹配不同的数据流。以第一个命令为例，判断的是dport字段，如果该字段与Oxffff进行与操作的结果是80，则“flowid 1:11”表示将把该数据流分配给类别1:11。</p>
+<h1 id="一个使用tc工具组成的流量控制脚本"><a href="#一个使用tc工具组成的流量控制脚本" class="headerlink" title="一个使用tc工具组成的流量控制脚本"></a>一个使用tc工具组成的流量控制脚本</h1><p>附上如下为工作中用到tc工具编写的一个shell流量控制脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.清空队列</span></span><br><span class="line">tc qdisc del dev eth0 root</span><br><span class="line"></span><br><span class="line"><span class="comment">#2.添加htb队列</span></span><br><span class="line">tc qdisc add dev eth0 root handle 1: htb default 30</span><br><span class="line"></span><br><span class="line"><span class="comment">#3.添加class</span></span><br><span class="line">tc class add dev eth0 parent 1:  classid 1:1  htb rate 1000mbit burst 10mbit</span><br><span class="line">tc class add dev eth0 parent 1:1 classid 1:10 htb rate 1000mbit burst 5mbit</span><br><span class="line">tc class add dev eth0 parent 1:1 classid 1:20 htb rate 1mbit burst 10k</span><br><span class="line">tc class add dev eth0 parent 1:1 classid 1:30 htb rate 1mbit burst 10k</span><br><span class="line">tc class add dev eth0 parent 1:1 classid 1:40 htb rate 300mbit burst 1mbit</span><br><span class="line"></span><br><span class="line">4.为子类别添加子队列</span><br><span class="line">tc qdisc add dev eth0 parent 1:10 handle 10: sfq perturb 10</span><br><span class="line">tc qdisc add dev eth0 parent 1:20 handle 20: sfq perturb 10</span><br><span class="line">tc qdisc add dev eth0 parent 1:30 handle 30: sfq perturb 10</span><br><span class="line">tc qdisc add dev eth0 parent 1:40 handle 40: sfq perturb 10</span><br><span class="line"></span><br><span class="line"><span class="comment">#5.添加filter</span></span><br><span class="line">tc filter add dev eth0 protocol ip parent 1:0 prio 2 u32 match ip dst 10.13.85.177/32  flowid 1:30</span><br><span class="line">tc filter add dev eth0 protocol ip parent 1:0 prio 2 u32 match ip dst 10.13.91.52/32  flowid 1:30</span><br><span class="line">tc filter add dev eth0 protocol ip parent 1:0 prio 2 u32 match ip src 10.13.91.52/32  flowid 1:30</span><br><span class="line">tc filter add dev eth0 protocol ip parent 1:0 prio 2 u32 match ip dst 10.13.91.53/32  flowid 1:20</span><br><span class="line">tc filter add dev eth0 protocol ip parent 1:0 prio 2 u32 match ip src 10.13.91.53/32  flowid 1:20</span><br><span class="line">tc filter add dev eth0 protocol ip parent 1:0 prio 100 u32 match ip dst 0.0.0.0/0  flowid 1:40</span><br><span class="line">tc filter add dev eth0 protocol ip parent 1:0 prio 100 u32 match ip src 0.0.0.0/0  flowid 1:40</span><br><span class="line"></span><br><span class="line"><span class="comment">#6.查看统计信息</span></span><br><span class="line">tc qdisc list dev eth0</span><br><span class="line">tc filter list dev eth0</span><br><span class="line">tc -s -d class  show dev eth0</span><br><span class="line">tc -s -d filter show dev eth0</span><br></pre></td></tr></table></figure>
+<p>学习资料参考于：<br><a href="http://www.ibm.com/developerworks/cn/linux/kernel/l-qos/" target="_blank" rel="noopener">http://www.ibm.com/developerworks/cn/linux/kernel/l-qos/</a><br><a href="https://www.ibm.com/developerworks/cn/linux/1412_xiehy_tc/index.html" target="_blank" rel="noopener">https://www.ibm.com/developerworks/cn/linux/1412_xiehy_tc/index.html</a><br><a href="http://blog.csdn.net/qinyushuang/article/details/46611709" target="_blank" rel="noopener">http://blog.csdn.net/qinyushuang/article/details/46611709</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/24/Linux下网络排查之ping-traceroute-mtr工具/" rel="next" title="Linux下网络排查之ping|traceroute|mtr工具">
+                <i class="fa fa-chevron-left"></i> Linux下网络排查之ping|traceroute|mtr工具
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/24/Linux中top命令的使用和理解/" rel="prev" title="Linux中top命令的使用和理解">
+                Linux中top命令的使用和理解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% endif %}
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar1.jpg" alt="锄禾小生">
+            
+              <p class="site-author-name" itemprop="name">锄禾小生</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">313</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/wangjianno1" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangjiannovip@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/wangjianno1" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/wangjianno1" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TC内核模块及tc工具简介"><span class="nav-number">1.</span> <span class="nav-text">TC内核模块及tc工具简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#流量控制的处理对象"><span class="nav-number">2.</span> <span class="nav-text">流量控制的处理对象</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#流量控制对象的命名规则"><span class="nav-number">3.</span> <span class="nav-text">流量控制对象的命名规则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tc工具配置的基本步骤"><span class="nav-number">4.</span> <span class="nav-text">tc工具配置的基本步骤</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tc命令的使用方法"><span class="nav-number">5.</span> <span class="nav-text">tc命令的使用方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tc进行流量控制的举例"><span class="nav-number">6.</span> <span class="nav-text">tc进行流量控制的举例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一个使用tc工具组成的流量控制脚本"><span class="nav-number">7.</span> <span class="nav-text">一个使用tc工具组成的流量控制脚本</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">锄禾小生</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">Hosted by <a target="_blank" rel="external nofollow" href="https://wangjianno1.github.io">老坛の菜园子<b></b></a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.2"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

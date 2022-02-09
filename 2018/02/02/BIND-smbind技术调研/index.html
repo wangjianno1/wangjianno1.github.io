@@ -1,35 +1,1386 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.2" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/my-favicon-32x32.ico?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/my-favicon-16x16.ico?v=6.0.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.0.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="DNS,">
+
+
+<meta name="description" content="Bind简介BIND，Berkeley Internet Name Daemon，是现今互联网上最常使用的DNS服务器软件，使用BIND作为服务器软件的DNS服务器约占所有DNS服务器的九成。BIND现在由互联网系统协会（Internet Systems Consortium）负责开发与维护。20世纪80年代，柏克莱加州大学计算机系统研究小组的四个研究生Douglas B Terry、Mark P">
+<meta name="keywords" content="DNS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BIND|smbind技术调研">
+<meta property="og:url" content="http://wangjianno1.github.io/2018/02/02/BIND-smbind技术调研/index.html">
+<meta property="og:site_name" content="老坛の菜园子">
+<meta property="og:description" content="Bind简介BIND，Berkeley Internet Name Daemon，是现今互联网上最常使用的DNS服务器软件，使用BIND作为服务器软件的DNS服务器约占所有DNS服务器的九成。BIND现在由互联网系统协会（Internet Systems Consortium）负责开发与维护。20世纪80年代，柏克莱加州大学计算机系统研究小组的四个研究生Douglas B Terry、Mark P">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://wangjianno1.github.io/images/smbind_1_1.png">
+<meta property="og:updated_time" content="2022-02-09T07:40:43.896Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="BIND|smbind技术调研">
+<meta name="twitter:description" content="Bind简介BIND，Berkeley Internet Name Daemon，是现今互联网上最常使用的DNS服务器软件，使用BIND作为服务器软件的DNS服务器约占所有DNS服务器的九成。BIND现在由互联网系统协会（Internet Systems Consortium）负责开发与维护。20世纪80年代，柏克莱加州大学计算机系统研究小组的四个研究生Douglas B Terry、Mark P">
+<meta name="twitter:image" content="http://wangjianno1.github.io/images/smbind_1_1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://wangjianno1.github.io/2018/02/02/BIND-smbind技术调研/">
+
+
+  <title>BIND|smbind技术调研 | 老坛の菜园子</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?8ff0b3da8786fc33df71f8ced9eebd5a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">老坛の菜园子</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">好记性不如乱笔头</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">37</span>
+              </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">28</span>
+              </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">313</span>
+              </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wangjianno1.github.io/2018/02/02/BIND-smbind技术调研/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="锄禾小生">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="老坛の菜园子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">BIND|smbind技术调研</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-02T19:29:43+08:00">2018-02-02</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/SRE/" itemprop="url" rel="index"><span itemprop="name">SRE</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Bind简介"><a href="#Bind简介" class="headerlink" title="Bind简介"></a>Bind简介</h1><p>BIND，Berkeley Internet Name Daemon，是现今互联网上最常使用的DNS服务器软件，使用BIND作为服务器软件的DNS服务器约占所有DNS服务器的九成。BIND现在由互联网系统协会（Internet Systems Consortium）负责开发与维护。20世纪80年代，柏克莱加州大学计算机系统研究小组的四个研究生Douglas B Terry、Mark Painter、David W. Riggle和周松年（Songnian Zhou）一同编写了BIND的第一个版本，并随4.3BSD发布。</p>
+<h1 id="Bind的安装和启动"><a href="#Bind的安装和启动" class="headerlink" title="Bind的安装和启动"></a>Bind的安装和启动</h1><p>（1）Bind的安装</p>
+<ul>
+<li><p>源码安装<br>在Bind官网<code>https://www.isc.org/downloads/bind/</code>中下载源码，然后编译安装。需要注意的是，源码安装Bind需要很多前置Lib环境的安装。</p>
+</li>
+<li><p>通过包管理工具安装bind</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install bind bindchroot  #RedHat系</span><br><span class="line">sudo apt-get install bind9   #Debian系</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>（2）Bind的启动</p>
+<p>named的启动命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/<span class="built_in">local</span>/sbin/named -u named -t /var/named/chroot -c /etc/named/named.conf</span><br></pre></td></tr></table></figure>
+<p>其中，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-u username     #指定用什么账户名来启动named</span><br><span class="line">-t directory    #chroot到指定目录，chroot是在加载配置文件之前，也就是配置文件路径还是从系统原先的根路径开始，等named服务启动后，那就是以-t后的directory目录作为根路径</span><br><span class="line">-c config-file  #指定named加载的配置文件路径。若没有该选项，则默认加载/etc/named.conf</span><br></pre></td></tr></table></figure>
+<h1 id="Bind的配置文件"><a href="#Bind的配置文件" class="headerlink" title="Bind的配置文件"></a>Bind的配置文件</h1><p>BIND服务的进程名为named，主要的配置文件有：</p>
+<p>（1）named.conf</p>
+<p>bind的主配置文件，用来对bind服务的基本配置、zonefile的位置、权限等设置、zone和zonefile的对应关系等。bind主配置文件named.conf的基本格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 全局配置段</span><br><span class="line">options &#123; ... &#125;;</span><br><span class="line">// 日志配置段</span><br><span class="line">logging &#123; ... &#125;;</span><br><span class="line">// 区域配置段</span><br><span class="line">zone &#123; ... &#125;;</span><br></pre></td></tr></table></figure>
+<p>named.conf options全局配置段中一些重要配置参数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">listen-on port 53 &#123; 127.0.0.1; 192.168.1.108; &#125;;    //定义DNS监听在哪个IP的特定端口上</span><br><span class="line">directory      &quot;/var/named&quot;;    //指定DNS zone文件存放目录</span><br><span class="line">allow-query    &#123; localhost; 192.168.1.100; &#125;;    //定义允许哪些主机可以查询该DNS服务</span><br><span class="line">recursion yes;    //定义是否允许DNS服务器做递归查询</span><br><span class="line">notify yes;    //DNS服务器采用主从模式时，定义是否当主服务器zone文件发生改变，通知从服务器更新</span><br></pre></td></tr></table></figure>
+<p>（2）zone file</p>
+<p>包括域名正解配置文件、ip反解配置文件。是域名解析的关键文件。举例说明如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">zone &quot;.&quot; IN &#123;     //根域的zone文件属性配置</span><br><span class="line">    type hint;    //定义此区域文件的类型为hint</span><br><span class="line">    file &quot;named.ca&quot;;    //相对directory &quot;/var/named/&quot;目录的文件，为根域的zone文件</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">zone &quot;example1.com&quot; &#123;</span><br><span class="line">    type master;     //说明该DNS对于example1.com域是Master</span><br><span class="line">    file &quot;db/example1.com.zone&quot;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在zone中类型type可以是hint、master、slave以及forward。特殊符号<code>@</code>是DNS配置中的保留关键字，表示当前域的名称，在上述的例子<code>db/example1.com.zone</code>配置中，可以使用<code>@</code>表示<code>example1.com</code>。在zone file中还有一些特殊参数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@TTL    #设置zone file中每一条记录的TTL值</span><br><span class="line">@ORIGIN #重新定义zone的名称，如上述例子中db/example1.com.zone文件中代表的域是example1.com，但当我们使用@ORIGIN bb.example1.com就表示当前域是bb.example1.com</span><br></pre></td></tr></table></figure>
+<p>备注：为保持主配置文件简洁，可以将部分配置信息存放于其他文件，然后再主配置文件named.conf中通过include指令进行引入，如include “/etc/named.rfc1912.zones”。</p>
+<h1 id="DNS的master-slave架构及配置同步问题"><a href="#DNS的master-slave架构及配置同步问题" class="headerlink" title="DNS的master/slave架构及配置同步问题"></a>DNS的master/slave架构及配置同步问题</h1><p>（1）master/slave架构简介</p>
+<p>Bind的架构是Master/Slave架构模式，即一主多从的结构。在生产环境中一般有2台以上的DNS服务器，其中一台作为master dns，其他的作为slave dns。master dns用来提供域名解析的修改，不提供对外DNS解析服务。各个slave dns自动从master dns上同步配置文件，且他们真正对外提供DNS解析服务。</p>
+<p>（2）master和slave dns的关键配置</p>
+<p>master和slave dns的配置文件基本是一样的，但有如下的一些差异：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// master dns配置如下</span><br><span class="line">zone &quot;example.com&quot; IN &#123;</span><br><span class="line">    type master;                       #指明dns的类型，这里是master dns</span><br><span class="line">    file &quot;named.example.com&quot;;          #指明zone file</span><br><span class="line">    allow-transfer &#123;192.168.100.10;&#125;;  #这里配置的是slave ip列表</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// slave dns配置如下</span><br><span class="line">zone &quot;example.com&quot; IN &#123;</span><br><span class="line">    type slave;                 #指明dns的类型，这里是slave dns</span><br><span class="line">    file &quot;named.example.com&quot;;   #指明zone file</span><br><span class="line">    masters &#123;192.168.100.122;&#125;; #这里配置master dns的ip</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（3）master和slave的同步机制</p>
+<p>master和slave dns之间的同步有两种策略：</p>
+<p>a）master主动告知，当master修改了正反解配置文件，会主动通知slave进行更新</p>
+<p>b）slave定期地比较本地配置文件的序号（或称为版本号）与master dns的不同。如果发现master的序号比本地要大，那么就会去同步master dns的配置文件。</p>
+<p>备注：dns的配置文件有序号或版本号的概念，每次修改dns的配置文件，则序号会递增一个。另外，master和slave间的配置同步是有bind自身来支持的，不是由rsync这样的工具来控制的哦。</p>
+<h1 id="cache-only-DNS服务器与forwarding-DNS服务器"><a href="#cache-only-DNS服务器与forwarding-DNS服务器" class="headerlink" title="cache-only DNS服务器与forwarding DNS服务器"></a>cache-only DNS服务器与forwarding DNS服务器</h1><p>（1）cache-only DNS服务器</p>
+<p>如果某个DNS服务器只有<code>.</code>这个zone file（root dns），我们称这种没有自己公共的DNS数据库的服务器称为cache-only DNS服务器。也就是这种DNS服务器只有缓存查找的功能，它自身并没有任何域名和IP正反解的配置文件。</p>
+<p>cache-only DNS的配置举例如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># named.conf主要的文件内容</span><br><span class="line">zone &quot;.&quot; &#123;</span><br><span class="line">  type hint;</span><br><span class="line">  file &quot;named.root&quot;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"># named.root文件的内容</span><br><span class="line">.                       446466  IN      NS      g.root-servers.net.</span><br><span class="line">.                       446466  IN      NS      k.root-servers.net.</span><br><span class="line">.                       446466  IN      NS      f.root-servers.net.</span><br><span class="line">.                       446466  IN      NS      a.root-servers.net.</span><br><span class="line">.                       446466  IN      NS      c.root-servers.net.</span><br><span class="line">.                       446466  IN      NS      d.root-servers.net.</span><br><span class="line">.                       446466  IN      NS      j.root-servers.net.</span><br><span class="line">.                       446466  IN      NS      l.root-servers.net.</span><br><span class="line">.                       446466  IN      NS      e.root-servers.net.</span><br><span class="line">.                       446466  IN      NS      i.root-servers.net.</span><br><span class="line">.                       446466  IN      NS      b.root-servers.net.</span><br><span class="line">.                       446466  IN      NS      m.root-servers.net.</span><br><span class="line">.                       446466  IN      NS      h.root-servers.net.</span><br><span class="line"></span><br><span class="line">a.root-servers.net.     447955  IN      A       198.41.0.4</span><br><span class="line">a.root-servers.net.     447958  IN      AAAA    2001:503:ba3e::2:30</span><br><span class="line">b.root-servers.net.     447955  IN      A       192.228.79.201</span><br><span class="line">b.root-servers.net.     447958  IN      AAAA    2001:500:84::b</span><br><span class="line">c.root-servers.net.     447955  IN      A       192.33.4.12</span><br><span class="line">c.root-servers.net.     447968  IN      AAAA    2001:500:2::c</span><br><span class="line">d.root-servers.net.     447955  IN      A       199.7.91.13</span><br><span class="line">d.root-servers.net.     447968  IN      AAAA    2001:500:2d::d</span><br><span class="line">e.root-servers.net.     447955  IN      A       192.203.230.10</span><br><span class="line">f.root-servers.net.     447955  IN      A       192.5.5.241</span><br><span class="line">f.root-servers.net.     447968  IN      AAAA    2001:500:2f::f</span><br><span class="line">g.root-servers.net.     447955  IN      A       192.112.36.4</span><br><span class="line">h.root-servers.net.     447968  IN      A       128.63.2.53</span><br><span class="line">h.root-servers.net.     447968  IN      AAAA    2001:500:1::803f:235</span><br><span class="line">i.root-servers.net.     447968  IN      A       192.36.148.17</span><br><span class="line">i.root-servers.net.     447968  IN      AAAA    2001:7fe::53</span><br><span class="line">j.root-servers.net.     447968  IN      A       192.58.128.30</span><br><span class="line">j.root-servers.net.     447968  IN      AAAA    2001:503:c27::2:30</span><br><span class="line">k.root-servers.net.     447968  IN      A       193.0.14.129</span><br><span class="line">k.root-servers.net.     447968  IN      AAAA    2001:7fd::1</span><br><span class="line">l.root-servers.net.     447968  IN      A       199.7.83.42</span><br><span class="line">l.root-servers.net.     447968  IN      AAAA    2001:500:3::42</span><br><span class="line">m.root-servers.net.     447968  IN      A       202.12.27.33</span><br><span class="line">m.root-servers.net.     447968  IN      AAAA    2001:dc3::35</span><br></pre></td></tr></table></figure>
+<p>（2）forwarding DNS服务器</p>
+<p>有些DNS服务器可能连<code>.</code>这个zone file都没有，而是通过forwarding配置将域名解析请求转发给其他的DNS服务器，我们称这种DNS服务器为forwarding DNS服务器。</p>
+<p>forwarding DNS服务器的配置举例如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">zone &quot;example1.com&quot; &#123;</span><br><span class="line">  type forward;</span><br><span class="line">  forward only;</span><br><span class="line">  forwarders &#123; 10.28.21.70; 10.28.21.71; &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">zone &quot;example2.com&quot; &#123;</span><br><span class="line">  type forward;</span><br><span class="line">  forward only;</span><br><span class="line">  forwarders &#123; 10.38.21.70; 10.38.21.71; &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>备注：forwarding这个特性通常用来做DNS劫持吧，如某公司有内部域名<code>example-inc.com</code>需要解析到内部IP地址，此时在公司机房的Local DNS上针对<code>example-inc.com</code>这个zone配置forwarding，将DNS请求转发到一套内部的DNS集群，然后由这个内部的DNS集群负责解析<code>example-inc.com</code>这个zone。因此<code>example-inc.com</code>这个域名，就不需要向外部的<code>.com</code>域上申请授权啦。</p>
+<p>（3）权威DNS服务器<br>自己的理解是，所谓权威DNS服务是相对于cache-only DNS和forwards DNS来说的，cache-only DNS和forwards DNS本身并不提供相关域名的解析（若自身缓存中有解析记录则可以返回给dns客户端，但这不叫自身的解析）。而权威服务器是自身就能够解析域名，即zone file中配置了域名和IP的映射关系（也有CNAME或MX等记录）。</p>
+<p>备注：其实在实际生产环境中，有些DNS服务器具有.这个zone file，同时通过forwading配置将某些域名的解析请求转发给其他的DNS服务器。</p>
+<h1 id="Bind中的zone-ACL-view概念"><a href="#Bind中的zone-ACL-view概念" class="headerlink" title="Bind中的zone/ACL/view概念"></a>Bind中的zone/ACL/view概念</h1><p>Bind中zone是指一个解析域，例如dns.baidu.com域名服务器中就有baidu.com、iqiyi.com等zone，zone里面会具体配置A记录、CNAME记录以及NS记录等等。</p>
+<p>Bind可以配置很多的ACL，每一个ACL包含了一个网络地址的集合，例如北京电信ACL，河南移动ACL，广州联通ACL等等。通过ACL就可以知道一个用户IP来源于哪个运营商网络。</p>
+<p>Bind中的view是匹配某个ACL的解析集合。</p>
+<p>如下是一个包含了view/acl/zone概念的Bind配置举例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">view beijing-cu &#123; </span><br><span class="line">    match-clients      &#123;beijing_cu.acl; &#125;;  #属于北京电信的用户才会被DNS从这个view中解析IP地址</span><br><span class="line">    recursion no;  #不允许外部网络用户进行递归查询（我们不是免费的公共dns）</span><br><span class="line"></span><br><span class="line">    zone &quot;lustlost.com&quot; IN &#123; </span><br><span class="line">            type master; </span><br><span class="line">            file &quot;lustlost.com.out&quot;; </span><br><span class="line">            allow-transfer &#123; none; &#125;; </span><br><span class="line">            allow-update &#123; none; &#125;; </span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="DNS-AXFR"><a href="#DNS-AXFR" class="headerlink" title="DNS AXFR"></a>DNS AXFR</h1><p>DNS Zone Transfer Protocol，简称AXFR，是多台DNS服务器之间同步解析规则的协议。因此可以通过AXFR，查到指定DNS服务器的所有解析记录。可以使用dig命令查看AXFR的威力，如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dig AXFR baidu.com @ns2.baidu.com    <span class="comment">#查询ns2.baidu.com</span></span><br></pre></td></tr></table></figure>
+<p>DNS服务器上baidu.com这个zone下的所有域名，当然一般来说，DNS服务器会限制外部使用AXFR功能，可以自己搭建一个DNS服务，然后到dns服务器上执行<code>dig AXFR example.com @localhost</code>或<code>dig AXFR example.com @127.0.0.1</code>。</p>
+<h1 id="Bind的开源可视化管理界面"><a href="#Bind的开源可视化管理界面" class="headerlink" title="Bind的开源可视化管理界面"></a>Bind的开源可视化管理界面</h1><p>Bind有非常非常多的WEB管理工具，例如webbind/smbind/DNS control/ProBIND/Binder/myWebDNS等等，具体参加页面<a href="http://www.ti6.net/internet/1490.html" target="_blank" rel="noopener">http://www.ti6.net/internet/1490.html</a></p>
+<p>其中smbind，全称为Simple Management for BIND.</p>
+<h1 id="智能DNS"><a href="#智能DNS" class="headerlink" title="智能DNS"></a>智能DNS</h1><p>像上面使用了view的概念后，就是智能DNS的配置。可以根据用户的来源IP所属的区域运营商，来返回一个离用户比较近的服务端IP给用户。值得注意的是，原始的DNS协议是无法获取到用户的来源IP，后来由Google起草的EDNS，EDNS是一个DNS扩展协议，改进部分很简单，就是在DNS协议中加入用户原始IP，这样DNS就知道用户的来源网络，为其指定一个离他较近的IP来访问。</p>
+<p>智能DNS需要用到的IP库可以从如下地址下载：<br><a href="http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest" target="_blank" rel="noopener">http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest</a></p>
+<p>备注：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dig www.zhxfei.com @172.16.130.129 +subnet=120.0.0.1/24</span><br></pre></td></tr></table></figure></p>
+<p>如上命令中，dig工具需要安装支持edns的版本，+subnet指定客户端所属的子网，@server指定Local DNS，假设172.16.130.129支持了edns，那么她会依照+subnet来解析出一个离客户端比较近的IP，而不是根据Local DNS来解析出较近的IP。这种情况下，DNS的GLSB负载均衡将会更准确。</p>
+<h1 id="Bind的递归配置"><a href="#Bind的递归配置" class="headerlink" title="Bind的递归配置"></a>Bind的递归配置</h1><p>在named.conf中options区域通过<code>recursion {yes | no}</code>来设置，默认是<code>recursion yes</code>配置，即默认是开启递归的。若开启了递归，那么bind dns服务会依据客户端的dns请求，不管是通过“自己本地解析”或“cache缓存”或者“查询其他dns服务器”，最终一定要得到客户端需要的终极结果返回给客户端。就不用客户端再去查询了。若关闭了递归，那么bind dns在收到客户端的请求后，如果本地不能解析或本地缓存中也不存在，那就会返回和dns请求相关的信息，如返回一条NS记录，告诉客户端再去其他的DNS上去查询结果。</p>
+<p>BIND9默认打开递归查询和关闭转发功能。</p>
+<h1 id="Bind提供的一些辅助工具"><a href="#Bind提供的一些辅助工具" class="headerlink" title="Bind提供的一些辅助工具"></a>Bind提供的一些辅助工具</h1><ul>
+<li>named-checkconf</li>
+<li>named-checkzone</li>
+<li>named-compilezone</li>
+<li>rndc</li>
+</ul>
+<h1 id="Bind的负载均衡"><a href="#Bind的负载均衡" class="headerlink" title="Bind的负载均衡"></a>Bind的负载均衡</h1><p>假设域名<code>www.bat.com</code>有多条A记录，如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">www.bat.com  A  10.0.0.1</span><br><span class="line">www.bat.com  A  10.0.0.2</span><br><span class="line">www.bat.com  A  10.0.0.3</span><br></pre></td></tr></table></figure></p>
+<p>那么当客户端请求dns服务器解析<code>www.bat.com</code>时，dns服务器会随机的返回<code>1,2,3</code>、<code>2,1,3</code>、<code>3,1,2</code>等这样的顺序，一般来说客户端会使用第一条记录，那么所有的A记录的对应的服务的DNS请求数几乎是一样的。</p>
+<h1 id="Bind能处理的类unix平台的信号"><a href="#Bind能处理的类unix平台的信号" class="headerlink" title="Bind能处理的类unix平台的信号"></a>Bind能处理的类unix平台的信号</h1><p>Bind能处理的类unix平台的信号有：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SIGHUP   #会触发bind重新加载named.conf配置</span><br><span class="line">SIGTERM  #会触发bind退出</span><br><span class="line">SIGINT   #会触发bind退出</span><br></pre></td></tr></table></figure>
+<h1 id="DNSPOD"><a href="#DNSPOD" class="headerlink" title="DNSPOD"></a>DNSPOD</h1><p>DNSPod建立于2006年3月份，是一款免费智能DNS产品。DNSPod是中国第一大DNS解析服务提供商、第一大域名托管商。DNSPod可以为同时有电信、联通、教育网服务器的网站提供智能的解析，让电信用户访问电信的服务器，联通的用户访问联通的服务器，教育网的用户访问教育网的服务器，达到互联互通的效果。</p>
+<p>说白了，DNSPOD对外提供了一个公共的DNS服务，帮助其用户解析域名，这样其用户就不需要搭建自己的DNS服务器了。注意和Public DNS，例如和8.8.8.8，114.114.114.114是有区别的，Public DNS是用来帮助用户的浏览器解析域名的，而不会帮忙搭建DNS域名解析服务。</p>
+<p>DNSPod目前是腾讯旗下的公司。</p>
+<h1 id="Bind的闲杂知识点"><a href="#Bind的闲杂知识点" class="headerlink" title="Bind的闲杂知识点"></a>Bind的闲杂知识点</h1><p>（1）bind配置的序列号serial num问题</p>
+<p>序列号的上限是2147483647(2ˆ31-1)，超过这个值之后，需要重置才能生效。如下为官方手册的说明：</p>
+<p><img src="/images/smbind_1_1.png" alt></p>
+<p>备注：先用当前序列号加上2147483647，并让bind reload配置，待各slaves更新完配置；在将序列号设定为自己想要的值，并再让bind reload配置即可。</p>
+<p>学习资料参考于：<br><a href="https://www.isc.org/downloads/bind/" target="_blank" rel="noopener">https://www.isc.org/downloads/bind/</a><br><a href="https://www.isc.org/downloads/bind/doc/" target="_blank" rel="noopener">https://www.isc.org/downloads/bind/doc/</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DNS/" rel="tag"># DNS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/02/正向HTTP-HTTPS-FTP代理软件squid技术调研/" rel="next" title="正向HTTP/HTTPS/FTP代理软件squid技术调研">
+                <i class="fa fa-chevron-left"></i> 正向HTTP/HTTPS/FTP代理软件squid技术调研
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/02/Chrome浏览器的一些使用小技巧/" rel="prev" title="Chrome浏览器的一些使用小技巧">
+                Chrome浏览器的一些使用小技巧 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% endif %}
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar1.jpg" alt="锄禾小生">
+            
+              <p class="site-author-name" itemprop="name">锄禾小生</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">313</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/wangjianno1" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangjiannovip@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/wangjianno1" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/wangjianno1" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Bind简介"><span class="nav-number">1.</span> <span class="nav-text">Bind简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Bind的安装和启动"><span class="nav-number">2.</span> <span class="nav-text">Bind的安装和启动</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Bind的配置文件"><span class="nav-number">3.</span> <span class="nav-text">Bind的配置文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DNS的master-slave架构及配置同步问题"><span class="nav-number">4.</span> <span class="nav-text">DNS的master/slave架构及配置同步问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cache-only-DNS服务器与forwarding-DNS服务器"><span class="nav-number">5.</span> <span class="nav-text">cache-only DNS服务器与forwarding DNS服务器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Bind中的zone-ACL-view概念"><span class="nav-number">6.</span> <span class="nav-text">Bind中的zone/ACL/view概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DNS-AXFR"><span class="nav-number">7.</span> <span class="nav-text">DNS AXFR</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Bind的开源可视化管理界面"><span class="nav-number">8.</span> <span class="nav-text">Bind的开源可视化管理界面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#智能DNS"><span class="nav-number">9.</span> <span class="nav-text">智能DNS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Bind的递归配置"><span class="nav-number">10.</span> <span class="nav-text">Bind的递归配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Bind提供的一些辅助工具"><span class="nav-number">11.</span> <span class="nav-text">Bind提供的一些辅助工具</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Bind的负载均衡"><span class="nav-number">12.</span> <span class="nav-text">Bind的负载均衡</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Bind能处理的类unix平台的信号"><span class="nav-number">13.</span> <span class="nav-text">Bind能处理的类unix平台的信号</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DNSPOD"><span class="nav-number">14.</span> <span class="nav-text">DNSPOD</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Bind的闲杂知识点"><span class="nav-number">15.</span> <span class="nav-text">Bind的闲杂知识点</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">锄禾小生</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">Hosted by <a target="_blank" rel="external nofollow" href="https://wangjianno1.github.io">老坛の菜园子<b></b></a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.2"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

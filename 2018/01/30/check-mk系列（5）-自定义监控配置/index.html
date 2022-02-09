@@ -1,35 +1,1346 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.2" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/my-favicon-32x32.ico?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/my-favicon-16x16.ico?v=6.0.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.0.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="check_mk,">
+
+
+<meta name="description" content="check_mk自定义监控配置方法下面以创建一个统计磁盘状态的监控为例来说明，check_mk自定义监控的配置步骤为： （1）在check_mk agent端增加采集脚本 在/usr/lib/check_mk_agent/plugins目录中自定义一个script脚本，并赋予可执行权限，假设为usr/lib/check_mk_agent/plugins/rapid.sh，其内容如下： 123456">
+<meta name="keywords" content="check_mk">
+<meta property="og:type" content="article">
+<meta property="og:title" content="check_mk系列（5）_自定义监控配置">
+<meta property="og:url" content="http://wangjianno1.github.io/2018/01/30/check-mk系列（5）-自定义监控配置/index.html">
+<meta property="og:site_name" content="老坛の菜园子">
+<meta property="og:description" content="check_mk自定义监控配置方法下面以创建一个统计磁盘状态的监控为例来说明，check_mk自定义监控的配置步骤为： （1）在check_mk agent端增加采集脚本 在/usr/lib/check_mk_agent/plugins目录中自定义一个script脚本，并赋予可执行权限，假设为usr/lib/check_mk_agent/plugins/rapid.sh，其内容如下： 123456">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://wangjianno1.github.io/images/check_mk_5_1.png">
+<meta property="og:image" content="http://wangjianno1.github.io/images/check_mk_5_6.png">
+<meta property="og:image" content="http://wangjianno1.github.io/images/check_mk_5_2.png">
+<meta property="og:image" content="http://wangjianno1.github.io/images/check_mk_5_3.png">
+<meta property="og:image" content="http://wangjianno1.github.io/images/check_mk_5_4.png">
+<meta property="og:image" content="http://wangjianno1.github.io/images/check_mk_5_5.png">
+<meta property="og:updated_time" content="2022-02-09T07:40:43.964Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="check_mk系列（5）_自定义监控配置">
+<meta name="twitter:description" content="check_mk自定义监控配置方法下面以创建一个统计磁盘状态的监控为例来说明，check_mk自定义监控的配置步骤为： （1）在check_mk agent端增加采集脚本 在/usr/lib/check_mk_agent/plugins目录中自定义一个script脚本，并赋予可执行权限，假设为usr/lib/check_mk_agent/plugins/rapid.sh，其内容如下： 123456">
+<meta name="twitter:image" content="http://wangjianno1.github.io/images/check_mk_5_1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://wangjianno1.github.io/2018/01/30/check-mk系列（5）-自定义监控配置/">
+
+
+  <title>check_mk系列（5）_自定义监控配置 | 老坛の菜园子</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?8ff0b3da8786fc33df71f8ced9eebd5a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">老坛の菜园子</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">好记性不如乱笔头</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">37</span>
+              </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">28</span>
+              </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">313</span>
+              </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wangjianno1.github.io/2018/01/30/check-mk系列（5）-自定义监控配置/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="锄禾小生">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="老坛の菜园子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">check_mk系列（5）_自定义监控配置</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-30T15:56:24+08:00">2018-01-30</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/监控/" itemprop="url" rel="index"><span itemprop="name">监控</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="check-mk自定义监控配置方法"><a href="#check-mk自定义监控配置方法" class="headerlink" title="check_mk自定义监控配置方法"></a>check_mk自定义监控配置方法</h1><p>下面以创建一个统计磁盘状态的监控为例来说明，check_mk自定义监控的配置步骤为：</p>
+<p>（1）在check_mk agent端增加采集脚本</p>
+<p>在/usr/lib/check_mk_agent/plugins目录中自定义一个script脚本，并赋予可执行权限，假设为usr/lib/check_mk_agent/plugins/rapid.sh，其内容如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'&lt;&lt;&lt;rapid&gt;&gt;&gt;'</span></span><br><span class="line"></span><br><span class="line">cat &lt;&lt; EOF</span><br><span class="line">/dev/sda   1 Raw_Read_Error_Rate     0x002f   200   200   051    Pre-fail  Always       -       0</span><br><span class="line">/dev/sda   3 Spin_Up_Time            0x0027   129   127   021    Pre-fail  Always       -       6541</span><br><span class="line">/dev/sda   4 Start_Stop_Count        0x0032   100   100   000    Old_age   Always       -       251</span><br><span class="line">/dev/sda   5 Reallocated_Sector_Ct   0x0033   200   200   140    Pre-fail  Always       -       0</span><br><span class="line">/dev/sda   6 Temperature_Celsius     0x0022   106   098   000    Old_age   Always       -       41</span><br><span class="line">/dev/sdb   1 Raw_Read_Error_Rate     0x002f   200   200   051    Pre-fail  Always       -       0</span><br><span class="line">/dev/sdb   3 Spin_Up_Time            0x0027   129   127   021    Pre-fail  Always       -       6541</span><br><span class="line">/dev/sdb   4 Start_Stop_Count        0x0032   100   100   000    Old_age   Always       -       251</span><br><span class="line">/dev/sdb   5 Reallocated_Sector_Ct   0x0033   200   200   140    Pre-fail  Always       -       0</span><br><span class="line">/dev/sdb   6 Temperature_Celsius     0x0022   106   098   000    Old_age   Always       -       411</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+<p>备注：</p>
+<p>一定要注意的是，采集脚本的输出要以&lt;&lt;<xxxx>&gt;&gt;开头，该header将在check_mk的服务端标识该采集数据的来源。该采集脚本是模拟输出硬件磁盘的一些状态信息，每个设备都会有好多的指标及对应的数值。在agent端配置了采集脚本后，先在agent执行/usr/bin/check_mk_agent命令，看能够正常输出新增的采集，然后在check_mk的服务端执行./bin/check_mk -d HOSTNAME来查看新配置的采集脚本输出，若有输出，则说明采集脚本配置正确。</xxxx></p>
+<p>另外我们不在agent端新增脚本，直接编辑/usr/bin/check_mk_agent脚本，将自己的采集程序加入到该脚本也是可以的，但是我们一般不会这么做哦。</p>
+<p>（2）在服务端编写check脚本，用于解析agent端返回的值</p>
+<p>在/opt/omd/sites/XXX/local/share/check_mk/checks目录下新建名称为rapid的文本文件（文件名必须要于agent端采集脚本的header相同），内容如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"></span><br><span class="line">rapid_temp_default_values = (<span class="number">40</span>, <span class="number">60</span>)   <span class="comment">#监控的阈值</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#称为inventory函数，info是agent端返回的header为rapid的文本值</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">inventory_rapid_temp</span><span class="params">(info)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> info:</span><br><span class="line">        disk = line[<span class="number">0</span>]</span><br><span class="line">        field = line[<span class="number">2</span>]</span><br><span class="line">        <span class="keyword">if</span> field == <span class="string">"Temperature_Celsius"</span>:</span><br><span class="line">            <span class="keyword">yield</span> disk, <span class="string">"rapid_temp_default_values"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#称为check函数，item为inventory函数返回值的第一个字段，parms为inventory函数返回的第二个字段</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">check_rapid_temp</span><span class="params">(item, params, info)</span>:</span></span><br><span class="line">    warn, crit = params</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> info:</span><br><span class="line">        <span class="keyword">if</span> line[<span class="number">0</span>] == item <span class="keyword">and</span> line[<span class="number">2</span>] == <span class="string">"Temperature_Celsius"</span>:</span><br><span class="line">            celsius = int(line[<span class="number">10</span>])</span><br><span class="line">            <span class="keyword">if</span> celsius &gt; crit:</span><br><span class="line">                <span class="keyword">return</span> <span class="number">2</span>, <span class="string">"Temperature is %dC"</span> % celsius</span><br><span class="line">            <span class="keyword">elif</span> celsius &gt; warn:</span><br><span class="line">                <span class="keyword">return</span> <span class="number">1</span>, <span class="string">"Temperature is %dC"</span> % celsius</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>, <span class="string">"Temperature is %dC"</span> % celsius</span><br><span class="line"></span><br><span class="line"><span class="comment">#该部分是该自定义监控的声明，其中的temp值会被check函数的item替代</span></span><br><span class="line">check_info[<span class="string">"rapid.temp"</span>] = &#123;     </span><br><span class="line">    <span class="string">'check_function'</span>:            check_rapid_temp,</span><br><span class="line">    <span class="string">'inventory_function'</span>:        inventory_rapid_temp,</span><br><span class="line">    <span class="string">'service_description'</span>:       <span class="string">'RAPID drive %s'</span>,    <span class="comment">#%s是check函数的返回值的第二个字段，这个将作为check_mk上的服务名</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>备注：配置了如上内容，既可以在./bin/check_mk -L中有了rapid.temp的采集项</p>
+<p>（3）测试验证</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./bin/check_mk -L | grep rapid               <span class="comment">#查看检查项已经正确配置到check_mk</span></span><br><span class="line">./bin/check_mk --checks=rapid -I 10.8.18.53  <span class="comment">#向指定的机器发起rapid的采集，并存储到服务端中</span></span><br><span class="line">./bin/check_mk -nv 10.8.18.53                <span class="comment">#查看监控状态</span></span><br></pre></td></tr></table></figure>
+<p>在check_mk页面上，点击到机器的WATO页面，会发现新增的服务被check_mk自动发现了，我们在页面上点击添加，并activate change即可。界面显示效果如下：</p>
+<p><img src="/images/check_mk_5_1.png" alt></p>
+<h1 id="自定义监控服务端脚本说明"><a href="#自定义监控服务端脚本说明" class="headerlink" title="自定义监控服务端脚本说明"></a>自定义监控服务端脚本说明</h1><p>check_mk服务端脚本有三部分组成：</p>
+<p>（1）Inventory函数</p>
+<p>（2）check函数</p>
+<p>check函数接收三个参数，分别是items、检查参数、agent返回info。check函数返回值必须是一个元组，该元组的元素分别为：</p>
+<pre><code>status code (0=OK, 1=WARN, 2=CRIT, 3=UNKNOWN)
+文本字符串，用来现在到check_mk或nagios的WEB界面上
+性能数据，该部分是可选的
+</code></pre><p>（3）check声明</p>
+<p>是一个字典形式。</p>
+<h1 id="为自定义监控加上性能数据"><a href="#为自定义监控加上性能数据" class="headerlink" title="为自定义监控加上性能数据"></a>为自定义监控加上性能数据</h1><p>（1）修改服务端脚本</p>
+<p>为自定义监控加上性能数据，既可以在check_mk页面展示PNP4Nagios的可视化界面了。增加性能数据只需要修改服务端脚本即可，我们在上面的例子基础上，做如下修改即可：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"></span><br><span class="line">rapid_temp_default_values = (<span class="number">40</span>, <span class="number">60</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">inventory_rapid_temp</span><span class="params">(info)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> info:</span><br><span class="line">        disk = line[<span class="number">0</span>]</span><br><span class="line">        field = line[<span class="number">2</span>]</span><br><span class="line">        <span class="keyword">if</span> field == <span class="string">"Temperature_Celsius"</span>:</span><br><span class="line">            <span class="keyword">yield</span> disk, <span class="string">"rapid_temp_default_values"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">check_rapid_temp</span><span class="params">(item, params, info)</span>:</span></span><br><span class="line">    warn, crit = params</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> info:</span><br><span class="line">        <span class="keyword">if</span> line[<span class="number">0</span>] == item <span class="keyword">and</span> line[<span class="number">2</span>] == <span class="string">"Temperature_Celsius"</span>:</span><br><span class="line">            celsius = int(line[<span class="number">10</span>])</span><br><span class="line">            perfdata = [( <span class="string">"temp"</span>, celsius, warn, crit)]</span><br><span class="line">            <span class="keyword">if</span> celsius &gt; crit:</span><br><span class="line">                <span class="keyword">return</span> <span class="number">2</span>, <span class="string">"Temperature is %dC"</span> % celsius, perfdata</span><br><span class="line">            <span class="keyword">elif</span> celsius &gt; warn:</span><br><span class="line">                <span class="keyword">return</span> <span class="number">1</span>, <span class="string">"Temperature is %dC"</span> % celsius, perfdata</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>, <span class="string">"Temperature is %dC"</span> % celsius, perfdata</span><br><span class="line"></span><br><span class="line">check_info[<span class="string">"rapid.temp"</span>] = &#123;</span><br><span class="line">    <span class="string">'check_function'</span>:            check_rapid_temp,</span><br><span class="line">    <span class="string">'inventory_function'</span>:        inventory_rapid_temp,</span><br><span class="line">    <span class="string">'service_description'</span>:       <span class="string">'RAPID drive %s'</span>,</span><br><span class="line">    <span class="string">'has_perfdata'</span>:              <span class="literal">True</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>备注：需要两处修改，第一处在check声明时，通过has_perfdata指明有性能数据。第二处是在check函数的返回值增加第三个字段，填充性能数据即可。其中性能数据的python列表，列表中每一个元素是元组类型，每个元组类型的字段如下（其中只有name和value是必需的，其他都是可选的）：</p>
+<p><img src="/images/check_mk_5_6.png" alt></p>
+<p>举例来说：</p>
+<p><img src="/images/check_mk_5_2.png" alt></p>
+<p>（2）check_mk界面上验证效果</p>
+<p>增加了性能数据，在check_mk的显示效果为：</p>
+<p><img src="/images/check_mk_5_3.png" alt></p>
+<p><img src="/images/check_mk_5_4.png" alt></p>
+<p><img src="/images/check_mk_5_5.png" alt></p>
+<p>学习资料参考于：<br><a href="http://blog.csdn.net/dingyingguidyg/article/details/22674779" target="_blank" rel="noopener">http://blog.csdn.net/dingyingguidyg/article/details/22674779</a><br><a href="http://mathias-kettner.de/checkmk_devel_agentbased.html" target="_blank" rel="noopener">http://mathias-kettner.de/checkmk_devel_agentbased.html</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/check-mk/" rel="tag"># check_mk</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/30/check-mk系列（4）-livestatus模块/" rel="next" title="check_mk系列（4）_livestatus模块">
+                <i class="fa fa-chevron-left"></i> check_mk系列（4）_livestatus模块
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/30/check-mk系列（6）-分布式任务处理系统gearman以及在nagios应用/" rel="prev" title="check_mk系列（6）_分布式任务处理系统gearman以及在nagios应用">
+                check_mk系列（6）_分布式任务处理系统gearman以及在nagios应用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% endif %}
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar1.jpg" alt="锄禾小生">
+            
+              <p class="site-author-name" itemprop="name">锄禾小生</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">313</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/wangjianno1" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangjiannovip@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/wangjianno1" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/wangjianno1" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#check-mk自定义监控配置方法"><span class="nav-number">1.</span> <span class="nav-text">check_mk自定义监控配置方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自定义监控服务端脚本说明"><span class="nav-number">2.</span> <span class="nav-text">自定义监控服务端脚本说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为自定义监控加上性能数据"><span class="nav-number">3.</span> <span class="nav-text">为自定义监控加上性能数据</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">锄禾小生</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">Hosted by <a target="_blank" rel="external nofollow" href="https://wangjianno1.github.io">老坛の菜园子<b></b></a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.2"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

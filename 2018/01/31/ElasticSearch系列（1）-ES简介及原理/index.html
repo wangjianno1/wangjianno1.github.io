@@ -1,35 +1,1424 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.2" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/my-favicon-32x32.ico?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/my-favicon-16x16.ico?v=6.0.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.0.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="ElasticSearch,">
+
+
+<meta name="description" content="ElasticSearch简介Elasticsearch是一个基于Apache Lucene(TM)的开源搜索引擎。无论在开源还是专有领域，Lucene可以被认为是迄今为止最先进、性能最好的、功能最全的搜索引擎库。但是，Lucene只是一个库。想要使用它，你必须使用Java来作为开发语言并将其直接集成到你的应用中，更糟糕的是，Lucene非常复杂，你需要深入了解检索的相关知识来理解它是如何工作的。">
+<meta name="keywords" content="ElasticSearch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ElasticSearch系列（1）_ES简介及原理">
+<meta property="og:url" content="http://wangjianno1.github.io/2018/01/31/ElasticSearch系列（1）-ES简介及原理/index.html">
+<meta property="og:site_name" content="老坛の菜园子">
+<meta property="og:description" content="ElasticSearch简介Elasticsearch是一个基于Apache Lucene(TM)的开源搜索引擎。无论在开源还是专有领域，Lucene可以被认为是迄今为止最先进、性能最好的、功能最全的搜索引擎库。但是，Lucene只是一个库。想要使用它，你必须使用Java来作为开发语言并将其直接集成到你的应用中，更糟糕的是，Lucene非常复杂，你需要深入了解检索的相关知识来理解它是如何工作的。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://wangjianno1.github.io/images/elasticsearch_1_1.png">
+<meta property="og:image" content="http://wangjianno1.github.io/images/elasticsearch_1_2.png">
+<meta property="og:image" content="http://wangjianno1.github.io/images/elasticsearch_1_3.png">
+<meta property="og:image" content="http://wangjianno1.github.io/images/elasticsearch_1_4.png">
+<meta property="og:image" content="http://wangjianno1.github.io/images/elasticsearch_1_5.png">
+<meta property="og:image" content="http://wangjianno1.github.io/images/elasticsearch_1_6.png">
+<meta property="og:image" content="http://wangjianno1.github.io/images/elasticsearch_1_7.png">
+<meta property="og:image" content="http://wangjianno1.github.io/images/elasticsearch_1_8.png">
+<meta property="og:image" content="http://wangjianno1.github.io/images/elasticsearch_1_9.png">
+<meta property="og:image" content="http://wangjianno1.github.io/images/elasticsearch_1_10.png">
+<meta property="og:image" content="http://wangjianno1.github.io/images/elasticsearch_1_11.png">
+<meta property="og:updated_time" content="2022-02-09T07:40:43.908Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ElasticSearch系列（1）_ES简介及原理">
+<meta name="twitter:description" content="ElasticSearch简介Elasticsearch是一个基于Apache Lucene(TM)的开源搜索引擎。无论在开源还是专有领域，Lucene可以被认为是迄今为止最先进、性能最好的、功能最全的搜索引擎库。但是，Lucene只是一个库。想要使用它，你必须使用Java来作为开发语言并将其直接集成到你的应用中，更糟糕的是，Lucene非常复杂，你需要深入了解检索的相关知识来理解它是如何工作的。">
+<meta name="twitter:image" content="http://wangjianno1.github.io/images/elasticsearch_1_1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://wangjianno1.github.io/2018/01/31/ElasticSearch系列（1）-ES简介及原理/">
+
+
+  <title>ElasticSearch系列（1）_ES简介及原理 | 老坛の菜园子</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?8ff0b3da8786fc33df71f8ced9eebd5a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">老坛の菜园子</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">好记性不如乱笔头</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">37</span>
+              </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">28</span>
+              </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">313</span>
+              </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wangjianno1.github.io/2018/01/31/ElasticSearch系列（1）-ES简介及原理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="锄禾小生">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="老坛の菜园子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ElasticSearch系列（1）_ES简介及原理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-31T17:46:30+08:00">2018-01-31</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/ELKStack/" itemprop="url" rel="index"><span itemprop="name">ELKStack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="ElasticSearch简介"><a href="#ElasticSearch简介" class="headerlink" title="ElasticSearch简介"></a>ElasticSearch简介</h1><p>Elasticsearch是一个基于Apache Lucene(TM)的开源搜索引擎。无论在开源还是专有领域，Lucene可以被认为是迄今为止最先进、性能最好的、功能最全的搜索引擎库。但是，Lucene只是一个库。想要使用它，你必须使用Java来作为开发语言并将其直接集成到你的应用中，更糟糕的是，Lucene非常复杂，你需要深入了解检索的相关知识来理解它是如何工作的。</p>
+<p>Elasticsearch也使用Java开发并使用Lucene作为其核心来实现所有索引和搜索的功能，但是它的目的是通过简单的RESTful API来隐藏Lucene的复杂性，从而让全文搜索变得简单。</p>
+<p>ElasticSearch不仅仅是Lucene，并且也不仅仅只是一个全文搜索引擎。 它可以被下面这样准确的形容：</p>
+<p>（1）一个分布式的实时文档存储，每个字段可以被索引与搜索</p>
+<p>（2）一个分布式实时分析搜索引擎</p>
+<p>（3）能胜任上百个服务节点的扩展，并支持 PB 级别的结构化或者非结构化数据</p>
+<p>备注：Apache Solr项目和ElasticSearch的功能类似，Apache Solr也是基于Lucene库的开源搜索引擎。Apache Solr在2010年与Apache Lucene项目合并。</p>
+<p>如下为ElasticSearch的架构图：</p>
+<p><img src="/images/elasticsearch_1_1.png" alt></p>
+<p>备注：Apache Lucene是一个单机版的全文索引和搜索的工具包，通过ElasticSearch的封装，可以让Apache lucene具有分布式的扩展能力。</p>
+<h1 id="ElasticSearch中的一些概念"><a href="#ElasticSearch中的一些概念" class="headerlink" title="ElasticSearch中的一些概念"></a>ElasticSearch中的一些概念</h1><p>（1）集群和节点</p>
+<p>节点(node)是一个运行着的ElasticSearch实例。集群(cluster)是一组具有相同cluster.name的节点集合，他们协同工作，共享数据并提供故障转移和扩展功能，当然一个节点也可以组成一个集群。</p>
+<p>我们通过修改config/elasticsearch.yml文件，来修改cluster.name名称，然后重启ELasticsearch即可。cluster.name默认为elasticsearch，我们最好修改一个自定义的名称，这样可以防止一个新启动的节点加入到相同网络中的另一个同名的集群中。</p>
+<p>另外，节点的名称可以通过node.name配置来修改。</p>
+<p>（2）索引、类型、文档</p>
+<p>和关系型数据库对比一下概念：</p>
+<pre><code>Relational DB :: Databases -&gt; Tables -&gt; Rows      -&gt; Columns
+ElasticSearch :: Indices   -&gt; Types  -&gt; Documents -&gt; Fields
+</code></pre><p><img src="/images/elasticsearch_1_2.png" alt></p>
+<p>备注：<br>Elasticsearch集群可以包含多个索引(indices)（数据库），每一个索引可以包含多个类型(types)（表），每一个类型包含多个文档(documents)（行），然后每个文档包含多个字段(Fields)（列）</p>
+<p>（3）索引</p>
+<p>索引(index)这个词在Elasticsearch中有着不同的含义，所以有必要在此做一下区分：</p>
+<p>A）索引（名词） </p>
+<p>如上文所述，一个索引(index)就像是传统关系数据库中的数据库，它是相关文档存储的地方，index的复数是indices 或indexes。</p>
+<p>B）索引（动词） </p>
+<p>「索引一个文档」表示把一个文档存储到索引（名词）里，以便它可以被检索或者查询。这很像SQL中的INSERT关键字，差别是，如果文档已经存在，新的文档将覆盖旧的文档。</p>
+<p>（4）分片和副本（Shards &amp; Replicas）</p>
+<p>一个索引可能存储大量的数据，这个数据量可能超过一个单独节点的硬盘大小。比如说，十亿个文档的索引可能会占用1TB大小的磁盘空间，可能就不适合一个单独节点的磁盘，也可能会导致这个节点处理查询请求非常缓慢。 为了解决这个问题，ElasticSearch提供一种能力，这种能力可以把索引细分到多个称为分片的地方中去。当我们往ES中写入文档时，ES按照一定的hash策略<code>[ shard = hash(routing) % number_of_primary_shards ]</code>，将文档写入某一个分片中，所以一个索引的多个shard是同时工作的，而不是说一个shard写满之后，就不在写了，然后创建出一个新的shard。当你创建索引的时候，可以自定义分片的数量。每个分片对于它自己都是全功能和独立索引的。</p>
+<p>在一个网络、云环境中，任何时候都有可能失败，万一 一个分片、节点以某种方式下线或者消失，有一个故障恢复机制是非常有用并被建议的。ElasticSearch允许索引的分片有一个或多个副本，这个副本我们称为复制分片，或直接叫做副本。</p>
+<p>备注：一个索引的shards的数量，是在创建shards时指定的，创建之后不可修改。而一个shard的replica数量是可以在索引创建之后根据需要修改的。</p>
+<h1 id="ElasticSearch集群工作机制"><a href="#ElasticSearch集群工作机制" class="headerlink" title="ElasticSearch集群工作机制"></a>ElasticSearch集群工作机制</h1><p>（1）ElasticSearch集群基本概念</p>
+<p>ElasticSearch集群中一个节点被选举为master节点，其他的节点则为slave节点。master节点负责集群整体状态的维护，例如创建或删除索引、增加或删除节点等等。对于用户，可以和集群中的任意节点进行通信，包括主节点。每个节点都知道某个文档的存放位置，并且能够将请求转发到持有所需数据的节点。用户直接通信的节点负责将需要的数据从各个节点收集起来，然后返回给用户。这个过程都是由ES透明地进行管理。</p>
+<p>当我们创建索引时，ElasticSearch默认将这个索引配置5个shard和1个replica（也就是新索引有5个分片，每个分片又有一个副本）。</p>
+<p>A）一个没有数据，且只有一个节点的空集群</p>
+<p><img src="/images/elasticsearch_1_3.png" alt></p>
+<p>该节点是集群中有一个节点，该节点为master节点</p>
+<p>B） 在（A）的基础上，创建一个有3个shard，1个replica的索引</p>
+<p><img src="/images/elasticsearch_1_4.png" alt></p>
+<p>三个shard均被分配到NODE1上。由于只有一个节点，3个replica没有被分配，当前集群状态为yellow</p>
+<p>C）在（B）的基础上，给ES集群增加一个节点NODE2</p>
+<p><img src="/images/elasticsearch_1_5.png" alt></p>
+<p>该索引的3个shard被复制到NODE2节点，因此在NODE2上有3个replica，至此集群状态为green（3个主分片和3个副本均正常）</p>
+<p>D）在（C）的基础上再增加一个节点NODE3</p>
+<p><img src="/images/elasticsearch_1_6.png" alt></p>
+<p>ES集群的shards和replica将会在集群中重新分配，以达到一个比较均衡的状态。</p>
+<p>E）在（D）的基础上将replica数量从1调整到2</p>
+<p><img src="/images/elasticsearch_1_7.png" alt></p>
+<p>F）在（E）的基础上干掉NODE1 master节点</p>
+<p><img src="/images/elasticsearch_1_8.png" alt></p>
+<p>master节点宕掉之后，第一件事是剩余的节点重新选主出master节点，图中NODE2被选举为新的master节点。由于P1和P2两个主分片在NODE1被干掉时丢失了，所以新的master节点将重新从replica中恢复主分片，图中将NODE2和NODE3中replica确定为主分片。此时集群的状态为yellow，因为该所有需要2个replica，目前只有1个replica.</p>
+<p>（2）shard的路由机制</p>
+<p>在ElasticSearch中，一个索引可能有多个shard，一个文档只能被存储到一个shard中。因此在索引文档的时候，需要有一个机制来决定文档被索引到哪一个shard上。在ES中，通过公式shard = hash(routing) % number_of_primary_shards来计算文档应该被分配到哪个shard中。而且在读取ES中某个文档时，也是通过该公式计算出该文档存储在哪个shard中。因此在ES中，shard数在创建文档时指定，后来就无法改变，因为如果改变索引的shard数，那么已经被索引的数据将会失效或找不到。而replica数目则是可以随时调整的。</p>
+<p>备注：公式中routing可以是文档的_id，也可以是用户自定义的值。</p>
+<p>（3）在ES集群中，每一个节点都维护了一套完整集群元数据，所有每个节点都知道某个文档的存储节点，以及能够将请求转发给相应的节点，因此ES集群中每一个节点都能响应客户端的所有请求，而不管它是master节点，还是slave节点。</p>
+<p>（4）ElasticSearch基本操作工作流</p>
+<p><strong><em>场景一：创建或删除一个文档</em></strong></p>
+<p><img src="/images/elasticsearch_1_9.png" alt></p>
+<p>A）NODE1收到用户发起的创建或删除文档请求</p>
+<p>B）NODE1根据文档的_id计算（hash(routing) % number_of_primary_shards） 出该文档属于shard 0. 然后NODE1将请求转发给shard 0所在的节点NODE3</p>
+<p>C）NODE3响应请求，完成P0的更新。然后将请求同时转发给给其副本所在的节点NODE1和NODE2。NODE1和NODE2更新完副本后，返回成功给主分片所在的节点NODE3。</p>
+<p>D）NODE3返回成功给NODE1，NODE1返回成功给用户</p>
+<p>备注：这个里面响应用户请求的是NODE1节点，其实这里其他的节点都可以直接响应用户的请求，请求工作流是类似的。</p>
+<p><strong><em>场景二：读取一个文档</em></strong></p>
+<p><img src="/images/elasticsearch_1_10.png" alt></p>
+<p>A）NODE1收到用户的读取文档请求</p>
+<p>B）NODE1根据文档的_id计算<code>hash(routing) % number_of_primary_shards</code>出该文档属于shard 0. NODE1发现在所有的节点上都有shard 0或shard 0的副本。在这种情况下，NODE1会按照Round Robin模式妆发请求，在上图的例子中，是转发给了NODE2</p>
+<p>C）NODE2返回文档数据给NODE1，然后NODE1将文档数据返回给用户</p>
+<p>备注：这个里面响应用户请求的是NODE1节点，其实这里其他的节点都可以直接响应用户的请求，请求工作流是类似的。</p>
+<p><strong><em>场景三：更新一个文档</em></strong></p>
+<p><img src="/images/elasticsearch_1_11.png" alt></p>
+<p>A）NODE1收到用户的更新文档请求</p>
+<p>B）NODE1计算出文档属于shard 0，并将请求转发给主分片shard 0所在的节点NODE3上。NODE3更新文档，并将请求转发给replica所在的NODE1和NODE2</p>
+<p>C）NODE1和NODE2更新replica，并返回成功给NODE3。NODE3返回成功给NODE1，然后NODE1返回成功给用户</p>
+<h1 id="ElasticSearch集群的自动发现机制"><a href="#ElasticSearch集群的自动发现机制" class="headerlink" title="ElasticSearch集群的自动发现机制"></a>ElasticSearch集群的自动发现机制</h1><p>分布式系统要解决的首要问题就是节点之间互相发现以及选主的机制。如果使用了Zookeeper/Etcd这样的成熟的服务发现工具，这两个问题都一并解决了。但ElasticSearch并没有依赖这样的工具，带来的好处是部署服务的成本和复杂度降低了，不用预先依赖一个服务发现的集群，缺点当然是将复杂度带入了ElasticSearch内部。ElasticSearch Discovery模块就是负责集群中节点的自动发现和Master节点选举的模块，详细介绍如下：</p>
+<p>（1）自动发现</p>
+<p>目前ElasticSearch的自动发现机制有四种选择，ES默认支持的是zen Discovery，详细介绍如下：</p>
+<p>A）zen discovery</p>
+<p>它是ElasticSearch默认支持的，有单播和多播两种方式。</p>
+<p>多播时需要如下配置：</p>
+<pre><code>discovery.zen.ping.multicast.group: 224.2.2.4  #组地址 
+discovery.zen.ping.multicast.port: 54328       #端口 
+discovery.zen.ping.multicast.ttl: 3            #广播消息TTL
+discovery.zen.ping.multicast.address: null     #绑定的地址，null表示绑定所有可用的网络接口 
+discovery.zen.ping.multicast.enabled: true     #多播自动发现禁用开关
+</code></pre><p>备注：在生产环境中，官方建议关闭多播模式，因为多播模式下，可能会有一些节点错误地加到ES集群中来</p>
+<p>单播时需要如下配置：</p>
+<pre><code>discovery.zen.ping.multicast.enabled: false        #多播自动发现禁用开关
+discovery.zen.ping.unicast.hosts: [&quot;192.168.11.192&quot;,&quot;192.168.11.193&quot;,&quot;192.168.11.194&quot;]  #unicast.hosts是集群中任意几个节点，而不用是所有ES中的所有节点。该节点会和unicast.hosts列表中机器进行通信，然后该节点和集群master节点通信，从而加入到集群中来
+</code></pre><p>B）Azure classic discovery</p>
+<p>它以插件的形式被ES支持，只有多播方式</p>
+<p>C） EC2 discovery</p>
+<p>它以插件的形式被ES支持，只有多播方式</p>
+<p>D）Google Compute Engine(GCE) discovery</p>
+<p>它以插件的形式被ES支持，只有多播方式</p>
+<p>（2）Master节点选举</p>
+<p>和master选举相关的几个参数有node.master，discovery.zen.minimum_master_nodes等</p>
+<p>（3）故障检测</p>
+<p>ElasticSearch中的故障检测有两个机制，一个是master节点定期去ping检测所有的slave节点；一个是slave节点定期去ping检测master节点是否存活。有如下三个相关的配置参数：</p>
+<pre><code>discovery.zen.fd.ping_interval #多长时间ping一次，默认是1s
+discovery.zen.fd.ping_timeout  #ping的返回最大容忍时间，默认是30s，也就是说超过30s，ping还没有返回，就认为超时了
+discovery.zen.fd.ping_retries  #如果ping超时，最大的重试次数，默认为3，也就是说重试了3次，一个节点还是ping不通，那么就认为该节点挂掉了
+</code></pre><h1 id="ElasticSearch中各种节点"><a href="#ElasticSearch中各种节点" class="headerlink" title="ElasticSearch中各种节点"></a>ElasticSearch中各种节点</h1><p>（1）master-eligible node（候选主节点）</p>
+<p>node.master为true，缺省即为true，意味着该节点可以被选举为master。</p>
+<p>（2）master node（主节点）</p>
+<p>（3）data node（数据节点）</p>
+<p>node.data为true，缺省即为true，它负责存储数据，执行数据相关的CRUD、搜索、聚合操作。</p>
+<p>（4）Ingest node（提取节点）</p>
+<p>node.ingest为true，缺省即为true，它能够在索引之前预处理文档，拦截文档的bulk和index请求，施加转换，然后再将文档传回给 bulk和index API。用户可以定义一个管道，指定一系列的预处理器，有点类似于logstash了哦。</p>
+<p>（5）Tribe node（部落节点）</p>
+<p>通过<code>tribe.*</code>配置，是一种特殊类型的协调节点，它连接多个集群，接受同事对多个集群的查询和操作。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ElasticSearch/" rel="tag"># ElasticSearch</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/31/zookeeper技术调研/" rel="next" title="zookeeper技术调研">
+                <i class="fa fa-chevron-left"></i> zookeeper技术调研
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/02/ElasticSearch系列（2）-ES安装及配置/" rel="prev" title="ElasticSearch系列（2）_ES安装及配置">
+                ElasticSearch系列（2）_ES安装及配置 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% endif %}
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar1.jpg" alt="锄禾小生">
+            
+              <p class="site-author-name" itemprop="name">锄禾小生</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">313</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/wangjianno1" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangjiannovip@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/wangjianno1" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/wangjianno1" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ElasticSearch简介"><span class="nav-number">1.</span> <span class="nav-text">ElasticSearch简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ElasticSearch中的一些概念"><span class="nav-number">2.</span> <span class="nav-text">ElasticSearch中的一些概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ElasticSearch集群工作机制"><span class="nav-number">3.</span> <span class="nav-text">ElasticSearch集群工作机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ElasticSearch集群的自动发现机制"><span class="nav-number">4.</span> <span class="nav-text">ElasticSearch集群的自动发现机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ElasticSearch中各种节点"><span class="nav-number">5.</span> <span class="nav-text">ElasticSearch中各种节点</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">锄禾小生</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">Hosted by <a target="_blank" rel="external nofollow" href="https://wangjianno1.github.io">老坛の菜园子<b></b></a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.2"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

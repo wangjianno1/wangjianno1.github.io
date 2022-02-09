@@ -1,35 +1,1440 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.2" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/my-favicon-32x32.ico?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/my-favicon-16x16.ico?v=6.0.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.0.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="Kafka,">
+
+
+<meta name="description" content="常见的消息队列Message Queue，MQ（1）RabbitMQ RabbitMQ是使用Erlang编写的一个开源的消息队列，本身支持很多的协议：AMQP，XMPP, SMTP, STOMP，也正因如此，它非常重量级，更适合于企业级的开发。同时实现了Broker构架，这意味着消息在发送给客户端时先在中心队列排队。对路由，负载均衡或者数据持久化都有很好的支持。 （2）Redis Redis是一个">
+<meta name="keywords" content="Kafka">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kafka技术调研">
+<meta property="og:url" content="http://wangjianno1.github.io/2018/01/31/Kafka技术调研/index.html">
+<meta property="og:site_name" content="老坛の菜园子">
+<meta property="og:description" content="常见的消息队列Message Queue，MQ（1）RabbitMQ RabbitMQ是使用Erlang编写的一个开源的消息队列，本身支持很多的协议：AMQP，XMPP, SMTP, STOMP，也正因如此，它非常重量级，更适合于企业级的开发。同时实现了Broker构架，这意味着消息在发送给客户端时先在中心队列排队。对路由，负载均衡或者数据持久化都有很好的支持。 （2）Redis Redis是一个">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://wangjianno1.github.io/images/kafka_1_1.png">
+<meta property="og:image" content="http://wangjianno1.github.io/images/kafka_1_2.png">
+<meta property="og:image" content="http://wangjianno1.github.io/images/kafka_1_3.png">
+<meta property="og:image" content="http://wangjianno1.github.io/images/kafka_1_4.png">
+<meta property="og:updated_time" content="2022-02-09T07:40:43.930Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kafka技术调研">
+<meta name="twitter:description" content="常见的消息队列Message Queue，MQ（1）RabbitMQ RabbitMQ是使用Erlang编写的一个开源的消息队列，本身支持很多的协议：AMQP，XMPP, SMTP, STOMP，也正因如此，它非常重量级，更适合于企业级的开发。同时实现了Broker构架，这意味着消息在发送给客户端时先在中心队列排队。对路由，负载均衡或者数据持久化都有很好的支持。 （2）Redis Redis是一个">
+<meta name="twitter:image" content="http://wangjianno1.github.io/images/kafka_1_1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://wangjianno1.github.io/2018/01/31/Kafka技术调研/">
+
+
+  <title>Kafka技术调研 | 老坛の菜园子</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?8ff0b3da8786fc33df71f8ced9eebd5a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">老坛の菜园子</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">好记性不如乱笔头</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">37</span>
+              </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">28</span>
+              </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">313</span>
+              </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wangjianno1.github.io/2018/01/31/Kafka技术调研/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="锄禾小生">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="老坛の菜园子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Kafka技术调研</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-31T16:13:13+08:00">2018-01-31</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/ELKStack/" itemprop="url" rel="index"><span itemprop="name">ELKStack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="常见的消息队列Message-Queue，MQ"><a href="#常见的消息队列Message-Queue，MQ" class="headerlink" title="常见的消息队列Message Queue，MQ"></a>常见的消息队列Message Queue，MQ</h1><p>（1）RabbitMQ</p>
+<p>RabbitMQ是使用Erlang编写的一个开源的消息队列，本身支持很多的协议：AMQP，XMPP, SMTP, STOMP，也正因如此，它非常重量级，更适合于企业级的开发。同时实现了Broker构架，这意味着消息在发送给客户端时先在中心队列排队。对路由，负载均衡或者数据持久化都有很好的支持。</p>
+<p>（2）Redis</p>
+<p>Redis是一个基于Key-Value对的NoSQL数据库，开发维护很活跃。虽然它是一个Key-Value数据库存储系统，但它本身支持MQ功能，所以完全可以当做一个轻量级的队列服务来使用。对于RabbitMQ和Redis的入队和出队操作，各执行100万次，每10万次记录一次执行时间。测试数据分为128Bytes、512Bytes、1K和10K四个不同大小的数据。实验表明：入队时，当数据比较小时Redis的性能要高于RabbitMQ，而如果数据大小超过了10K，Redis则慢的无法忍受；出队时，无论数据大小，Redis都表现出非常好的性能，而RabbitMQ的出队性能则远低于Redis。</p>
+<p>（3）ZeroMQ</p>
+<p>ZeroMQ号称最快的消息队列系统，尤其针对大吞吐量的需求场景。ZeroMQ能够实现RabbitMQ不擅长的高级/复杂的队列，但是开发人员需要自己组合多种技术框架，技术上的复杂度是对这MQ能够应用成功的挑战。ZeroMQ具有一个独特的非中间件的模式，你不需要安装和运行一个消息服务器或中间件，因为你的应用程序将扮演这个服务器角色。你只需要简单的引用ZeroMQ程序库，可以使用NuGet安装，然后你就可以愉快的在应用程序之间发送消息了。但是ZeroMQ仅提供非持久性的队列，也就是说如果宕机，数据将会丢失。其中，Twitter的Storm 0.9.0以前的版本中默认使用ZeroMQ作为数据流的传输（Storm从0.9版本开始同时支持ZeroMQ和Netty作为传输模块）。</p>
+<p>（4）ActiveMQ</p>
+<p>ActiveMQ是Apache下的一个子项目。 类似于ZeroMQ，它能够以代理人和点对点的技术实现队列。同时类似于RabbitMQ，它少量代码就可以高效地实现高级应用场景。</p>
+<p>（5）Kafka/Jafka<br>Kafka是Apache下的一个子项目，是一个高性能跨语言分布式发布/订阅消息队列系统，而Jafka是在Kafka之上孵化而来的，即Kafka的一个升级版。具有以下特性：快速持久化，可以在O(1)的系统开销下进行消息持久化；高吞吐，在一台普通的服务器上既可以达到10W/s的吞吐速率；完全的分布式系统，Broker、Producer、Consumer都原生自动支持分布式，自动实现负载均衡；支持Hadoop数据并行加载，对于像Hadoop的一样的日志数据和离线分析系统，但又要求实时处理的限制，这是一个可行的解决方案。Kafka通过Hadoop的并行加载机制统一了在线和离线的消息处理。Apache Kafka相对于ActiveMQ是一个非常轻量级的消息系统，除了性能非常好之外，还是一个工作良好的分布式系统。</p>
+<p>如下为Kafka、RabbitMQ以及RocketMQ的一点区别，权威性待验证。</p>
+<p>Kafka主要特点是基于Pull的模式来处理消息消费，追求高吞吐量，一开始的目的就是用于日志收集和传输。0.8版本开始支持复制，不支持事务，对消息的重复、丢失、错误没有严格要求，适合产生大量数据的互联网服务的数据收集业务。</p>
+<p>RabbitMQ是使用Erlang语言开发的开源消息队列系统，基于AMQP协议来实现。AMQP的主要特征是面向消息、队列、路由（包括点对点和发布/订阅）、可靠性、安全。AMQP协议更多用在企业系统内，对数据一致性、稳定性和可靠性要求很高的场景，对性能和吞吐量的要求还在其次。</p>
+<p>RocketMQ是阿里开源的消息中间件，它是纯Java开发，具有高吞吐量、高可用性、适合大规模分布式系统应用的特点。RocketMQ思路起源于Kafka，但并不是Kafka的一个Copy，它对消息的可靠传输及事务性做了优化，目前在阿里集团被广泛应用于交易、充值、流计算、消息推送、日志流式处理、binglog分发等场景。</p>
+<h1 id="Kafka简介"><a href="#Kafka简介" class="headerlink" title="Kafka简介"></a>Kafka简介</h1><p>Kafka是由LinkedIn开发的一个分布式的消息系统，使用Scala编写（Scala程序是运行在JDK上的），它以可水平扩展和高吞吐率而被广泛使用。目前越来越多的开源分布式处理系统如Cloudera、Apache Storm、Spark都支持与Kafka集成。</p>
+<p><img src="/images/kafka_1_1.png" alt></p>
+<p>Kafka集群的组成部分有：</p>
+<p>（1）Broker</p>
+<p>Kafka集群包含一个或多个服务器，这种服务器被称为broker 。</p>
+<p>（2）Topic</p>
+<p>每条发布到Kafka集群的消息都有一个类别，这个类别被称为Topic。（物理上不同Topic的消息分开存储，逻辑上一个Topic的消息虽然保存于一个或多个broker上但用户只需指定消息的Topic即可生产或消费数据而不必关心数据存于何处）。如下为一个topic的解剖图：</p>
+<p><img src="/images/kafka_1_2.png" alt></p>
+<p>备注：这个topic有3个partition，每一个partition中的数据是按时间有序的。</p>
+<p>（3）Partition</p>
+<p>Parition是物理上的概念，每个Topic包含一个或多个Partition。Partition是kafka消息队列组织的最小单位。</p>
+<p>（4）Producer</p>
+<p>负责发布消息到Kafka broker 。</p>
+<p>（5）Consumer</p>
+<p>消息消费者，向Kafka broker读取消息的客户端。</p>
+<p>（6）Consumer Group</p>
+<p>每个Consumer属于一个特定的Consumer Group（可为每个Consumer指定group name，若不指定group name则属于默认的group）。</p>
+<p>（7）Controller</p>
+<p>每个Cluster当中会选举出一个Broker来担任Controller，负责处理Partition的Leader选举，协调Partition迁移等工作。</p>
+<p>备注：Topic相当于pipe，Partition相当于pipelet。</p>
+<h1 id="关于Consumer和Consumer-Group的一点补充"><a href="#关于Consumer和Consumer-Group的一点补充" class="headerlink" title="关于Consumer和Consumer Group的一点补充"></a>关于Consumer和Consumer Group的一点补充</h1><p>传统的消息队列的消息消费有两种模式：</p>
+<p>（1）队列模式-Queue</p>
+<p>在队列模式中，一条消息只能被某一个消费者消费，一条消息一旦被消费后，其他的消费者就获取不到这条消息了。</p>
+<p>（2）发布/订阅模式-Topic</p>
+<p>在发布/订阅模式中，消息可以被所有的消费者消费。</p>
+<p>在Kafka中，通过使用Consumer Group的机制，Kafka集群就涵盖了上述两种的模式。每一个Consumer都存在于某个Consumer Group中。各个Consumer Group使用发布/订阅模式来消费数据，也就是说每个Consumer Group都可以消费消息队列中的所有消息。而对于单独的一个Consumer Group所包含的所有Consumer，则使用队列模式来消费消息，也就是Consumer Group订阅到的某一条消息，只能被该Group中的某一个Consumer消费。</p>
+<p>如果Kafka中，所有Consumer Group都包含一个Consumer的话，那其实就相当于是发布/订阅模式。下图形象地说明了Kafka的消息消费方式：</p>
+<p><img src="/images/kafka_1_3.png" alt></p>
+<p>另外，属于同一个Consumer Group的多个Consumer在消费信息时，也有一定的balance策略。当Consumer和Partition的数量相同时，那么每个Consumer都会去消费一个Partition。当Consumer比Partition的数据要少时，那么有些Consumer就会去消费多个Partition。当Consumer比Partition的数据要多时，那么有些Consumer就不会从任何Partition中订阅数据（此部分内容可参见<a href="http://www.jasongj.com/2015/01/02/Kafka%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/）。" target="_blank" rel="noopener">http://www.jasongj.com/2015/01/02/Kafka%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/）。</a></p>
+<h1 id="Kafka集群配置和搭建"><a href="#Kafka集群配置和搭建" class="headerlink" title="Kafka集群配置和搭建"></a>Kafka集群配置和搭建</h1><p>前提声明：本次部署测试用的是kafka_2.12-0.10.2.0</p>
+<p><strong><em>搭建测试一：单broker的Kafka集群搭建</em></strong></p>
+<p>（1）下载kafka二进制包</p>
+<p>（2）启动只有一个节点的应急的zookeeper集群</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/zookeeper-server-start.sh -daemon config/zookeeper.properties</span><br></pre></td></tr></table></figure>
+<p>连接zookeeper集群并测试：<code>./bin/zookeeper-shell.sh 192.168.65.239:2181</code>（备注：zookeeper的默认端口是2181）</p>
+<p>（3）启动一个kafka broker</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/kafka-server-start.sh config/server.properties</span><br></pre></td></tr></table></figure>
+<p>（4）创建测试用的topic</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建名称为wahaha的topic，有1个partition，复制因子为1（单副本，就是没有备份）</span></span><br><span class="line">./bin/kafka-topics.sh --create --zookeeper 192.168.65.239:2181 --replication-factor 1 --partitions 1 --topic wahaha</span><br></pre></td></tr></table></figure>
+<p>查看集群中的所有topic信息：<code>./bin/kafka-topics.sh --list --zookeeper 192.168.65.239:2181</code></p>
+<p>备注：也可以在broker配置，使其能够自动创建topic，而不需要手动去创建topic</p>
+<p>（5）向Kafka集群中指定的topic写入一些消息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/kafka-console-producer.sh --broker-list 192.168.65.239:9092 --topic wahaha</span><br></pre></td></tr></table></figure>
+<p>备注：使用Ctrl+D结束输入</p>
+<p>（6）消费Kafka集群中指定topic的消息（如下两种方式都是可以的）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./bin/kafka-console-consumer.sh --bootstrap-server 192.168.65.239:9092 --topic wahaha --from-beginning</span><br><span class="line">./bin/kafka-console-consumer.sh --zookeeper 192.168.65.239:2181 --topic wahaha --from-beginning</span><br></pre></td></tr></table></figure>
+<p><strong><em>搭建测试二：多broker的Kafka集群搭建</em></strong></p>
+<p>前提：在同一台物理机上通过启动3个broker进程，来达到搭建有3个broker的Kafka集群，步骤如下：</p>
+<p>（1）下载kafka二进制包</p>
+<p>（2）启动只有一个节点的应急的zookeeper集群</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/zookeeper-server-start.sh -daemon config/zookeeper.properties</span><br></pre></td></tr></table></figure>
+<p>连接zookeeper集群并测试：<code>./bin/zookeeper-shell.sh 192.168.65.239:2181</code>（备注：zookeeper的默认端口是2181）</p>
+<p>（3）启动三个kafka broker</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> config &amp;&amp; mv server.properties server-1.properties</span><br><span class="line"><span class="built_in">cd</span> config &amp;&amp; cp server-1.properties server-2.properties</span><br><span class="line"><span class="built_in">cd</span> config &amp;&amp; cp server-1.properties server-3.properties</span><br></pre></td></tr></table></figure>
+<p>修改config/server-1.properties内容如下：</p>
+<pre><code>broker.id=1
+listeners=PLAINTEXT://192.168.65.239:9092
+log.dir=/tmp/kafka-logs-1
+</code></pre><p>修改config/server-2.properties内容如下：</p>
+<pre><code>broker.id=2
+listeners=PLAINTEXT://192.168.65.239:9093
+log.dir=/tmp/kafka-logs-2
+</code></pre><p>修改config/server-3.properties内容如下：</p>
+<pre><code>broker.id=3
+listeners=PLAINTEXT://192.168.65.239:9094
+log.dir=/tmp/kafka-logs-3
+</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./bin/kafka-server-start.sh [-daemon] config/server-1.properties   <span class="comment">#启动监听默认9092端口的broker</span></span><br><span class="line">./bin/kafka-server-start.sh [-daemon] config/server-2.properties   <span class="comment">#启动监听默认9093端口的broker</span></span><br><span class="line">./bin/kafka-server-start.sh [-daemon] config/server-3.properties   <span class="comment">#启动监听默认9094端口的broker</span></span><br></pre></td></tr></table></figure>
+<p>备注：加上-daemon选项，将会在后台启动broker进程；另外，在实际部署kafka集群时，注意listens中的配置格式哦</p>
+<p>（4）创建测试用的topic</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建名称为wahaha-replicas的topic，有1个partition，复制因子为3（三副本）</span></span><br><span class="line">./bin/kafka-topics.sh --create --zookeeper 192.168.65.239:2181 --replication-factor 3 --partitions 1 --topic wahaha-replicas</span><br></pre></td></tr></table></figure>
+<p>备注：也可以在broker配置，使其能够自动创建topic，而不需要手动去创建topic</p>
+<p>（5）向Kafka集群中指定的topic写入一些消息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/kafka-console-producer.sh --broker-list 192.168.65.239:9093 --topic wahaha-replicas</span><br></pre></td></tr></table></figure>
+<p>备注：broker的端口9092,9093,9094都可以用的。–broker-list只需要随便给下broker的ip:port，不用给全部，参见metadata.broker.list</p>
+<p>（6）消费Kafka集群中指定topic的消息（如下两种方式都是可以的）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./bin/kafka-console-consumer.sh --bootstrap-server 192.168.65.239:9092 --topic wahaha-replicas --from-beginning</span><br><span class="line">./bin/kafka-console-consumer.sh --zookeeper 192.168.65.239:2181 --topic wahaha --from-beginning</span><br></pre></td></tr></table></figure>
+<h1 id="AMQP协议"><a href="#AMQP协议" class="headerlink" title="AMQP协议"></a>AMQP协议</h1><p>AMQP，Advanced Message Queuing Protocol，中文译为高级消息队列协议。AMQP是一个标准开放的应用层的消息中间件（Message Oriented Middleware）协议。AMQP定义了通过网络发送的字节流的数据格式。因此兼容性非常好，任何实现AMQP协议的程序都可以和与AMQP协议兼容的其他程序交互，可以很容易做到跨语言，跨平台。 像ActiveMQ/RabbitMQ都按照AMQP协议来实现，而Kafka是仿照AMQP协议来实现的。</p>
+<h1 id="Kafka集群搭建最佳实践"><a href="#Kafka集群搭建最佳实践" class="headerlink" title="Kafka集群搭建最佳实践"></a>Kafka集群搭建最佳实践</h1><p>（1）kafka集群最好部署在相同局域网的环境里，不要部署在不同的网络环境里。跨数据中心延迟大，大大影响kafka、zk写入效率以及分区复制效率。</p>
+<p>（2）磁盘推荐使用RAID，但是SSD是非必需的。</p>
+<p>（3）kafka集群的重要配置项</p>
+<pre><code>zookeeper.connect # 必配参数，建议在kafka集群的每台机器都配置所有zk
+broker.id         # 必配参数，集群节点的标示符，不得重复。取值范围0~n
+log.dirs          # 配置broker存放数据的位置，不要使用默认的/tmp/kafka-logs
+num.partitions    # 自动创建topic时默认partition数量。默认是1，为了获得更好的性能，建议修改为更大
+default.replication.factor # 自动创建topic的默认副本数量，官方建议修改为2，但通常一个副本就够了
+metadata.broker.list  # 给出一些broker地址，没必要将集群中所有的broker都添加到这个属性中，但是建议最少设置两个，以防止第一个broker不可用。Kafka会自己找到相应topic/partition的leader broker
+log.retention.hours   # kafka数据保留时间
+log.segment.bytes     # partition在磁盘的文件不能超过log.segment.bytes大小，如果超过该指，则重新写入一个新文件，即新的segment
+</code></pre><p>（4）在发布数据时，需要通过broker-list来指定broker的ip和port，这里其实不需要把集群中的所有broker都配置上去，因为发布端api可以通过一台broker获取到集群所有的metadata。而订阅数据时，只需要指定zookeeper地址即可。</p>
+<h1 id="Kafka的HA设计"><a href="#Kafka的HA设计" class="headerlink" title="Kafka的HA设计"></a>Kafka的HA设计</h1><p>（1）Kafka中的HA设计</p>
+<p>A）Kafka的Replication机制</p>
+<p>Kafka在0.8以前的版本中，并不提供High Availablity机制，一旦一个或多个Broker宕机，则宕机期间其上所有Partition都无法继续提供服务。若该Broker永远不能再恢复，亦或磁盘故障，则其上数据将丢失。而Kafka的设计目标之一即是提供数据持久化，同时对于分布式系统来说，尤其当集群规模上升到一定程度后，一台或者多台机器宕机的可能性大大提高，对Failover要求非常高。因此，Kafka从0.8开始提供High Availability机制。</p>
+<p>B）Kafka的Leader Election机制</p>
+<p>引入Replication之后，同一个Partition可能会有多个Replica，而这时需要在这些Replication之间选出一个Leader，Producer和Consumer只与这个Leader交互，其它Replica作为Follower从Leader中复制数据。 因为需要保证同一个Partition的多个Replica之间的数据一致性（其中一个宕机后其它Replica必须要能继续服务并且即不能造成数据重复也不能造成数据丢失）。如果没有一个Leader，所有Replica都可同时读/写数据，那就需要保证多个Replica之间互相（N×N条通路）同步数据，数据的一致性和有序性非常难保证，大大增加了Replication实现的复杂性，同时也增加了出现异常的几率。而引入Leader后，只有Leader负责数据读写，Follower只向Leader顺序Fetch数据（N条通路），系统更加简单且高效。如下为引入Replication机制后数据的同步过程图：</p>
+<p><img src="/images/kafka_1_4.png" alt></p>
+<p>（2）Kafka中replica的均衡分布算法</p>
+<p>Kafka中同一个topic中多个partition，以及每个partition的多个replica，在Kafka集群中的分布算法如下：</p>
+<pre><code>将所有Broker（假设共n个Broker）和待分配的Partition排序
+将第i个Partition分配到第（i mod n）个Broker上
+将第i个Partition的第j个Replica分配到第（(i + j) mode n）个Broker上
+</code></pre><p>（3）Kafka中partition的Leader Election选主算法</p>
+<p>实际上，Leader Election算法非常多，比如ZooKeeper的Zab, Raft和Viewstamped Replication。而Kafka所使用的Leader Election算法更像微软的PacificA算法。</p>
+<h1 id="Kafka中的一些常用操作"><a href="#Kafka中的一些常用操作" class="headerlink" title="Kafka中的一些常用操作"></a>Kafka中的一些常用操作</h1><p>（1）查看集群中的所有topic信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/kafka-topics.sh --list --zookeeper 192.168.65.239:2181</span><br></pre></td></tr></table></figure>
+<p>（2）查看集群中指定topic的详细信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/kafka-topics.sh --describe --zookeeper 192.168.65.239:2181 --topic wahaha-replicas</span><br></pre></td></tr></table></figure>
+<p>其中，leader负责给定分区中所有的读和写的任务，分区将随即选取一个节点作为leader； replicas列出了所有当前分区中的副本节点，不论这些节点是否是leader或者是否处于激活状态，都会被列出来；isr是表示“在同步中”的副本节点的列表，是replicas列表的一个子集，包含了当前处于激活状态的节点，并且leader节点开头。</p>
+<p>（3）给一个topic增加partition</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/kafka-topics.sh --zookeeper 192.168.65.239:2181 --alter --topic wahaha-replicas --partitions 3</span><br></pre></td></tr></table></figure>
+<h1 id="Kafka中消息发送端Producer的可靠性保证"><a href="#Kafka中消息发送端Producer的可靠性保证" class="headerlink" title="Kafka中消息发送端Producer的可靠性保证"></a>Kafka中消息发送端Producer的可靠性保证</h1><p>发布端Producer可以通过acks参数来决定发布时的一些控制，具体如下：</p>
+<pre><code>acks=0   #producer不等待broker的acks。发送的消息可能丢失，但永远不会重发
+acks=1   #leader不等待其他follower同步，leader直接写log然后发送acks给producer。这种情况下会有重发现象，可靠性比only once好点，但是仍然会丢消息。例如leader挂了了，但是其他replication还没同步完成
+acks=all #leader等待所有follower同步完成才返回acks。消息可靠不丢失（丢了会重发），没收到ack会重发
+</code></pre><p>备注：当acks=all的时候，就算你设置retries=0也依然会重发</p>
+<h1 id="Kafka集群的压力测试"><a href="#Kafka集群的压力测试" class="headerlink" title="Kafka集群的压力测试"></a>Kafka集群的压力测试</h1><p>Kafka集群的压力测试，可以使用Kafka自带的kafka-producer-perf-test.sh和kafka-consumer-perf-test.sh工具，使用方法如下：</p>
+<p>（1）发布压力测试</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/kafka-producer-perf-test.sh --topic <span class="built_in">test</span>-benchmark --num-records 100000000 --record-size 1024 --throughput 5000000 --producer-props bootstrap.servers=192.168.65.239:9092,192.168.65.239:9093 acks=all retries=2 linger.ms=1</span><br></pre></td></tr></table></figure>
+<p>（2）订阅压力测试</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/kafka-consumer-perf-test.sh --topic wahaha-replicas --batch-size 10000 --num-fetch-threads 2 --threads 10 --show-detailed-stats --group kafka.benchmark --messages 100000000 --broker-list 192.168.65.239:9092,192.168.65.239:9093</span><br></pre></td></tr></table></figure>
+<p>学习资料参考于：<br><a href="http://www.infoq.com/cn/articles/kafka-analysis-part-1" target="_blank" rel="noopener">http://www.infoq.com/cn/articles/kafka-analysis-part-1</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Kafka/" rel="tag"># Kafka</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/31/Flume技术调研/" rel="next" title="Flume技术调研">
+                <i class="fa fa-chevron-left"></i> Flume技术调研
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/31/Kafka集群运维工具/" rel="prev" title="Kafka集群运维工具">
+                Kafka集群运维工具 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% endif %}
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar1.jpg" alt="锄禾小生">
+            
+              <p class="site-author-name" itemprop="name">锄禾小生</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">313</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/wangjianno1" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangjiannovip@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/wangjianno1" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/wangjianno1" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#常见的消息队列Message-Queue，MQ"><span class="nav-number">1.</span> <span class="nav-text">常见的消息队列Message Queue，MQ</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Kafka简介"><span class="nav-number">2.</span> <span class="nav-text">Kafka简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于Consumer和Consumer-Group的一点补充"><span class="nav-number">3.</span> <span class="nav-text">关于Consumer和Consumer Group的一点补充</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Kafka集群配置和搭建"><span class="nav-number">4.</span> <span class="nav-text">Kafka集群配置和搭建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AMQP协议"><span class="nav-number">5.</span> <span class="nav-text">AMQP协议</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Kafka集群搭建最佳实践"><span class="nav-number">6.</span> <span class="nav-text">Kafka集群搭建最佳实践</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Kafka的HA设计"><span class="nav-number">7.</span> <span class="nav-text">Kafka的HA设计</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Kafka中的一些常用操作"><span class="nav-number">8.</span> <span class="nav-text">Kafka中的一些常用操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Kafka中消息发送端Producer的可靠性保证"><span class="nav-number">9.</span> <span class="nav-text">Kafka中消息发送端Producer的可靠性保证</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Kafka集群的压力测试"><span class="nav-number">10.</span> <span class="nav-text">Kafka集群的压力测试</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">锄禾小生</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">Hosted by <a target="_blank" rel="external nofollow" href="https://wangjianno1.github.io">老坛の菜园子<b></b></a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.2"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
