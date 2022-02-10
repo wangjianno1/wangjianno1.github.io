@@ -56,6 +56,36 @@ switch(expression) {
 }
 ```
 
+当变量的值与case语句的值相等时，那么case语句之后的语句开始执行，直到break语句出现才会跳出switch语句。当遇到break语句时，switch语句终止，程序跳转到switch语句后面的语句执行。case语句不必须要包含break语句，如果没有break语句出现，程序会继续执行下一条case语句，直到出现break语句。代码举例如下：
+
+```java
+public class Test {
+   public static void main(String args[]){
+      //char grade = args[0].charAt(0);
+      char grade = 'C';
+ 
+      switch(grade) {
+         case 'A' :
+            System.out.println("优秀"); 
+            break;
+         case 'B' :
+         case 'C' :
+            System.out.println("良好");
+            break;
+         case 'D' :
+            System.out.println("及格");
+            break;
+         case 'F' :
+            System.out.println("你需要再努力努力");
+            break;
+         default :
+            System.out.println("未知等级");
+      }
+      System.out.println("你的等级是 " + grade);
+   }
+}
+```
+
 # 循环结构
 
 （1）while循环
@@ -87,6 +117,15 @@ for(初始化; 布尔表达式; 更新) {
 ```java
 for(声明语句 : 表达式) {
     //代码句子
+}
+```
+
+代码举例如下：
+
+```java
+String[] fruits = {"Apple", "Banana", "Watermelon", "Orange"};
+for (String fruit : fruits) {
+    System.out.println(fruit);
 }
 ```
 
