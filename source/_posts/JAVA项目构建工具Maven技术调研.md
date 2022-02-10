@@ -83,7 +83,22 @@ cd到Maven项目根目录，然后执行`mvn compile`。
 
 （3）镜像仓库
 
-maven的中央仓库是部署在国外的，国内访问有点慢。其实在国内有很多maven官方仓库的镜像仓库，我们可以将maven中央仓库修改为国内的镜像仓库，那么在安装依赖jar包就会快很多哦。具体可以在${MAVEN_HOME}/conf/settings.xml中设置。
+maven的中央仓库是部署在国外的，国内访问有点慢。其实在国内有很多maven官方仓库的镜像仓库，我们可以将maven中央仓库修改为国内的镜像仓库，那么在安装依赖jar包就会快很多哦。具体可以在`${MAVEN_HOME}/conf/settings.xml`中设置，即在该配置文件的mirrors标签中添加如下内容：
+
+```xml
+<mirror>
+    <id>alimaven</id>
+    <name>aliyun maven</name>
+    <url>https://maven.aliyun.com/repository/public</url>
+    <mirrorOf>central</mirrorOf>
+</mirror>
+<mirror>
+    <id>alimaven-central</id>
+    <name>aliyun maven central</name>
+    <url>https://maven.aliyun.com/repository/central</url>
+    <mirrorOf>central</mirrorOf>
+</mirror>
+```
 
 # mvn常见的使用命令
 
@@ -403,11 +418,11 @@ mvn [options] [<goal(s)>] [<phase(s)>]
 
 （2）`mvn [options] [<goal(s)>]`
 
-这里的goal就是插件中目标的概念，这与maven定义的生命周期没有什么概念。`mvn [options] [<goal(s)>]`表示直接在maven项目中执行某个插件的指定的目标goal。如`mvn archetype:generate`表示生成一个Maven项目结构，`mvn checkstyle:check`表示检查代码风格。
+这里的goal就是插件中目标的概念，这与maven定义的生命周期没有什么关系，也就是不会像执行`mvn [options] [<phase(s)>]`那样，从一个生命周期的第一个phase开始执行。`mvn [options] [<goal(s)>]`表示直接在maven项目中执行某个插件的指定的目标goal。如`mvn archetype:generate`表示生成一个Maven项目结构，`mvn checkstyle:check`表示检查代码风格。
 
 # Maven中profile多环境配置概念和应用
 
-在开发过程中，我们的软件会面对不同的运行环境，比如开发环境、测试环境、生产环境，而我们的软件在不同的环境中，有的配置可能会不一样，比如数据源配置、日志文件配置、以及一些软件运行过程中的基本配置，那每次我们将软件部署到不同的环境时，都需要修改相应的配置文件，这样来回修改，很容易出错，而且浪费劳动力。Maven提供了一种方便的解决这种问题的方案，就是profile功能。profile可以让我们定义一系列的配置信息，然后指定其激活条件。这样我们就可以定义多个profile，然后每个profile对应不同的激活条件和配置信息，从而达到不同环境使用不同配置信息的效果。假设我们的Maven工程有开发、测试和生成环境的配置，在打包项目时，我们期望在不同环境可以使用不同的配置文件。具体配置方法如下：
+在开发过程中，我们的软件会面对不同的运行环境，比如开发环境、测试环境、生产环境，而我们的软件在不同的环境中，有的配置可能会不一样，比如数据源配置、日志文件配置、以及一些软件运行过程中的基本配置，那每次我们将软件部署到不同的环境时，都需要修改相应的配置文件，这样来回修改，很容易出错，而且浪费劳动力。Maven提供了一种方便的解决这种问题的方案，就是profile功能。profile可以让我们定义一系列的配置信息，然后指定其激活条件。这样我们就可以定义多个profile，然后每个profile对应不同的激活条件和配置信息，从而达到不同环境使用不同配置信息的效果。假设我们的Maven工程有开发、测试和生产环境的配置，在打包项目时，我们期望在不同环境可以使用不同的配置文件。具体配置方法如下：
 
 （1）为不同环境建立相应的配置文件
 
@@ -626,7 +641,7 @@ xxoo-web是个web应用模块，在项目xxoo上点击右键，选择`new->proje
 
 ![](/images/maven_1_10.png)
 
-在实际的工程实践中，一定要注意，xxoo-common是一个抽离出来的工具库，其他模块会引用xxoo-common，假设xxoo-order依赖xxoo-common，因为xxoo-common是xxoo的字模块，maven继承了xxoo的pom.xml中的配置，那其实xxoo-common也是一个SpringBoot的项目，如果在xxoo的pom.xml中有如下的配置：
+在实际的工程实践中，一定要注意，xxoo-common是一个抽离出来的工具库，其他模块会引用xxoo-common，假设xxoo-order依赖xxoo-common，因为xxoo-common是xxoo的子模块，maven继承了xxoo的pom.xml中的配置，那其实xxoo-common也是一个SpringBoot的项目，如果在xxoo的pom.xml中有如下的配置：
 
 ```xml
 <plugin>

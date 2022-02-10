@@ -34,7 +34,7 @@ SpringBoot主要特点有化繁为简，简化配置；下一代框架，技术�
 
 备注：controller是控制层，用来接收并响应http请求。service是业务逻辑层。dao是数据访问层，主要用来访问数据库等。entity是数据库中ORM的实体层。
 
-# SpringBoot项目中的一些Maven库依赖说明
+# SpringBoot项目的一些常见依赖库说明
 
 （1）spring-boot-maven-plugin插件的使用
 
