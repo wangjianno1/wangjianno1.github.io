@@ -116,7 +116,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://wangjianno1.github.io/images/springboot_info_1_1.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/springboot_info_1_2.png">
-<meta property="og:updated_time" content="2022-02-09T07:40:43.957Z">
+<meta property="og:updated_time" content="2022-02-10T06:28:38.016Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringBoot介绍">
 <meta name="twitter:description" content="SpringBoot简介SpringBoot是这几年微服务概念流行后，Pivotal团队开发的一套快速开发Spring应用的框架。它本身并不提供Spring框架的核心特性以及扩展功能，只是用于快速、敏捷地开发新一代基于Spring框架的应用程序。也就是说，它并不是用来替代Spring的解决方案，而是和Spring框架紧密结合用于提升Spring开发者体验的工具。同时它集成了大量常用的第三方库配置（">
@@ -421,7 +421,7 @@ RESTful API
 </code></pre><h1 id="SpringBoot项目的目录结构"><a href="#SpringBoot项目的目录结构" class="headerlink" title="SpringBoot项目的目录结构"></a>SpringBoot项目的目录结构</h1><p>若使用Maven构建工具，SpringBoot项目的目录结构如下：</p>
 <p><img src="/images/springboot_info_1_1.png" alt></p>
 <p>备注：controller是控制层，用来接收并响应http请求。service是业务逻辑层。dao是数据访问层，主要用来访问数据库等。entity是数据库中ORM的实体层。</p>
-<h1 id="SpringBoot项目中的一些Maven库依赖说明"><a href="#SpringBoot项目中的一些Maven库依赖说明" class="headerlink" title="SpringBoot项目中的一些Maven库依赖说明"></a>SpringBoot项目中的一些Maven库依赖说明</h1><p>（1）spring-boot-maven-plugin插件的使用</p>
+<h1 id="SpringBoot项目的一些常见依赖库说明"><a href="#SpringBoot项目的一些常见依赖库说明" class="headerlink" title="SpringBoot项目的一些常见依赖库说明"></a>SpringBoot项目的一些常见依赖库说明</h1><p>（1）spring-boot-maven-plugin插件的使用</p>
 <p>Maven项目的pom.xml中，添加了org.springframework.boot:spring-boot-maven-plugin插件后，当运行<code>mvn package</code>命令进行打包时，会将SpringBoot应用打包成一个可以直接运行的JAR文件，即使用<code>java -jar</code>命令就可以直接运行。</p>
 <p>一般的Maven项目的打包命令，不会把依赖的jar包也打包进去的，只是会放在jar包的同目录下，能够引用就可以了，但是spring-boot-maven-plugin插件，会将依赖的jar包全部打包进去。比如下面这个jar包的<code>BOOT-INF/lib</code>目录下面就包含了所有依赖的jar包：</p>
 <p><img src="/images/springboot_info_1_2.png" alt></p>
@@ -795,7 +795,7 @@ Mustache
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SpringBoot简介"><span class="nav-number">1.</span> <span class="nav-text">SpringBoot简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SpringBoot的特点"><span class="nav-number">2.</span> <span class="nav-text">SpringBoot的特点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#学习SpringBoot的前置知识"><span class="nav-number">3.</span> <span class="nav-text">学习SpringBoot的前置知识</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SpringBoot项目的目录结构"><span class="nav-number">4.</span> <span class="nav-text">SpringBoot项目的目录结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SpringBoot项目中的一些Maven库依赖说明"><span class="nav-number">5.</span> <span class="nav-text">SpringBoot项目中的一些Maven库依赖说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SpringBoot支持的模板引擎"><span class="nav-number">6.</span> <span class="nav-text">SpringBoot支持的模板引擎</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SpringBoot简介"><span class="nav-number">1.</span> <span class="nav-text">SpringBoot简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SpringBoot的特点"><span class="nav-number">2.</span> <span class="nav-text">SpringBoot的特点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#学习SpringBoot的前置知识"><span class="nav-number">3.</span> <span class="nav-text">学习SpringBoot的前置知识</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SpringBoot项目的目录结构"><span class="nav-number">4.</span> <span class="nav-text">SpringBoot项目的目录结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SpringBoot项目的一些常见依赖库说明"><span class="nav-number">5.</span> <span class="nav-text">SpringBoot项目的一些常见依赖库说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SpringBoot支持的模板引擎"><span class="nav-number">6.</span> <span class="nav-text">SpringBoot支持的模板引擎</span></a></li></ol></div>
             
 
           </div>
