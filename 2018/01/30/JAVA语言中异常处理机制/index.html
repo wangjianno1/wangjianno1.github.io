@@ -116,7 +116,7 @@
 <meta property="og:description" content="JAVA的异常与错误要理解Java异常处理是如何工作的，你需要掌握以下三种类型的异常： （1）错误Error Error表示由JVM所侦测到的无法预期的错误，由于这是属于JVM层次的严重错误 ，导致JVM无法继续执行，因此，这是不可捕捉到的，无法采取任何恢复的操作，顶多只能显示错误信息。 Error类体系描述了Java运行系统中的内部错误以及资源耗尽的情形。假如出现这种错误，除了尽力使程序安全退出">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_syntax_10_1.png">
-<meta property="og:updated_time" content="2022-02-09T07:40:43.925Z">
+<meta property="og:updated_time" content="2022-02-10T14:50:18.290Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA语言中异常处理机制">
 <meta name="twitter:description" content="JAVA的异常与错误要理解Java异常处理是如何工作的，你需要掌握以下三种类型的异常： （1）错误Error Error表示由JVM所侦测到的无法预期的错误，由于这是属于JVM层次的严重错误 ，导致JVM无法继续执行，因此，这是不可捕捉到的，无法采取任何恢复的操作，顶多只能显示错误信息。 Error类体系描述了Java运行系统中的内部错误以及资源耗尽的情形。假如出现这种错误，除了尽力使程序安全退出">
@@ -415,7 +415,7 @@
 <p>（2）检查性异常Exception</p>
 <p>检查性异常也就是我们经常遇到的IO异常，以及SQL异常等。对于这种异常，JAVA编译器强制要求我们必需对出现的这些异常进行catch。所以，面对这种异常不管我们是否愿意，只能自己去写一大堆catch块去处理可能的异常。</p>
 <p>（3）运行时异常Exception</p>
-<p>出现运行时Exception时，总是由虚拟机接管。比如，我们从来没有人去处理过NullPointerException异常，它就是运行时异常，并且这种异常还是最常见的异常之一。 出现运行时异常后，系统会把异常一直往上层抛，一直遇到处理代码。如果没有处理块，到最上层，如果是多线程就由Thread.run()抛出，如果是单线程就被main()抛出。抛出之后，如果是线程，这个线程也就退出了。如果是主程序抛出的异常，那么这整个程序也就退出了。运行时异常是Exception的子类，也有一般异常的特点，是可以被Catch块处理的。只不过往往我们不对他处理罢了。也就是说，你如果不对运行时异常进行处理，那么出现运行时异常之后，要么是线程中止，要么是主程序终止。当然，如果需要，我们可以像检查性异常一样去对运行性异常进行catch并处理。</p>
+<p>出现运行时Exception时，总是由虚拟机接管。比如，我们从来没有人去处理过NullPointerException异常，它就是运行时异常，并且这种异常还是最常见的异常之一。 出现运行时异常后，系统会把异常一直往上层抛，一直遇到处理代码。如果没有处理块，到最上层，如果是多线程就由Thread.run()抛出，如果是单线程就被main()抛出。抛出之后，如果是线程，这个线程也就退出了。如果是主程序抛出的异常，那么这整个程序也就退出了。运行时异常是Exception的子类，也有一般异常的特点，是可以被catch块处理的，只不过往往我们不对他处理罢了。也就是说，你如果不对运行时异常进行处理，那么出现运行时异常之后，要么是线程中止，要么是主程序终止。当然，如果需要，我们可以像检查性异常一样去对运行性异常进行catch并处理。</p>
 <p>备注：简单来说，你的代码少了一个分号，那么运行出来的结果是提示java.lang.Error错误；如果你用System.out.println(11/0)，那么因为用0做了除数，会抛出 java.lang.ArithmeticException异常。值得注意的是，ERROR和Exception的一个重要区别是，ERROR是用户代码无法捕获并处理的问题；</p>
 <p>而Exception，包括检查性异常和运行时异常。检查性异常必须被<code>try{}catch{}</code>语句块所捕获，或者在方法里通过throws子句声明，检查性异常命名为Checked Exception，是因为Java编译器要进行检查，Java虚拟机也要进行检查，以确保这个规则得到遵守，否则编译的时候就会报错。对于运行时异常，可以选择用try-catch捕获，或throws关键字抛出，当然也可以不做任何处理。</p>
 <h1 id="JAVA的异常或错误的类层级图"><a href="#JAVA的异常或错误的类层级图" class="headerlink" title="JAVA的异常或错误的类层级图"></a>JAVA的异常或错误的类层级图</h1><p>JAVA的异常或错误的类层级图如下：</p>
