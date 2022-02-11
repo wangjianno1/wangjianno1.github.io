@@ -101,7 +101,7 @@ C#里面的泛型无论在程序源码中、编译后的IL中，或者是运行�
 如下为使用JAVA泛型的一段源代码：
 
 ```java
-public class void main(String[] args) {
+public static void main(String[] args) {
     Map<String, String> map = new HashMap<String, String>();
     map.put("hello", "你好");
     map.put("how ary you?", "吃了吗");
@@ -113,8 +113,8 @@ public class void main(String[] args) {
 把上段JAVA代码编译成Class文件，然后再用字节码反编译工具进行反编译后，将会发现泛型都不见了，泛型类型都变回了原生类型，如下所示：
 
 ```java
-public class void main(String[] args) {
-    Map<String, String> map = new HashMap<String, String>();
+public static void main(String[] args) {
+    Map<String, String> map = new HashMap();
     map.put("hello", "你好");
     map.put("how ary you?", "吃了吗");
     System.out.println((String)map.get("hello"));
