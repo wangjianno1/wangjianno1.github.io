@@ -25,11 +25,11 @@ SPI全称为(Service Provider Interface)，是JDK内置的一种服务提供发�
 
 ## java.sql.Driver的MySQL厂商实现
 
-在MySQL的jar包`mysql-connector-java-6.0.6.jar`中，可以找到`META-INF/services`目录，该目录下会有一个名字为`java.sql.Driver`的文件，文件内容是`com.mysql.cj.jdbc.Driver`，这里面的内容就是针对Java中定义的接口的实现类的完整路径。
+在MySQL的jar包`mysql-connector-java-6.0.6.jar`中，可以找到`META-INF/services`目录，该目录下会有一个名字为`java.sql.Driver`的文件，文件内容是`com.mysql.cj.jdbc.Driver`，这个就是针对JDK中定义的Driver接口的MySQL实现类的完整包路径。
 
 ## java.sql.Driver的Postgresql厂商实现
 
-同样在PostgreSQL的jar包postgresql-42.0.0.jar中，也可以找到同样的配置文件，文件内容是`org.postgresql.Driver`，这是postgresql对Java的`java.sql.Driver`的实现。
+同样在PostgreSQL的jar包postgresql-42.0.0.jar中，也可以找到同样的配置文件`META-INF/services/java.sql.Driver`，文件内容是`org.postgresql.Driver`，这是postgresql对JDK的Driver接口的实现类的完整包路径。
 
 ## 通过SPI机制来加载具体的驱动实现
 

@@ -88,9 +88,11 @@ public class Runoob {
         }
         System.out.println("Closing...");
     }
+}
 
+public class Test {
     public static void main(String[] args) {
-        final Runoob demo = new Runoob();
+        final Runoob demo = new Runoob(); //demo是一个多线程共享资源
         Runnable runA = new Runnable() {
             public void run() {
                 try {
