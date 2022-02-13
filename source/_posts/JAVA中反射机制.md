@@ -9,7 +9,7 @@ categories: JAVA
 
 JAVA反射机制是在运行状态中，对于任意一个类/对象，都能够知道这个类/对象的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法；这种动态获取的信息以及动态调用对象的方法的功能称为Java语言的反射机制。
 
-在JAVA或一些JAVA框架中，都有很多的注解Annotation，注解的实现原理，一部分就是使用到了JAVA反射技术。举例来说，Spring中使用@Bean注解来表示某个类是Bean对象，那么Spring在初始化时，会通过JAVA反射机制去搜索项目工程中的所有Class对象，是否包含了@Beaan注解，如果有则创建Bean的Java示例，并放到Spring容器中统一管理。
+在JAVA或一些JAVA框架中，都有很多的注解Annotation，注解的实现原理，一部分就是使用到了JAVA反射技术。举例来说，Spring中使用@Bean注解来表示某个类是Bean对象，那么Spring在初始化时，会通过JAVA反射机制去搜索项目工程中的所有Class对象，是否包含了@Bean注解，如果有则创建Bean的Java示例，并放到Spring容器中统一管理。
 
 JAVA中关于反射相关的类在`java.lang.reflect`包中。
 

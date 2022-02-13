@@ -24,7 +24,7 @@ public static void testfunc() {
 
 # Java中字符串比较
 
-双等号`str1 == str2`表示比较两个字符串对象是否在内存中时同一个。`str1.equals(str2)`表示比较两个字符串的内容是否一样。
+双等号`str1 == str2`表示比较两个字符串对象是否在内存中是同一个。`str1.equals(str2)`表示比较两个字符串的内容是否一样。
 
 ```java
 String str1 = "Lee";

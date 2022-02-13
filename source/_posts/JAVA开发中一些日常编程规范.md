@@ -98,4 +98,4 @@ com.sina.webo.as
     展示对象:xxxVO，xxx一般为网页名称
     POJO是DO/DTO/BO/VO的统称，禁止命名成xxxPOJO
 
-（4）不要使用一个常量类维护所有常量，按常量功能进行归类，分开维护。大而全的常量类，，不利于理解和维护。建议缓存相关常量放在类CacheConsts下；系统配置相关常量放在类ConfigConsts下。
+（4）不要使用一个常量类维护所有常量，按常量功能进行归类，分开维护。大而全的常量类，不利于理解和维护。建议缓存相关常量放在类CacheConsts下；系统配置相关常量放在类ConfigConsts下。
