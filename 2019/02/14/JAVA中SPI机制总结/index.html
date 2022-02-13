@@ -117,7 +117,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_spi_1_1.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_spi_1_2.png">
-<meta property="og:updated_time" content="2022-02-09T07:40:43.920Z">
+<meta property="og:updated_time" content="2022-02-13T13:33:40.734Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA中SPI机制总结">
 <meta name="twitter:description" content="API与SPI面向对象的设计里，我们一般推荐模块之间基于接口编程，模块之间不对实现类进行硬编码。一旦代码里涉及具体的实现类，就违反了可拔插的原则，如果需要替换一种实现，就需要修改代码。  当接口属于实现方时，实现方提供了接口和具体实现类，然后调用方通过引用接口来达到调用该实现类的功能。这中模式就是我们经常所说的API。 当接口属于调用方时，我们就将其称为SPI（全称为Service Provide">
@@ -416,8 +416,8 @@
 <p>当接口属于调用方时，我们就将其称为SPI（全称为Service Provider Interface）。</p>
 <h1 id="SPI"><a href="#SPI" class="headerlink" title="SPI"></a>SPI</h1><p>SPI全称为(Service Provider Interface)，是JDK内置的一种服务提供发现机制。许多开发框架都使用了Java的SPI机制，如数据库驱动java.sql.Driver的SPI实现（mysql驱动、oracle驱动等）、common-logging的日志接口实现、dubbo的扩展实现等等。下面我们以数据库驱动为例来解释SPI的机制原理。</p>
 <h2 id="JDBC驱动接口的定义"><a href="#JDBC驱动接口的定义" class="headerlink" title="JDBC驱动接口的定义"></a>JDBC驱动接口的定义</h2><p>首先在JDK中定义了接口<code>java.sql.Driver</code>，但并没有具体的实现，具体的实现都是由不同的数据库厂商来提供的。</p>
-<h2 id="java-sql-Driver的MySQL厂商实现"><a href="#java-sql-Driver的MySQL厂商实现" class="headerlink" title="java.sql.Driver的MySQL厂商实现"></a>java.sql.Driver的MySQL厂商实现</h2><p>在MySQL的jar包<code>mysql-connector-java-6.0.6.jar</code>中，可以找到<code>META-INF/services</code>目录，该目录下会有一个名字为<code>java.sql.Driver</code>的文件，文件内容是<code>com.mysql.cj.jdbc.Driver</code>，这里面的内容就是针对Java中定义的接口的实现类的完整路径。</p>
-<h2 id="java-sql-Driver的Postgresql厂商实现"><a href="#java-sql-Driver的Postgresql厂商实现" class="headerlink" title="java.sql.Driver的Postgresql厂商实现"></a>java.sql.Driver的Postgresql厂商实现</h2><p>同样在PostgreSQL的jar包postgresql-42.0.0.jar中，也可以找到同样的配置文件，文件内容是<code>org.postgresql.Driver</code>，这是postgresql对Java的<code>java.sql.Driver</code>的实现。</p>
+<h2 id="java-sql-Driver的MySQL厂商实现"><a href="#java-sql-Driver的MySQL厂商实现" class="headerlink" title="java.sql.Driver的MySQL厂商实现"></a>java.sql.Driver的MySQL厂商实现</h2><p>在MySQL的jar包<code>mysql-connector-java-6.0.6.jar</code>中，可以找到<code>META-INF/services</code>目录，该目录下会有一个名字为<code>java.sql.Driver</code>的文件，文件内容是<code>com.mysql.cj.jdbc.Driver</code>，这个就是针对JDK中定义的Driver接口的MySQL实现类的完整包路径。</p>
+<h2 id="java-sql-Driver的Postgresql厂商实现"><a href="#java-sql-Driver的Postgresql厂商实现" class="headerlink" title="java.sql.Driver的Postgresql厂商实现"></a>java.sql.Driver的Postgresql厂商实现</h2><p>同样在PostgreSQL的jar包postgresql-42.0.0.jar中，也可以找到同样的配置文件<code>META-INF/services/java.sql.Driver</code>，文件内容是<code>org.postgresql.Driver</code>，这是postgresql对JDK的Driver接口的实现类的完整包路径。</p>
 <h2 id="通过SPI机制来加载具体的驱动实现"><a href="#通过SPI机制来加载具体的驱动实现" class="headerlink" title="通过SPI机制来加载具体的驱动实现"></a>通过SPI机制来加载具体的驱动实现</h2><p>我们在项目开发中，可以通过如下代码来获取数据库连接：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String url = <span class="string">"jdbc:xxxx://xxxx:xxxx/xxxx"</span>;</span><br><span class="line">Connection conn = DriverManager.getConnection(url, username, password);</span><br></pre></td></tr></table></figure>
 <p>这里就涉及到使用Java的SPI扩展机制来查找相关具体驱动实例类了，但从直观上来看，并不能看到有关SPI机制相关的代码，其实被封装在了DriverManager中。DriverManager是JDK中的实现，用来获取数据库连接，在DriverManager中有一个静态代码块如下：</p>
