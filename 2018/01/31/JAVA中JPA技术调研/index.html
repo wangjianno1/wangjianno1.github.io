@@ -116,7 +116,7 @@
 <meta property="og:description" content="JPA简介JPA（Java Persistence API）是Sun官方提出的Java持久化规范。它为Java开发人员提供了一种对象/关联映射工具来管理Java应用中的关系数据。它的出现主要是为了简化现有的持久化开发工作和整合ORM技术，结束现在Hibernate，TopLink，JDO等ORM框架各自为营的局面。值得注意的是，JPA是在充分吸收了现有Hibernate，TopLink，JDO等O">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_syntax_15_1.png">
-<meta property="og:updated_time" content="2022-02-09T07:40:43.918Z">
+<meta property="og:updated_time" content="2022-02-14T03:38:24.313Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA中JPA技术调研">
 <meta name="twitter:description" content="JPA简介JPA（Java Persistence API）是Sun官方提出的Java持久化规范。它为Java开发人员提供了一种对象/关联映射工具来管理Java应用中的关系数据。它的出现主要是为了简化现有的持久化开发工作和整合ORM技术，结束现在Hibernate，TopLink，JDO等ORM框架各自为营的局面。值得注意的是，JPA是在充分吸收了现有Hibernate，TopLink，JDO等O">
@@ -453,7 +453,7 @@ javax.persistence.Transient
 <p>（3）若要修改数据库中已有的记录，可按如下的方式</p>
 <p>若记录是在Managed状态，例如查找记录之后，直接更新记录，在提交确认之后，记录的更新就会反应至数据库之中：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">User user = entityManager.find(User<span class="class">.<span class="keyword">class</span>, <span class="title">id</span>)</span>;</span><br><span class="line">user.setName(<span class="string">"Justin Lin"</span>);</span><br></pre></td></tr></table></figure>
-<p>（4）若要删除数库表中的记录，则记录必须是在Managed的状态，例如用EntityManager的find()方法查找记录，以查找到的记录配合remove()方法来移除，或是使用merge(()方法将Entity处于Managed状态再用remove()移除，代码示例如下：</p>
+<p>（4）若要删除数库表中的记录，则记录必须是在Managed的状态，例如用EntityManager的find()方法查找记录，以查找到的记录配合remove()方法来移除，或是使用merge()方法将Entity处于Managed状态再用remove()移除，代码示例如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">User user = entityManager.find(User<span class="class">.<span class="keyword">class</span>, <span class="title">id</span>)</span>;</span><br><span class="line">entityManager.remove(user);</span><br></pre></td></tr></table></figure>
 <p>学习资料参考于：<br><a href="https://openhome.cc/Gossip/EJB3Gossip/EntityManager.html" target="_blank" rel="noopener">https://openhome.cc/Gossip/EJB3Gossip/EntityManager.html</a></p>
 

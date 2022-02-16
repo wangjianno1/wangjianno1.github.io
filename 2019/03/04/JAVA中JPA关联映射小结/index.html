@@ -114,7 +114,7 @@
 <meta property="og:site_name" content="老坛の菜园子">
 <meta property="og:description" content="JAVA中JPA关联映射简介数据库的关系映射的概念知识，参见《数据库设计中关系映射（一对一|多对一|一对多|多对多|单向|双向）》部分。JAVA JPA规范也对关系映射有支持，JPA中的映射类型有： 一对一（One To One） 一对多（One To Many） 多对一（Many To One） 多对多（Many To Many） 另外，关联映射是有方向的，即是单向或者双向的。如Student和">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2022-02-09T07:40:43.918Z">
+<meta property="og:updated_time" content="2022-02-14T09:24:51.464Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA中JPA关联映射小结">
 <meta name="twitter:description" content="JAVA中JPA关联映射简介数据库的关系映射的概念知识，参见《数据库设计中关系映射（一对一|多对一|一对多|多对多|单向|双向）》部分。JAVA JPA规范也对关系映射有支持，JPA中的映射类型有： 一对一（One To One） 一对多（One To Many） 多对一（Many To One） 多对多（Many To Many） 另外，关联映射是有方向的，即是单向或者双向的。如Student和">
@@ -406,7 +406,7 @@
       
 
       
-        <h1 id="JAVA中JPA关联映射简介"><a href="#JAVA中JPA关联映射简介" class="headerlink" title="JAVA中JPA关联映射简介"></a>JAVA中JPA关联映射简介</h1><p>数据库的关系映射的概念知识，参见《数据库设计中关系映射（一对一|多对一|一对多|多对多|单向|双向）》部分。JAVA JPA规范也对关系映射有支持，JPA中的映射类型有：</p>
+        <h1 id="JAVA中JPA关联映射简介"><a href="#JAVA中JPA关联映射简介" class="headerlink" title="JAVA中JPA关联映射简介"></a>JAVA中JPA关联映射简介</h1><p>数据库的关系映射的概念知识，参见<a href="https://wangjianno1.github.io/2019/03/13/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E4%B8%AD%E5%85%B3%E7%B3%BB%E6%98%A0%E5%B0%84%EF%BC%88%E4%B8%80%E5%AF%B9%E4%B8%80-%E5%A4%9A%E5%AF%B9%E4%B8%80-%E4%B8%80%E5%AF%B9%E5%A4%9A-%E5%A4%9A%E5%AF%B9%E5%A4%9A%EF%BC%89/">《数据库设计中关系映射（一对一|多对一|一对多|多对多|单向|双向）》</a>部分。JAVA JPA规范也对关系映射有支持，JPA中的映射类型有：</p>
 <pre><code>一对一（One To One）
 一对多（One To Many）
 多对一（Many To One）
@@ -418,7 +418,7 @@
 <p>若ClassRoom实体类中定义了private List<student> studentList属性，那么对于ClassRoom实体类来说是建立了单向的“OneToMany”的映射，通过ClassRoom的studentList属性可以得知属于该ClassRoom的所有Student。</student></p>
 <p>（3）双向“一对多”或双向“多对一”</p>
 <p>若Student实体类中定义了private ClassRoom classRoom属性，且ClassRoom实体类中定义了<code>private List&lt;Student&gt; studentList</code>属性，那么对于Student和ClassRoom来说，它们就建立了双向“一对多”或双向“多对一”的关系。</p>
-<h1 id="mappedBy-”xxxxxx”"><a href="#mappedBy-”xxxxxx”" class="headerlink" title="mappedBy=”xxxxxx”"></a>mappedBy=”xxxxxx”</h1><p>在四种关联关系OneToOne，OneToMany，ManyToOne和ManyToMany中，只有OneToOne、OneToMany和ManyToMany这三中关联关系有mappedBy属性，ManyToOne是不存在mappedBy属性的。</p>
+<h1 id="mappedBy-”xxxxxx”"><a href="#mappedBy-”xxxxxx”" class="headerlink" title="mappedBy=”xxxxxx”"></a>mappedBy=”xxxxxx”</h1><p>在四种关联关系OneToOne，OneToMany，ManyToOne和ManyToMany中，只有OneToOne、OneToMany和ManyToMany这三种关联关系有mappedBy属性，ManyToOne是不存在mappedBy属性的。</p>
 <p>简单来说，实体类中使用了mappedBy设置，那么表示该实体类放弃维护关联关系，也就是不会去维护数据库层面的外键关系，而是将关联关系交给对方维护。假设ClassRoom中定义了private List<student> studentList属性，当在studentList上使用mappedBy，则我们新增一个ClassRoom时，会在数据库中插入ClassRoom记录以及Student记录，但是不会设置Student表中外键值，在这种情况下，只有新增Student实例时，才会设置Student表中的外键classid。</student></p>
 <p>ClassRoom实体类<code>private List&lt;Student&gt; studentList</code>属性上的<code>mappedBy=&quot;xxxxxx&quot;</code>，xxxx要是Student实例中private ClassRoom classRoom的属性名，即classRoom，也就是<code>mappedBy=&quot;classRoom&quot;</code>。</p>
 <h1 id="JoinColum-name-“xxxxx”"><a href="#JoinColum-name-“xxxxx”" class="headerlink" title="JoinColum(name = “xxxxx”)"></a>JoinColum(name = “xxxxx”)</h1><p>关于<code>@JoinColumn(name = &quot;address_id&quot;, referencedColumnName=&quot;ref_id&quot;)</code>，我们知道，无论使用OneToOne，OneToMany还是ManyToOne，最终都会落实到数据库表中的外键关系，这里的name表明外键在数据库中的字段名，referencedColumnName表示被外键关联到的表的哪个字段，如果不指定referencedColumnName，默认会外键指向的被关联表的主键哦。在实例类的关系映射处都加上JoinColumn注解。</p>
