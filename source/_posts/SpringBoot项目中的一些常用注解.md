@@ -18,17 +18,26 @@ categories: SpringBoot
 
 Spring4之后新加的注解，表示controller返回给浏览器json格式的结果。此前控制器返回json结果，需要@ResponseBody配合@Controller一起。如果单独使用@Controller，那么需要配合模板引擎给浏览器返回html页面。即`@RestController=@Controller+@ResponseBody`。
 
-# @RequestMapping|@GetMapping|@PostMapping|@PutMapping|@DeleteMapping
+# 设置路由映射及请求方法_@RequestMapping|@GetMapping|@PostMapping|@PutMapping|@DeleteMapping
 
-都是用来配置url路由映射。@GetMapping、@PostMapping、@PutMapping以及@DeleteMapping除了配置url路由外，还指定了HTTP请求的Method，如@GetMapping代表的是Get请求。
+都是用来配置url路由映射（即请求url映射到controller方法上）以及HTTP请求方法设定。@GetMapping、@PostMapping、@PutMapping以及@DeleteMapping除了配置url路由外，还指定了HTTP请求的Method，如@GetMapping代表的是Get请求。举例来说：
 
-# @PathVariable|@RequestParam|@RequestBody
+    @GetMapping("/hello")    #映射到http://xxx/hello请求路径上，HTTP请求方法是GET请求
+    @RequestMapping(value="/hello", method = RequestMethod.POST)  #映射到http://xxx/hello请求路径上，HTTP请求方法是POST请求
 
-@PathVariable|@RequestParam是获取http请求参数相关的注解。具体如下：
+# 获取HTTP请求参数_@PathVariable|@RequestParam|@RequestBody
 
-    @PathVariable：获取url中的数据
-    @RequestParam：获取请求体body中的参数值
-    @RequestBody：将请求体中内容映射到Java中对象上
+（1）@PathVariable
+
+获取url中的数据，如`@PathVariable("id") int id`，获取`@RequestMapping(value="/searchListById/{id}",method = RequestMethod.POST)`中的id
+    
+（2）@RequestParam
+
+获取url问号后参数，如`@RequestParam(value="name",required = true)`，name表示问号参数的key，`?name=xxxx`
+
+（3）@RequestBody
+
+将请求体中内容映射到Java中对象上，如`@RequestBody TbUserModel user`，获取POST请求中请求body中的json数据，`{"id":1,"userId":1,"pwd":"123","name":"123","pwd":"123","headPortait":"123","isEnable":"123","createDate":"2015-05-12","lastLogin":"2015-05-12"}`
 
 # @EnableAutoConfiguration
 

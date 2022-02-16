@@ -147,7 +147,7 @@ User user = entityManager.find(User.class, id);
 user.setName("Justin Lin");
 ```
 
-（4）若要删除数库表中的记录，则记录必须是在Managed的状态，例如用EntityManager的find()方法查找记录，以查找到的记录配合remove()方法来移除，或是使用merge(()方法将Entity处于Managed状态再用remove()移除，代码示例如下：
+（4）若要删除数库表中的记录，则记录必须是在Managed的状态，例如用EntityManager的find()方法查找记录，以查找到的记录配合remove()方法来移除，或是使用merge()方法将Entity处于Managed状态再用remove()移除，代码示例如下：
 
 ```java
 User user = entityManager.find(User.class, id);

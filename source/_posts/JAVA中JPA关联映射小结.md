@@ -7,7 +7,7 @@ categories: SSM/SSH
 
 # JAVA中JPA关联映射简介
 
-数据库的关系映射的概念知识，参见《数据库设计中关系映射（一对一|多对一|一对多|多对多|单向|双向）》部分。JAVA JPA规范也对关系映射有支持，JPA中的映射类型有：
+数据库的关系映射的概念知识，参见[《数据库设计中关系映射（一对一|多对一|一对多|多对多|单向|双向）》](https://wangjianno1.github.io/2019/03/13/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E4%B8%AD%E5%85%B3%E7%B3%BB%E6%98%A0%E5%B0%84%EF%BC%88%E4%B8%80%E5%AF%B9%E4%B8%80-%E5%A4%9A%E5%AF%B9%E4%B8%80-%E4%B8%80%E5%AF%B9%E5%A4%9A-%E5%A4%9A%E5%AF%B9%E5%A4%9A%EF%BC%89/)部分。JAVA JPA规范也对关系映射有支持，JPA中的映射类型有：
 
     一对一（One To One）
     一对多（One To Many）
@@ -30,7 +30,7 @@ categories: SSM/SSH
 
 # mappedBy="xxxxxx"
 
-在四种关联关系OneToOne，OneToMany，ManyToOne和ManyToMany中，只有OneToOne、OneToMany和ManyToMany这三中关联关系有mappedBy属性，ManyToOne是不存在mappedBy属性的。
+在四种关联关系OneToOne，OneToMany，ManyToOne和ManyToMany中，只有OneToOne、OneToMany和ManyToMany这三种关联关系有mappedBy属性，ManyToOne是不存在mappedBy属性的。
 
 简单来说，实体类中使用了mappedBy设置，那么表示该实体类放弃维护关联关系，也就是不会去维护数据库层面的外键关系，而是将关联关系交给对方维护。假设ClassRoom中定义了private List<Student> studentList属性，当在studentList上使用mappedBy，则我们新增一个ClassRoom时，会在数据库中插入ClassRoom记录以及Student记录，但是不会设置Student表中外键值，在这种情况下，只有新增Student实例时，才会设置Student表中的外键classid。
 

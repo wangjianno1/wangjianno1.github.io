@@ -21,7 +21,7 @@ categories: SpringBoot
 </dependency>
 ```
 
-该JAR包时MyBatis开发出来用来集成SpringBoot项目的MyBatis依赖JAR包，有了这个JAR包，在SpringBoot项目中使用MyBatis就好用多了。mybatis-spring-boot-starter在SpringBoot项目中主要有两种开发配置方案，一种是使用注解解决一切问题，一种是简化XML后的传统方式。两种方式各有特点，注解版适合简单快速的模式，非常适合现在流行的微服务架构模式。XML传统模式比适合大型项目，可以灵活的动态生成SQL，方便调整SQL，也有痛痛快快，洋洋洒洒的写SQL的感觉。
+该JAR包是MyBatis开发出来用来集成SpringBoot项目的MyBatis依赖JAR包，有了这个JAR包，在SpringBoot项目中使用MyBatis就好用多了。mybatis-spring-boot-starter在SpringBoot项目中主要有两种开发配置方案，一种是使用注解解决一切问题，一种是简化XML后的传统方式。两种方式各有特点，注解版适合简单快速的模式，非常适合现在流行的微服务架构模式。XML传统模式比适合大型项目，可以灵活的动态生成SQL，方便调整SQL，也有痛痛快快，洋洋洒洒的写SQL的感觉。
 
 # 使用注解的方式
 
