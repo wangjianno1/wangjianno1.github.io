@@ -49,6 +49,8 @@ public class MammalInt implements Animal {
 }
 ```
 
+需要注意的是，一个类可以实现implements多个接口，如`public class WaHaHa implements InterfaceA, InterfaceB {}`
+
 # 接口的继承
 
 关于接口的继承的两点。一是接口可以继承其他接口，和类的继承是一样的。二是接口可以多继承，即一个接口可以继承多个父接口（类的继承只能是单继承）。

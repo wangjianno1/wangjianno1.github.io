@@ -711,6 +711,11 @@ resources代表了Maven的资源文件，是项目中要使用的文件，代码
 
 使用maven构建Servlet WEB项目时，可以直接在pom.xml中引入jetty plugin，然后可以直接在jetty servlet容器中运行WEB项目了哦，开发测试非常方便。当然我们也可以引入tomcat plugin哦。
 
+## Maven Wrapper
+
+我们使用Maven时，基本上只会用到mvn这一个命令。有些童鞋可能听说过mvnw，这个是啥？mvnw是Maven Wrapper的缩写。因为我们安装Maven时，默认情况下，系统所有项目都会使用全局安装的这个Maven版本。但是，对于某些项目来说，它可能必须使用某个特定的Maven版本，这个时候，就可以使用Maven Wrapper，它可以负责给这个特定的项目安装指定版本的Maven，而其他项目不受影响。简单地说，Maven Wrapper就是给一个项目提供一个独立的，指定版本的Maven给它使用。实际使用中使用mvnw代替mvn，如`mvnw clean package`。
+
+
 学习资料参考于：
 https://www.cnblogs.com/luotaoyeah/p/3819001.html
 https://maven.apache.org/run.html
