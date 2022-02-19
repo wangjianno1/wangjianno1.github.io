@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="老坛の菜园子">
 <meta property="og:description" content="基本数据类型   数据类型 关键字 占用空间(字节） 包装类型     整型 byte 1 Byte   整型 char 2 Character   整型 short 2 Short   整型 int 4 Integer   整型 long 8 Long   浮点型 float 8 Float   浮点型 double 8 Double   布尔型 boolean 8 Boolean    备注：">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2022-02-09T07:40:43.925Z">
+<meta property="og:updated_time" content="2022-02-19T16:05:47.027Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA语言中各种数据类型">
 <meta name="twitter:description" content="基本数据类型   数据类型 关键字 占用空间(字节） 包装类型     整型 byte 1 Byte   整型 char 2 Character   整型 short 2 Short   整型 int 4 Integer   整型 long 8 Long   浮点型 float 8 Float   浮点型 double 8 Double   布尔型 boolean 8 Boolean    备注：">
@@ -468,6 +468,9 @@
 </tbody>
 </table>
 <p>备注：byte/char/short/int/long都是整型数据类型，因占用存储空间的不同，所能代表的取值范围也是不同的。char和short虽然都占2个字节，但是char是无符号的整型，而short是有符号的整型，因此char和short的取值范围也是不同的。</p>
+<p><strong>在Java中，整数字面值常量默认的数据类型是int，小数字面值常量默认的数据类型是double。</strong></p>
+<p>当声明<code>long a = 23</code>时，23是int类型，属于小类型往大类型转换，Java可以自动转换，但是当后字面值常量大于int的访问时，就会报错了，因此当声明long类型的变量时，在后面加上<code>L/l</code>，即<code>long a = 23L</code>，<code>23L</code>就是一个long类型的字面值常量，这样就不存在类型的自动转换了。</p>
+<p>当声明<code>float a = 2.3</code>时，2.3是double类型，属于大类型往小类型转换，这就可能会造成精度丢失，编译时会直接报错，因此当声明float类型的变量时，在后面加上<code>F/f</code>，即<code>float a = 2.3F</code>，<code>2.3F</code>就是一个float类型的字面值常量，这样就不存在类型的自动转换了。</p>
 <h1 id="抽象数据类型ADT"><a href="#抽象数据类型ADT" class="headerlink" title="抽象数据类型ADT"></a>抽象数据类型ADT</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">类/对象</span><br></pre></td></tr></table></figure>
 
       

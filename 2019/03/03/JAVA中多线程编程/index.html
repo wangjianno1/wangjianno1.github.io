@@ -107,18 +107,18 @@
   <meta name="keywords" content="Hexo, NexT">
 
 
-<meta name="description" content="JAVA多线程简介Java给多线程编程提供了内置的支持。 一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。 一点说明，Java是单进程多线程模型，这个单进程就是JVM进程，在操作系统层面看到就是java或java.exe进程，Java貌似不能搞多进程编程，如果也可以通过Runtime.getRuntime().exec(&amp;quot;java xxx">
+<meta name="description" content="JAVA多线程简介Java给多线程编程提供了内置的支持，Java的多线程是内核线程，即是JVM调用系统API创建的线程，Java线程调度是由操作系统来调度。 一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。 一点说明，Java是单进程多线程模型，这个单进程就是JVM进程，在操作系统层面看到就是java或java.exe进程，Java貌似不能搞多进程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JAVA中多线程编程">
 <meta property="og:url" content="http://wangjianno1.github.io/2019/03/03/JAVA中多线程编程/index.html">
 <meta property="og:site_name" content="老坛の菜园子">
-<meta property="og:description" content="JAVA多线程简介Java给多线程编程提供了内置的支持。 一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。 一点说明，Java是单进程多线程模型，这个单进程就是JVM进程，在操作系统层面看到就是java或java.exe进程，Java貌似不能搞多进程编程，如果也可以通过Runtime.getRuntime().exec(&amp;quot;java xxx">
+<meta property="og:description" content="JAVA多线程简介Java给多线程编程提供了内置的支持，Java的多线程是内核线程，即是JVM调用系统API创建的线程，Java线程调度是由操作系统来调度。 一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。 一点说明，Java是单进程多线程模型，这个单进程就是JVM进程，在操作系统层面看到就是java或java.exe进程，Java貌似不能搞多进程">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_thread_1_1.png">
-<meta property="og:updated_time" content="2022-02-09T07:40:43.921Z">
+<meta property="og:updated_time" content="2022-02-19T12:40:31.355Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA中多线程编程">
-<meta name="twitter:description" content="JAVA多线程简介Java给多线程编程提供了内置的支持。 一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。 一点说明，Java是单进程多线程模型，这个单进程就是JVM进程，在操作系统层面看到就是java或java.exe进程，Java貌似不能搞多进程编程，如果也可以通过Runtime.getRuntime().exec(&amp;quot;java xxx">
+<meta name="twitter:description" content="JAVA多线程简介Java给多线程编程提供了内置的支持，Java的多线程是内核线程，即是JVM调用系统API创建的线程，Java线程调度是由操作系统来调度。 一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。 一点说明，Java是单进程多线程模型，这个单进程就是JVM进程，在操作系统层面看到就是java或java.exe进程，Java貌似不能搞多进程">
 <meta name="twitter:image" content="http://wangjianno1.github.io/images/java_thread_1_1.png">
 
 
@@ -408,7 +408,7 @@
       
 
       
-        <h1 id="JAVA多线程简介"><a href="#JAVA多线程简介" class="headerlink" title="JAVA多线程简介"></a>JAVA多线程简介</h1><p>Java给多线程编程提供了内置的支持。 一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。</p>
+        <h1 id="JAVA多线程简介"><a href="#JAVA多线程简介" class="headerlink" title="JAVA多线程简介"></a>JAVA多线程简介</h1><p>Java给多线程编程提供了内置的支持，Java的多线程是内核线程，即是JVM调用系统API创建的线程，Java线程调度是由操作系统来调度。 一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。</p>
 <p>一点说明，Java是单进程多线程模型，这个单进程就是JVM进程，在操作系统层面看到就是java或java.exe进程，Java貌似不能搞多进程编程，如果也可以通过<code>Runtime.getRuntime().exec(&quot;java xxx&quot;)</code>来创建新的进程，创建出来的也是JVM进程。</p>
 <h1 id="JAVA中线程的生命周期"><a href="#JAVA中线程的生命周期" class="headerlink" title="JAVA中线程的生命周期"></a>JAVA中线程的生命周期</h1><p><img src="/images/java_thread_1_1.png" alt></p>
 <h1 id="JAVA创建多线程编程的方法"><a href="#JAVA创建多线程编程的方法" class="headerlink" title="JAVA创建多线程编程的方法"></a>JAVA创建多线程编程的方法</h1><p>Java提供了三种创建线程的方法。</p>

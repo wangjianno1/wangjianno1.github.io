@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="老坛の菜园子">
 <meta property="og:description" content="JAVA中equals | hashCode | toString方法简介在java.lang.Object类中有equals、hashCode和toString这些基础的方法。如下所示： 1234567891011public class Object &amp;#123;    public boolean equals(Object obj) &amp;#123;        return (this =">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2022-02-09T07:40:43.920Z">
+<meta property="og:updated_time" content="2022-02-19T15:40:44.780Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA中equals | hashCode | toString简介和使用">
 <meta name="twitter:description" content="JAVA中equals | hashCode | toString方法简介在java.lang.Object类中有equals、hashCode和toString这些基础的方法。如下所示： 1234567891011public class Object &amp;#123;    public boolean equals(Object obj) &amp;#123;        return (this =">
@@ -409,15 +409,16 @@
       
         <h1 id="JAVA中equals-hashCode-toString方法简介"><a href="#JAVA中equals-hashCode-toString方法简介" class="headerlink" title="JAVA中equals | hashCode | toString方法简介"></a>JAVA中equals | hashCode | toString方法简介</h1><p>在<code>java.lang.Object</code>类中有<code>equals</code>、<code>hashCode</code>和<code>toString</code>这些基础的方法。如下所示：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Object</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (<span class="keyword">this</span> == obj);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> getClass().getName() + <span class="string">"@"</span> + Integer.toHexString(hashCode());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="equals"><a href="#equals" class="headerlink" title="equals()"></a>equals()</h1><p><code>equals()</code>方法用来判断两个对象是否“相等”，在<code>Object</code>中<code>equals()</code>方法中是判断两个对象的引用是否相等，开发者可以在自定义类中根据具体需求覆写<code>equals()</code>方法。</p>
-<p>例如，String类中就重写了<code>equals()</code>方法，重写后的<code>equals()</code>方法用来判断两个字符串的内容是否相等。</p>
-<h1 id="hashCode"><a href="#hashCode" class="headerlink" title="hashCode()"></a>hashCode()</h1><p><code>hashCode()</code>方法返回该对象的哈希码值。支持此方法是为了提高哈希表（例如 <code>java.util.Hashtable</code>提供的哈希表）的性能。关于<code>hashCode()</code>有几点注意事项：</p>
+<h1 id="equals"><a href="#equals" class="headerlink" title="equals()"></a>equals()</h1><p><code>equals()</code>方法用来判断两个对象是否“相等”，在<code>Object</code>中<code>equals()</code>方法中是判断两个对象的引用是否相等。若开发者在自定义类中根据具体需求覆写了<code>equals()</code>方法，那就会是另外的比较策略了，例如，String类中就重写了<code>equals()</code>方法，重写后的<code>equals()</code>方法用来判断两个字符串的内容是否相等。</p>
+<p>补充：对于基本数据类型，<code>==</code>比较的是两个变量的值是不是相等；而对于抽象数据类型，<code>==</code>比较的是两个变量的引用是否相等，即变量在内存中的地址是否相等。</p>
+<h1 id="hashCode"><a href="#hashCode" class="headerlink" title="hashCode()"></a>hashCode()</h1><p><code>hashCode()</code>方法返回该对象的哈希码值。Object的<code>hashCode()</code>方法是本地方法，也就是用C/C++语言实现的，该方法通常用来将对象的内存地址转换为整数之后返回。支持此方法是为了提高哈希表（例如 <code>java.util.Hashtable</code>提供的哈希表）的性能。关于<code>hashCode()</code>有几点注意事项：</p>
 <ul>
 <li>在Java应用程序执行期间，如果没有修改对象进行<code>equals</code>比较时所用的信息，在对同一对象多次调用<code>hashCode</code>方法时，必须一致地返回相同的整数。从某一应用程序的一次执行到同一应用程序的另一次执行，该整数无需保持一致。</li>
 <li>如果根据<code>equals(Object)</code>方法，两个对象是相等的，那么对这两个对象中的每个对象调用<code>hashCode</code>方法都必须生成相同的整数结果。</li>
 <li>如果根据<code>equals(java.lang.Object)</code>方法，两个对象不相等，那么对这两个对象中的任一对象上调用<code>hashCode</code>方法不要求一定生成不同的整数结果。但是，程序员应该意识到，为不相等的对象生成不同整数结果可以提高哈希表的性能。</li>
 </ul>
 <p>实际上，由Object类定义的hashCode方法确实会针对不同的对象返回不同的整数。开发者可以根据实际需求覆写该方法。</p>
+<p>两个对象的<code>hashCode()</code>结果一样，但不一定是同一个对象，因为可能是哈希函数冲突碰撞，即两个不同的对象，经过<code>hashCode()</code>函数哈希出来的结果一样。若两个对象的<code>hashCode()</code>结果不一样，那么这两个对象一定不是同一个对象。</p>
 <h1 id="toString-NaN"><a href="#toString-NaN" class="headerlink" title="toString()"></a>toString()</h1><p><code>toString()</code>方法返回该对象的字符串表示。通常<code>toString</code>方法会返回一个“以文本方式表示”此对象的字符串。结果应是一个简明但易于读懂的信息表达式。开发者可以根据实际需求覆写该方法。</p>
 <p>Object类的<code>toString()</code>方法返回一个字符串，该字符串由类名（对象是该类的一个实例）、at标记符<code>&quot;@&quot;</code>和此对象哈希码的无符号十六进制表示组成。</p>
 

@@ -700,10 +700,8 @@
       
         
           
-          JAVA多线程简介Java给多线程编程提供了内置的支持。 一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。
-一点说明，Java是单进程多线程模型，这个单进程就是JVM进程，在操作系统层面看到就是java或java.exe进程，Java貌似不能搞多进程编程，如果也可以通过Runtime.getRuntime().exec(&quot;java xxx&quot;)来创建新的进程，创建出来的也是JVM进程。
-JAVA中线程的生命周期
-JAVA创建多线
+          JAVA多线程简介Java给多线程编程提供了内置的支持，Java的多线程是内核线程，即是JVM调用系统API创建的线程，Java线程调度是由操作系统来调度。 一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。
+一点说明，Java是单进程多线程模型，这个单进程就是JVM进程，在操作系统层面看到就是java或java.exe进程，Java貌似不能搞多进程编程，如果也可以通过Runtime.getRuntime().exec(&quot;java xxx
           ...
           <!--noindex-->
           <div class="post-button text-center">

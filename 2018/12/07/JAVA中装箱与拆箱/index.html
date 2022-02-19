@@ -117,7 +117,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_box_1_1.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_box_1_2.png">
-<meta property="og:updated_time" content="2022-02-09T07:40:43.923Z">
+<meta property="og:updated_time" content="2022-02-19T16:11:13.448Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA中装箱与拆箱">
 <meta name="twitter:description" content="自动装箱与自动拆箱自动装箱就是Java自动将基础数据类型的值转换成对应的对象，比如将int的变量转换成Integer对象，这个过程叫做装箱。反之将Integer对象转换成int类型值，这个过程叫做拆箱。因为这里的装箱和拆箱是自动进行的，而非人为转换，所以就称作为自动装箱和拆箱。 简单一点来说，装箱就是自动将基本数据类型转换为包装器类型。拆箱就是自动将包装器类型转换为基本数据类型。如下是一些需要装箱">
@@ -416,6 +416,7 @@
 <p><img src="/images/java_box_1_2.png" alt></p>
 <h1 id="案例说明"><a href="#案例说明" class="headerlink" title="案例说明"></a>案例说明</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 自动装箱</span></span><br><span class="line">        Integer total = <span class="number">99</span>;</span><br><span class="line">        <span class="comment">// 自定拆箱</span></span><br><span class="line">        <span class="keyword">int</span> totalprim = total;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>备注：当执行<code>Integer total = 99</code>这句代码时，其实JVM为我们执行了<code>Integer total = Integer.valueOf(99)</code>。当执行<code>int totalprim = total</code>这句代码时，其实JVM为我们执行了<code>int totalprim = total.intValue()</code>。</p>
+<h1 id="自动装箱-拆箱的原理"><a href="#自动装箱-拆箱的原理" class="headerlink" title="自动装箱/拆箱的原理"></a>自动装箱/拆箱的原理</h1><p>从字节码中，我们发现装箱其实就是调用了包装类的<code>valueOf()</code>方法，而拆箱其实就是调用了<code>xxxValue()</code>方法。需要注意的是，如果频繁拆装箱的话，也会严重影响系统的性能，我们应该尽量避免不必要的拆/装箱操作。</p>
 
       
     </div>
@@ -781,7 +782,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#自动装箱与自动拆箱"><span class="nav-number">1.</span> <span class="nav-text">自动装箱与自动拆箱</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#案例说明"><span class="nav-number">2.</span> <span class="nav-text">案例说明</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#自动装箱与自动拆箱"><span class="nav-number">1.</span> <span class="nav-text">自动装箱与自动拆箱</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#案例说明"><span class="nav-number">2.</span> <span class="nav-text">案例说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自动装箱-拆箱的原理"><span class="nav-number">3.</span> <span class="nav-text">自动装箱/拆箱的原理</span></a></li></ol></div>
             
 
           </div>

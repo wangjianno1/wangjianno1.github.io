@@ -116,7 +116,7 @@
 <meta property="og:description" content="JAVA的异常与错误要理解Java异常处理是如何工作的，你需要掌握以下三种类型的异常： （1）错误Error Error表示由JVM所侦测到的无法预期的错误，由于这是属于JVM层次的严重错误 ，导致JVM无法继续执行，因此，这是不可捕捉到的，无法采取任何恢复的操作，顶多只能显示错误信息。 Error类体系描述了Java运行系统中的内部错误以及资源耗尽的情形。假如出现这种错误，除了尽力使程序安全退出">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_syntax_10_1.png">
-<meta property="og:updated_time" content="2022-02-10T14:50:18.290Z">
+<meta property="og:updated_time" content="2022-02-19T16:23:48.057Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA语言中异常处理机制">
 <meta name="twitter:description" content="JAVA的异常与错误要理解Java异常处理是如何工作的，你需要掌握以下三种类型的异常： （1）错误Error Error表示由JVM所侦测到的无法预期的错误，由于这是属于JVM层次的严重错误 ，导致JVM无法继续执行，因此，这是不可捕捉到的，无法采取任何恢复的操作，顶多只能显示错误信息。 Error类体系描述了Java运行系统中的内部错误以及资源耗尽的情形。假如出现这种错误，除了尽力使程序安全退出">
@@ -411,7 +411,7 @@
       
         <h1 id="JAVA的异常与错误"><a href="#JAVA的异常与错误" class="headerlink" title="JAVA的异常与错误"></a>JAVA的异常与错误</h1><p>要理解Java异常处理是如何工作的，你需要掌握以下三种类型的异常：</p>
 <p>（1）错误Error</p>
-<p>Error表示由JVM所侦测到的无法预期的错误，由于这是属于JVM层次的严重错误 ，导致JVM无法继续执行，因此，这是不可捕捉到的，无法采取任何恢复的操作，顶多只能显示错误信息。 Error类体系描述了Java运行系统中的内部错误以及资源耗尽的情形。假如出现这种错误，除了尽力使程序安全退出外，在其他方面是无能为力的。</p>
+<p>Error表示由JVM所侦测到的无法预期的错误，由于这是属于JVM层次的严重错误 ，导致JVM无法继续执行，因此，这是不可捕捉到的，无法采取任何恢复的操作，顶多只能显示错误信息。 Error类体系描述了Java运行系统中的内部错误以及资源耗尽的情形。假如出现这种错误，除了尽力使程序安全退出外，在其他方面是无能为力的。例如Java 虚拟机运行错误（Virtual MachineError）、虚拟机内存不够错误(OutOfMemoryError)、类定义错误（NoClassDefFoundError）等 。这些异常发生时，Java 虚拟机（JVM）一般会选择线程终止。</p>
 <p>（2）检查性异常Exception</p>
 <p>检查性异常也就是我们经常遇到的IO异常，以及SQL异常等。对于这种异常，JAVA编译器强制要求我们必需对出现的这些异常进行catch。所以，面对这种异常不管我们是否愿意，只能自己去写一大堆catch块去处理可能的异常。</p>
 <p>（3）运行时异常Exception</p>
