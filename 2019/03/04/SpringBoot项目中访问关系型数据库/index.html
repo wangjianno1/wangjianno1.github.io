@@ -114,7 +114,7 @@
 <meta property="og:site_name" content="老坛の菜园子">
 <meta property="og:description" content="JdbcTemplate（1）引入JdbcTemplate相关的jar包依赖 12345678&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt;    &amp;lt;artifactId&amp;gt;spring-boot-starter-jdbc&amp;lt;/artifactId&amp;gt;&amp;lt;/depend">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2022-02-09T07:40:43.959Z">
+<meta property="og:updated_time" content="2022-02-19T00:03:50.690Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringBoot项目中访问关系型数据库">
 <meta name="twitter:description" content="JdbcTemplate（1）引入JdbcTemplate相关的jar包依赖 12345678&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt;    &amp;lt;artifactId&amp;gt;spring-boot-starter-jdbc&amp;lt;/artifactId&amp;gt;&amp;lt;/depend">
@@ -422,7 +422,7 @@ spring.datasource.password=sbdemo
 <pre><code>Hibernate
 Spring Data JPA
 Spring ORMs
-</code></pre><p>所以说，在SpringBoot项目中使用Spring Data JPA，使用到的JPA ORM框架是Hibernate。</p>
+</code></pre><p>所以说，在SpringBoot项目中使用Spring Data JPA，使用到的JPA ORM框架默认是Hibernate。</p>
 <p>（1）引入Spring Data JPA相关的jar包依赖</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-data-jpa<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>（2）定义数据源DataSource，在application.properties中添加如下配置</p>
