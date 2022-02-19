@@ -28,3 +28,7 @@ public class Main {
 ```
 
 备注：当执行`Integer total = 99`这句代码时，其实JVM为我们执行了`Integer total = Integer.valueOf(99)`。当执行`int totalprim = total`这句代码时，其实JVM为我们执行了`int totalprim = total.intValue()`。
+
+# 自动装箱/拆箱的原理
+
+从字节码中，我们发现装箱其实就是调用了包装类的`valueOf()`方法，而拆箱其实就是调用了`xxxValue()`方法。需要注意的是，如果频繁拆装箱的话，也会严重影响系统的性能，我们应该尽量避免不必要的拆/装箱操作。
