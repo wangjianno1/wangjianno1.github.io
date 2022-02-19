@@ -5,26 +5,28 @@ tags:
 categories: SSM/SSH
 ---
 
-# Spring框架简介
+# Spring Framework简介
 
-总体来说，Spring是使用基本的JavaBean代替EJB，通过容器来管理JavaBean的配置和生命周期，在此基础上实现了AOP、IOC的Spring核心功能，其他WEB框架组件在AOP、IOC的基础上工作，将JavaBean交给Spring来管理。简单来说，Spring是一个轻量级的控制反转（IoC）和面向切面（AOP）的容器框架。
+通常来说，我们说的Spring指的是Spring Framework，其实它只是Spring家族中一个产品。
+
+Spring Framework是使用基本的JavaBean代替EJB，通过容器来管理JavaBean的配置和生命周期，在此基础上实现了AOP、IoC的Spring核心功能，其他WEB框架组件在AOP、IoC的基础上工作，将JavaBean交给Spring来管理。简单来说，Spring是一个轻量级的控制反转（IoC）和面向切面（AOP）的容器框架。
 Spring功能模块框架图如下：
 
 ![](/images/java_spring_1_1.png)
 
-备注：Spring提供了很多的模块，开发项目时，我们可以根据需要来选择部分的模块来使用。具体参见`https://spring.io/projects`页面各模块的说明。
+Spring Framework的主要子模块有IoC，AOP，Spring MVC，JMS，JMX等等。
 
-# Spring的几个核心概念
+# Spring Framework的几个核心概念
 
-简单来说，Spring是一个轻量级的控制反转IOC和面向切面AOP的容器框架。Spring的核心模块有：
+简单来说，Spring Framework是一个轻量级的控制反转IoC和面向切面AOP的容器框架。Spring Framework的核心模块有：
 
 （1）Bean容器
 
-Bean容器（Spring框架的基础核心概念哦，Spring Bean容器存放的是一个个单例对象）。**相比于JAVA官方的EJB，Spring Bean容器更轻量级及简单易用（Spring Bean容器可以对标到EJB容器哦）**。也许正是因为这个核心功能，才让人们经常把Spring和EJB进行对标。
+Bean容器（Spring Framework的基础核心概念哦，Spring Bean容器存放的是一个个单例对象）。**相比于JAVA官方的EJB，Spring Bean容器更轻量级及简单易用（Spring Bean容器可以对标到EJB容器哦）**。也许正是因为这个核心功能，才让人们经常把Spring和EJB进行对标。
 
-（2）IOC（和依赖注入DI是一个意思哦）
+（2）IoC（和依赖注入DI是一个意思哦）
 
-IOC，控制反转，即依赖对象的获得被反转了。控制反转有一个更容易理解的名字是“依赖注入（DI）”。许多复杂的应用都是由两个或多个类通过彼此的合作来实现业务逻辑的，这使得每个对象都获得与其合作的对象（也就是它所依赖的对象）的引用。如果这个获取过程是靠自身实现，那么将导致代码高度耦合并且难以测试。在Spring中，有了IOC或DI，它可以在对象生成或初始化时直接将数据注入到对象中，也可以通过将对象引用注入到对象数据域中的方式来注入对方法调用的依赖。这种依赖注入是可以递归的，对象被逐层注入，这样就简化了对象依赖关系的管理，在很大程度上简化了面向对象系统的复杂性。
+IoC，控制反转，即依赖对象的获得被反转了。控制反转有一个更容易理解的名字是“依赖注入（DI）”。许多复杂的应用都是由两个或多个类通过彼此的合作来实现业务逻辑的，这使得每个对象都获得与其合作的对象（也就是它所依赖的对象）的引用。如果这个获取过程是靠自身实现，那么将导致代码高度耦合并且难以测试。在Spring中，有了IoC或DI，它可以在对象生成或初始化时直接将数据注入到对象中，也可以通过将对象引用注入到对象数据域中的方式来注入对方法调用的依赖。这种依赖注入是可以递归的，对象被逐层注入，这样就简化了对象依赖关系的管理，在很大程度上简化了面向对象系统的复杂性。
 
 其实，IoC的思想在不同的语言中都有很多实现。Spring IoC是JAVA世界中最著名的一个。
 

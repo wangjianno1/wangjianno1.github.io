@@ -46,3 +46,40 @@ Spring Data是Spring平台中一个功能模块，主要用来和数据访问层
 （15）Spring Kafka
 
 （16）.....
+
+备注：Spring家族提供了很多的模块，开发项目时，我们可以根据需要来选择部分的模块来使用。具体参见`https://spring.io/projects`页面各模块的说明。
+
+# Spring全家桶的包结构
+
+（1）Spring Framework
+
+    org.springframework.core
+    org.springframework.beans
+    org.springframework.aop
+    org.springframework.web  // Spring MVC/Spring Web
+    org.springframework.cache
+    org.springframework.cglib
+    org.springframework.context
+    org.springframework.jdbc
+    org.springframework.jms
+    org.springframework.scheduling
+    org.springframework.messaging
+    ....
+
+（2）Sping Data
+
+    org.springframework.data.jpa
+    org.springframework.data.mongodb
+    org.springframework.data.jdbc
+    org.springframework.data.redis
+    ....
+
+（3）Spring Boot
+
+    org.springframework.boot
+
+（4）Spring Security
+
+    org.springframework.security
+
+（5）….

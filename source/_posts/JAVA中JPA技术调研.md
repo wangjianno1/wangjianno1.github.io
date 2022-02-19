@@ -58,13 +58,13 @@ JAVA JPA技术整体组织结构如下：
 ```java
 //定义Student实例类
 @Entity
-@Table(name="t_student")
+@Table(name="t_student") //如果数据库中表名和实体类名相同的话，@Table注解可以省略
 public class Student {
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue
-    @Column(name = "id")
+    @Id  //@Id表示主键
+    @GeneratedValue //@GeneratedValue自定义主键生成策略
+    @Column(name = "id") //若字段名与数据库中表的列名相同，@Column注解可以省略
     private Integer id;
 
     @Column(name = "name")

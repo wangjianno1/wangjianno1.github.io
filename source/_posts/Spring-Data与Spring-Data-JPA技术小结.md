@@ -45,7 +45,7 @@ public class Foo {
 }
 ```
 
-备注：@Entity和@ID都是JAVA JPA中定义的注解，即javax.persistence.Entity和javax.persistence.Id等
+备注：@Entity和@Id都是JAVA JPA中定义的注解，即javax.persistence.Entity和javax.persistence.Id等
 
 （3）定义Repository接口
 
@@ -75,7 +75,7 @@ public class FooController {
 }
 ```
 
-备注：有一点一定需要了解哦，Spring Data JPA只是用来简化DAO层的开发，它并不是ORM框架哦，**像上面的例子中的ORM映射默认使用的是Hibernate框架**，因为我们引入的spring-data-jpa的依赖会引入Hibernate相关的依赖哦。
+备注：有一点一定需要了解哦，Spring Data JPA只是用来简化DAO层的开发，它并不是ORM框架哦，**像上面的例子中的ORM映射默认使用的是Hibernate框架**，因为我们引入的spring-data-jpa的依赖会默认引入Hibernate相关的依赖哦。
 
 # Spring Data JPA中Repository接口及其子接口XXRepository的说明
 

@@ -110,7 +110,7 @@ public class StudentDao {
     Spring Data JPA
     Spring ORMs
 
-所以说，在SpringBoot项目中使用Spring Data JPA，使用到的JPA ORM框架是Hibernate。
+所以说，在SpringBoot项目中使用Spring Data JPA，使用到的JPA ORM框架默认是Hibernate。
 
 （1）引入Spring Data JPA相关的jar包依赖
 
