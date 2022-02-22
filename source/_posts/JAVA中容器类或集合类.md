@@ -54,6 +54,10 @@ Properties继承于Hashtable。Properties类表示了一个持久的属性集.�
 
 上图中有一点疑惑，水平的实心箭头的produces是什么含义？一个Collection的类可以产生一个Iterator的对象？
 
+![](/images/java_syntax_8_1.png)
+
+如上是一个简化版的容器类关系图，图中只列举了主要的继承派生关系，并没有列举所有关系。比方省略了AbstractList，NavigableSet等抽象类以及其他的一些辅助类，如想深入了解，可自行查看源码。
+
 # JAVA常用集合类
 
 常用的接口和类：
