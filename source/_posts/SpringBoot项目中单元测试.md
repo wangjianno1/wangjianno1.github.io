@@ -79,6 +79,29 @@ public class StudentControllerTest {
 
 在测试方法名或测试类上右键选择`Run As >> JUnit Test`菜单项，然后在Junit窗体中查看单元测试结果。
 
+# Junit中Assert断言的使用
+
+Junit框架包下的Assert提供了多个断言方法，主用于比较测试传递进去的两个参数。常用的断言方法如下：
+
+```java
+Assert.assertEquals(T expected, T actual)   //比较expected和actual值是否相等，可以是各种基础数据类型，也可以是抽象数据类型
+Assert.assertNotEquals(T expected, T actual)
+
+Assert.assertSame(T expected, T actual)   //比较expected和actual值在内存中是否是同一个对象， expected == actual
+Assert.assertNotSame(T expected, T actual)
+
+
+Assert.assertTrue(boolean condition)
+Assert.assertFalse(boolean condition)
+
+Assert.assertNull(Object object)
+Assert.assertNotNull(Object object)
+
+Assert.assertArrayEquals(Object[] expected, Object[] actual) // 比较数组，如果数组长度相同，且每个对应的元素相同，则两个数组相等，否则不相等
+
+......
+```
+
 # 闲杂知识
 
 （1）src/test/java目录下的package结构要和src/main/java下的package结构一样。被测试类要和测试类保持一一对应。
