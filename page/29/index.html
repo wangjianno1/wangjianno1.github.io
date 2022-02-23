@@ -563,11 +563,10 @@ d）private
       
         
           
-          数组变量的声明1dataType[] arrayRefVar;   // 首选的方法
-或
-1dataType arrayRefVar[];  // 效果相同，但不是首选方法
-数组变量的初始化1arrayRefVar = new dataType[arraySize];
-数组的声明和初始化1234dataType[] arrayRefVar = new dataType[arraySize];dataType arrayRefVar[] = new dataType[arraySize];data
+          数组变量的声明和初始化（分开）（1）数据变量的声明
+123dataType[] arrayRefVar;   // 首选的方法dataType arrayRefVar[];   // 效果相同，但不是首选方法
+（2）数组变量的初始化
+123456arrayRefVar = new dataType[arraySize];arrayRefVar = new dataType[]&#123;var1, var2, var3, ....&#125;;// arrayRefVar = new dataT
           ...
           <!--noindex-->
           <div class="post-button text-center">
