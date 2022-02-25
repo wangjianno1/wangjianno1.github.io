@@ -2,7 +2,7 @@
 title: HTTP 30X重定向跳转小结
 date: 2018-08-26 22:39:02
 tags:
-categories: 大前端
+categories: HTTP
 ---
 
 # 30X重定向

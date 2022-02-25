@@ -2,7 +2,7 @@
 title: 浏览器HTTP缓存机制（Last-Modified/Etag/Expires/Cache-Control等）
 date: 2018-05-18 15:16:06
 tags:
-categories: 大前端
+categories: HTTP
 ---
 
 # 浏览器HTTP缓存简介

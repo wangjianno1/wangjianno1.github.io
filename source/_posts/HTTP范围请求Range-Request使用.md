@@ -2,7 +2,7 @@
 title: HTTP范围请求Range Request使用
 date: 2019-06-09 18:01:14
 tags:
-categories: 大前端
+categories: HTTP
 ---
 
 # HTTP范围请求

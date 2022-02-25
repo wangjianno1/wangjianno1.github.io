@@ -2,7 +2,7 @@
 title: HTTP常见状态码说明
 date: 2019-06-09 18:09:19
 tags:
-categories: 大前端
+categories: HTTP
 ---
 
 # HTTP常见状态码

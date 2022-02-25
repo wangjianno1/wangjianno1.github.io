@@ -2,7 +2,7 @@
 title: HTTPS双向认证过程及配置
 date: 2018-02-03 19:26:45
 tags:
-categories: Security
+categories: HTTPS
 ---
 
 # HTTPS双向认证简介
