@@ -115,13 +115,13 @@ change master to master_host='10.1.6.159', master_port=3306, master_user='dba', 
 change master to master_host='192.168.3.100', master_port=3306, master_user='dba', master_password='123456', master_log_file='mysql-bin.000004', master_log_pos=1687;
 ```
 
-对于mysql 5.7+及MariaDB来说，支持“多源复制”架构，使用`change master to`命令时，需要明确当前slave的名称，执行命令范例如下：
+对于Mysql 5.7+及MariaDB来说，支持“多源复制”架构，在从库上使用`change master to`命令时，需要明确每个Slave IO的名称，执行命令范例如下：
 
 ```sql
-change master 'xx_db' to master_host='10.27.102.202', master_user='dba', master_password='123456', master_log_file='mysql.000006', master_log_pos=238976927;    --其中xx_db是“多源复制”中某一个slave IO线程
+change master 'xx_db' to master_host='10.27.102.202', master_user='dba', master_password='123456', master_log_file='mysql.000006', master_log_pos=238976927;    --其中xx_db是“多源复制”中某一个slave IO线程，也就是slave上有多个Slave IO线程，对应多个master，这是给每个slave IO线程起一个名字
 ```
 
-（5）启动slave，也即启动从库的IO线程和SQL线程。
+（5）启动Slave，也即启动从库的IO线程和SQL线程。
 
 ```sql
 start slave;
@@ -131,17 +131,17 @@ start slave;
 
 在Slave节点上执行`show slave status`命令查看复制状态。一般情况下，当Slave_IO_Running和Salve_SQL_Running都为YES时，我们才认为主从复制的状态是正常的。
 
-# 基于binlog的mysql主从复制的部分复制配置
+# 基于binlog的Mysql主从复制的部分复制配置
 
-mysql的主从之间的复制可以对整个数据库实例进行复制，也可以对数据库实例中的某个库或某个表进行复制。部分复制可以通过如下选项参数来控制：
+Mysql的主从之间的复制可以对整个数据库实例进行复制，也可以对数据库实例中的某个库或某个表进行复制。部分复制可以通过如下选项参数来控制：
 
 master端的控制参数有`--binlog-do-db/--binlog-ignore-db`
 
 slave端的控制参数有`--replicate-do-db/--replicate-ignore-db/--replicate-do-table/--replicate-ignore-table/--replicate-wild-do-table/--replicate-wild-ignore-table`
 
-# mysql多源复制
+# MySQL多源复制
 
-多源复制也就是多mater复制，允许一个slave对应多个master。在mysql5.7以前，主从复制集群都是“一主多从”的结构，即一个slave只有一个master，一个master可以有多个slave。而在mysql5.7及以后的版本中，支持一个slave对应多个master的结构。如下为多源复制的应用场景之一：
+多源复制也就是多mater复制，允许一个slave对应多个master。在MySQL5.7以前，主从复制集群都是“一主多从”的结构，即一个slave只有一个master，一个master可以有多个slave。而在MySQL5.7及以后的版本中，支持一个slave对应多个master的结构。如下为多源复制的应用场景之一：
 
 当我们需要将跨数据库实例来查询数据时，往往在效率和用户程序实现上比较难，但有了多源复制之后，我们可以将多个mysql数据库中数据同步复制到同一个Slave中，这样通过对Salve数据库实例操作，来达到跨数据库实例操作的目的。
 

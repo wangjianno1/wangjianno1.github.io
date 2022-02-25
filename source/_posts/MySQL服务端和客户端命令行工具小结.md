@@ -29,6 +29,6 @@ MySQL Workbenck也有两个版本：
 MySQL在安装完后，一般在`${MYSQL_HOME}/bin`目录下有mysql_config工具，它不是一个二进制文件，是一个脚本工具。当我们在编译自己的mysql客户端时，可用通过mysql_config工具获取很多的有用的编译参数，例如使用`mysql_config --include`可以获取mysql的mysql在安装时的一些头文件位置，或者`mysql_config --libs`可以获取mysql的头文件及共享库等编译参数。例如：
 
 ```bash
-mysql_config--include   #得到-I/usr/include/mysql
-mysql_config --libs     #得到-L/usr/lib/mysql-lmysqlclient -lz -lcrypt -lnsl -lm -L/usr/lib -lssl -lcrypto
+mysql_config --include   #得到-I/usr/include/mysql
+mysql_config --libs      #得到-L/usr/lib/mysql-lmysqlclient -lz -lcrypt -lnsl -lm -L/usr/lib -lssl -lcrypto
 ```
