@@ -116,9 +116,10 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://wangjianno1.github.io/images/http_message_1_1.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/http_message_1_2.png">
+<meta property="og:image" content="http://wangjianno1.github.io/images/http_message_1_5.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/http_message_1_3.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/http_message_1_4.png">
-<meta property="og:updated_time" content="2022-02-25T15:33:26.404Z">
+<meta property="og:updated_time" content="2022-02-25T15:41:53.642Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HTTP请求&#x2F;响应报文结构">
 <meta name="twitter:description" content="HTTP请求报文一个HTTP请求报文由请求行（request line）、请求头部（header）、空行和请求数据4个部分组成，下图给出了请求报文的一般格式： ＜request-line＞ ＜headers＞ ＜blank line＞ [＜request-body＞] 请求行请求行由请求方法字段、URL字段和HTTP协议版本字段3个字段组成，它们用空格分隔。例如GET /index.html HT">
@@ -247,7 +248,7 @@
         
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">315</span>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">316</span>
               </a>
         </li>
       
@@ -448,6 +449,8 @@ Cookie: PREF=ID=80a06da87be9ae3c:U=f7167333e2c3b714:NW=1:TM=1261551909:LM=126155
 hl=zh-CN&amp;source=hp&amp;q=domety 
 </code></pre><p>可以看到，POST方式请求行中不包含数据字符串，这些数据保存在”请求内容”部分，各数据之间也是使用”&amp;”符号隔开。POST方式大多用于页面的表单中。因为POST也能完成GET的功能，因此多数人在设计表单的时候一律都使用POST方式，其实这是一个误区。GET方式也有自己的特点和优势，我们应该根据不同的情况来选择是使用GET还是使用POST。</p>
 <p>（3）HEAD请求</p>
+<p>HTTP HEAD方法请求资源的首部信息，并且这些首部与HTTP GET方法请求时返回的一致。该请求方法的一个使用场景是在下载一个大文件前先获取其大小再决定是否要下载，以此可以节约带宽资源。以<code>curl -I</code>发起的HEAD HTTP请求为例来说明：</p>
+<p><img src="/images/http_message_1_5.png" alt></p>
 <p>HEAD就像GET，只不过服务端接受到HEAD请求后只返回响应头，而不会发送响应内容。当我们只需要查看某个页面的状态的时候，使用HEAD是非常高效的，因为在传输的过程中省去了页面内容。</p>
 <h2 id="请求头部"><a href="#请求头部" class="headerlink" title="请求头部"></a>请求头部</h2><p>请求头部由关键字/值对组成，每行一对，关键字和值用英文冒号“:”分隔。请求头部通知服务器有关于客户端请求的信息，典型的请求头有：</p>
 <pre><code>User-Agent：产生请求的浏览器类型
@@ -497,6 +500,10 @@ Host：请求的主机名，允许多个域名同处一个IP地址，即虚拟�
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/02/25/HTTP内容协商及Vary头部介绍/" rel="prev" title="HTTP内容协商及Vary头部介绍">
+                HTTP内容协商及Vary头部介绍 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -599,7 +606,7 @@ Host：请求的主机名，允许多个域名同处一个IP地址，即虚拟�
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">315</span>
+                    <span class="site-state-item-count">316</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
