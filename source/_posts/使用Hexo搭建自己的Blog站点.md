@@ -37,7 +37,7 @@ Hexo出自台湾大学生tommy351之手，是一个基于Node.js的静态博客�
 
 可以参见下面的<<使用Hexo new创建一篇新文章>>部分。
 
-（2）使用编辑器打开source或source/_posts目录下新文章对应的MarkDown文件，然后编辑其内容并保存
+（2）使用编辑器打开`source`或`source/_posts`目录下新文章对应的MarkDown文件，然后编辑其内容并保存
 
 （3）使用hexo server命令启动hexo http server服务器，然后在浏览器中输入`http://ip:4000`来预览文章内容
 
@@ -51,17 +51,19 @@ Hexo出自台湾大学生tommy351之手，是一个基于Node.js的静态博客�
 
 # 使用Hexo new创建一篇新文章
 
-命令格式为：hexo new [layout] <title>即可。这里的layout最好不要理解成布局的意思，个人觉得是新文章的类别。Hexo默认的有三种类别，分别是post、page 和 draft，下面分别介绍：
+命令格式为：`hexo new [layout] <title>`即可。这里的layout最好不要理解成布局的意思，个人觉得是新文章的类别。Hexo默认的有三种类别，分别是post、page和draft，下面分别介绍：
 
 （1）post
 
-使用hexo new不指定layout参数时，则会根据/mysitename/_config.yml中的default_layout参数来指定默认layout，一般来说默认是post。hexo new post会在mysitenaem/source/_posts/中创建一个markdown文件（使用scaffolds/post.md作为脚手架来创建markdown文件）。然后经过hexo generate生成静态文件后，会在"public/${year}/${month}/${day}/markdown文件tilte/"组成的目录中生成index.html文件，在浏览器中输入`http://ip:4000/2018/01/28/markdown文件title/`即可访问。
+使用hexo new不指定layout参数时，则会根据`/mysitename/_config.yml`中的`default_layout`参数来指定默认layout，一般来说默认是post。hexo new post会在`mysitenaem/source/_posts/`中创建一个markdown文件（使用scaffolds/post.md作为脚手架来创建markdown文件）。然后经过hexo generate生成静态文件后，会在"public/${year}/${month}/${day}/markdown文件tilte/"组成的目录中生成index.html文件，在浏览器中输入`http://ip:4000/2018/01/28/markdown文件title/`即可访问。
+
+如使用`hexo new post "wahaha"`命令，表示创建一篇名称为wahaha的文章，然后用编辑器打开，修改tags/categories，为文章分类或打标签。
 
 备注：这种就是使用最多的创建文章类型。
 
 （2）draft
 
-使用hexo new draft会在mysitenaem/source/_drafts/中创建一个markdown文件（使用scaffolds/draft.md作为脚手架来创建markdown文件），执行hexo generate命令时，并不会生成对应的html文件，我们把hexo new draft创建的文章称为草稿，也就是创建后并不会在站点中显示出来的文章。当然，我们可以使用`hexo generate --draft && hexo server --draft`在本地预览草稿文章的效果。当我们需要将草稿正式发布时，可以使用`hexo publish draft "文章标题"`即可。
+使用hexo new draft会在`mysitenaem/source/_drafts/`中创建一个markdown文件（使用scaffolds/draft.md作为脚手架来创建markdown文件），执行hexo generate命令时，并不会生成对应的html文件，我们把hexo new draft创建的文章称为草稿，也就是创建后并不会在站点中显示出来的文章。当然，我们可以使用`hexo generate --draft && hexo server --draft`在本地预览草稿文章的效果。当我们需要将草稿正式发布时，可以使用`hexo publish draft "文章标题"`即可。
 
 备注：当我们的一篇文章还没有彻底完善好或想作为私密文档的话，就可以使用该种类型。
 
@@ -73,7 +75,7 @@ Hexo出自台湾大学生tommy351之手，是一个基于Node.js的静态博客�
 
 （4）自定义
 
-我们也可以自定义哦，若我们在scaffolds目录下新建一个wahaha.md的脚手架，然后我们就可以使用hexo new wahaha "title"来创建一篇文章。hexo new wahaha会在mysitenaem/source/_posts/中创建一个markdown文件（使用scaffolds/wahaha.md作为脚手架来创建markdown文件）。
+我们也可以自定义哦，若我们在scaffolds目录下新建一个wahaha.md的脚手架，然后我们就可以使用hexo new wahaha "title"来创建一篇文章。hexo new wahaha会在`mysitenaem/source/_posts/`中创建一个markdown文件（使用scaffolds/wahaha.md作为脚手架来创建markdown文件）。
 
 # 将项目部署到Github Pages
 
@@ -85,7 +87,7 @@ Hexo出自台湾大学生tommy351之手，是一个基于Node.js的静态博客�
 
 （3）给hexo配置github pages属性
 
-在/blog/_config.yml中修改deploy属性，内容如下：
+在`/blog/_config.yml`中修改deploy属性，内容如下：
 
 ```
 deploy:
@@ -99,7 +101,7 @@ deploy:
 备注：hexo generate命令将我们编写的MarkDown等文件生成浏览器能直接识别的静态页面文件（包括html、js、css等等），使用hexo deploy是将这些静态文件提交到Github的“用户名.github.io”仓库中。
 
 # Hexo中主题(theme)说明
-创建Hexo主题非常容易，只需要在互联网上搜索hexo主题，然后将hexo主题对应的文件夹放置到mysitname/themes目录中，然后修改mysitename/_config.yml内的theme属性即可切换主题。
+创建Hexo主题非常容易，只需要在互联网上搜索hexo主题，然后将hexo主题对应的文件夹放置到mysitname/themes目录中，然后修改`mysitename/_config.yml`内的theme属性即可切换主题。
 
 一般来说，Hexo的主题文件夹的结构如下：
 

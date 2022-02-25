@@ -46,6 +46,52 @@ MYSQL事务操作主要有两种方法：
     SET AUTOCOMMIT=0禁止自动提交
     SET AUTOCOMMIT=1开启自动提交
 
+举例来说，
+
+```sql
+create table test(id int);
+
+-- 开始事务，提交事务
+-- 所以1被插入
+begin;
+insert into test values(1);
+commit;
+
+-- 先回滚事务，再提交事务
+-- 所以2没有被插入
+begin;
+insert into test values(2);
+rollback;
+commit;
+
+-- 先回滚到s1，再提交事务
+-- 所以3被插入，4没有被插入
+begin;
+insert into test values(3);
+savepoint s1;
+insert into test values(4);
+rollback to s1;
+commit;
+
+-- 回滚事务，事务未提交
+-- 所以5没有被插入
+start transaction;
+insert into test values(5);
+rollback;
+
+-- 自动提交，再回滚
+-- 所以6会被插入
+set autocommit=1;
+insert into test values(6);
+rollback;
+
+-- 禁止自动提交 再回滚
+-- 所以7未被插入
+set autocommit=0;
+insert into test value(7);
+rollback;
+```
+
 # 事务提交的类型
 
 ## 显式提交
