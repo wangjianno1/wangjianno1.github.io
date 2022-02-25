@@ -119,7 +119,7 @@
 <meta property="og:image" content="http://wangjianno1.github.io/images/innodb_trx_1_3.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/innodb_trx_1_4.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/innodb_trx_1_5.png">
-<meta property="og:updated_time" content="2022-02-09T07:40:43.912Z">
+<meta property="og:updated_time" content="2022-02-25T03:45:26.378Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="InnoDB引擎中事务|事务隔离级别|MVCC">
 <meta name="twitter:description" content="MySQL事务MySQL事务主要用于处理操作量大，复杂度高的数据。比如说，在人员管理系统中，你删除一个人员，即需要删除人员的基本资料，也要删除和该人员相关的信息，如信箱，文章等等，这样，这些数据库操作语句就构成一个事务。 关于MySQL事务操作，需要注意如下几点： （1）在MySQL中只有使用了InnoDB存储引擎的数据库或表才支持事务 （2）事务处理可以用来维护数据库的完整性，保证成批的SQL语">
@@ -234,21 +234,21 @@
         
         <li class="menu-item menu-item-categories">
           <a href="/categories/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">37</span>
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">38</span>
               </a>
         </li>
       
         
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">28</span>
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">29</span>
               </a>
         </li>
       
         
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">313</span>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">314</span>
               </a>
         </li>
       
@@ -434,7 +434,9 @@ COMMIT事务确认
 </code></pre><p>（2）直接用SET来改变MySQL的自动提交模式</p>
 <pre><code>SET AUTOCOMMIT=0禁止自动提交
 SET AUTOCOMMIT=1开启自动提交
-</code></pre><h1 id="事务提交的类型"><a href="#事务提交的类型" class="headerlink" title="事务提交的类型"></a>事务提交的类型</h1><h2 id="显式提交"><a href="#显式提交" class="headerlink" title="显式提交"></a>显式提交</h2><p>所有的数据操纵语句都是要显式提交的，所谓显式提交就是要执行commit/rollback。数据操纵语句执行完后，处理的数据都会放在回滚段中，等待用户进行提交或者回滚，当用户执行commit/rollback后，放在回滚段中的数据就会被删除。显式提交是由你决定是否提交，这种事务允许你自己决定哪批工作必须成功完成，否则所有部分都不能完成。</p>
+</code></pre><p>举例来说，</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">test</span>(<span class="keyword">id</span> <span class="built_in">int</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 开始事务，提交事务</span></span><br><span class="line"><span class="comment">-- 所以1被插入</span></span><br><span class="line"><span class="keyword">begin</span>;</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> <span class="keyword">test</span> <span class="keyword">values</span>(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">commit</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 先回滚事务，再提交事务</span></span><br><span class="line"><span class="comment">-- 所以2没有被插入</span></span><br><span class="line"><span class="keyword">begin</span>;</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> <span class="keyword">test</span> <span class="keyword">values</span>(<span class="number">2</span>);</span><br><span class="line"><span class="keyword">rollback</span>;</span><br><span class="line"><span class="keyword">commit</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 先回滚到s1，再提交事务</span></span><br><span class="line"><span class="comment">-- 所以3被插入，4没有被插入</span></span><br><span class="line"><span class="keyword">begin</span>;</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> <span class="keyword">test</span> <span class="keyword">values</span>(<span class="number">3</span>);</span><br><span class="line"><span class="keyword">savepoint</span> s1;</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> <span class="keyword">test</span> <span class="keyword">values</span>(<span class="number">4</span>);</span><br><span class="line"><span class="keyword">rollback</span> <span class="keyword">to</span> s1;</span><br><span class="line"><span class="keyword">commit</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 回滚事务，事务未提交</span></span><br><span class="line"><span class="comment">-- 所以5没有被插入</span></span><br><span class="line"><span class="keyword">start</span> <span class="keyword">transaction</span>;</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> <span class="keyword">test</span> <span class="keyword">values</span>(<span class="number">5</span>);</span><br><span class="line"><span class="keyword">rollback</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 自动提交，再回滚</span></span><br><span class="line"><span class="comment">-- 所以6会被插入</span></span><br><span class="line"><span class="keyword">set</span> autocommit=<span class="number">1</span>;</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> <span class="keyword">test</span> <span class="keyword">values</span>(<span class="number">6</span>);</span><br><span class="line"><span class="keyword">rollback</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 禁止自动提交 再回滚</span></span><br><span class="line"><span class="comment">-- 所以7未被插入</span></span><br><span class="line"><span class="keyword">set</span> autocommit=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> <span class="keyword">test</span> <span class="keyword">value</span>(<span class="number">7</span>);</span><br><span class="line"><span class="keyword">rollback</span>;</span><br></pre></td></tr></table></figure>
+<h1 id="事务提交的类型"><a href="#事务提交的类型" class="headerlink" title="事务提交的类型"></a>事务提交的类型</h1><h2 id="显式提交"><a href="#显式提交" class="headerlink" title="显式提交"></a>显式提交</h2><p>所有的数据操纵语句都是要显式提交的，所谓显式提交就是要执行commit/rollback。数据操纵语句执行完后，处理的数据都会放在回滚段中，等待用户进行提交或者回滚，当用户执行commit/rollback后，放在回滚段中的数据就会被删除。显式提交是由你决定是否提交，这种事务允许你自己决定哪批工作必须成功完成，否则所有部分都不能完成。</p>
 <h2 id="隐式提交"><a href="#隐式提交" class="headerlink" title="隐式提交"></a>隐式提交</h2><p>MySQL数据库隐式提交的三种情况：</p>
 <pre><code>正常执行完数据定义语言（DDL）包括create，alter，drop，truncate，rename
 正常执行完数据控制语言（DCL）包括grant，revoke
@@ -608,7 +610,7 @@ SET AUTOCOMMIT=1开启自动提交
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">313</span>
+                    <span class="site-state-item-count">314</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -695,7 +697,9 @@ SET AUTOCOMMIT=1开启自动提交
                     
                       
                     
-                    <span class="site-state-item-count">36</span>
+                      
+                    
+                    <span class="site-state-item-count">37</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -764,7 +768,9 @@ SET AUTOCOMMIT=1开启自动提交
                     
                       
                     
-                    <span class="site-state-item-count">28</span>
+                      
+                    
+                    <span class="site-state-item-count">29</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

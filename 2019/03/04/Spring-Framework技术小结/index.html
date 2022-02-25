@@ -121,7 +121,7 @@
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_spring_1_5.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_spring_1_7.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_spring_1_6.png">
-<meta property="og:updated_time" content="2022-02-19T01:32:11.959Z">
+<meta property="og:updated_time" content="2022-02-25T03:17:06.136Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring Framework技术小结">
 <meta name="twitter:description" content="Spring Framework简介通常来说，我们说的Spring指的是Spring Framework，其实它只是Spring家族中一个产品。 Spring Framework是使用基本的JavaBean代替EJB，通过容器来管理JavaBean的配置和生命周期，在此基础上实现了AOP、IoC的Spring核心功能，其他WEB框架组件在AOP、IoC的基础上工作，将JavaBean交给Sprin">
@@ -236,21 +236,21 @@
         
         <li class="menu-item menu-item-categories">
           <a href="/categories/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">37</span>
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">38</span>
               </a>
         </li>
       
         
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">28</span>
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">29</span>
               </a>
         </li>
       
         
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">313</span>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">314</span>
               </a>
         </li>
       
@@ -421,6 +421,7 @@
 <h1 id="Spring-Framework的几个核心概念"><a href="#Spring-Framework的几个核心概念" class="headerlink" title="Spring Framework的几个核心概念"></a>Spring Framework的几个核心概念</h1><p>简单来说，Spring Framework是一个轻量级的控制反转IoC和面向切面AOP的容器框架。Spring Framework的核心模块有：</p>
 <p>（1）Bean容器</p>
 <p>Bean容器（Spring Framework的基础核心概念哦，Spring Bean容器存放的是一个个单例对象）。<strong>相比于JAVA官方的EJB，Spring Bean容器更轻量级及简单易用（Spring Bean容器可以对标到EJB容器哦）</strong>。也许正是因为这个核心功能，才让人们经常把Spring和EJB进行对标。</p>
+<p>备注：Spring容器中的Bean默认都是单例的。</p>
 <p>（2）IoC（和依赖注入DI是一个意思哦）</p>
 <p>IoC，控制反转，即依赖对象的获得被反转了。控制反转有一个更容易理解的名字是“依赖注入（DI）”。许多复杂的应用都是由两个或多个类通过彼此的合作来实现业务逻辑的，这使得每个对象都获得与其合作的对象（也就是它所依赖的对象）的引用。如果这个获取过程是靠自身实现，那么将导致代码高度耦合并且难以测试。在Spring中，有了IoC或DI，它可以在对象生成或初始化时直接将数据注入到对象中，也可以通过将对象引用注入到对象数据域中的方式来注入对方法调用的依赖。这种依赖注入是可以递归的，对象被逐层注入，这样就简化了对象依赖关系的管理，在很大程度上简化了面向对象系统的复杂性。</p>
 <p>其实，IoC的思想在不同的语言中都有很多实现。Spring IoC是JAVA世界中最著名的一个。</p>
@@ -621,7 +622,7 @@ AnnotationConfigWebApplicationContext
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">313</span>
+                    <span class="site-state-item-count">314</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -708,7 +709,9 @@ AnnotationConfigWebApplicationContext
                     
                       
                     
-                    <span class="site-state-item-count">36</span>
+                      
+                    
+                    <span class="site-state-item-count">37</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -777,7 +780,9 @@ AnnotationConfigWebApplicationContext
                     
                       
                     
-                    <span class="site-state-item-count">28</span>
+                      
+                    
+                    <span class="site-state-item-count">29</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
