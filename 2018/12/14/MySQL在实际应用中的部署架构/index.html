@@ -107,18 +107,18 @@
   <meta name="keywords" content="MySQL,">
 
 
-<meta name="description" content="单机式架构只在一台机器上部署一个MySQL Server，所有的client都连接这个MySQL Server。这种结构数据安全以及访问效率上都有一定的局限性。 基于主从同步的分布式结构基于主从同步的分布式集群中，包括主节点，以及很多的从节点，从节点从主节点中同步数据。然后以MySQL-Proxy来实现“读写分离”，主库可以提供读写服务，从库只可以提供读服务。其中实现MySQL”读写分离”的MyS">
+<meta name="description" content="单机式架构只在一台机器上部署一个MySQL Server，所有的client都连接这个MySQL Server。这种结构数据安全以及访问效率上都有一定的局限性。 基于主从同步的分布式结构基于主从同步的分布式集群中，包括主节点，以及很多的从节点，从节点从主节点中同步数据。然后以MySQL-Proxy来实现“读写分离”，主库可以提供读写服务，从库只可以提供读服务。其中实现MySQL“读写分离”的MyS">
 <meta name="keywords" content="MySQL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL在实际应用中的部署架构">
 <meta property="og:url" content="http://wangjianno1.github.io/2018/12/14/MySQL在实际应用中的部署架构/index.html">
 <meta property="og:site_name" content="老坛の菜园子">
-<meta property="og:description" content="单机式架构只在一台机器上部署一个MySQL Server，所有的client都连接这个MySQL Server。这种结构数据安全以及访问效率上都有一定的局限性。 基于主从同步的分布式结构基于主从同步的分布式集群中，包括主节点，以及很多的从节点，从节点从主节点中同步数据。然后以MySQL-Proxy来实现“读写分离”，主库可以提供读写服务，从库只可以提供读服务。其中实现MySQL”读写分离”的MyS">
+<meta property="og:description" content="单机式架构只在一台机器上部署一个MySQL Server，所有的client都连接这个MySQL Server。这种结构数据安全以及访问效率上都有一定的局限性。 基于主从同步的分布式结构基于主从同步的分布式集群中，包括主节点，以及很多的从节点，从节点从主节点中同步数据。然后以MySQL-Proxy来实现“读写分离”，主库可以提供读写服务，从库只可以提供读服务。其中实现MySQL“读写分离”的MyS">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2022-02-09T07:40:43.938Z">
+<meta property="og:updated_time" content="2022-02-24T10:16:51.517Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL在实际应用中的部署架构">
-<meta name="twitter:description" content="单机式架构只在一台机器上部署一个MySQL Server，所有的client都连接这个MySQL Server。这种结构数据安全以及访问效率上都有一定的局限性。 基于主从同步的分布式结构基于主从同步的分布式集群中，包括主节点，以及很多的从节点，从节点从主节点中同步数据。然后以MySQL-Proxy来实现“读写分离”，主库可以提供读写服务，从库只可以提供读服务。其中实现MySQL”读写分离”的MyS">
+<meta name="twitter:description" content="单机式架构只在一台机器上部署一个MySQL Server，所有的client都连接这个MySQL Server。这种结构数据安全以及访问效率上都有一定的局限性。 基于主从同步的分布式结构基于主从同步的分布式集群中，包括主节点，以及很多的从节点，从节点从主节点中同步数据。然后以MySQL-Proxy来实现“读写分离”，主库可以提供读写服务，从库只可以提供读服务。其中实现MySQL“读写分离”的MyS">
 
 
 
@@ -408,7 +408,7 @@
 
       
         <h1 id="单机式架构"><a href="#单机式架构" class="headerlink" title="单机式架构"></a>单机式架构</h1><p>只在一台机器上部署一个MySQL Server，所有的client都连接这个MySQL Server。这种结构数据安全以及访问效率上都有一定的局限性。</p>
-<h1 id="基于主从同步的分布式结构"><a href="#基于主从同步的分布式结构" class="headerlink" title="基于主从同步的分布式结构"></a>基于主从同步的分布式结构</h1><p>基于主从同步的分布式集群中，包括主节点，以及很多的从节点，从节点从主节点中同步数据。然后以MySQL-Proxy来实现“读写分离”，主库可以提供读写服务，从库只可以提供读服务。其中实现MySQL”读写分离”的MySQL-Proxy可以有很多的选择。</p>
+<h1 id="基于主从同步的分布式结构"><a href="#基于主从同步的分布式结构" class="headerlink" title="基于主从同步的分布式结构"></a>基于主从同步的分布式结构</h1><p>基于主从同步的分布式集群中，包括主节点，以及很多的从节点，从节点从主节点中同步数据。然后以MySQL-Proxy来实现“读写分离”，主库可以提供读写服务，从库只可以提供读服务。其中实现MySQL“读写分离”的MySQL-Proxy可以有很多的选择。</p>
 <h1 id="基于NDB存储引擎的MySQL集群"><a href="#基于NDB存储引擎的MySQL集群" class="headerlink" title="基于NDB存储引擎的MySQL集群"></a>基于NDB存储引擎的MySQL集群</h1><p>类似于Oracle集群的“节点”概念，基于NDB存储引擎的MySQL集群也包含“节点”的概念，其中包括数据节点(ndbd)，管理节点(mgmd)，服务节点(mysqld)。</p>
 <p>（1）数据节点</p>
 <p>数据节点就是用来存储数据的，数据节点上只需启动ndbd服务就可以，不需要部署mysqld。</p>

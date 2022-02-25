@@ -116,7 +116,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://wangjianno1.github.io/images/mysql_tools_1_1.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/mysql_tools_1_2.png">
-<meta property="og:updated_time" content="2022-02-09T07:40:43.938Z">
+<meta property="og:updated_time" content="2022-02-24T16:09:48.266Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL服务端和客户端命令行工具小结">
 <meta name="twitter:description" content="MySQL服务端命令行工具 备注：mysqld工具可能不在bin目录下，可能在${mysql安装目录}/mysql/libexec下。 MySQL客户端命令行工具 MySQL官方图形化管理工具MySQL WorkbenchMySQL Workbenck也有两个版本： MySQL Workbench Community Edition，也就是社区版本 MySQL Workbench Standard">
@@ -417,7 +417,7 @@
 MySQL Workbench Standard Edition，也就是商业版本，是按年收取费用的
 </code></pre><h1 id="其他MySQL附带工具"><a href="#其他MySQL附带工具" class="headerlink" title="其他MySQL附带工具"></a>其他MySQL附带工具</h1><p>（1）mysql_config</p>
 <p>MySQL在安装完后，一般在<code>${MYSQL_HOME}/bin</code>目录下有mysql_config工具，它不是一个二进制文件，是一个脚本工具。当我们在编译自己的mysql客户端时，可用通过mysql_config工具获取很多的有用的编译参数，例如使用<code>mysql_config --include</code>可以获取mysql的mysql在安装时的一些头文件位置，或者<code>mysql_config --libs</code>可以获取mysql的头文件及共享库等编译参数。例如：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql_config--include   <span class="comment">#得到-I/usr/include/mysql</span></span><br><span class="line">mysql_config --libs     <span class="comment">#得到-L/usr/lib/mysql-lmysqlclient -lz -lcrypt -lnsl -lm -L/usr/lib -lssl -lcrypto</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql_config --include   <span class="comment">#得到-I/usr/include/mysql</span></span><br><span class="line">mysql_config --libs      <span class="comment">#得到-L/usr/lib/mysql-lmysqlclient -lz -lcrypt -lnsl -lm -L/usr/lib -lssl -lcrypto</span></span><br></pre></td></tr></table></figure>
 
       
     </div>
