@@ -4,6 +4,88 @@
   
     
     <entry>
+      <title>WebSocket技术调研</title>
+      <link href="/2022/02/27/WebSocket%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/"/>
+      <url>/2022/02/27/WebSocket%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/</url>
+      
+        <content type="html"><![CDATA[<h1 id="WebSocket简介"><a href="#WebSocket简介" class="headerlink" title="WebSocket简介"></a>WebSocket简介</h1><p>WebSocket是一种网络通信协议。在2009年诞生，于2011年被IETF定为标准RFC 6455通信标准。并由RFC7936补充规范。WebSocket API也被W3C定为标准。</p><p>WebSocket是HTML5开始提供的一种在单个TCP连接上进行全双工（full-duplex）通讯的协议。没有了Request和Response的概念，两者地位完全平等，连接一旦建立，就建立了真正的持久性连接，双方可以随时向对方发送数据。</p><p><img src="/images/websocket_1_1.png" alt></p><p>简单总结WebSocket，WebSocket是HTML5开始提供的一种独立在单个TCP连接上进行全双工通讯的有状态的协议（它不同于无状态的HTTP），并且还能支持二进制帧、扩展协议、部分自定义的子协议、压缩等特性。</p><p>目前看来，WebSocket是可以完美替代AJAX轮询和Comet。但是某些场景还是不能替代SSE，WebSocket和SSE各有所长。</p><h1 id="WebSocket的特点"><a href="#WebSocket的特点" class="headerlink" title="WebSocket的特点"></a>WebSocket的特点</h1><p>WebSocket最大特点就是，服务器可以主动向客户端推送信息，客户端也可以主动向服务器发送信息，是真正的双向平等对话，属于服务器推送技术的一种。</p><p><img src="/images/websocket_1_2.png" alt></p><p>其他特点包括：</p><p>（1）建立在TCP协议之上，服务器端的实现比较容易。</p><p>（2）与HTTP协议有着良好的兼容性。默认端口也是80和443，并且握手阶段采用HTTP协议，因此握手时不容易屏蔽，能通过各种HTTP代理服务器。</p><p>（3）数据格式比较轻量，性能开销小，通信高效。</p><p>（4）可以发送文本，也可以发送二进制数据。</p><p>（5）没有同源限制，客户端可以与任意服务器通信。</p><p>（6）协议标识符是ws（如果加密，则为wss），服务器网址就是URL，形如<code>ws://example.com:80/some/path</code>。</p><p><img src="/images/websocket_1_3.png" alt></p><h1 id="WebSocket编程"><a href="#WebSocket编程" class="headerlink" title="WebSocket编程"></a>WebSocket编程</h1><p>（1）WebSocket客户端编写</p><pre><code class="javascript"><span class="keyword">var</span> ws = <span class="keyword">new</span> WebSocket(<span class="string">"wss://echo.websocket.org"</span>);ws.onopen = <span class="function"><span class="keyword">function</span>(<span class="params">evt</span>) </span>{     <span class="built_in">console</span>.log(<span class="string">"Connection open ..."</span>);     ws.send(<span class="string">"Hello WebSockets!"</span>);};ws.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">evt</span>) </span>{    <span class="built_in">console</span>.log( <span class="string">"Received Message: "</span> + evt.data);    ws.close();};ws.onclose = <span class="function"><span class="keyword">function</span>(<span class="params">evt</span>) </span>{    <span class="built_in">console</span>.log(<span class="string">"Connection closed."</span>);};</code></pre><h1 id="WebSocket与长链接的HTTP的联系区别"><a href="#WebSocket与长链接的HTTP的联系区别" class="headerlink" title="WebSocket与长链接的HTTP的联系区别"></a>WebSocket与长链接的HTTP的联系区别</h1><p>（1）WebSocket是也是基于TCP长连接技术上的，值得注意的是，WebSocket也是使用的是80/443端口。</p><p>（2）HTTP和WebSocket都是应用层协议。</p><p>（3）WebSocket协议有两部分阶段，一是握手阶段；另一个是数据传输阶段。WebSocket的握手阶段是基于HTTP Upgrade机制的，将HTTP协议协议升级到WebSocket协议。然后WebSocket数据传输阶段就和HTTP没关系了，使用的WebSocket协议。</p><p><img src="/images/websocket_1_4.png" alt></p><h1 id="nginx支持websocket"><a href="#nginx支持websocket" class="headerlink" title="nginx支持websocket"></a>nginx支持websocket</h1><p>nginx已支持websocket，只需要开启nginx的Upgrade机制即可。</p><p>学习资料参考于：<br><a href="https://halfrost.com/websocket/" target="_blank" rel="noopener">https://halfrost.com/websocket/</a><br><a href="http://www.ruanyifeng.com/blog/2017/05/websocket.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2017/05/websocket.html</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> HTTP </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> WebSocket </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>HTTP/3技术调研</title>
+      <link href="/2022/02/27/HTTP-3%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/"/>
+      <url>/2022/02/27/HTTP-3%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/</url>
+      
+        <content type="html"><![CDATA[<h1 id="HTTP-3简介"><a href="#HTTP-3简介" class="headerlink" title="HTTP/3简介"></a>HTTP/3简介</h1><p>虽然HTTP/2解决了很多之前旧版本的问题，但是它还是存在一个巨大的问题，主要是底层支撑的TCP协议造成的。</p><p>上文提到HTTP/2使用了多路复用，一般来说同一域名下只需要使用一个TCP连接。但当这个连接中出现了丢包的情况，那就会导致HTTP/2的表现情况反倒不如HTTP/1了。</p><p>因为在出现丢包的情况下，整个TCP都要开始等待重传，也就导致了后面的所有数据都被阻塞了。但是对于HTTP/1.1来说，可以开启多个TCP连接，出现这种情况反到只会影响其中一个连接，剩余的TCP连接还可以正常传输数据。</p><p>那么可能就会有人考虑到去修改TCP协议，其实这已经是一件不可能完成的任务了。因为TCP存在的时间实在太长，已经充斥在各种设备中，并且这个协议是由操作系统实现的，更新起来不大现实。</p><p>基于这个原因，Google就另起炉灶搞了一个基于UDP协议的QUIC协议，并且使用在了HTTP/3上，HTTP/3之前名为HTTP-over-QUIC，从这个名字中我们也可以发现，HTTP/3最大的改造就是使用了QUIC。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> HTTP </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>HTTP/2技术调研</title>
+      <link href="/2022/02/27/HTTP-2%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/"/>
+      <url>/2022/02/27/HTTP-2%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/</url>
+      
+        <content type="html"><![CDATA[<h1 id="HTTP-2简介"><a href="#HTTP-2简介" class="headerlink" title="HTTP/2简介"></a>HTTP/2简介</h1><p>2015年，HTTP/2发布。HTTP/2是现行HTTP协议（HTTP/1.x）的替代，但它不是重写，HTTP方法/状态码/语义都与HTTP/1.x一样。HTTP/2基于SPDY3，专注于性能，最大的一个目标是在用户和网站间只用一个连接（connection）。</p><p>HTTP/2没有改动HTTP的应用语义。 HTTP方法、状态代码、URI和标头字段等核心概念一如往常。 不过相较于HTTP/1.1来说，HTTP/2提供有如下新特性：</p><p>（1）多路复用</p><p>HTTP/2使用多路复用技术，同一个TCP连接可以并发处理多个请求。</p><p>（2）首部压缩</p><p>HTTP/1.1的首部带有大量信息，而且每次都要重复发送。HTTP/2.0要求通讯双方各自缓存一份首部字段表，从而避免了重复传输。</p><p>（3）服务端推送</p><p>HTTP/2在客户端请求一个资源时，会把相关的资源一起发送给客户端，客户端就不需要再次发起请求了。例如客户端请求index.html页面，服务端就把index.js一起发给客户端。</p><p>（4）二进制分帧</p><p>HTTP/1.1的解析是基于文本的，而HTTP/2采用二进制格式。</p><h1 id="HTTP-2二进制分帧层"><a href="#HTTP-2二进制分帧层" class="headerlink" title="HTTP/2二进制分帧层"></a>HTTP/2二进制分帧层</h1><p>在不改动HTTP/1.x的语义、方法、状态码、URI以及首部字段等情况下, HTTP/2是如何做到「突破HTTP1.1的性能限制，改进传输性能，实现低延迟和高吞吐量」的？关键之一就是在应用层（HTTP/2）和传输层（TCP/UDP）之间增加一个二进制分帧层。</p><p><img src="/images/http2_1_1.png" alt></p><p>在二进制分帧层中， HTTP/2会将所有传输的信息分割为更小的消息和帧（frame）,并对它们采用二进制格式的编码 ，其中HTTP1.x的首部信息会被封装到HEADER frame，而相应的Request Body则封装到DATA frame里面。</p><p>HTTP/2通信都在一个连接上完成，这个连接可以承载任意数量的双向数据流。</p><p>在过去， HTTP性能优化的关键并不在于高带宽，而是低延迟。TCP连接会随着时间进行自我「调谐」，起初会限制连接的最大速度，如果数据成功传输，会随着时间的推移提高传输的速度。这种调谐则被称为TCP慢启动。由于这种原因，让原本就具有突发性和短时性的HTTP连接变的十分低效。HTTP/2通过让所有数据流共用同一个连接，可以更有效地使用TCP连接，让高带宽也能真正的服务于HTTP的性能提升。</p><p>总结，单连接多资源的方式，减少服务端的链接压力，内存占用更少，连接吞吐量更大；由于TCP连接的减少而使网络拥塞状况得以改善，同时慢启动时间的减少，使拥塞和丢包恢复速度更快。</p><p><img src="/images/http2_1_2.png" alt></p><p><img src="/images/http2_1_3.png" alt></p><p>备注：Stream Identifier编号，表示了不同的HTTP请求/响应交互。</p><p>帧的种类有如下几种：</p><p><img src="/images/http2_1_4.png" alt></p><h1 id="多路复用"><a href="#多路复用" class="headerlink" title="多路复用"></a>多路复用</h1><p>多路复用，代替原来的序列和阻塞机制。所有的请求都是通过一个TCP连接并发完成。 HTTP 1.x中，如果想并发多个请求，必须使用多个TCP链接，且浏览器为了控制资源，还会对单个域名有6-8个的TCP链接请求限制。比如Chrome有个机制，对于同一个域名，默认允许同时建立6个TCP持久连接。使用持久连接时，虽然能共用一个TCP管道，但是在一个管道中同一时刻只能处理一个请求，在当前的请求没有结束之前，其他的请求只能处于阻塞状态，如果在同一个域名下同时有10个请求发生，那么其中4个请求会进入排队等待状态，直至进行中的请求完成。</p><p>HTTP/2可以很容易的去实现多流并行而不用依赖建立多个TCP连接。如下图，红色圈出来的请求就因域名链接数已超过限制，而被挂起等待了一段时间：</p><p><img src="/images/http2_1_5.png" alt></p><p><img src="/images/http2_1_6.png" alt></p><p><img src="/images/http2_1_7.png" alt></p><h1 id="服务端推送"><a href="#服务端推送" class="headerlink" title="服务端推送"></a>服务端推送</h1><p>服务端可以在发送页面HTML时主动推送其它资源，而不用等到浏览器解析到相应位置，发起请求再响应。例如客户端向服务端请求index.html页面，html页面中嵌有JS和CSS文件，服务端可以主动把JS和CSS文件推送给客户端，而不需要客户端解析HTML时再发送这些请求。</p><p>服务端可以主动推送，客户端也有权利选择是否接收。如果服务端推送的资源已经被浏览器缓存过，浏览器可以通过发送RST_STREAM帧来拒收。主动推送也遵守同源策略，服务器不会随便推送第三方资源给客户端。</p><p><img src="/images/http2_1_8.png" alt></p><h1 id="首部压缩"><a href="#首部压缩" class="headerlink" title="首部压缩"></a>首部压缩</h1><p>HTTP/1.1请求的大小变得越来越大，有时甚至会大于TCP窗口的初始大小，因为它们需要等待带着ACK的响应回来以后才能继续被发送。HTTP/2对消息头采用HPACK（专为HTTP/2头部设计的压缩格式）进行压缩传输，能够节省消息头占用的网络的流量。而HTTP/1.x每次请求，都会携带大量冗余头信息，浪费了很多带宽资源。</p><h1 id="HTTP-2开启方法"><a href="#HTTP-2开启方法" class="headerlink" title="HTTP/2开启方法"></a>HTTP/2开启方法</h1><p>（1）服务端开启HTTP/2</p><p>在Nginx的配置文件nginx.conf增加如下内容：</p><pre><code>listen [::]:443 ssl http2 ipv6only=on; listen 443 ssl http2;</code></pre><p>（2）客户端开启HTTP/2</p><p>主流浏览器都支持了HTTP/2啦。是否开启HTTP/2，还需要浏览器和服务端进行协商才可以啦。</p><p>学习资料参考于：<br><a href="https://www.infoq.cn/article/kU4OkqR8vH123a8dLCCJ" target="_blank" rel="noopener">https://www.infoq.cn/article/kU4OkqR8vH123a8dLCCJ</a><br><a href="https://blog.fundebug.com/2019/03/07/understand-http2-and-http3/" target="_blank" rel="noopener">https://blog.fundebug.com/2019/03/07/understand-http2-and-http3/</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> HTTP </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>低版本浏览器对HTTPS支持问题</title>
+      <link href="/2022/02/27/%E4%BD%8E%E7%89%88%E6%9C%AC%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AF%B9HTTPS%E6%94%AF%E6%8C%81%E9%97%AE%E9%A2%98/"/>
+      <url>/2022/02/27/%E4%BD%8E%E7%89%88%E6%9C%AC%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AF%B9HTTPS%E6%94%AF%E6%8C%81%E9%97%AE%E9%A2%98/</url>
+      
+        <content type="html"><![CDATA[<p>各个浏览器对HTTPS相关的支持情况，可以在<a href="https://www.ssllabs.com/ssltest/clients.html" target="_blank" rel="noopener">《Qualys ssltest页面》</a>查看，也可以通过<a href="https://www.ssllabs.com/ssltest/viewClient.html?name=IE&amp;version=6&amp;platform=XP&amp;key=18" target="_blank" rel="noopener">《Qualys兼容性页面》</a>查看某个浏览器对HTTPS支持的非常详细的一些属性。</p><p>老旧浏览器不兼容HTTPS主要体现在如下几个方面：</p><p>（1）只支持SLv2/SSLv3协议</p><p>IE 6只支持SSLv2和SSLv3，也就是说HTTPS网站要支持IE 6，就必须启用SSLv3。</p><p>（2）加密套件不匹配</p><p>有些浏览器仅仅支持有限的CipherSuite，而这些有限的加密套件由于安全问题或其他原因在有些网站的服务器中并不支持，导致在TLS握手中，因为没有协商出客户端和服务端都能支持的加密套件而导致握手失败。</p><p>（3）不支持SNI</p><p>现在还有一定用户量的Windows XP IE6-8、Android 2.x Webview都不支持SNI。如果要避免在这些浏览器中出现证书错误，只能将使用不同证书的HTTPS站点部署在不同IP上，最简单的做法是分开部署到不同机器上。</p><p>（4）证书不支持</p><p>简单来说，就是客户端拿到证书后，由于不支持高版本的哈希函数，导致无法进行证书签名验证，从而直接失败。HTTPS网站需要通过CA取得合法证书，证书通过数字签名技术确保第三方无法伪造。证书的简单原理如下：</p><p>A）根据版本号、序列号、签名算法标识、发行者名称、有效期、证书主体名、证书主体公钥信息、发行商唯一标识、主体唯一标识、扩展生成 TBSCertificate（待签名证书To Be Signed Certificate）信息；</p><p>B）签发数字签名：使用 HASH 函数对 TBSCertificate 计算得到消息摘要，用 CA 的私钥对消息摘要进行加密，得到签名；</p><p>C）校验数字签名：使用相同的 HASH 函数对 TBSCertificate 计算得到消息摘要，与使用 CA 公钥解密签名得到内容相比较；</p><p>使用SHA-1做为HASH函数的证书被称之为SHA-1证书，由于目前已经找到SHA-1的碰撞条件，将证书换成使用更安全的SHA-2做为HASH函数的SHA-2证书被提上日程。</p><p>实际上，微软已经宣称自2017年1月1日起，将全面停止对SHA-1证书的支持。届时在最新版本的Windows系统中，SHA-1证书将不被信任。而根据Chrome官方博客的文章，使用SHA-1证书且证书有效期在2016年1月1号至2016年12月31号之间的站点会被给予「安全的，但存在漏洞」的提示，也就是地址栏的小锁不再是绿色的，并且会有一个黄色小三角。而使用SHA-1证书且证书有效期超过2017年1月1号的站点会被给予「不安全」的红色警告，小锁上直接显示一个红色的叉。</p><p>然而，并不是所有的终端都支持SHA-2证书，服务端不支持还好办，浏览器只能依赖于用户升级了。下面是常见浏览器支持SHA-2证书的最低版本：</p><p><img src="/images/https_compatibility_1_1.png" alt></p><p>可以看到，如果要照顾没有打XP SP3补丁的IE6用户，只能继续使用SHA-1证书。</p><p>另外有些浏览器对ECC这种新型的证书支持度更差，也会导致失败哦。</p><p>学习资料参考于：<br><a href="https://linux.cn/article-6900-1.html" target="_blank" rel="noopener">https://linux.cn/article-6900-1.html</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> HTTPS </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>椭圆曲线密码学ECC简介</title>
       <link href="/2022/02/27/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%AF%86%E7%A0%81%E5%AD%A6ECC%E7%AE%80%E4%BB%8B/"/>
       <url>/2022/02/27/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%AF%86%E7%A0%81%E5%AD%A6ECC%E7%AE%80%E4%BB%8B/</url>
