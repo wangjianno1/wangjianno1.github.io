@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.2" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/my-favicon-32x32.ico?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/my-favicon-16x16.ico?v=6.0.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.0.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="Hexo, NexT">
+
+
+<meta name="description" content="SSL中会话Session简介SSL中的Session会跟HTTP的Session类似，都是用来保存客户端和服务端之间交互的一些记录。在SSL协议中一次TLS握手（密钥协商）的结果是建立了一条对称加密的数据通道，这条对称加密的数据通道的相关参数都是可以保存的，我们把这个信息称为TLS中Session信息，使用这个Session信息就可以直接复原对称加密的通信通道，从而省去了密钥协商的过程。 不管是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TLS1.2中会话恢复机制中SessionID和SessionTicket">
+<meta property="og:url" content="http://wangjianno1.github.io/2022/02/26/TLS1-2中会话恢复机制中SessionID和SessionTicket/index.html">
+<meta property="og:site_name" content="老坛の菜园子">
+<meta property="og:description" content="SSL中会话Session简介SSL中的Session会跟HTTP的Session类似，都是用来保存客户端和服务端之间交互的一些记录。在SSL协议中一次TLS握手（密钥协商）的结果是建立了一条对称加密的数据通道，这条对称加密的数据通道的相关参数都是可以保存的，我们把这个信息称为TLS中Session信息，使用这个Session信息就可以直接复原对称加密的通信通道，从而省去了密钥协商的过程。 不管是">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://wangjianno1.github.io/images/https_session_1_1.png">
+<meta property="og:image" content="http://wangjianno1.github.io/images/https_session_1_2.png">
+<meta property="og:updated_time" content="2022-02-26T10:07:40.060Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TLS1.2中会话恢复机制中SessionID和SessionTicket">
+<meta name="twitter:description" content="SSL中会话Session简介SSL中的Session会跟HTTP的Session类似，都是用来保存客户端和服务端之间交互的一些记录。在SSL协议中一次TLS握手（密钥协商）的结果是建立了一条对称加密的数据通道，这条对称加密的数据通道的相关参数都是可以保存的，我们把这个信息称为TLS中Session信息，使用这个Session信息就可以直接复原对称加密的通信通道，从而省去了密钥协商的过程。 不管是">
+<meta name="twitter:image" content="http://wangjianno1.github.io/images/https_session_1_1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://wangjianno1.github.io/2022/02/26/TLS1-2中会话恢复机制中SessionID和SessionTicket/">
+
+
+  <title>TLS1.2中会话恢复机制中SessionID和SessionTicket | 老坛の菜园子</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?8ff0b3da8786fc33df71f8ced9eebd5a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">老坛の菜园子</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">好记性不如乱笔头</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">40</span>
+              </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">29</span>
+              </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">321</span>
+              </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wangjianno1.github.io/2022/02/26/TLS1-2中会话恢复机制中SessionID和SessionTicket/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="锄禾小生">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="老坛の菜园子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">TLS1.2中会话恢复机制中SessionID和SessionTicket</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-02-26T17:55:12+08:00">2022-02-26</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/HTTPS/" itemprop="url" rel="index"><span itemprop="name">HTTPS</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="SSL中会话Session简介"><a href="#SSL中会话Session简介" class="headerlink" title="SSL中会话Session简介"></a>SSL中会话Session简介</h1><p>SSL中的Session会跟HTTP的Session类似，都是用来保存客户端和服务端之间交互的一些记录。在SSL协议中一次TLS握手（密钥协商）的结果是建立了一条对称加密的数据通道，这条对称加密的数据通道的相关参数都是可以保存的，我们把这个信息称为TLS中Session信息，使用这个Session信息就可以直接复原对称加密的通信通道，从而省去了密钥协商的过程。</p>
+<p>不管是SessionCache，SessionTicket，还是TLS1.3中的PSK，都是为了解决对称加密通道的快速恢复问题。</p>
+<p>SessionID是RFC5246引入，SessionTicket是RFC5077引入。</p>
+<h1 id="SessionID-SessionCache"><a href="#SessionID-SessionCache" class="headerlink" title="SessionID/SessionCache"></a>SessionID/SessionCache</h1><p>当SSL的Session保存在服务端时，服务端OpenSSL会给每个Session分配一个SessionID，并将这个SessionID发送给客户端。当客户端再次请求（Client Hello）到达的时候，客户端携带SessionID，服务端就可以根据这个SessionID找到该客户端上次和服务端SSL加密通信的上下文信息，从而直接复原对称加密信道了，而不用再进行SSL握手密钥协商了。</p>
+<p>需要注意的是，该种方式下，服务端需要为每个客户端都维护一个Session，服务端有一个专门维护Session信息的OpenSSL组件，即OpenSSL SessionCache，服务端去管理这些Session信息，会消耗大量的服务器内存资源。</p>
+<p>备注：SessionID机制在服务端这边就涉及到各服务器或各集群要实现Session共享。若不支持客户端和服务端的SSL回话恢复的成功率就低了，因为当下一次请求解析到另外的服务端IP时，服务端是没有Session信息的。</p>
+<h1 id="SessionTicket"><a href="#SessionTicket" class="headerlink" title="SessionTicket"></a>SessionTicket</h1><p>从上面看到，Session Cache的一些问题，即SessionCache需要消耗大量的服务器存储资源。对称加密的上下文并不是一个非常轻量级的内容，当数目很大的时候，内存资源的消耗就会很可观，另外由服务器管理这个上下文也带来了极大的管理成本。另外一个思路就是将这件事情交给客户端。因为客户端和服务端对已经建立的加密信道拥有相同的知识，所以客户端完全可以做到存储这个上下文，但是这也不能使得服务端完全的从这个事物中解脱，因为服务端如果伪造一个上下文，就失去了认证的作用了。所以客户端存储的对称加密的上下文是要用服务器的私有密钥（Session Ticket Encryption Key，简写为STEK）加密过的，也就是经过服务器传输给客户端的。这样服务器在收到一个SessionTicket的时候，自己能够正常的解密就能证明确实是自己颁发的，从而杜绝了伪造。</p>
+<p>也就是说，服务端发送给客户端的SessionTicket，只有服务端自己能解密，当客户端发送给服务端后，服务端用密钥解密，即可以恢复与该客户端的加密数据通道，即对称加密通道，而不再需要SSL握手密钥协商了。</p>
+<p>SessionTicket相对于SessionID/SessionCache机制，它的最大优势是给服务端减轻压力，把一部分计算放在了客户端。因为服务端会解密SessionTicket，从而复原出对称加密的上下文，所以对于服务端来说这个开销也是很小。由于其天然的不需要在服务端存储内容，所以服务端当要组成集群的时候，只需要定期换一下SessionTicket用来加密的key即可。不像SessionCache那样需要自己做一个分布式的缓存。</p>
+<p>客户端保存的SessionTicket是由服务端通过SSL握手协议中的NewSessionTicket报文传送给客户端的。</p>
+<p>TLS1.2中的NewSessionTicket报文格式如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> &#123;</span> </span><br><span class="line">    uint32 ticket_lifetime_hint; </span><br><span class="line">    opaque ticket&lt;<span class="number">0.</span><span class="number">.2</span>^<span class="number">16</span><span class="number">-1</span>&gt;; </span><br><span class="line">&#125; NewSessionTicket;</span><br></pre></td></tr></table></figure>
+<p>其中一个字段是ticket_lifetime_hint，其单位是秒，用来告知客户端这个sessionticket的生命周期（老化时间），sessionticket就是主要包含了主秘钥等其他信息（客户端认证的话可能还包含客户端的证书）。</p>
+<p>LS1.3中的NewSessionTicket报文格式如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    uint32 ticket_lifetime;</span><br><span class="line">    uint32 ticket_age_add;</span><br><span class="line">    opaque ticket_nonce&lt;<span class="number">0.</span><span class="number">.255</span>&gt;;</span><br><span class="line">    opaque ticket&lt;<span class="number">1.</span><span class="number">.2</span>^<span class="number">16</span><span class="number">-1</span>&gt;;</span><br><span class="line">    Extension extensions&lt;<span class="number">0.</span><span class="number">.2</span>^<span class="number">16</span><span class="number">-2</span>&gt;;</span><br><span class="line">&#125; NewSessionTicket;</span><br></pre></td></tr></table></figure>
+<p>其中ticket_lifetime和TLS 1.2中的ticket_lifetime_hint含义一样，用以告知客户端ticket的老化时间。</p>
+<h1 id="SessionID与SessionTicket对比"><a href="#SessionID与SessionTicket对比" class="headerlink" title="SessionID与SessionTicket对比"></a>SessionID与SessionTicket对比</h1><p>SessionID机制有一些弊端，负载均衡中，服务端多个主机IP之间往往没有同步Session信息，如果客户端两次请求没有落在同一台机器上就无法找到匹配的Session信息。然后服务端存储SessionID对应的信息不好控制失效时间，太短起不到作用，太长又占用服务端大量资源。</p>
+<p>而SessionTicket可以解决这些问题，SessionTicket是用只有服务端知道的安全密钥加密过的会话信息，最终保存在浏览器端。浏览器如果在ClientHello时带上了SessionTicket，只要服务器能成功解密就可以完成快速握手，即服务端很容易在多个主机IP间共享Session信息。</p>
+<p>Github上有一个名为<a href="https://github.com/vincentbernat/rfc5077" target="_blank" rel="noopener">《rfc5077》</a>的项目，非常适合用来测试服务端对SessionID和SessionTicket这两种TLS会话复用机制的支持情况。编译完成后，当前目录会出现多个可执行文件。这里我们只会用到rfc5077-client，它的用法举例如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./rfc5077-client -s imququ.com 114.215.116.12 139.162.98.188</span><br></pre></td></tr></table></figure>
+<p><img src="/images/https_session_1_1.png" alt></p>
+<p>从以上结果可以看出，禁用SessionTicket时，每次连接到不同IP都会导致Session无法复用；而启用SessionTicket后，不同IP之间也可以复用Session。符合前面的结论。值得注意的是，为了让一台服务器生成的SessionTicket能被另外服务器承认，往往需要对WebServer进行额外配置。例如在Nginx中，就需要通过ssl_session_ticket_key参数让多台机器使用相同的key文件（其实这里的可以就是服务端加密和解密SessionTicket的密钥），否则Nginx会使用随机生成的key文件，无法复用SessionTicket。出于安全考虑，key文件应该定期更换，并且确保换下来的key文件被彻底销毁。</p>
+<p>需要注意的是，SessionTicket在服务端的多个主机IP间都能复用，也是需要服务端去做配置支持的哦。</p>
+<h1 id="SessionID和SessionTicket的生成"><a href="#SessionID和SessionTicket的生成" class="headerlink" title="SessionID和SessionTicket的生成"></a>SessionID和SessionTicket的生成</h1><p>SessionID是服务端生成，通过ServerHello报文中的SessionID字段将信息传递给客户端。SessionTicket是服务端生成，当客户端和服务端完成完整的SSL握手过程后，服务端会发送一个NewSessionTicket的报文给客户端，也即是SessionTicket啦。</p>
+<h1 id="Nginx中SessionID和SessionTicket的配置"><a href="#Nginx中SessionID和SessionTicket的配置" class="headerlink" title="Nginx中SessionID和SessionTicket的配置"></a>Nginx中SessionID和SessionTicket的配置</h1><p>（1）Nginx SessionCache的配置</p>
+<p>SessionCache在Apache中可以通过SSLSessionCache来配置，在Nginx中可以通过ssl_session_cache来进行设置。举例来说：</p>
+<pre><code>ssl_session_cache shared:SSL:50m;
+ssl_session_timeout 1d;
+</code></pre><p>上述配置表示共享缓存，缓存大小为50MB，会话的缓存时间1天，超过1天就过期失效了。</p>
+<p>ssl_session_cache设置储存SSL会话的缓存类型和大小。默认值为ssl_session_cache off，off为关闭，还有一些其它的缓存类型，不过这里建议使用shared共享缓存类型，这种方法更为有效。</p>
+<p>ssl_session_timeout客户端能够反复使用储存在缓存中的会话参数时间。</p>
+<p>（2）Nginx SessionTicket的配置</p>
+<p>SessionTicket在Apache中可以通过SSLTicketKeyDefault来配置，在Nginx中可以通过ssl_session_tickets来进行设置。举例来说：</p>
+<pre><code>ssl_session_tickets on;
+ssl_session_ticket_key current.key;
+ssl_session_ticket_key previous.key;
+</code></pre><p>Nginx中使用ssl_session_ticket_key file来配置用于加密和解密SSL SessionTicket的密钥，如果用了多个指令文件，则仅第一个指令文件中的密钥用来加密和解密；其它的密钥文件（下面的）用来解密，这样的原因是，我们最好定期轮换加解密的key，轮换的时候把旧的放在下面用来解密旧的SessionTicket，第一个放新的，用来加解密新的请求。如果没有配置key文件，则openssl默认会在ssl初始化的时候生成随机数的key；这种时候只有在重启web server的时候才会重新生成随机key。</p>
+<h1 id="TLS1-3中PSK"><a href="#TLS1-3中PSK" class="headerlink" title="TLS1.3中PSK"></a>TLS1.3中PSK</h1><p>在TLS1.3中，SessionCache和SessionTicket都被完全的取消，取而代之的是PSK（Pre Shared Key）。这个PSK并不是说每个客户端都要和服务端提前共享一个密钥，而是与握手相同的首先使用非对称加密方法直接提前协商一个密钥出来（psk_dhe_ke ），或者直接从之前协商出来的密钥参数中得出一个密钥（psk_ke）。</p>
+<h1 id="国内外主流CDN厂商对SessionID和SessionTicket的支持情况"><a href="#国内外主流CDN厂商对SessionID和SessionTicket的支持情况" class="headerlink" title="国内外主流CDN厂商对SessionID和SessionTicket的支持情况"></a>国内外主流CDN厂商对SessionID和SessionTicket的支持情况</h1><p><img src="/images/https_session_1_2.png" alt></p>
+<p>学习资料参考于：<br><a href="https://zhuanlan.zhihu.com/p/37826359" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/37826359</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/02/26/TLS1-2握手交互过程分析/" rel="next" title="TLS1.2握手交互过程分析">
+                <i class="fa fa-chevron-left"></i> TLS1.2握手交互过程分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar1.jpg" alt="锄禾小生">
+            
+              <p class="site-author-name" itemprop="name">锄禾小生</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">321</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">39</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">29</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/wangjianno1" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangjiannovip@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/wangjianno1" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/wangjianno1" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SSL中会话Session简介"><span class="nav-number">1.</span> <span class="nav-text">SSL中会话Session简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SessionID-SessionCache"><span class="nav-number">2.</span> <span class="nav-text">SessionID/SessionCache</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SessionTicket"><span class="nav-number">3.</span> <span class="nav-text">SessionTicket</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SessionID与SessionTicket对比"><span class="nav-number">4.</span> <span class="nav-text">SessionID与SessionTicket对比</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SessionID和SessionTicket的生成"><span class="nav-number">5.</span> <span class="nav-text">SessionID和SessionTicket的生成</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Nginx中SessionID和SessionTicket的配置"><span class="nav-number">6.</span> <span class="nav-text">Nginx中SessionID和SessionTicket的配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TLS1-3中PSK"><span class="nav-number">7.</span> <span class="nav-text">TLS1.3中PSK</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#国内外主流CDN厂商对SessionID和SessionTicket的支持情况"><span class="nav-number">8.</span> <span class="nav-text">国内外主流CDN厂商对SessionID和SessionTicket的支持情况</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">锄禾小生</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">Hosted by <a target="_blank" rel="external nofollow" href="https://wangjianno1.github.io">老坛の菜园子<b></b></a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.2"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
