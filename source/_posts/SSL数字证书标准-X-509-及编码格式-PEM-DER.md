@@ -2,7 +2,7 @@
 title: SSL数字证书标准(X.509)及编码格式(PEM|DER)
 date: 2018-02-03 18:52:53
 tags:
-categories: Security
+categories: HTTPS
 ---
 
 # SSL数字证书标准X.509
