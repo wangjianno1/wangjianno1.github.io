@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>常用的密钥协商Key Agreement算法介绍</title>
+      <link href="/2022/02/27/%E5%B8%B8%E7%94%A8%E7%9A%84%E5%AF%86%E9%92%A5%E5%8D%8F%E5%95%86Key-Agreement%E7%AE%97%E6%B3%95%E4%BB%8B%E7%BB%8D/"/>
+      <url>/2022/02/27/%E5%B8%B8%E7%94%A8%E7%9A%84%E5%AF%86%E9%92%A5%E5%8D%8F%E5%95%86Key-Agreement%E7%AE%97%E6%B3%95%E4%BB%8B%E7%BB%8D/</url>
+      
+        <content type="html"><![CDATA[<h1 id="密钥协商算法简介"><a href="#密钥协商算法简介" class="headerlink" title="密钥协商算法简介"></a>密钥协商算法简介</h1><p>密钥协商算法主要有三类：</p><p>（1）依靠非对称加密算法</p><p>（2）依靠专门的密钥交换算法</p><p>（3）依靠通讯双方事先已经共享的秘密（如PSK）等</p><h1 id="DH，Diffie-Hellman算法"><a href="#DH，Diffie-Hellman算法" class="headerlink" title="DH，Diffie-Hellman算法"></a>DH，Diffie-Hellman算法</h1><p>Diffie-Hellman密钥交换（Diffie-Hellman key exchange）是1976年由Whitfield Diffie和Martin Hellman共同发明的一种算法。使用这种算法，通信双方仅通过交换一些可以公开的信息就能生成出共享的对称密码的密钥。虽然这种算法叫“密钥交换”，但是实际上并没有真正的交换密钥，而是通过计算生成出了一个相同的共享密钥。准确的来说，应该叫Diffie-Hellman密钥协商（Diffie-Hellman key agreement）。</p><p>DH协商算法的过程如下：</p><p><img src="/images/https_negotiate_1_1.png" alt></p><p>（1）Alice向Bob发送两个质数P和G</p><p>P是一个非常大的质数，G是一个较小的数字，称为生成元。P和G可以公开，P和G的生成也可以由任何一方生成。</p><p>（2）Alice生成一个随机数A</p><p>A是<code>1~(P-2)</code>之间的整数，这个数只有Alice知道。</p><p>（3）Bob生成一个随机数B</p><p>B是<code>1~(P-2)</code>之间的整数，这个数只有Bob知道。</p><p>（4）Alice把(G^A mod P)的结果发送给Bob</p><p>这个数被窃听了也没有关系。</p><p>（5）Bob把(G^B mod P)的结果发送给Alice</p><p>这个数被窃听了也没有关系。</p><p>（6）Alice用Bob发过来的数计算A次方并求mod P</p><p>这个数就是最终的共享密钥，如下：</p><pre><code>(G^B mod P)^A mod P = G^(B*A) mod P = G^(A*B) mod P</code></pre><p>（7）Bob用Alice发过来的数计算B次方并求mod P</p><p>这个数就是最终的共享密钥，如下：</p><pre><code>(G^A mod P)^B mod P = G^(A*B) mod P</code></pre><p>至此，A和B计算出来的密钥是一致的。</p><p>窃听者能获取到的信息有P、G、G^A mod P、G^B mod P。通过这4个值想计算出<code>G^(A*B) mod P</code>是非常困难的。</p><p>如果能知道A和B任意一个数，就可以破解上面所有步骤，并算出最后的共享密钥。但是窃听者只能获取到G^A mod P、G^B mod P，这里的mod P是关键，如果是知道G^A也可以算出A，但是这里是推算不出A和B的，因为这是有限域(finite field)上的离散对数问题。</p><p>使用DH算法，即使协商过程中被别人全程偷窥（比如“网络嗅探”），偷窥者也【无法】知道协商得出的密钥是啥。但是DH算法本身也有缺点，即不支持数字认证。也就是无法对抗中间人攻击MITM，因为缺乏身份认证，必定会遭到中间人攻击。为了避免遭遇MITM攻击，DH需要与其它签名算法（比如RSA、DSA、ECDSA）配合，靠签名算法帮忙来进行身份认证。当DH与RSA配合使用，称之为DH-RSA，与DSA配合则称为DH-DSA，以此类推。反之，如果DH没有配合某种签名算法，则称为DH-ANON（ANON是洋文“匿名”的简写），此时会遭遇中间人攻击/MITM。</p><h1 id="使用RSA作为密钥协商算法"><a href="#使用RSA作为密钥协商算法" class="headerlink" title="使用RSA作为密钥协商算法"></a>使用RSA作为密钥协商算法</h1><p><img src="/images/https_negotiate_1_2.png" alt></p><p>RSA算法流程文字描述如下：</p><p>（1）任意客户端对服务器发起请求，服务器首先发回复自己的公钥到客户端（公钥明文传输）。</p><p>（2）客户端使用随机数算法，生成一个密钥S，使用收到的公钥进行加密，生成C，把C发送到服务器。</p><p>（3）服务器收到C，使用公钥对应的私钥进行解密，得到S。</p><p>（4）上述交换步骤后，客户端和服务器都得到了S，S为密钥（预主密钥）。</p><h1 id="使用DHE密钥协商算法"><a href="#使用DHE密钥协商算法" class="headerlink" title="使用DHE密钥协商算法"></a>使用DHE密钥协商算法</h1><p>DHE是DH的扩展。</p><p><img src="/images/https_negotiate_1_3.png" alt></p><p>DHE算法流程文字描述如下：</p><p>（1）客户端计算一个随机值Xa，使用Xa作为指数，即计算<code>Pa = q^Xa mod p</code>，其中q和p是全世界公认的一对值。客户端把Pa发送至服务器，Xa作为自己私钥，仅且自己知道。</p><p>（2）服务器和客户端计算流程一样，生成一个随机值Xb，使用Xb作为指数，计算<code>Pb = q^Xb mod p</code>，将结果Pb发送至客户端，Xb仅自己保存。</p><p>（3）客户端收到Pb后计算<code>Sa = Pb ^Xa mod p</code>；服务器收到Pa后计算<code>Sb = Pa^Xb mod p</code></p><p>（4）算法保证了Sa = Sb = S，故密钥交换成功，S为密钥（预主密钥）</p><h1 id="使用ECDHE密钥协商算法"><a href="#使用ECDHE密钥协商算法" class="headerlink" title="使用ECDHE密钥协商算法"></a>使用ECDHE密钥协商算法</h1><p>ECDHE是基于椭圆曲线EC的DHE密钥协商算法。</p><p><img src="/images/https_negotiate_1_4.png" alt></p><p>ECDHE算法流程文字描述如下：</p><p>（1）客户端随机生成随机值Ra，计算<code>Pa(x, y) = Ra * Q(x, y)</code>，Q(x, y)为全世界公认的某个椭圆曲线算法的基点。将Pa(x, y)发送至服务器（其中Pa(x, y)相当于客户端的公钥）</p><p>备注：根据椭圆曲线，由xG和G不能推算出x，也就有Pa(x,y)和Q(x,y)无法推算出来随机数Ra。</p><p>（2）服务器随机生成随机值Rb，计算<code>Pb(x,y) = Rb * Q(x, y)</code>。将Pb(x, y)发送至客户端（其中Pb(x, y)相当于客户端的公钥）</p><p>（3）客户端计算<code>Sa(x, y) = Ra * Pb(x, y)</code>；服务器计算<code>Sb(x, y) = Rb * Pa(x, y)</code></p><p>（4）算法保证了Sa = Sb = S，提取其中的S的x向量作为密钥（预主密钥）</p><p>备注：根据椭圆曲线性质可知，获取到Pb(x,y)和Pa(x,y)，是无法计算出对应的随机数Ra或Rb的。随意窃听者拿到公开的信息后，是根本无法计算出对称加密阶段的密钥的，所以很安全。</p><p>学习资料参考于：<br><a href="https://halfrost.com/cipherkey/" target="_blank" rel="noopener">https://halfrost.com/cipherkey/</a><br><a href="https://blog.csdn.net/mrpre/article/details/78025940" target="_blank" rel="noopener">https://blog.csdn.net/mrpre/article/details/78025940</a><br><a href="https://program-think.blogspot.com/2016/09/https-ssl-tls-3.html" target="_blank" rel="noopener">https://program-think.blogspot.com/2016/09/https-ssl-tls-3.html</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> HTTPS </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>加密套件Cipher Suites</title>
       <link href="/2022/02/26/%E5%8A%A0%E5%AF%86%E5%A5%97%E4%BB%B6Cipher-Suites/"/>
       <url>/2022/02/26/%E5%8A%A0%E5%AF%86%E5%A5%97%E4%BB%B6Cipher-Suites/</url>
