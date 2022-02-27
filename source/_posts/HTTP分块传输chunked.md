@@ -45,7 +45,7 @@ Nginx关闭chunked模式配置如下：
 
     chunked_transfer_encoding off;
 
-# 关于分开传输的一些闲杂知识
+# 关于分块传输的一些闲杂知识
 
 （1）服务端选择使用chunked传输，那么服务端是无法知道消息体的长度的，也就是不确定Content-Length的大小。因此使用chunked传输时，HTTP响应Header中是没有Content-Length的。若端上依赖Content-Length则会有一些问题。
 
