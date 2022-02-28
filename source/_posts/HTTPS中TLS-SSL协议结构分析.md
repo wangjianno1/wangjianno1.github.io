@@ -63,11 +63,13 @@ struct {
 } TLSPlaintext;
 ```
 
+opaque fragment应该指的就是change_cipher_spec，handshake，application_data以及alert等这些子协议的内容了。
+
 # TLS密码切换协议
 
 change_cipher_spec（以下简称CCS协议） 协议，是TLS记录层对应用数据是否进行加密的分界线。客户端或者服务端一旦收到对端发来的CCS协议，就表明接下来传输数据过程中可以对应用数据协议进行加密了。
 
-经过TLS记录层包装以后（也就是说下面的结构是TLS记录层的完整结构，下面的Message Header头也是TLS记录层的协议头。然后后面的其他子协议都是一样的哦），结构如下:
+经过TLS记录层包装以后（**也就是说下面的结构是TLS记录层的完整结构，下面的Message Header头也是TLS记录层的协议头。然后后面的其他子协议都是一样的哦**），结构如下:
 
 ![](/images/https_protocol_1_4.png)
 
