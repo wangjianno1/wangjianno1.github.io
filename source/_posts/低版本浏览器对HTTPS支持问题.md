@@ -9,7 +9,7 @@ categories: HTTPS
 
 老旧浏览器不兼容HTTPS主要体现在如下几个方面：
 
-（1）只支持SLv2/SSLv3协议
+（1）只支持SSLv2/SSLv3协议
 
 IE 6只支持SSLv2和SSLv3，也就是说HTTPS网站要支持IE 6，就必须启用SSLv3。
 

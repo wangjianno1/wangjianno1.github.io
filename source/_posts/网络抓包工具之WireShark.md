@@ -73,7 +73,7 @@ tls.handshake.type eq 1 && tls.handshake.extensions_server_name contains ixigua.
 
 （1）TCP三次握手建立连接
 
-（2）HTTPS协商阶段，包括ClientHello，ServerHello以及Change Cipher Spec等。在该阶段中，看到的都是TLS协议层的报文。
+（2）HTTPS协商阶段，包括ClientHello，ServerHello以及Change Cipher Spec等。在该阶段中，看到的都是TLS协议层的报文，不过一些随机数是可以在报文中看到的。
 
 （3）HTTPS应用数据传输阶段，各种TLS的Application Data的报文。在该阶段中，HTTP报文已经被加密的了，看不到任何HTTP header和body的相关内容啦。
 

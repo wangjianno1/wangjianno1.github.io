@@ -23,7 +23,7 @@ HTTPS TLS1.2首次握手交互（2-RTT）过程文字描述如下：
 
 （1）客户端发送一个ClientHello的信息到服务端，这个包含信息主要包含了客户端所支持的加密套件（cipher_suites）、支持的TLS版本（client_version）、会话ID（session_id）等数据。
 
-（2）服务器在收到这个ClientHello后，会选择一个合适的加密套件cipher suites，然后返回一个ServerHello的信息，这当中包括了选中的加密套件。初此以外，还会发送证书以及密钥交换（ServerKeyExchange）。密钥交换的数据由选中的加密套件决定，比如使用ECDHE时，发送数据有椭圆曲线域参数、公钥的值（详情见 RFC 4492 section 5.4）。
+（2）服务器在收到这个ClientHello后，会选择一个合适的加密套件cipher suites，然后返回一个ServerHello的信息，这当中包括了选中的加密套件。除此以外，还会发送证书以及密钥交换（ServerKeyExchange）。密钥交换的数据由选中的加密套件决定，比如使用ECDHE时，发送数据有椭圆曲线域参数、公钥的值（详情见RFC 4492 section 5.4）。
 
 （3）客户端收到ServerHello后，会对收到的证书进行验证。如果验证通过，则继续进行密钥交换流程，将客户端生成的公钥和服务端的结合，计算出本次会话的密钥，然后把公钥发送给服务端，最后再发送一个Finished信息。
 
