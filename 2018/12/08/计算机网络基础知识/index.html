@@ -121,7 +121,7 @@
 <meta property="og:image" content="http://wangjianno1.github.io/images/network_protocol_1_2.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/network_osi_1_3.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/network_osi_1_4.png">
-<meta property="og:updated_time" content="2022-02-09T07:40:43.983Z">
+<meta property="og:updated_time" content="2022-02-28T07:26:15.579Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="计算机网络基础知识">
 <meta name="twitter:description" content="数据通信的三种交换方式 电路交换 报文交换 分组交换   计算机网络核心网络分层。 物理层的信道复用技术 频分复用，FDM（Frequency Division Multiplexing） 时分复用，TDM（Time Division Multiplexing） 统计时分复用 波分复用，WDM（Wavelength Division Multiplexing） 码分复用，CDM（Code Divi">
@@ -435,10 +435,10 @@
 <p><img src="/images/network_osi_1_2.png" alt></p>
 <h1 id="网络协议栈"><a href="#网络协议栈" class="headerlink" title="网络协议栈"></a>网络协议栈</h1><p><img src="/images/network_protocol_1_1.png" alt></p>
 <p><img src="/images/network_protocol_1_2.png" alt></p>
-<h1 id="基于TCP-IP网络封解包及数据传输过程"><a href="#基于TCP-IP网络封解包及数据传输过程" class="headerlink" title="基于TCP/IP网络封解包及数据传输过程"></a>基于TCP/IP网络封解包及数据传输过程</h1><h2 id="发送端主机侧"><a href="#发送端主机侧" class="headerlink" title="发送端主机侧"></a>发送端主机侧</h2><p>1.应用层封装HTTP报文。</p>
-<p>2.TCP层封装应用报文，生成TCP数据包，包括源端口，目标端口，TCP会根据MSS以及TCP发送窗口大小来决定每个TCP报文的payload大小，进而会分割应用层的报文。</p>
-<p>3.IP层封装TCP数据包，生成IP数据包，IP包中源IP地址，目标IP地址等信息。</p>
-<p>4.数据链路层封装IP数据包，生成MAC数据帧，帧中包括源MAC地址，目标MAC地址。需要注意的是，目标MAC地址在经过链路中的三层网络设备节点时，会被三层设备修改为下一跳IP对应的MAC地址。目标MAC地址的生成还是有一些复杂：</p>
+<h1 id="基于TCP-IP网络封解包及数据传输过程"><a href="#基于TCP-IP网络封解包及数据传输过程" class="headerlink" title="基于TCP/IP网络封解包及数据传输过程"></a>基于TCP/IP网络封解包及数据传输过程</h1><h2 id="发送端主机侧"><a href="#发送端主机侧" class="headerlink" title="发送端主机侧"></a>发送端主机侧</h2><p>（1）应用层封装HTTP报文。</p>
+<p>（2）TCP层封装应用报文，生成TCP数据包，包括源端口，目标端口，TCP会根据MSS以及TCP发送窗口大小来决定每个TCP报文的payload大小，进而会分割应用层的报文。</p>
+<p>（3）IP层封装TCP数据包，生成IP数据包，IP包中源IP地址，目标IP地址等信息。</p>
+<p>（4）数据链路层封装IP数据包，生成MAC数据帧，帧中包括源MAC地址，目标MAC地址。需要注意的是，目标MAC地址在经过链路中的三层网络设备节点时，会被三层设备修改为下一跳IP对应的MAC地址。目标MAC地址的生成还是有一些复杂：</p>
 <ul>
 <li>确定下一跳IP地址</li>
 </ul>
@@ -447,7 +447,7 @@
 <li>确定下一跳IP的MAC地址</li>
 </ul>
 <p>查询本机ARP缓存表（IP-MAC映射表）中，是否有下一条IP的MAC地址，有就直接使用。若本地ARP缓存中没有对应IP的MAC地址缓存记录，则发送ARP广播报文，询问广播域中指定IP地址的MAC地址是多少，然后该IP的拥有者会响应正确的MAC地址。获取到目标MAC地址后，就会设置到数据帧的目标MAC地址中。</p>
-<p>5.通过物理层，也就是双绞线或光纤，将二进制数据流发送到网络中。</p>
+<p>（5）通过物理层，也就是双绞线或光纤，将二进制数据流发送到网络中。</p>
 <h2 id="交换机侧"><a href="#交换机侧" class="headerlink" title="交换机侧"></a>交换机侧</h2><p>交换机拆解数据链路层MAC帧，解析出目标MAC地址。然后交换机根据MAC地址转发表，将数据帧通过指定的交换机端口转发出去。</p>
 <h2 id="路由器侧"><a href="#路由器侧" class="headerlink" title="路由器侧"></a>路由器侧</h2><p>路由器拆解IP层数据包，解析出源IP地址和目标IP地址，然后路由器查询本地路由表，查找下一跳IP地址，ARP缓存表中查找下一跳IP对应的MAC地址。然后就是路由器的封包过程，生成IP数据包，再封装MAC数据帧（要修改目标MAC地址），最后通过MAC地址转发表，将数据帧从指定的端口发送出去。</p>
 <h2 id="接收端主机侧"><a href="#接收端主机侧" class="headerlink" title="接收端主机侧"></a>接收端主机侧</h2><p>接收端从数据链路层到应用层，依次拆包。确定数据包是不是发送给自己的，如果是，则将应用层的数据交给应用程序处理即可。</p>
