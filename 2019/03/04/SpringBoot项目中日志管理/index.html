@@ -114,7 +114,7 @@
 <meta property="og:site_name" content="老坛の菜园子">
 <meta property="og:description" content="SpringBoot日志简介默认情况下，SpringBoot会用Logback来记录日志，并用INFO级别输出到控制台。但是默认配置也提供了对常用日志的支持，如Java Util Logging，Log4J，Log4J2和Logback。每种Logger都可以通过配置使用控制台或者文件输出日志内容。默认输出日志的格式如下： 2016-04-13 08:23:50.120 INFO 37397 --">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2022-02-09T07:40:43.958Z">
+<meta property="og:updated_time" content="2022-03-02T01:21:20.036Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringBoot项目中日志管理">
 <meta name="twitter:description" content="SpringBoot日志简介默认情况下，SpringBoot会用Logback来记录日志，并用INFO级别输出到控制台。但是默认配置也提供了对常用日志的支持，如Java Util Logging，Log4J，Log4J2和Logback。每种Logger都可以通过配置使用控制台或者文件输出日志内容。默认输出日志的格式如下： 2016-04-13 08:23:50.120 INFO 37397 --">
@@ -242,7 +242,7 @@
         
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">334</span>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">335</span>
               </a>
         </li>
       
@@ -429,7 +429,7 @@ B).在application.properties中配置debug=true，该属性置为true的时候�
 </code></pre><p>备注：上述配置的日志级别是针对SpringBoot框架自身的日志级别，开发者在代码中logger.xxx并不会依据该级别输出日志。</p>
 <p>（2）配置开发者自己代码输出的日志</p>
 <p>我们可以在controller、service以及repository层定义Logger，然后使用Logger输出不同级别的日志，代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Logger logger = LoggerFactory.getLogger(StudentController<span class="class">.<span class="keyword">class</span>)</span>; <span class="comment">//参数一定要是当前类的类对象，将会在日志中有体现</span></span><br><span class="line">logger.info(<span class="string">"info log print~~~"</span>);</span><br><span class="line">logger.debug(<span class="string">"debug log print~~~"</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Logger logger = LoggerFactory.getLogger(StudentController<span class="class">.<span class="keyword">class</span>)</span>; <span class="comment">//参数一定要是当前类的类对象，将会在日志中有体现</span></span><br><span class="line">logger.info(<span class="string">"info log print~~~"</span>);</span><br><span class="line">logger.debug(<span class="string">"debug log print~~~"</span>);</span><br></pre></td></tr></table></figure>
 <p>如需要在静态工具类中打印日志，可以使用<code>private final static Logger logger = LoggerFactory.getLogger(ResultUtil.class)</code>即可。</p>
 <p>在application.properties中做如下配置可以控制输出的日志级别：</p>
 <pre><code>logging.level.com.bat=WARN #格式为logging.level.*=LEVEL，其中*表示包名，表示对该包下的所有类的日志输出定义一个日志级别
@@ -582,7 +582,7 @@ logging.pattern.file=%d - %msg%n
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">334</span>
+                    <span class="site-state-item-count">335</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
