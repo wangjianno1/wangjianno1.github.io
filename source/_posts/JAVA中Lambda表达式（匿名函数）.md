@@ -53,7 +53,7 @@ x -> 2 * x
 # Lambda表达式实践
 
 ```java
-// Java 7中编写线程的代码
+// Java 7中编写线程的代码 -- 匿名内部类
 new Thread(new Runnable() {
     @Override
     public void run() {
@@ -62,7 +62,7 @@ new Thread(new Runnable() {
     }
 }).start();
 
-// Java 8中编写线程的代码
+// Java 8中编写线程的代码 -- 匿名函数，Lambda表达式
 new Thread(() -> {
     System.out.println("Hello");
     System.out.println("Jimmy");

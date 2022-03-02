@@ -50,6 +50,9 @@ SpringBoot应用的日志级别控制有如下几种配置：
 我们可以在controller、service以及repository层定义Logger，然后使用Logger输出不同级别的日志，代码如下：
 
 ```java
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 private final Logger logger = LoggerFactory.getLogger(StudentController.class); //参数一定要是当前类的类对象，将会在日志中有体现
 logger.info("info log print~~~");
 logger.debug("debug log print~~~");
