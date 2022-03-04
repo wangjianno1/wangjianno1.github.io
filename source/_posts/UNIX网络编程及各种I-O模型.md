@@ -110,7 +110,7 @@ UNIX下有5种I/O模型。
 
 前四种模型都会导致应用进程阻塞，我们称他们为“同步IO模型”，因为他们的真正I/O操作recvfrom会阻塞应用进程。只有第五种模型才是“异步IO模型”，因为自始至终都没有因为I/O操作导致应用进程被阻塞。
 
-# 一点理解
+# 一点概念理解
 
 同步，异步，阻塞以及非阻塞等概念相对难理解。
 
@@ -119,6 +119,55 @@ UNIX下有5种I/O模型。
 所谓阻塞/非阻塞是客户端一种调用发出后的一种状态。阻塞调用是指调用结果返回之前，调用者会被挂起，调用线程只有在得到结果之后才会返回。非阻塞调用指在不能立刻得到结果之前，该调用不会阻塞当前线程。
 
 以一个例子来说明，同步就是烧开水，要自己来看开没开；异步就是水开了，然后水壶响了通知你水开了。阻塞是烧开水的过程中，你不能干其他事情（即你被阻塞住了）；非阻塞是烧开水的过程里可以干其他事情。同步与异步说的是你获得水开了的方式不同。阻塞与非阻塞说的是你得到结果之前能不能干其他事情。两组概念描述的是不同的内容。
+
+# 网络编程的线程/进程模型
+
+## 传统的线程/进程模型
+
+```java
+// 传统模型1：单线程模式，无法并发，如果当前的请求没有处理完，那么后面的请求只能被阻塞，服务器的吞吐量太低。
+while(true){
+    socket = accept();
+    handle(socket);
+}
+
+// 传统模型2：多线程模式，connection per thread，每一个连接用一个线程处理。
+while(true){
+    socket = accept();
+    new Thread(socket);
+}
+
+// 传统模型3：线程池模式，减少了线程的反复创建和销毁，但本质上一个线程还是要完整的处理连接、读取、写入
+while(true){
+    socket = accept();
+    ExecutorService executorService = Executors.newCachedThreadPool();
+    executorService.execute(new Thread(socket));
+}
+```
+
+## Reactor模型
+
+基于I/O多路复用和线程池，就是所谓的"Reactor模型"的基本设计思想。
+
+以Java的NIO库来说，Java nio的select函数，可以同时监听多个套接字socket。每个socket都会关联连接event、读取event、回写event。然后把一个线程拆分成更小的粒度：建立连接的handler、读取数据的handler、回写数据的hander。handler处理完event就丢给下一个handler处理，自己又可以去服务socket，提高了复用率，提高了系统的吞吐量。
+
+Reactor模型由分为单Reactor单线程、单Reactor多线程和多Reactor多线程三种模型。
+
+（1）单Reactor单线程
+
+![](/images/unix_io_1_8.png)
+
+（2）单Reactor多线程
+
+![](/images/unix_io_1_9.png)
+
+（3）多Reactor多线程
+
+![](/images/unix_io_1_10.png)
+
+## Proactor模型
+
+基于异步IO模型。
 
 学习资料参考于：
 《UNIX网络编程卷1：套接字联网API》
