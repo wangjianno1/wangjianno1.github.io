@@ -116,7 +116,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://wangjianno1.github.io/images/ms_flowctrl_1_1.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/ms_flowctrl_1_2.png">
-<meta property="og:updated_time" content="2022-02-09T07:40:43.896Z">
+<meta property="og:updated_time" content="2022-03-04T16:26:02.662Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="API设计中的流控|服务降级|服务熔断机制">
 <meta name="twitter:description" content="限流或流控限流或流控指得是通过对并发访问/请求进行限速，或者对一个时间窗口内的请求进行限速来保护系统，一旦达到限制速率则可以拒绝服务、排队或等待、降级等处理。 流控中主要涉及到几种算法，即固定时间窗口限流算法、滑动时间窗口限流算法、漏桶算法和令牌桶算法。目前使用较多的还是漏桶算法和令牌桶算法，尤其是令牌桶算法。 （1）漏桶算法 漏桶算法（Leaky Bucket）是网络世界中流量整形（Traffi">
@@ -421,6 +421,7 @@
 <p>令牌桶算法的原理是系统会以一个恒定的速度往桶里放入令牌，而如果请求需要被处理，则需要先从桶里获取一个令牌，当桶里没有令牌可取时，则拒绝服务。</p>
 <p><img src="/images/ms_flowctrl_1_2.png" alt></p>
 <p>需要注意的是，令牌桶算法比漏桶算法更加灵活，令牌桶算法在一定条件下，能够支持突发流量的处理。</p>
+<p>在令牌桶算法的一些具体实现库中，如Golang的time.rate库，就是基于令牌桶算法实现的限流器，在构造令牌桶时，会有两个参数，一个是limit，一个是burst，limit表示每秒往令牌桶的放入多少个Token，burst表示令牌桶的容量，也就是能应对的最大突发流量。</p>
 <h1 id="服务降级"><a href="#服务降级" class="headerlink" title="服务降级"></a>服务降级</h1><p>简单来说，当服务A调用服务B，当服务B出现异常且达到一定的异常条件时，服务A干脆就调用一个类似于本地方法（也即备用方案）来代替服务B。</p>
 <h1 id="服务熔断"><a href="#服务熔断" class="headerlink" title="服务熔断"></a>服务熔断</h1><p>熔断就跟保险丝一样，当一个服务请求并发特别大，服务已经招架不住了，调用错误率飙升，当错误率达到一定阈值后，就将这个服务熔断了。熔断之后，后续的请求就不会再请求这个服务了。</p>
 <h1 id="Hystrix组件"><a href="#Hystrix组件" class="headerlink" title="Hystrix组件"></a>Hystrix组件</h1><p>目前Netflix公司的开源组件Hystrix就已经对服务降级和服务熔断有了很好的支持。</p>

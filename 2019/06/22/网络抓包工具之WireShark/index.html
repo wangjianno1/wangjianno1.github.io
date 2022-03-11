@@ -107,22 +107,22 @@
   <meta name="keywords" content="Hexo, NexT">
 
 
-<meta name="description" content="WireShark简介WireShark，前称Ethereal，是当今世界最流行的网络协议嗅探、抓包和分析工具，它使我们得以窥探网络上流动的数据及其协议细节。网络管理员使用WireShark来检测网络问题；网络安全工程师使用WireShark来检查网络安全相关问题；开发者可以使用WireShark来开发调试新的通信协议；普通使用者可以使用WireShark来学习网络协议栈相关的知识。 如下是Wir">
+<meta name="description" content="WireShark简介WireShark，前称Ethereal，是当今世界最流行的网络协议嗅探、抓包和分析工具，它使我们得以窥探网络上流动的数据及其协议细节。网络管理员使用WireShark来检测网络问题；网络安全工程师使用WireShark来检查网络安全相关问题；开发者可以使用WireShark来开发调试新的通信协议；普通使用者可以使用WireShark来学习网络协议栈相关的知识。 Wiresh">
 <meta property="og:type" content="article">
 <meta property="og:title" content="网络抓包工具之WireShark">
 <meta property="og:url" content="http://wangjianno1.github.io/2019/06/22/网络抓包工具之WireShark/index.html">
 <meta property="og:site_name" content="老坛の菜园子">
-<meta property="og:description" content="WireShark简介WireShark，前称Ethereal，是当今世界最流行的网络协议嗅探、抓包和分析工具，它使我们得以窥探网络上流动的数据及其协议细节。网络管理员使用WireShark来检测网络问题；网络安全工程师使用WireShark来检查网络安全相关问题；开发者可以使用WireShark来开发调试新的通信协议；普通使用者可以使用WireShark来学习网络协议栈相关的知识。 如下是Wir">
+<meta property="og:description" content="WireShark简介WireShark，前称Ethereal，是当今世界最流行的网络协议嗅探、抓包和分析工具，它使我们得以窥探网络上流动的数据及其协议细节。网络管理员使用WireShark来检测网络问题；网络安全工程师使用WireShark来检查网络安全相关问题；开发者可以使用WireShark来开发调试新的通信协议；普通使用者可以使用WireShark来学习网络协议栈相关的知识。 Wiresh">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://wangjianno1.github.io/images/wireshark_1_1.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/wireshark_1_2.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/wireshark_1_3.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/wireshark_1_5.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/wireshark_1_4.png">
-<meta property="og:updated_time" content="2022-02-28T02:30:05.254Z">
+<meta property="og:updated_time" content="2022-03-09T09:52:55.948Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="网络抓包工具之WireShark">
-<meta name="twitter:description" content="WireShark简介WireShark，前称Ethereal，是当今世界最流行的网络协议嗅探、抓包和分析工具，它使我们得以窥探网络上流动的数据及其协议细节。网络管理员使用WireShark来检测网络问题；网络安全工程师使用WireShark来检查网络安全相关问题；开发者可以使用WireShark来开发调试新的通信协议；普通使用者可以使用WireShark来学习网络协议栈相关的知识。 如下是Wir">
+<meta name="twitter:description" content="WireShark简介WireShark，前称Ethereal，是当今世界最流行的网络协议嗅探、抓包和分析工具，它使我们得以窥探网络上流动的数据及其协议细节。网络管理员使用WireShark来检测网络问题；网络安全工程师使用WireShark来检查网络安全相关问题；开发者可以使用WireShark来开发调试新的通信协议；普通使用者可以使用WireShark来学习网络协议栈相关的知识。 Wiresh">
 <meta name="twitter:image" content="http://wangjianno1.github.io/images/wireshark_1_1.png">
 
 
@@ -413,6 +413,7 @@
 
       
         <h1 id="WireShark简介"><a href="#WireShark简介" class="headerlink" title="WireShark简介"></a>WireShark简介</h1><p>WireShark，前称Ethereal，是当今世界最流行的网络协议嗅探、抓包和分析工具，它使我们得以窥探网络上流动的数据及其协议细节。网络管理员使用WireShark来检测网络问题；网络安全工程师使用WireShark来检查网络安全相关问题；开发者可以使用WireShark来开发调试新的通信协议；普通使用者可以使用WireShark来学习网络协议栈相关的知识。</p>
+<p>Wireshark是捕获机器上的某一块网卡的所有网络包，当你的机器上有多块网卡的时候，你需要指定选择一个网卡。</p>
 <p>如下是WireShark的界面分布：</p>
 <p><img src="/images/wireshark_1_1.png" alt></p>
 <h1 id="WireShark中的过滤器"><a href="#WireShark中的过滤器" class="headerlink" title="WireShark中的过滤器"></a>WireShark中的过滤器</h1><p>WireShark中有两个过滤器，一个是“捕捉过滤器”，用于决定将什么样的Packets需要被WireShark捕获，可以点击“捕获”|“捕获过滤器”中设定，只有满足了捕获过滤器中的条件的Packets才会被WireShark所捕获；另一种是“显示过滤器”（即主界面中的过滤框），是对WireShark已经捕获的Packets做一下过滤，即显示部分的抓包结果。</p>
