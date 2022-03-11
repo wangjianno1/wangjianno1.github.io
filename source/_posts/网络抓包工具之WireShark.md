@@ -9,6 +9,8 @@ categories: Network
 
 WireShark，前称Ethereal，是当今世界最流行的网络协议嗅探、抓包和分析工具，它使我们得以窥探网络上流动的数据及其协议细节。网络管理员使用WireShark来检测网络问题；网络安全工程师使用WireShark来检查网络安全相关问题；开发者可以使用WireShark来开发调试新的通信协议；普通使用者可以使用WireShark来学习网络协议栈相关的知识。
 
+Wireshark是捕获机器上的某一块网卡的所有网络包，当你的机器上有多块网卡的时候，你需要指定选择一个网卡。
+
 如下是WireShark的界面分布：
 
 ![](/images/wireshark_1_1.png)

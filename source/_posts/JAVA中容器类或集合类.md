@@ -123,6 +123,11 @@ for (Object key : map.keySet()) {
 for (Object value : map.values()) {
     System.out.println(value);
 }
+//使用key集合或者values集合的迭代器来遍历
+for (Iterator it = map.keySet().iterator(); it.hasNext();) {
+    Object obj = it.next();
+    System.out.println(obj);
+}
 //使用Map.Entry来遍历，Map.Entry是Map的内部接口，在HashMap会实现这个接口，而成为HashMap的内部类
 for (Map.Entry<String, Integer> entity : map.entrySet()) {
     String key1 = entity.getKey();

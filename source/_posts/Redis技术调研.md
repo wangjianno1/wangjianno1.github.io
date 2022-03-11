@@ -51,7 +51,7 @@ Redis采用的是基于内存的采用的是单进程单线程模型的KV数据�
 
 （3）采用单线程，避免了不必要的上下文切换和竞争条件，也不存在多进程或者多线程导致的切换而消耗CPU，不用去考虑各种锁的问题，不存在加锁释放锁操作，没有因为可能出现死锁而导致的性能消耗。
 
-（4）使用多路I/O复用模型，非阻塞IO
+（4）使用多路I/O复用的Reactor模型，非阻塞IO
 需要注意的是，Redis是单线程的，只是在处理网络请求的时候只有一个线程来处理，一个正式的Redis Server运行的时候肯定是不止一个线程的。例如Redis进行持久化的时候会以子进程或者子线程的方式执行（具体是子线程还是子进程待读者深入研究）。至于Redis处理请求时使用单线程，官方解释说，Redis的瓶颈不在CPU，而在内存和网络带宽。
 
 正是由于Redis处理请求是单线程的，所以不能充分利用CPU多核的特性。如果要想利用CPU多核特性，我们可以在一台机器上启动多个Redis实例就好了。
@@ -119,11 +119,39 @@ zrevrange myZset 0 1  #逆序输出某个范围区间的元素，0为start，1�
 
 （5）bitmap
 
- bitmap存储的是连续的二进制数字（0和1），通过bitmap, 只需要一个bit位来表示某个元素对应的值或者状态，key就是对应元素本身。操作bitmap的常用命令有setbit，getbit，bitcount，bitop。
+bitmap存储的是连续的二进制数字（0和1），通过bitmap，只需要一个bit位来表示某个元素对应的值或者状态，key就是对应元素本身。操作bitmap的常用命令有setbit，getbit，bitcount，bitop。
+
+# Redis内存淘汰机制
+
+Redis内存淘汰机制，保证Redis中的数据都是热点数据。Redis提供6种数据淘汰策略如下：
+
+（1）volatile-lru（least recently used）
+
+从已设置过期时间的数据集（server.db[i].expires）中挑选最近最少使用的数据淘汰。
+
+（2）volatile-ttl
+
+从已设置过期时间的数据集（server.db[i].expires）中挑选将要过期的数据淘汰。
+
+（3）olatile-random
+
+从已设置过期时间的数据集（server.db[i].expires）中任意选择数据淘汰。
+
+（4）allkeys-lru（least recently used）
+
+当内存不足以容纳新写入数据时，在键空间中，移除最近最少使用的key（这个是最常用的） 
+
+（5）allkeys-random
+
+从数据集（server.db[i].dict）中任意选择数据淘汰。
+
+（6）no-eviction
+
+禁止驱逐数据，也就是说当内存不足以容纳新写入数据时，新写入操作会报错。
 
 # Redis分布式集群的搭建
 
-未完待续
+Redis支持主从同步，提供Cluster集群部署模式。高可用集群。
 
 # 其他闲杂
 
