@@ -127,3 +127,6 @@ RTT，全称为Round-Trip Time，表示往返时延。在计算机网络中它�
 
 LTS，Long Term Support，长期支持。软件的发行版本若被标注为LTS，表示软件的所有者会持续优化/修改这个软件版本。
 
+# ETL
+
+ETL，是英文Extract-Transform-Load的缩写，用来描述将数据从来源端经过抽取（extract）、转换（transform）、加载（load）至目的端的过程。ETL一词较常用在数据仓库，但其对象并不限于数据仓库。

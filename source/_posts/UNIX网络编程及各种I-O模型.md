@@ -78,7 +78,7 @@ UNIX下有5种I/O模型。
 
 当一个应用进程像这样对一个非阻塞描述符循环调用recvfrom时，我们称之为轮询polling。应用进程持续轮询内核，以查看某个操作是否就绪。这么做往往耗费大量CPU时间。
 
-## I/O复用（select和poll）
+## I/O复用（select/poll/epoll）
 
 有了I/O复用（I/O multiplexing），我们就可以调用select和poll，那么应用进程会阻塞在select或poll系统调用上，而不是阻塞在真正的I/O系统调用上。如下图：
 
