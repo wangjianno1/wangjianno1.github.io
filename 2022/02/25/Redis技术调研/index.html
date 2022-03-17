@@ -116,7 +116,7 @@
 <meta property="og:description" content="Redis简介Redis是一个key-value的非关系型数据库（NoSQL），现在在各种系统中的使用越来越多，大部分情况下是因为其高性能的特性，被当做缓存使用。Redis应用广泛，尤其是被作为缓存使用，Redis由于其丰富的数据结构也可以被应用到其他场景。Redis的具有很多优势： （1）读写性能高，10w次/s+的读速度，8w次/s+的写速度 （2）K-V，value支持的数据类型很多，包括字">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://wangjianno1.github.io/images/redis_1_1.png">
-<meta property="og:updated_time" content="2022-03-04T08:47:45.380Z">
+<meta property="og:updated_time" content="2022-03-13T04:03:02.051Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis技术调研">
 <meta name="twitter:description" content="Redis简介Redis是一个key-value的非关系型数据库（NoSQL），现在在各种系统中的使用越来越多，大部分情况下是因为其高性能的特性，被当做缓存使用。Redis应用广泛，尤其是被作为缓存使用，Redis由于其丰富的数据结构也可以被应用到其他场景。Redis的具有很多优势： （1）读写性能高，10w次/s+的读速度，8w次/s+的写速度 （2）K-V，value支持的数据类型很多，包括字">
@@ -427,9 +427,20 @@
 <h1 id="Redis的速度为什么快"><a href="#Redis的速度为什么快" class="headerlink" title="Redis的速度为什么快"></a>Redis的速度为什么快</h1><p>Redis采用的是基于内存的采用的是单进程单线程模型的KV数据库，由C语言编写。Redis之所以快的原因主要有：</p>
 <p>（1）完全基于内存，绝大部分请求是纯粹的内存操作，非常快速。数据存在内存中，类似于HashMap，HashMap的优势就是查找和操作的时间复杂度都是O(1)。</p>
 <p>（2）数据结构简单，对数据操作也简单，Redis中的数据结构是专门进行设计的。</p>
-<p>（3）采用单线程，避免了不必要的上下文切换和竞争条件，也不存在多进程或者多线程导致的切换而消耗CPU，不用去考虑各种锁的问题，不存在加锁释放锁操作，没有因为可能出现死锁而导致的性能消耗。</p>
+<p>（3）采用单线程，避免了不必要的上下文切换和竞争条件，也不存在多进程或者多线程导致的切换而消耗CPU，不用去考虑各种锁的问题，不存在加锁释放锁操作，没有因为可能出现死锁而导致的性能消耗。需要注意的是，Redis新版本开始支持了多线程了。</p>
 <p>（4）使用多路I/O复用的Reactor模型，非阻塞IO<br>需要注意的是，Redis是单线程的，只是在处理网络请求的时候只有一个线程来处理，一个正式的Redis Server运行的时候肯定是不止一个线程的。例如Redis进行持久化的时候会以子进程或者子线程的方式执行（具体是子线程还是子进程待读者深入研究）。至于Redis处理请求时使用单线程，官方解释说，Redis的瓶颈不在CPU，而在内存和网络带宽。</p>
 <p>正是由于Redis处理请求是单线程的，所以不能充分利用CPU多核的特性。如果要想利用CPU多核特性，我们可以在一台机器上启动多个Redis实例就好了。</p>
+<h1 id="Redis命令"><a href="#Redis命令" class="headerlink" title="Redis命令"></a>Redis命令</h1><p>Redis命令格式如下：</p>
+<pre><code>COMMAND KEY_NAME [VALUE] [OPTION]
+</code></pre><p>Redis的命令有很多，常用的有：</p>
+<pre><code>SET
+GET
+DEL
+EXISTS
+EXPIRE
+TTL
+...
+</code></pre><p><a href="https://redis.io/commands" target="_blank" rel="noopener">更多命令参见官网</a></p>
 <h1 id="Redis支持抽象数据类型"><a href="#Redis支持抽象数据类型" class="headerlink" title="Redis支持抽象数据类型"></a>Redis支持抽象数据类型</h1><p>Redis的value不仅支持整型、浮点型、字符、字符串这些基础数据类型，还支持一些抽象数据类型：</p>
 <p>（1）list</p>
 <p>list即是链表。操作list的常用命令有rpush，lpop，lpush，rpop，lrange，llen等。命令举例如下：</p>
@@ -459,8 +470,12 @@
 <p>从数据集（server.db[i].dict）中任意选择数据淘汰。</p>
 <p>（6）no-eviction</p>
 <p>禁止驱逐数据，也就是说当内存不足以容纳新写入数据时，新写入操作会报错。</p>
-<h1 id="Redis分布式集群的搭建"><a href="#Redis分布式集群的搭建" class="headerlink" title="Redis分布式集群的搭建"></a>Redis分布式集群的搭建</h1><p>Redis支持主从同步，提供Cluster集群部署模式。高可用集群。</p>
-<h1 id="其他闲杂"><a href="#其他闲杂" class="headerlink" title="其他闲杂"></a>其他闲杂</h1><p>缓存击穿，缓存穿透</p>
+<h1 id="Redis部署方式"><a href="#Redis部署方式" class="headerlink" title="Redis部署方式"></a>Redis部署方式</h1><p>（1）单机部署模式</p>
+<p>（2）Master-Slave + Sentinel选举模式</p>
+<p>（3）Redis Cluster模式</p>
+<h1 id="Redisson"><a href="#Redisson" class="headerlink" title="Redisson"></a>Redisson</h1><p>Redisson是一个企业级的开源Redis Client，这个推荐使用。且这个Client还带有分布式锁支持，从而避免使用原生Client API实现分布式锁时考虑的一些复杂问题。</p>
+<h1 id="其他闲杂"><a href="#其他闲杂" class="headerlink" title="其他闲杂"></a>其他闲杂</h1><p>（1）缓存击穿，缓存穿透</p>
+<p>（2）从Redis 2.6版本起，Redis开始支持Lua脚本，一个Lua脚本操作Redis，是一个原子性操作，Redis分布式的实现一般来说会用到Lua脚本。</p>
 
       
     </div>
@@ -836,7 +851,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis简介"><span class="nav-number">1.</span> <span class="nav-text">Redis简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis的一些特性"><span class="nav-number">2.</span> <span class="nav-text">Redis的一些特性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis持久化"><span class="nav-number">3.</span> <span class="nav-text">Redis持久化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis的速度为什么快"><span class="nav-number">4.</span> <span class="nav-text">Redis的速度为什么快</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis支持抽象数据类型"><span class="nav-number">5.</span> <span class="nav-text">Redis支持抽象数据类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis内存淘汰机制"><span class="nav-number">6.</span> <span class="nav-text">Redis内存淘汰机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis分布式集群的搭建"><span class="nav-number">7.</span> <span class="nav-text">Redis分布式集群的搭建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他闲杂"><span class="nav-number">8.</span> <span class="nav-text">其他闲杂</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis简介"><span class="nav-number">1.</span> <span class="nav-text">Redis简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis的一些特性"><span class="nav-number">2.</span> <span class="nav-text">Redis的一些特性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis持久化"><span class="nav-number">3.</span> <span class="nav-text">Redis持久化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis的速度为什么快"><span class="nav-number">4.</span> <span class="nav-text">Redis的速度为什么快</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis命令"><span class="nav-number">5.</span> <span class="nav-text">Redis命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis支持抽象数据类型"><span class="nav-number">6.</span> <span class="nav-text">Redis支持抽象数据类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis内存淘汰机制"><span class="nav-number">7.</span> <span class="nav-text">Redis内存淘汰机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis部署方式"><span class="nav-number">8.</span> <span class="nav-text">Redis部署方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redisson"><span class="nav-number">9.</span> <span class="nav-text">Redisson</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他闲杂"><span class="nav-number">10.</span> <span class="nav-text">其他闲杂</span></a></li></ol></div>
             
 
           </div>
