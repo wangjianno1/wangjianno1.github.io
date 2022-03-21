@@ -88,3 +88,8 @@ JDK，Java Development Kit，是Java开发工具包，是程序员使用Java语�
 # JAVA技术栈的技能图谱
 
 ![](/images/java_syntax_1_2.png)
+
+# JAVA世界中的一些新闻
+
+（1）2017年，Oracle向Eclipse基金会捐赠Java EE规范，Java EE将被改名为Jakarta EE，在Java EE 8版本之后就是Jakarta EE 9，包名的命名空间从`javax.*`也改成了`jakarta.*`。
+
