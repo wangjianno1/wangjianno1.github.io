@@ -13,7 +13,7 @@ categories: SpringBoot
 <dependency>
     <groupId>org.mybatis.spring.boot</groupId>
     <artifactId>mybatis-spring-boot-starter</artifactId>
-    <version>1.1.1</version>
+    <version>2.2.2</version>
 </dependency>
 <dependency>
     <groupId>mysql</groupId>
@@ -38,6 +38,8 @@ SpringBoot会自动加载`spring.datasource.*`相关配置，数据源就会自�
 （2）在启动类中添加对mapper包扫描@MapperScan
 
 ```java
+import org.mybatis.spring.annotation.MapperScan;
+
 @SpringBootApplication
 @MapperScan("com.bat.mapper")
 public class Application {
@@ -52,6 +54,13 @@ public class Application {
 （3）开发Mapper类
 
 ```java
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
+
 public interface UserMapper {
     @Select("SELECT * FROM users")
     @Results({
@@ -67,10 +76,10 @@ public interface UserMapper {
     })
     UserEntity getOne(Long id);
 
-    @Insert("INSERT INTO users(userName,passWord,user_sex) VALUES(#{userName}, #{passWord}, #{userSex})")
+    @Insert("INSERT INTO users(user_name,password,user_sex) VALUES(#{userName}, #{passWord}, #{userSex})")
     void insert(UserEntity user);
 
-    @Update("UPDATE users SET userName=#{userName},nick_name=#{nickName} WHERE id =#{id}")
+    @Update("UPDATE users SET user_name=#{userName},nick_name=#{nickName} WHERE id =#{id}")
     void update(UserEntity user);
 
     @Delete("DELETE FROM users WHERE id =#{id}")
@@ -84,7 +93,7 @@ public interface UserMapper {
     @Result修饰返回的结果集，关联实体类属性和数据库字段一一对应，如果实体类属性和数据库属性名保持一致，就不需要这个属性来修饰
     @Insert插入数据库使用，直接传入实体类会自动解析属性到对应的值
     @Update负责修改，也可以直接传入对象
-    @delete负责删除
+    @Delete负责删除
 
 （4）在Service层直接注入Mapper类，然后是用Mapper类来对数据进行操作
 
@@ -135,13 +144,13 @@ public void addSomeUsers() throws Exception {
 <mapper namespace="com.bat.mapper.UserMapper" >
     <resultMap id="BaseResultMap" type="com.bat.entity.UserEntity" >
         <id column="id" property="id" jdbcType="BIGINT" />
-        <result column="userName" property="userName" jdbcType="VARCHAR" />
-        <result column="passWord" property="passWord" jdbcType="VARCHAR" />
+        <result column="user_name" property="userName" jdbcType="VARCHAR" />
+        <result column="password" property="passWord" jdbcType="VARCHAR" />
         <result column="user_sex" property="userSex" javaType="com.bat.enums.UserSexEnum"/>
         <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
     </resultMap>
     <sql id="Base_Column_List" >
-        id, userName, passWord, user_sex, nick_name
+        id, user_name, password, user_sex, nick_name
     </sql>
     <select id="getAll" resultMap="BaseResultMap"  >
        SELECT
@@ -157,7 +166,7 @@ public void addSomeUsers() throws Exception {
     <insert id="insert" parameterType="com.bat.entity.UserEntity" >
        INSERT INTO
             users
-            (userName,passWord,user_sex)
+            (user_name,password,user_sex)
         VALUES
             (#{userName}, #{passWord}, #{userSex})
     </insert>
@@ -165,8 +174,8 @@ public void addSomeUsers() throws Exception {
        UPDATE
             users
        SET
-        <if test="userName != null">userName = #{userName},</if>
-        <if test="passWord != null">passWord = #{passWord},</if>
+        <if test="userName != null">user_name = #{userName},</if>
+        <if test="passWord != null">password = #{passWord},</if>
         nick_name = #{nickName}
        WHERE
             id = #{id}
@@ -197,4 +206,5 @@ public interface UserMapper {
 同第一种方式。
 
 学习资料参考于：
+[MyBatis整合SpringBoot官网](http://mybatis.org/spring-boot-starter/mybatis-spring-boot-autoconfigure/)
 http://www.ityouknow.com/springboot/2016/11/06/spring-boo-mybatis.html

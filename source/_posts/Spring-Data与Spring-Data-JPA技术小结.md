@@ -15,7 +15,7 @@ Spring Data是Spring平台中一个功能模块，主要用来和数据访问层
 
 Spring Data JPA是Spring Data的一个子模块，使用它可以非常简单地操作“关系型数据库”。Spring Data JPA是用来简化项目中数据访问层的逻辑。在以前的Spring应用项目中，我们需要编写DAO层接口和DAO层实现类，而这些接口或实现类有很多是重复类似的代码。若使用了Spring Data JPA子模块，那么我们只需要编写DAO层接口，Spring Data JPA会根据这些接口自动生成实现类，并由Spring容器管理以便再注入到service层。
 
-如下为Spring Data JPA的周边技术关系图（可见使用Spring Data JPA时，具体使用哪种ORM框架是由用户自己决定的）：
+如下为Spring Data JPA的周边技术关系图（可见使用Spring Data JPA时，具体使用哪种ORM框架是由用户自己决定的，**默认的还是Hibernate哦**）：
 
 ![](/images/java_springdata_1_2.png)
 

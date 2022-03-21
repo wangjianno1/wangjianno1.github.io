@@ -43,7 +43,7 @@ public class ConfigController {
 }
 ```
 
-# SpringBoot项目中自定义配置
+# SpringBoot项目中自定义配置文件
 
 `application.properties/application.yml`是SpringBoot项目缺省的核心配置，配置了一些框架相关的参数。当然，我们也可以将业务方面的配置写入到`application.properties/application.yml`中，但是一般来说我们不建议这么做，这个时候就需要自定义配置文件了。在没用SpringBoot开发框架之前，我们一般先创建一个独立的配置文件，然后在里面配置好值，用工具类去读取。当然也可以用Spring提供的PropertiesFactoryBean去读取。在SpringBoot项目中有了更方便的操作方式。具体方法如下：
 

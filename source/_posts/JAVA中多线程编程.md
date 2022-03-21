@@ -148,14 +148,13 @@ try {
 在Thread API中提供了UncaughtExceptionHandle，它能检测出某个由于未捕获的异常而线程终结的情况。
 
 ```java
-Thread.setDefaultUncaughtExceptionHandler(new  Thread.UncaughtExceptionHandler() {
-        @Override
-        public void uncaughtException(Thread t, Throwable e) {
-            // 加入一些释放连接等善后的业务的业务代码
-            logger.error("UnCaughtException", e);
-        }
-    });
-}
+Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+    @Override
+    public void uncaughtException(Thread t, Throwable e) {
+        // 加入一些释放连接等善后的业务的业务代码
+        logger.error("UnCaughtException", e);
+    }
+});
 ```
 
 该方法可以捕获到多线程中的一些未捕获的异常，然后进行一些善后的处理。

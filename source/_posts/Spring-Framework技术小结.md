@@ -91,14 +91,14 @@ BeanFacotry是Spring中比较原始的Factory，如XMLBeanFactory就是一种典
 
 （2）基于注解的方式
 
-通过JAVA的注解来定义bean，而不是XML配置文件，从而将Spring配置信息的载体由XML文件转移到了JAVA类中，最终简化了Spring配置的繁琐性哦。常用的Spring Bean注解有：
+通过JAVA的注解来定义bean，而不是XML配置文件，从而将Spring配置信息的载体由XML文件转移到了JAVA类中，最终简化了Spring配置的繁琐性哦。常用的Spring Bean注解是`org.springframework.stereotype.*`，举例来说：
 
     @Component是一个通用的bean注解，可用于任何bean
     @Repository通常用于注解DAO类，即持久层的bean
     @Service通常用于注解Service类，即服务层的bean
     @Controller通常用于注解Controller类，即控制层的bean
 
-即被@Component、@Repository，@Service以及@Controller等注解，注解过的对象，就会被Spring自动识别为Bean并予以管理哦。
+即被@Component、@Repository，@Service以及@Controller等注解，注解过的对象，就会被Spring自动识别为Bean并予以管理哦。然后在需要用到Bean的地方使用注解@Autowired（`org.springframework.beans.factory.annotation.Autowired`）就可以自动装配指定的Bean了。
 
 备注：其实Spring框架中的很多模块的使用，即可以使用XML配置文件，也可以使用注解的方式。
 

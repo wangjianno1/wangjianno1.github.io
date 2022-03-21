@@ -29,12 +29,35 @@ hibernate.cfg.xml中配置数据库的地址、用户名、密码等基本信息
 Configuration cfg = new Configuration().configure();  //Hibernate会在类路径的根路径下自动寻找名为hibernate.cfg.xml的配置文件并加载
 sessionFactory = cfg.buildSessionFactory();
 Session session = sessionFactory.openSession();
-Query query = session.createQuery("from Course")
+
+Transaction ts = null;
+try {
+    ts = session.beginTransaction();
+
+    //查询操作，对标Select语句
+    Query query = session.createQuery("from Course");
+    //session.find(".....");
+
+    //增加操作，对标Insert语句
+    //User user = new User();
+    //user.setLoginName("amigo");
+    //session.save(employee);
+    
+    //修改操作，对标Update语句
+    //User user = session.get(User.class, "amigo");
+    //user.setFullName("xxxx");
+    //session.update(user);
+    
+    //删除操作，对标Delete语句
+    //User user = session.get(User.class, "amigo");
+    //session.delete(user);
+    ts.commit();
+}
 ```
 
 备注：这个是Hibernate的最传统的使用方式，Hibernate支持通过注解来提高开发效率哦。
 
-# Hibernate与Mybatis的区别
+# Hibernate与MyBatis的区别
 
 Hibernate和MyBatis同为实现了JPA规范的ORM框架，它们有很多的区别。
 
@@ -43,3 +66,7 @@ ORM框架的本质是简化编程中与数据库相关的交互，发展到现�
 Hibernate是一个开放源代码的对象关系映射框架，它对JDBC进行了非常轻量级的对象封装，使得Java程序员可以随心所欲的使用对象编程思维来操纵数据库。属于全自动的ORM框架，着力点在于POJO和数据库表之间的映射，完成映射即可自动生成和执行SQL。
 
 而MyBatis本是Apache的一个开源项目iBatis，2010年这个项目由Apache Software Foundation迁移到了Google Code，并且改名为MyBatis 。属于半自动的ORM框架，着力点在于POJO和SQL之间的映射，自己编写SQL语句，然后通过配置文件将所需的参数和返回的字段映射到POJO。
+
+总之，Hibernate对数据库结构提供了较为完整的封装，Hibernate的O/R Mapping实现了POJO和数据库表之间的映射，以及SQL的自动生成和执行。程序员往往只需定义好了POJO到数据库表的映射关系，即可通过Hibernate提供的方法完成持久层操作。程序员甚至不需要对SQL的熟练掌握，Hibernate会根据制定的存储逻辑，自动生成对应的SQL 并调用JDBC接口加以执行。
+
+MyBatis的着力点，则在于POJO与SQL之间的映射关系。然后通过映射配置文件，将SQL所需的参数，以及返回的结果字段映射到指定POJO。相对Hibernate的“O/R”而言，MyBatis是一种“SQL Mapping”的ORM实现。

@@ -22,6 +22,8 @@ MySQL Workbenck也有两个版本：
     MySQL Workbench Community Edition，也就是社区版本
     MySQL Workbench Standard Edition，也就是商业版本，是按年收取费用的
 
+备注：Sequel Pro/Navicat也是很好用的图形管理界面哦。
+
 # 其他MySQL附带工具
 
 （1）mysql_config
