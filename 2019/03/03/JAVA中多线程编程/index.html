@@ -115,7 +115,7 @@
 <meta property="og:description" content="JAVA多线程简介Java给多线程编程提供了内置的支持，Java的多线程是内核线程，即是JVM调用系统API创建的线程，Java线程调度是由操作系统来调度。 一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。 一点说明，Java是单进程多线程模型，这个单进程就是JVM进程，在操作系统层面看到就是java或java.exe进程，Java貌似不能搞多进程">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_thread_1_1.png">
-<meta property="og:updated_time" content="2022-03-02T01:57:49.573Z">
+<meta property="og:updated_time" content="2022-03-20T11:59:50.136Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA中多线程编程">
 <meta name="twitter:description" content="JAVA多线程简介Java给多线程编程提供了内置的支持，Java的多线程是内核线程，即是JVM调用系统API创建的线程，Java线程调度是由操作系统来调度。 一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。 一点说明，Java是单进程多线程模型，这个单进程就是JVM进程，在操作系统层面看到就是java或java.exe进程，Java貌似不能搞多进程">
@@ -433,7 +433,7 @@ call()方法可以抛出异常
 <p>但是我们可以在run()里面通过try-catch-finally块来处理异常。</p>
 <p>（2）Thread API来处理异常</p>
 <p>在Thread API中提供了UncaughtExceptionHandle，它能检测出某个由于未捕获的异常而线程终结的情况。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Thread.setDefaultUncaughtExceptionHandler(<span class="keyword">new</span>  Thread.UncaughtExceptionHandler() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">uncaughtException</span><span class="params">(Thread t, Throwable e)</span> </span>&#123;</span><br><span class="line">            <span class="comment">// 加入一些释放连接等善后的业务的业务代码</span></span><br><span class="line">            logger.error(<span class="string">"UnCaughtException"</span>, e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Thread.setDefaultUncaughtExceptionHandler(<span class="keyword">new</span> Thread.UncaughtExceptionHandler() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">uncaughtException</span><span class="params">(Thread t, Throwable e)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 加入一些释放连接等善后的业务的业务代码</span></span><br><span class="line">        logger.error(<span class="string">"UnCaughtException"</span>, e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p>该方法可以捕获到多线程中的一些未捕获的异常，然后进行一些善后的处理。</p>
 
       

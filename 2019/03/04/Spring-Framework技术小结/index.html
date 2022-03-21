@@ -121,7 +121,7 @@
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_spring_1_5.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_spring_1_7.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_spring_1_6.png">
-<meta property="og:updated_time" content="2022-02-25T03:17:06.136Z">
+<meta property="og:updated_time" content="2022-03-18T10:26:31.211Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring Framework技术小结">
 <meta name="twitter:description" content="Spring Framework简介通常来说，我们说的Spring指的是Spring Framework，其实它只是Spring家族中一个产品。 Spring Framework是使用基本的JavaBean代替EJB，通过容器来管理JavaBean的配置和生命周期，在此基础上实现了AOP、IoC的Spring核心功能，其他WEB框架组件在AOP、IoC的基础上工作，将JavaBean交给Sprin">
@@ -449,12 +449,12 @@ AnnotationConfigWebApplicationContext
 事件传播
 载入多个（有继承关系）上下文 ，使得每一个上下文都专注于一个特定的层次，比如应用的web层 
 </code></pre><p>（2）基于注解的方式</p>
-<p>通过JAVA的注解来定义bean，而不是XML配置文件，从而将Spring配置信息的载体由XML文件转移到了JAVA类中，最终简化了Spring配置的繁琐性哦。常用的Spring Bean注解有：</p>
+<p>通过JAVA的注解来定义bean，而不是XML配置文件，从而将Spring配置信息的载体由XML文件转移到了JAVA类中，最终简化了Spring配置的繁琐性哦。常用的Spring Bean注解是<code>org.springframework.stereotype.*</code>，举例来说：</p>
 <pre><code>@Component是一个通用的bean注解，可用于任何bean
 @Repository通常用于注解DAO类，即持久层的bean
 @Service通常用于注解Service类，即服务层的bean
 @Controller通常用于注解Controller类，即控制层的bean
-</code></pre><p>即被@Component、@Repository，@Service以及@Controller等注解，注解过的对象，就会被Spring自动识别为Bean并予以管理哦。</p>
+</code></pre><p>即被@Component、@Repository，@Service以及@Controller等注解，注解过的对象，就会被Spring自动识别为Bean并予以管理哦。然后在需要用到Bean的地方使用注解@Autowired（<code>org.springframework.beans.factory.annotation.Autowired</code>）就可以自动装配指定的Bean了。</p>
 <p>备注：其实Spring框架中的很多模块的使用，即可以使用XML配置文件，也可以使用注解的方式。</p>
 <h1 id="AOP技术"><a href="#AOP技术" class="headerlink" title="AOP技术"></a>AOP技术</h1><p>（1）AOP简介</p>
 <p>AOP，Aspect Oriented Programming，中文为面向切面的编程，通过预编译方式或运行期动态代理实现程序功能的统一维护的一种技术。AOP能够将那些与业务无关，却为业务模块所共同调用的逻辑或责任封装起来，便于减少系统的重复代码，降低模块间的耦合度，并有利于未来的可拓展性和可维护性，主要的功能有日志记录、性能统计、安全控制、事务处理以及异常处理等等。举例来说：</p>
