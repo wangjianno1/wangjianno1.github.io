@@ -116,7 +116,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://wangjianno1.github.io/images/design_pattern_1_1.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/design_pattern_1_2.png">
-<meta property="og:updated_time" content="2022-02-09T07:40:43.924Z">
+<meta property="og:updated_time" content="2022-03-21T07:45:08.985Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA设计模式之代理模式">
 <meta name="twitter:description" content="代理模式定义为被代理对象提供一种代理，以控制对这个对象的访问。使用代理模式，可以对某些类进行增强或扩展的功能，Spring AOP实现的核心基础就是代理模式的运用。 Java中代理模式的实现在Java中，有静态代理和动态代理两种，所谓静态代理，就是代理类在源码阶段或编译阶段是确定的。而动态代理，代理类在源码或编译阶段是不存在的，在程序运行中动态生成的。需要注意的是，动态代理的实现有很多种方式，如J">
@@ -426,7 +426,7 @@
 <pre><code>Bike静态代理类增强/扩展逻辑开始...
 自行车骑行中...
 Bike静态代理类增强/扩展逻辑结束...
-</code></pre><h1 id="Java-JDK动态代理"><a href="#Java-JDK动态代理" class="headerlink" title="Java JDK动态代理"></a>Java JDK动态代理</h1><p>通过静态代理的代码可以发现每一个代理类只能为一个接口服务，这样一来程序开发中必然会产生过多的代理。如果可以在程序运行中能够动态地生成代理类那就极好了。呵呵，JDK动态代理就可以达到这个目的。动态代理类的字节码在程序运行时由Java反射机制动态生成，无需程序员手工编写它的源代码。动态代理类不仅简化了编程工作，而且提高了软件系统的可扩展性，因为Java反射机制可以生成任意类型的动态代理类。<code>java.lang.reflect</code>包中的<code>Proxy</code>类和<code>InvocationHandler</code>接口提供了生成动态代理类的能力。</p>
+</code></pre><h1 id="Java-JDK动态代理"><a href="#Java-JDK动态代理" class="headerlink" title="Java JDK动态代理"></a>Java JDK动态代理</h1><p>通过静态代理的代码可以发现每一个代理类只能为一个接口服务，这样一来程序开发中必然会产生过多的代理。如果可以在程序运行中能够动态地生成代理类那就极好了。呵呵，JDK动态代理就可以达到这个目的。动态代理类的字节码在程序运行时由Java反射机制动态生成，无需程序员手工编写它的源代码，代理类也会实现该接口。动态代理类不仅简化了编程工作，而且提高了软件系统的可扩展性，因为Java反射机制可以生成任意类型的动态代理类。<code>java.lang.reflect</code>包中的<code>Proxy</code>类和<code>InvocationHandler</code>接口提供了生成动态代理类的能力。</p>
 <p><img src="/images/design_pattern_1_2.png" alt></p>
 <p>下面用代码来演示JDK动态代理的使用：</p>
 <p>（1）定义接口</p>

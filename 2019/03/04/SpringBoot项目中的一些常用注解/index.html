@@ -114,7 +114,7 @@
 <meta property="og:site_name" content="老坛の菜园子">
 <meta property="og:description" content="@Controller|@Service|@Repository|@Component事实上，@Controller|@Service|@Repository|@Component这几个注解并没有任何功能上的区别，可以把这些当做是分类标签，目的是为了让你的代码可读性更强。在Annotaion配置注解中用@Component来表示一个通用注解，用于说明一个类是一个被Spring容器管理的bean，即">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2022-02-16T14:31:08.194Z">
+<meta property="og:updated_time" content="2022-03-21T13:17:16.285Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringBoot项目中的一些常用注解">
 <meta name="twitter:description" content="@Controller|@Service|@Repository|@Component事实上，@Controller|@Service|@Repository|@Component这几个注解并没有任何功能上的区别，可以把这些当做是分类标签，目的是为了让你的代码可读性更强。在Annotaion配置注解中用@Component来表示一个通用注解，用于说明一个类是一个被Spring容器管理的bean，即">
@@ -439,6 +439,7 @@
 <h1 id="SpringBootApplication"><a href="#SpringBootApplication" class="headerlink" title="@SpringBootApplication"></a>@SpringBootApplication</h1><p>很多SpringBoot开发者总是使用@Configuration，@EnableAutoConfiguration和@ComponentScan注解他们的main类。由于这些注解被如此频繁地一块使用，Spring Boot提供一个方便的@SpringBootApplication选择。该@SpringBootApplication注解等价于以默认属性使用@Configuration，@EnableAutoConfiguration和@ComponentScan。值得注意的是，使用了@SpringBootApplication注解后，在该启动Main类所在的package下的所有子package都会被Spring扫描，若使用了@Service、 @Repository或@Component等注解的类，都会被Spring容器纳入管理。一定要注意的是，使用@SpringBootApplication注解只会扫描启动所在package下及其子package的类，如果满足@Service、 @Repository或@Component等注解才会纳入Spring容器管理。因此，如果需要SpringBoot中Spring能管理第三方包中的Bean，则在@SpringBootApplication的基础上再加上@ComponentScan注解，指明要扫描的包名。</p>
 <h1 id="ResponseBody"><a href="#ResponseBody" class="headerlink" title="@ResponseBody"></a>@ResponseBody</h1><p>该注解用于将Controller的方法返回的对象通过适当的HttpMessageConverter转换为指定格式后，写入到Response对象的body数据区。因此，当我们Controller方法返回的数据不是html格式的页面，而是其他某种格式的数据时，如json、xml等，就需要使用到@ResponseBody注解。</p>
 <h1 id="Transactional"><a href="#Transactional" class="headerlink" title="@Transactional"></a>@Transactional</h1><p>在和数据库做相关操作时，我们可以通过@Transactional注解来达到事务功能。@Transactional注解可以作用到类上，也可以作用到方法上。假设@Transactional作用到某个方法上，那么在一次客户端请求过程中，如果该方法中任何地方抛出异常（不管是数据库相关的异常，还是其他的异常），则回滚所有数据库相关的变更操作。如果@Transactional作用到类上，那么相当于该类中所有方法上都使用了@Transactional注解。需要注意的是，一般我们将@Transactional注解到Service层的类名或Service层的方法上，注解到Service的类上，则该类中所有方法都有事务性，注解到方法上则只有该方法有事务性。</p>
+<p>备注：@Transactional注解的完整包路径是<code>org.springframework.transaction.annotation.Transactional</code>，是属于Spring Framework框架中的。</p>
 
       
     </div>

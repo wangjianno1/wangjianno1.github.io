@@ -119,9 +119,10 @@
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_spring_1_3.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_spring_1_4.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_spring_1_5.png">
+<meta property="og:image" content="http://wangjianno1.github.io/images/java_spring_1_8.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_spring_1_7.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_spring_1_6.png">
-<meta property="og:updated_time" content="2022-03-18T10:26:31.211Z">
+<meta property="og:updated_time" content="2022-03-21T12:38:19.825Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring Framework技术小结">
 <meta name="twitter:description" content="Spring Framework简介通常来说，我们说的Spring指的是Spring Framework，其实它只是Spring家族中一个产品。 Spring Framework是使用基本的JavaBean代替EJB，通过容器来管理JavaBean的配置和生命周期，在此基础上实现了AOP、IoC的Spring核心功能，其他WEB框架组件在AOP、IoC的基础上工作，将JavaBean交给Sprin">
@@ -443,7 +444,8 @@ XmlWebApplicationContext
 AnnotationConfigApplicationContext
 AnnotationConfigWebApplicationContext
 ......
-</code></pre><p>BeanFacotry是Spring中比较原始的Factory，如XMLBeanFactory就是一种典型的BeanFactory。原始的BeanFactory无法支持Spring的许多插件，如AOP功能、WEB应用等。ApplicationContext接口，它由BeanFactory接口派生而来，因而提供BeanFactory所有的功能。ApplicationContext以一种更向面向框架的方式工作以及对上下文进行分层和实现继承，ApplicationContext包还提供了以下的功能：  </p>
+</code></pre><p>Spring主要提供了两种IOC容器，分别是BeanFactory和ApplicationContext。</p>
+<p>BeanFacotry是Spring中比较原始的Factory，如XMLBeanFactory就是一种典型的BeanFactory。原始的BeanFactory无法支持Spring的许多插件，如AOP功能、WEB应用等。ApplicationContext接口，它由BeanFactory接口派生而来，因而提供BeanFactory所有的功能。ApplicationContext以一种更向面向框架的方式工作以及对上下文进行分层和实现继承，ApplicationContext包还提供了以下的功能：  </p>
 <pre><code>MessageSource, 提供国际化的消息访问
 资源访问，如URL和文件
 事件传播
@@ -461,12 +463,25 @@ AnnotationConfigWebApplicationContext
 <p><img src="/images/java_spring_1_5.png" alt></p>
 <p>（2）AOP技术的实现方式</p>
 <p>AOP技术的实现方式有两种，一个是以AspectJ等为代表的预编译方式，一个是以Spring AOP，JbossAOP等为代表的运行期动态代理（JDK动态代理、CGLib动态代理）。</p>
+<p><img src="/images/java_spring_1_8.png" alt></p>
 <p>Spring AOP是基于动态代理的，如果要代理的对象，实现了某个接口，那么Spring AOP会使用JDK Proxy，去创建代理对象，而对于没有实现接口的对象，就无法使用JDK Proxy去进行代理了，这时候Spring AOP会使用Cglib，这时候Spring AOP会使用Cglib生成一个被代理对象的子类来作为代理，如下图所示：</p>
 <p><img src="/images/java_spring_1_7.png" alt></p>
 <p>（3）AOP技术中的一些基本概念</p>
 <p><img src="/images/java_spring_1_6.png" alt></p>
 <p>（4）Spring AOP的配置</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">aop:config</span>&gt;</span><span class="tag">&lt;<span class="name">aop:aspect</span>&gt;</span><span class="tag">&lt;/<span class="name">aop:aspect</span>&gt;</span><span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="Spring-Bean注入方式"><a href="#Spring-Bean注入方式" class="headerlink" title="Spring Bean注入方式"></a>Spring Bean注入方式</h1><p>Spring Bean注入方式有三种：</p>
+<p>（1）属性注入</p>
+<p>所谓基于属性注入，就是在Bean的变量上使用注解进行依赖注入。本质上是通过反射的方式直接注入到属性。这是我平常开发中看的最多也是最熟悉的一种方式，同时，也正是Spring团队所不推荐的方式。比如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> Svc svc;</span><br></pre></td></tr></table></figure>
+<p>（2）构造器注入</p>
+<p>将各个必需的依赖全部放在带有注解构造方法的参数中，并在构造方法中完成对应变量的初始化，这种方式，就是基于构造方法的注入。比如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">privat Svc svc;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">HelpService</span><span class="params">(Svc svc)</span> </span>&#123;  <span class="comment">// HelpService是一个构造方法</span></span><br><span class="line">    <span class="keyword">this</span>.svc = svc;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>备注：在Spring 4.3及以后的版本中，如果这个类只有一个构造方法，那么这个构造方法上面也可以不写@Autowired注解。</p>
+<p>（3）setter注入</p>
+<p>通过对应变量的<code>setXXX()</code>方法以及在方法上面使用注解，来完成依赖注入。比如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> Helper helper;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setHelper</span><span class="params">(Helper helper)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.helper = helper;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>备注：在Spring 4.3及以后的版本中，setter上面的@Autowired注解是可以不写的。</p>
 <h1 id="Spring-HelloWorld程序"><a href="#Spring-HelloWorld程序" class="headerlink" title="Spring HelloWorld程序"></a>Spring HelloWorld程序</h1><p>（1）在Eclipse新建Maven Project，且在pom.xml中引入Spring框架的核心依赖，如下：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-context<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.3.10.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>（2）新建一个将要被Spring容器管理的Bean类</p>
@@ -852,7 +867,7 @@ AnnotationConfigWebApplicationContext
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-Framework简介"><span class="nav-number">1.</span> <span class="nav-text">Spring Framework简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-Framework的几个核心概念"><span class="nav-number">2.</span> <span class="nav-text">Spring Framework的几个核心概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-Bean容器"><span class="nav-number">3.</span> <span class="nav-text">Spring Bean容器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AOP技术"><span class="nav-number">4.</span> <span class="nav-text">AOP技术</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-HelloWorld程序"><span class="nav-number">5.</span> <span class="nav-text">Spring HelloWorld程序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Tomcat中Spring的初始化"><span class="nav-number">6.</span> <span class="nav-text">Tomcat中Spring的初始化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他闲杂知识"><span class="nav-number">7.</span> <span class="nav-text">其他闲杂知识</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-Framework简介"><span class="nav-number">1.</span> <span class="nav-text">Spring Framework简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-Framework的几个核心概念"><span class="nav-number">2.</span> <span class="nav-text">Spring Framework的几个核心概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-Bean容器"><span class="nav-number">3.</span> <span class="nav-text">Spring Bean容器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AOP技术"><span class="nav-number">4.</span> <span class="nav-text">AOP技术</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-Bean注入方式"><span class="nav-number">5.</span> <span class="nav-text">Spring Bean注入方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-HelloWorld程序"><span class="nav-number">6.</span> <span class="nav-text">Spring HelloWorld程序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Tomcat中Spring的初始化"><span class="nav-number">7.</span> <span class="nav-text">Tomcat中Spring的初始化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他闲杂知识"><span class="nav-number">8.</span> <span class="nav-text">其他闲杂知识</span></a></li></ol></div>
             
 
           </div>

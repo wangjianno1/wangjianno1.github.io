@@ -115,15 +115,16 @@
 <meta property="og:site_name" content="老坛の菜园子">
 <meta property="og:description" content="常见的消息队列Message Queue，MQ（1）RabbitMQ RabbitMQ是使用Erlang编写的一个开源的消息队列，本身支持很多的协议：AMQP，XMPP, SMTP, STOMP，也正因如此，它非常重量级，更适合于企业级的开发。同时实现了Broker构架，这意味着消息在发送给客户端时先在中心队列排队。对路由，负载均衡或者数据持久化都有很好的支持。 （2）Redis Redis是一个">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://wangjianno1.github.io/images/kafka_1_5.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/kafka_1_1.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/kafka_1_2.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/kafka_1_3.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/kafka_1_4.png">
-<meta property="og:updated_time" content="2022-02-09T07:40:43.930Z">
+<meta property="og:updated_time" content="2022-03-22T03:15:45.712Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kafka技术调研">
 <meta name="twitter:description" content="常见的消息队列Message Queue，MQ（1）RabbitMQ RabbitMQ是使用Erlang编写的一个开源的消息队列，本身支持很多的协议：AMQP，XMPP, SMTP, STOMP，也正因如此，它非常重量级，更适合于企业级的开发。同时实现了Broker构架，这意味着消息在发送给客户端时先在中心队列排队。对路由，负载均衡或者数据持久化都有很好的支持。 （2）Redis Redis是一个">
-<meta name="twitter:image" content="http://wangjianno1.github.io/images/kafka_1_1.png">
+<meta name="twitter:image" content="http://wangjianno1.github.io/images/kafka_1_5.png">
 
 
 
@@ -425,17 +426,18 @@
 <p>Kafka主要特点是基于Pull的模式来处理消息消费，追求高吞吐量，一开始的目的就是用于日志收集和传输。0.8版本开始支持复制，不支持事务，对消息的重复、丢失、错误没有严格要求，适合产生大量数据的互联网服务的数据收集业务。</p>
 <p>RabbitMQ是使用Erlang语言开发的开源消息队列系统，基于AMQP协议来实现。AMQP的主要特征是面向消息、队列、路由（包括点对点和发布/订阅）、可靠性、安全。AMQP协议更多用在企业系统内，对数据一致性、稳定性和可靠性要求很高的场景，对性能和吞吐量的要求还在其次。</p>
 <p>RocketMQ是阿里开源的消息中间件，它是纯Java开发，具有高吞吐量、高可用性、适合大规模分布式系统应用的特点。RocketMQ思路起源于Kafka，但并不是Kafka的一个Copy，它对消息的可靠传输及事务性做了优化，目前在阿里集团被广泛应用于交易、充值、流计算、消息推送、日志流式处理、binglog分发等场景。</p>
+<p><img src="/images/kafka_1_5.png" alt></p>
 <h1 id="Kafka简介"><a href="#Kafka简介" class="headerlink" title="Kafka简介"></a>Kafka简介</h1><p>Kafka是由LinkedIn开发的一个分布式的消息系统，使用Scala编写（Scala程序是运行在JDK上的），它以可水平扩展和高吞吐率而被广泛使用。目前越来越多的开源分布式处理系统如Cloudera、Apache Storm、Spark都支持与Kafka集成。</p>
 <p><img src="/images/kafka_1_1.png" alt></p>
 <p>Kafka集群的组成部分有：</p>
 <p>（1）Broker</p>
 <p>Kafka集群包含一个或多个服务器，这种服务器被称为broker 。</p>
 <p>（2）Topic</p>
-<p>每条发布到Kafka集群的消息都有一个类别，这个类别被称为Topic。（物理上不同Topic的消息分开存储，逻辑上一个Topic的消息虽然保存于一个或多个broker上但用户只需指定消息的Topic即可生产或消费数据而不必关心数据存于何处）。如下为一个topic的解剖图：</p>
+<p>Topic是逻辑上的概念。每条发布到Kafka集群的消息都有一个类别，这个类别被称为Topic。一个Topic的消息虽然保存于一个或多个broker上但用户只需指定消息的Topic即可生产或消费数据而不必关心数据存于何处。如下为一个topic的解剖图：</p>
 <p><img src="/images/kafka_1_2.png" alt></p>
 <p>备注：这个topic有3个partition，每一个partition中的数据是按时间有序的。</p>
 <p>（3）Partition</p>
-<p>Parition是物理上的概念，每个Topic包含一个或多个Partition。Partition是kafka消息队列组织的最小单位。</p>
+<p>Parition是物理上的概念。每个Topic包含一个或多个Partition，每个partition又由一个一个消息组成，每个消息都被标识了一个递增序列号代表其进来的先后顺序，并按顺序存储在partition中。Partition是kafka消息队列组织的最小单位。对于某一个Partition来说，它只会存储在某个broker上（就是某台机器上），而不会分布在多台机器上，当然这个Partition有Replica的话，它的Replica是分布在其他的Broker上的。</p>
 <p>（4）Producer</p>
 <p>负责发布消息到Kafka broker 。</p>
 <p>（5）Consumer</p>
@@ -453,7 +455,7 @@
 <p>在Kafka中，通过使用Consumer Group的机制，Kafka集群就涵盖了上述两种的模式。每一个Consumer都存在于某个Consumer Group中。各个Consumer Group使用发布/订阅模式来消费数据，也就是说每个Consumer Group都可以消费消息队列中的所有消息。而对于单独的一个Consumer Group所包含的所有Consumer，则使用队列模式来消费消息，也就是Consumer Group订阅到的某一条消息，只能被该Group中的某一个Consumer消费。</p>
 <p>如果Kafka中，所有Consumer Group都包含一个Consumer的话，那其实就相当于是发布/订阅模式。下图形象地说明了Kafka的消息消费方式：</p>
 <p><img src="/images/kafka_1_3.png" alt></p>
-<p>另外，属于同一个Consumer Group的多个Consumer在消费信息时，也有一定的balance策略。当Consumer和Partition的数量相同时，那么每个Consumer都会去消费一个Partition。当Consumer比Partition的数据要少时，那么有些Consumer就会去消费多个Partition。当Consumer比Partition的数据要多时，那么有些Consumer就不会从任何Partition中订阅数据（此部分内容可参见<a href="http://www.jasongj.com/2015/01/02/Kafka%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/）。" target="_blank" rel="noopener">http://www.jasongj.com/2015/01/02/Kafka%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/）。</a></p>
+<p>另外，属于同一个Consumer Group的多个Consumer在消费信息时，也有一定的balance策略。当Consumer和Partition的数量相同时，那么每个Consumer都会去消费一个Partition。当Consumer比Partition的数据要少时，那么有些Consumer就会去消费多个Partition。当Consumer比Partition的数据要多时，那么有些Consumer就不会从任何Partition中订阅数据。此部分内容可参见<a href="http://www.jasongj.com/2015/01/02/Kafka%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/" target="_blank" rel="noopener">《Kafka深度解析》</a>。</p>
 <h1 id="Kafka集群配置和搭建"><a href="#Kafka集群配置和搭建" class="headerlink" title="Kafka集群配置和搭建"></a>Kafka集群配置和搭建</h1><p>前提声明：本次部署测试用的是kafka_2.12-0.10.2.0</p>
 <p><strong><em>搭建测试一：单broker的Kafka集群搭建</em></strong></p>
 <p>（1）下载kafka二进制包</p>
