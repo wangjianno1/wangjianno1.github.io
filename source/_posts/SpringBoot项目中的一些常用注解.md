@@ -117,3 +117,5 @@ http://www.springframework.org/schema/taskhttp://www.springframework.org/schema/
 
 # @Transactional
 在和数据库做相关操作时，我们可以通过@Transactional注解来达到事务功能。@Transactional注解可以作用到类上，也可以作用到方法上。假设@Transactional作用到某个方法上，那么在一次客户端请求过程中，如果该方法中任何地方抛出异常（不管是数据库相关的异常，还是其他的异常），则回滚所有数据库相关的变更操作。如果@Transactional作用到类上，那么相当于该类中所有方法上都使用了@Transactional注解。需要注意的是，一般我们将@Transactional注解到Service层的类名或Service层的方法上，注解到Service的类上，则该类中所有方法都有事务性，注解到方法上则只有该方法有事务性。
+
+备注：@Transactional注解的完整包路径是`org.springframework.transaction.annotation.Transactional`，是属于Spring Framework框架中的。

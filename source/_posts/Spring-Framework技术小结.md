@@ -82,6 +82,8 @@ System.out.println(userService);
     AnnotationConfigWebApplicationContext
     ......
 
+Spring主要提供了两种IOC容器，分别是BeanFactory和ApplicationContext。
+
 BeanFacotry是Spring中比较原始的Factory，如XMLBeanFactory就是一种典型的BeanFactory。原始的BeanFactory无法支持Spring的许多插件，如AOP功能、WEB应用等。ApplicationContext接口，它由BeanFactory接口派生而来，因而提供BeanFactory所有的功能。ApplicationContext以一种更向面向框架的方式工作以及对上下文进行分层和实现继承，ApplicationContext包还提供了以下的功能：  
 
     MessageSource, 提供国际化的消息访问
@@ -114,6 +116,8 @@ AOP，Aspect Oriented Programming，中文为面向切面的编程，通过预�
 
 AOP技术的实现方式有两种，一个是以AspectJ等为代表的预编译方式，一个是以Spring AOP，JbossAOP等为代表的运行期动态代理（JDK动态代理、CGLib动态代理）。
 
+![](/images/java_spring_1_8.png)
+
 Spring AOP是基于动态代理的，如果要代理的对象，实现了某个接口，那么Spring AOP会使用JDK Proxy，去创建代理对象，而对于没有实现接口的对象，就无法使用JDK Proxy去进行代理了，这时候Spring AOP会使用Cglib，这时候Spring AOP会使用Cglib生成一个被代理对象的子类来作为代理，如下图所示：
 
 ![](/images/java_spring_1_7.png)
@@ -127,6 +131,49 @@ Spring AOP是基于动态代理的，如果要代理的对象，实现了某个�
 ```xml
 <aop:config><aop:aspect></aop:aspect></aop:config>
 ```
+
+# Spring Bean注入方式
+
+Spring Bean注入方式有三种：
+
+（1）属性注入
+
+所谓基于属性注入，就是在Bean的变量上使用注解进行依赖注入。本质上是通过反射的方式直接注入到属性。这是我平常开发中看的最多也是最熟悉的一种方式，同时，也正是Spring团队所不推荐的方式。比如：
+
+```java
+@Autowired
+private Svc svc;
+```
+
+（2）构造器注入
+
+将各个必需的依赖全部放在带有注解构造方法的参数中，并在构造方法中完成对应变量的初始化，这种方式，就是基于构造方法的注入。比如：
+
+```java
+privat Svc svc;
+
+@Autowired
+public HelpService(Svc svc) {  // HelpService是一个构造方法
+    this.svc = svc;
+}
+```
+
+备注：在Spring 4.3及以后的版本中，如果这个类只有一个构造方法，那么这个构造方法上面也可以不写@Autowired注解。
+
+（3）setter注入
+
+通过对应变量的`setXXX()`方法以及在方法上面使用注解，来完成依赖注入。比如：
+
+```java
+private Helper helper;
+
+@Autowired
+public void setHelper(Helper helper) {
+    this.helper = helper;
+}
+```
+
+备注：在Spring 4.3及以后的版本中，setter上面的@Autowired注解是可以不写的。
 
 # Spring HelloWorld程序
 

@@ -34,6 +34,8 @@ RabbitMQ是使用Erlang语言开发的开源消息队列系统，基于AMQP协�
 
 RocketMQ是阿里开源的消息中间件，它是纯Java开发，具有高吞吐量、高可用性、适合大规模分布式系统应用的特点。RocketMQ思路起源于Kafka，但并不是Kafka的一个Copy，它对消息的可靠传输及事务性做了优化，目前在阿里集团被广泛应用于交易、充值、流计算、消息推送、日志流式处理、binglog分发等场景。
 
+![](/images/kafka_1_5.png)
+
 # Kafka简介
 
 Kafka是由LinkedIn开发的一个分布式的消息系统，使用Scala编写（Scala程序是运行在JDK上的），它以可水平扩展和高吞吐率而被广泛使用。目前越来越多的开源分布式处理系统如Cloudera、Apache Storm、Spark都支持与Kafka集成。
@@ -48,7 +50,7 @@ Kafka集群包含一个或多个服务器，这种服务器被称为broker 。
 
 （2）Topic
 
-每条发布到Kafka集群的消息都有一个类别，这个类别被称为Topic。（物理上不同Topic的消息分开存储，逻辑上一个Topic的消息虽然保存于一个或多个broker上但用户只需指定消息的Topic即可生产或消费数据而不必关心数据存于何处）。如下为一个topic的解剖图：
+Topic是逻辑上的概念。每条发布到Kafka集群的消息都有一个类别，这个类别被称为Topic。一个Topic的消息虽然保存于一个或多个broker上但用户只需指定消息的Topic即可生产或消费数据而不必关心数据存于何处。如下为一个topic的解剖图：
 
 ![](/images/kafka_1_2.png)
 
@@ -56,7 +58,7 @@ Kafka集群包含一个或多个服务器，这种服务器被称为broker 。
 
 （3）Partition
 
-Parition是物理上的概念，每个Topic包含一个或多个Partition。Partition是kafka消息队列组织的最小单位。
+Parition是物理上的概念。每个Topic包含一个或多个Partition，每个partition又由一个一个消息组成，每个消息都被标识了一个递增序列号代表其进来的先后顺序，并按顺序存储在partition中。Partition是kafka消息队列组织的最小单位。对于某一个Partition来说，它只会存储在某个broker上（就是某台机器上），而不会分布在多台机器上，当然这个Partition有Replica的话，它的Replica是分布在其他的Broker上的。
 
 （4）Producer
 
@@ -94,7 +96,7 @@ Parition是物理上的概念，每个Topic包含一个或多个Partition。Part
 
 ![](/images/kafka_1_3.png)
 
-另外，属于同一个Consumer Group的多个Consumer在消费信息时，也有一定的balance策略。当Consumer和Partition的数量相同时，那么每个Consumer都会去消费一个Partition。当Consumer比Partition的数据要少时，那么有些Consumer就会去消费多个Partition。当Consumer比Partition的数据要多时，那么有些Consumer就不会从任何Partition中订阅数据（此部分内容可参见http://www.jasongj.com/2015/01/02/Kafka%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/）。
+另外，属于同一个Consumer Group的多个Consumer在消费信息时，也有一定的balance策略。当Consumer和Partition的数量相同时，那么每个Consumer都会去消费一个Partition。当Consumer比Partition的数据要少时，那么有些Consumer就会去消费多个Partition。当Consumer比Partition的数据要多时，那么有些Consumer就不会从任何Partition中订阅数据。此部分内容可参见[《Kafka深度解析》](http://www.jasongj.com/2015/01/02/Kafka%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/)。
 
 # Kafka集群配置和搭建
 
