@@ -234,7 +234,7 @@ AMQP，Advanced Message Queuing Protocol，中文译为高级消息队列协议�
 	broker.id         # 必配参数，集群节点的标示符，不得重复。取值范围0~n
 	log.dirs          # 配置broker存放数据的位置，不要使用默认的/tmp/kafka-logs
 	num.partitions    # 自动创建topic时默认partition数量。默认是1，为了获得更好的性能，建议修改为更大
-	default.replication.factor # 自动创建topic的默认副本数量，官方建议修改为2，但通常一个副本就够了
+	default.replication.factor # 自动创建topic的默认副本数量，官方建议修改为2，也就是在kafka集群中同一个消息有两份
 	metadata.broker.list  # 给出一些broker地址，没必要将集群中所有的broker都添加到这个属性中，但是建议最少设置两个，以防止第一个broker不可用。Kafka会自己找到相应topic/partition的leader broker
 	log.retention.hours   # kafka数据保留时间
 	log.segment.bytes     # partition在磁盘的文件不能超过log.segment.bytes大小，如果超过该指，则重新写入一个新文件，即新的segment
@@ -288,6 +288,8 @@ Kafka中同一个topic中多个partition，以及每个partition的多个replica
 ```bash
 ./bin/kafka-topics.sh --zookeeper 192.168.65.239:2181 --alter --topic wahaha-replicas --partitions 3
 ```
+
+备注：增加了分区或增加了broker节点，原有的数据并不会rebalance，可以使用Kafka自带的kafka-reassign-partitions.sh工具进行rebalance。
 
 # Kafka中消息发送端Producer的可靠性保证
 

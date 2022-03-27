@@ -72,7 +72,9 @@ Properties继承于Hashtable。Properties类表示了一个持久的属性集.�
 
 （3）Map接口
 
-键值对、键唯一、值不唯一。如HashMap、Hashtable以及TreeMap等。
+大都是无序（有些LinkedHashMap是有序的），键值对、键唯一、值不唯一。如HashMap、Hashtable以及TreeMap等。
+
+备注：有序，指的是遍历读取集合中元素的顺序，和集合中元素添加时的先后次序保持一样。
 
 # 集合类的遍历操作
 
