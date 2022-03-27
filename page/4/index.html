@@ -913,7 +913,7 @@ Charles是收费软件，可以免费试用30天。试用期过后，未付费�
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://wangjianno1.github.io/2019/06/09/HTTP常见状态码说明/">
+    <link itemprop="mainEntityOfPage" href="http://wangjianno1.github.io/2019/06/09/HTTP常见请求方法-状态码说明/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="锄禾小生">
@@ -932,7 +932,7 @@ Charles是收费软件，可以免费试用30天。试用期过后，未付费�
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/06/09/HTTP常见状态码说明/" itemprop="url">HTTP常见状态码说明</a></h1>
+                <a class="post-title-link" href="/2019/06/09/HTTP常见请求方法-状态码说明/" itemprop="url">HTTP常见请求方法/状态码说明</a></h1>
         
 
         <div class="post-meta">
@@ -1001,16 +1001,19 @@ Charles是收费软件，可以免费试用30天。试用期过后，未付费�
       
         
           
-          HTTP常见状态码（1）502
-502，名称为Bad Gateway，表示作为网关或者代理工作的服务器尝试执行请求时，从上游服务器接收到无效的响应。
-（2）503
-HTTP 503，Service Unavailable，服务器不可用。
-（3）504
-504，名称为Gateway Time-out，表示网关或者代理工作的服务器尝试执行请求时，未能及时从上游服务器（URI标识出的服务器，例如HTTP、FTP、LDAP）或者辅助服务器（例如DNS）收到响应。说白了，504即Nginx代理超过了自己设
+          HTTP请求方法（1）GET
+向特定的资源发出请求。
+（2）POST
+向指定资源提交数据进行处理请求（例如提交表单或者上传文件）。数据被包含在请求体中。POST请求可能会导致新的资源的建立和/或已有资源的修改。
+（3）HEAD
+向服务器索与GET请求相一致的响应，只不过响应体将不会被返回。这一方法可以再不必传输整个响应内容的情况下，就可以获取包含在响应小消息头中的元信息。使用cURL命令中的curl -I参数就是发起的HEAD HTTP请求。
+（4）PUT
+向指定资源位置上传其最新内容。
+（5）
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/06/09/HTTP常见状态码说明/#more" rel="contents">
+            <a class="btn" href="/2019/06/09/HTTP常见请求方法-状态码说明/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>

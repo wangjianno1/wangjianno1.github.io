@@ -107,27 +107,27 @@
   <meta name="keywords" content="Hexo, NexT">
 
 
-<meta name="description" content="HTTP常见状态码（1）502 502，名称为Bad Gateway，表示作为网关或者代理工作的服务器尝试执行请求时，从上游服务器接收到无效的响应。 （2）503 HTTP 503，Service Unavailable，服务器不可用。 （3）504 504，名称为Gateway Time-out，表示网关或者代理工作的服务器尝试执行请求时，未能及时从上游服务器（URI标识出的服务器，例如HTTP">
+<meta name="description" content="HTTP请求方法（1）GET 向特定的资源发出请求。 （2）POST 向指定资源提交数据进行处理请求（例如提交表单或者上传文件）。数据被包含在请求体中。POST请求可能会导致新的资源的建立和/或已有资源的修改。 （3）HEAD 向服务器索与GET请求相一致的响应，只不过响应体将不会被返回。这一方法可以再不必传输整个响应内容的情况下，就可以获取包含在响应小消息头中的元信息。使用cURL命令中的cur">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HTTP常见状态码说明">
-<meta property="og:url" content="http://wangjianno1.github.io/2019/06/09/HTTP常见状态码说明/index.html">
+<meta property="og:title" content="HTTP常见请求方法&#x2F;状态码说明">
+<meta property="og:url" content="http://wangjianno1.github.io/2019/06/09/HTTP常见请求方法-状态码说明/index.html">
 <meta property="og:site_name" content="老坛の菜园子">
-<meta property="og:description" content="HTTP常见状态码（1）502 502，名称为Bad Gateway，表示作为网关或者代理工作的服务器尝试执行请求时，从上游服务器接收到无效的响应。 （2）503 HTTP 503，Service Unavailable，服务器不可用。 （3）504 504，名称为Gateway Time-out，表示网关或者代理工作的服务器尝试执行请求时，未能及时从上游服务器（URI标识出的服务器，例如HTTP">
+<meta property="og:description" content="HTTP请求方法（1）GET 向特定的资源发出请求。 （2）POST 向指定资源提交数据进行处理请求（例如提交表单或者上传文件）。数据被包含在请求体中。POST请求可能会导致新的资源的建立和/或已有资源的修改。 （3）HEAD 向服务器索与GET请求相一致的响应，只不过响应体将不会被返回。这一方法可以再不必传输整个响应内容的情况下，就可以获取包含在响应小消息头中的元信息。使用cURL命令中的cur">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2022-02-25T15:35:36.531Z">
+<meta property="og:updated_time" content="2022-03-27T04:30:20.060Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HTTP常见状态码说明">
-<meta name="twitter:description" content="HTTP常见状态码（1）502 502，名称为Bad Gateway，表示作为网关或者代理工作的服务器尝试执行请求时，从上游服务器接收到无效的响应。 （2）503 HTTP 503，Service Unavailable，服务器不可用。 （3）504 504，名称为Gateway Time-out，表示网关或者代理工作的服务器尝试执行请求时，未能及时从上游服务器（URI标识出的服务器，例如HTTP">
+<meta name="twitter:title" content="HTTP常见请求方法&#x2F;状态码说明">
+<meta name="twitter:description" content="HTTP请求方法（1）GET 向特定的资源发出请求。 （2）POST 向指定资源提交数据进行处理请求（例如提交表单或者上传文件）。数据被包含在请求体中。POST请求可能会导致新的资源的建立和/或已有资源的修改。 （3）HEAD 向服务器索与GET请求相一致的响应，只不过响应体将不会被返回。这一方法可以再不必传输整个响应内容的情况下，就可以获取包含在响应小消息头中的元信息。使用cURL命令中的cur">
 
 
 
 
 
 
-  <link rel="canonical" href="http://wangjianno1.github.io/2019/06/09/HTTP常见状态码说明/">
+  <link rel="canonical" href="http://wangjianno1.github.io/2019/06/09/HTTP常见请求方法-状态码说明/">
 
 
-  <title>HTTP常见状态码说明 | 老坛の菜园子</title>
+  <title>HTTP常见请求方法/状态码说明 | 老坛の菜园子</title>
   
 
 
@@ -322,7 +322,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://wangjianno1.github.io/2019/06/09/HTTP常见状态码说明/">
+    <link itemprop="mainEntityOfPage" href="http://wangjianno1.github.io/2019/06/09/HTTP常见请求方法-状态码说明/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="锄禾小生">
@@ -339,7 +339,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">HTTP常见状态码说明</h1>
+          <h1 class="post-title" itemprop="name headline">HTTP常见请求方法/状态码说明</h1>
         
 
         <div class="post-meta">
@@ -406,7 +406,23 @@
       
 
       
-        <h1 id="HTTP常见状态码"><a href="#HTTP常见状态码" class="headerlink" title="HTTP常见状态码"></a>HTTP常见状态码</h1><p>（1）502</p>
+        <h1 id="HTTP请求方法"><a href="#HTTP请求方法" class="headerlink" title="HTTP请求方法"></a>HTTP请求方法</h1><p>（1）GET</p>
+<p>向特定的资源发出请求。</p>
+<p>（2）POST</p>
+<p>向指定资源提交数据进行处理请求（例如提交表单或者上传文件）。数据被包含在请求体中。POST请求可能会导致新的资源的建立和/或已有资源的修改。</p>
+<p>（3）HEAD</p>
+<p>向服务器索与GET请求相一致的响应，只不过响应体将不会被返回。这一方法可以再不必传输整个响应内容的情况下，就可以获取包含在响应小消息头中的元信息。使用cURL命令中的<code>curl -I</code>参数就是发起的HEAD HTTP请求。</p>
+<p>（4）PUT</p>
+<p>向指定资源位置上传其最新内容。</p>
+<p>（5）DELETE</p>
+<p>请求服务器删除Request-URL所标识的资源。</p>
+<p>（6）OPTIONS</p>
+<p>返回服务器针对特定资源所支持的HTTP请求方法，也可以利用向web服务器发送<code>*</code>的请求来测试服务器的功能性。</p>
+<p>（7）TRACE</p>
+<p>回显服务器收到的请求，主要用于测试或诊断。</p>
+<p>（8）CONNECT</p>
+<p>HTTP/1.1协议中预留给能够将连接改为管道方式的代理服务器。</p>
+<h1 id="HTTP常见状态码"><a href="#HTTP常见状态码" class="headerlink" title="HTTP常见状态码"></a>HTTP常见状态码</h1><p>（1）502</p>
 <p>502，名称为Bad Gateway，表示作为网关或者代理工作的服务器尝试执行请求时，从上游服务器接收到无效的响应。</p>
 <p>（2）503</p>
 <p>HTTP 503，Service Unavailable，服务器不可用。</p>
@@ -794,7 +810,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP常见状态码"><span class="nav-number">1.</span> <span class="nav-text">HTTP常见状态码</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP请求方法"><span class="nav-number">1.</span> <span class="nav-text">HTTP请求方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP常见状态码"><span class="nav-number">2.</span> <span class="nav-text">HTTP常见状态码</span></a></li></ol></div>
             
 
           </div>
