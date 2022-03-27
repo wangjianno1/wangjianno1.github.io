@@ -115,12 +115,16 @@
 <meta property="og:site_name" content="老坛の菜园子">
 <meta property="og:description" content="Redis简介Redis是一个key-value的非关系型数据库（NoSQL），现在在各种系统中的使用越来越多，大部分情况下是因为其高性能的特性，被当做缓存使用。Redis应用广泛，尤其是被作为缓存使用，Redis由于其丰富的数据结构也可以被应用到其他场景。Redis的具有很多优势： （1）读写性能高，10w次/s+的读速度，8w次/s+的写速度 （2）K-V，value支持的数据类型很多，包括字">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://wangjianno1.github.io/images/redis_1_3.png">
+<meta property="og:image" content="http://wangjianno1.github.io/images/redis_1_2.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/redis_1_1.png">
-<meta property="og:updated_time" content="2022-03-13T04:03:02.051Z">
+<meta property="og:image" content="http://wangjianno1.github.io/images/redis_1_4.png">
+<meta property="og:image" content="http://wangjianno1.github.io/images/redis_1_5.png">
+<meta property="og:updated_time" content="2022-03-27T03:13:42.009Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis技术调研">
 <meta name="twitter:description" content="Redis简介Redis是一个key-value的非关系型数据库（NoSQL），现在在各种系统中的使用越来越多，大部分情况下是因为其高性能的特性，被当做缓存使用。Redis应用广泛，尤其是被作为缓存使用，Redis由于其丰富的数据结构也可以被应用到其他场景。Redis的具有很多优势： （1）读写性能高，10w次/s+的读速度，8w次/s+的写速度 （2）K-V，value支持的数据类型很多，包括字">
-<meta name="twitter:image" content="http://wangjianno1.github.io/images/redis_1_1.png">
+<meta name="twitter:image" content="http://wangjianno1.github.io/images/redis_1_3.png">
 
 
 
@@ -421,18 +425,53 @@
 <p>（3）支持事务，multi指示事务的开始，exec指示事务的执行，discard指示事务的丢弃。所有的指令在exec之前都不执行，只是被缓存到服务器的一个队列里，只有在收到exec指令后才开始执行</p>
 <h1 id="Redis持久化"><a href="#Redis持久化" class="headerlink" title="Redis持久化"></a>Redis持久化</h1><p>即将内存的数据持久化磁盘上，这样重启Redis进程之后，缓存的数据就不会丢失。当然也可以设置让Redis不做持久化，这样数据只会在内存中存在，当Redis进程重启时，数据就会丢失。关于Redis持久化有如下两种方式：</p>
 <p>（1）RDB方式，即快照</p>
-<p>周期性地将Redis内存中的数据持久化到磁盘上。</p>
-<p>（2）AOF方式</p>
-<p>以日志方式记录Redis的所有操作。</p>
+<p>RDB持久化方式会在一个特定的间隔保存那个时间点的数据快照。</p>
+<p>（2）AOF方式，即追加式文件</p>
+<p>AOF持久化方式则会记录每一个服务器收到的写操作。在服务启动时，这些记录的操作会逐条执行从而重建出原来的数据。写操作命令记录的格式跟Redis协议一致，以追加的方式进行保存。</p>
 <h1 id="Redis的速度为什么快"><a href="#Redis的速度为什么快" class="headerlink" title="Redis的速度为什么快"></a>Redis的速度为什么快</h1><p>Redis采用的是基于内存的采用的是单进程单线程模型的KV数据库，由C语言编写。Redis之所以快的原因主要有：</p>
 <p>（1）完全基于内存，绝大部分请求是纯粹的内存操作，非常快速。数据存在内存中，类似于HashMap，HashMap的优势就是查找和操作的时间复杂度都是O(1)。</p>
 <p>（2）数据结构简单，对数据操作也简单，Redis中的数据结构是专门进行设计的。</p>
 <p>（3）采用单线程，避免了不必要的上下文切换和竞争条件，也不存在多进程或者多线程导致的切换而消耗CPU，不用去考虑各种锁的问题，不存在加锁释放锁操作，没有因为可能出现死锁而导致的性能消耗。需要注意的是，Redis新版本开始支持了多线程了。</p>
 <p>（4）使用多路I/O复用的Reactor模型，非阻塞IO<br>需要注意的是，Redis是单线程的，只是在处理网络请求的时候只有一个线程来处理，一个正式的Redis Server运行的时候肯定是不止一个线程的。例如Redis进行持久化的时候会以子进程或者子线程的方式执行（具体是子线程还是子进程待读者深入研究）。至于Redis处理请求时使用单线程，官方解释说，Redis的瓶颈不在CPU，而在内存和网络带宽。</p>
 <p>正是由于Redis处理请求是单线程的，所以不能充分利用CPU多核的特性。如果要想利用CPU多核特性，我们可以在一台机器上启动多个Redis实例就好了。</p>
-<h1 id="Redis命令"><a href="#Redis命令" class="headerlink" title="Redis命令"></a>Redis命令</h1><p>Redis命令格式如下：</p>
+<h1 id="Redis客户端"><a href="#Redis客户端" class="headerlink" title="Redis客户端"></a>Redis客户端</h1><p>Redis命令用于在redis服务上执行操作。要在redis服务上执行命令需要一个redis客户端。Redis安装之后自带redis-cli，就是Redis的客户端。</p>
+<p>（1）连接本地redis服务</p>
+<pre><code>$ redis-cli
+redis 127.0.0.1:6379&gt;
+redis 127.0.0.1:6379&gt; PING
+
+PONG
+</code></pre><p>（2）连接远程redis服务</p>
+<p>以下实例演示了如何连接到主机为127.0.0.1，端口为6379 ，密码为mypass的redis服务上。</p>
+<pre><code>$redis-cli -h 127.0.0.1 -p 6379 -a &quot;mypass&quot;
+redis 127.0.0.1:6379&gt;
+redis 127.0.0.1:6379&gt; PING
+
+PONG
+</code></pre><p>备注：redis也有账号密码，这块待研究。</p>
+<h1 id="Redis整体的数据结构以及支持的数据类型"><a href="#Redis整体的数据结构以及支持的数据类型" class="headerlink" title="Redis整体的数据结构以及支持的数据类型"></a>Redis整体的数据结构以及支持的数据类型</h1><h2 id="Redis数据结构"><a href="#Redis数据结构" class="headerlink" title="Redis数据结构"></a>Redis数据结构</h2><p>Redis内部整体的存储结构是一个大的hashmap，内部是数组实现的hash，key冲突通过挂链表去实现，每个dictEntry为一个key/value对象，value为定义的redisObject。</p>
+<p><img src="/images/redis_1_3.png" alt></p>
+<p>dictEntry是存储key-&gt;value的地方，再让我们看一下dictEntry结构体：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 字典</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">dictEntry</span> &#123;</span></span><br><span class="line">    <span class="comment">// 键</span></span><br><span class="line">    <span class="keyword">void</span> *key;</span><br><span class="line">    <span class="comment">// 值</span></span><br><span class="line">    <span class="keyword">union</span> &#123;</span><br><span class="line">        <span class="comment">// 指向具体redisObject</span></span><br><span class="line">        <span class="keyword">void</span> *val;</span><br><span class="line">        <span class="comment">// </span></span><br><span class="line">        <span class="keyword">uint64_t</span> u64;</span><br><span class="line">        <span class="keyword">int64_t</span> s64;</span><br><span class="line">    &#125; v;</span><br><span class="line">    <span class="comment">// 指向下个哈希表节点，形成链表</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">dictEntry</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125; dictEntry;</span><br></pre></td></tr></table></figure>
+<p>因此通过dictEntry结构看到，redis中的value是一个redisObject，下面是redis中定义的redisObject结构：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Redis 对象</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">redisObject</span> &#123;</span></span><br><span class="line">    <span class="comment">// 类型 4bits</span></span><br><span class="line">    <span class="keyword">unsigned</span> type:<span class="number">4</span>;</span><br><span class="line">    <span class="comment">// 编码方式 4bits</span></span><br><span class="line">    <span class="keyword">unsigned</span> encoding:<span class="number">4</span>;</span><br><span class="line">    <span class="comment">// LRU 时间（相对于 server.lruclock） 24bits</span></span><br><span class="line">    <span class="keyword">unsigned</span> lru:<span class="number">22</span>;</span><br><span class="line">    <span class="comment">// 引用计数 Redis里面的数据可以通过引用计数进行共享 32bits</span></span><br><span class="line">    <span class="keyword">int</span> refcount;</span><br><span class="line">    <span class="comment">// 指向对象的值 64-bit</span></span><br><span class="line">    <span class="keyword">void</span> *ptr;</span><br><span class="line">&#125; robj;</span><br></pre></td></tr></table></figure>
+<p>如上<code>*ptr</code>指向具体的数据结构的地址；type表示该对象的类型，即String/List/Hash/Set/Zset中的一个，但为了提高存储效率与程序执行效率，每种对象的底层数据结构实现都可能不止一种，encoding表示对象底层所使用的编码，也就是<code>*ptr</code>指向的数据类型，是Redis的内部数据类型，有如下八种：</p>
+<pre><code>REDIS_ENCODING_INT（long 类型的整数）
+REDIS_ENCODING_EMBSTR embstr （编码的简单动态字符串）
+REDIS_ENCODING_RAW （简单动态字符串）
+REDIS_ENCODING_HT （字典）
+REDIS_ENCODING_LINKEDLIST （双端链表）
+REDIS_ENCODING_ZIPLIST （压缩列表）
+REDIS_ENCODING_INTSET （整数集合）
+REDIS_ENCODING_SKIPLIST （跳跃表和字典）
+</code></pre><p>总结来说，String/List/Hash/Set/Zset是Redis对外提供的数据类型，而Redis实际存储时用的是内部类型，如下是对外类型和内部类型的对应关系：</p>
+<p><img src="/images/redis_1_2.png" alt></p>
+<p>可以使用<code>OBJECT ENCODING key</code>命令来查看某个key存储的value的底层数据类型。</p>
+<p>举例来说，String类型内部使用了int/embstr/raw类型，这也就是Redis能用String类型存储整型/浮点型数据的原因了。</p>
+<h2 id="Redis支持的五种数据类型"><a href="#Redis支持的五种数据类型" class="headerlink" title="Redis支持的五种数据类型"></a>Redis支持的五种数据类型</h2><p>Redis支持的五种数据类型，string（字符串），hash（哈希），list（列表），set（集合）及zset(sorted set：有序集合)。</p>
+<h1 id="Redis命令"><a href="#Redis命令" class="headerlink" title="Redis命令"></a>Redis命令</h1><h2 id="Redis命令简介"><a href="#Redis命令简介" class="headerlink" title="Redis命令简介"></a>Redis命令简介</h2><p>Redis命令格式如下：</p>
 <pre><code>COMMAND KEY_NAME [VALUE] [OPTION]
-</code></pre><p>Redis的命令有很多，常用的有：</p>
+</code></pre><p>Redis的命令可以根据数据类型分为几类，常用的有：</p>
 <pre><code>SET
 GET
 DEL
@@ -440,24 +479,47 @@ EXISTS
 EXPIRE
 TTL
 ...
-</code></pre><p><a href="https://redis.io/commands" target="_blank" rel="noopener">更多命令参见官网</a></p>
-<h1 id="Redis支持抽象数据类型"><a href="#Redis支持抽象数据类型" class="headerlink" title="Redis支持抽象数据类型"></a>Redis支持抽象数据类型</h1><p>Redis的value不仅支持整型、浮点型、字符、字符串这些基础数据类型，还支持一些抽象数据类型：</p>
-<p>（1）list</p>
-<p>list即是链表。操作list的常用命令有rpush，lpop，lpush，rpop，lrange，llen等。命令举例如下：</p>
+</code></pre><p><a href="https://redis.io/commands" target="_blank" rel="noopener">Redis支持命令完整版参见官网</a></p>
+<h2 id="与keys相关操作命令"><a href="#与keys相关操作命令" class="headerlink" title="与keys相关操作命令"></a>与keys相关操作命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">DEL key    <span class="comment">#该命令用于在 key 存在时删除 key</span></span><br><span class="line">DUMP key   <span class="comment">#序列化给定 key ，并返回被序列化的值</span></span><br><span class="line">EXISTS key <span class="comment">#检查给定 key 是否存在</span></span><br><span class="line">EXPIRE key seconds       <span class="comment">#为给定 key 设置过期时间，以秒计</span></span><br><span class="line">EXPIREAT key timestamp   <span class="comment">#EXPIREAT的作用和EXPIRE类似，都用于为key设置过期时间。 不同在于EXPIREAT命令接受的时间参数是UNIX时间戳(unix timestamp)</span></span><br><span class="line">PEXPIRE key milliseconds <span class="comment">#设置 key 的过期时间以毫秒计</span></span><br><span class="line">PEXPIREAT key milliseconds-timestamp <span class="comment">#设置 key 过期时间的时间戳(unix timestamp) 以毫秒计</span></span><br><span class="line">KEYS pattern <span class="comment">#查找所有符合给定模式( pattern)的 key</span></span><br><span class="line">MOVE key db  <span class="comment">#将当前数据库的 key 移动到给定的数据库 db 当中</span></span><br><span class="line">PERSIST key  <span class="comment">#移除 key 的过期时间，key 将持久保持</span></span><br><span class="line">PTTL key     <span class="comment">#以毫秒为单位返回 key 的剩余的过期时间</span></span><br><span class="line">TTL key      <span class="comment">#以秒为单位，返回给定 key 的剩余生存时间(TTL, time to live)</span></span><br><span class="line">RANDOMKEY    <span class="comment">#从当前数据库中随机返回一个 key</span></span><br><span class="line">RENAME key newkey    <span class="comment">#修改 key 的名称</span></span><br><span class="line">RENAMENX key newkey  <span class="comment">#仅当 newkey 不存在时，将 key 改名为 newkey</span></span><br><span class="line">SCAN cursor [MATCH pattern] [COUNT count]  <span class="comment">#迭代数据库中的数据库键</span></span><br><span class="line">TYPE key             <span class="comment">#返回 key 所储存的值的类型</span></span><br></pre></td></tr></table></figure>
+<h2 id="与string相关操作命令"><a href="#与string相关操作命令" class="headerlink" title="与string相关操作命令"></a>与string相关操作命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">SET key value           <span class="comment">#设置指定 key 的值</span></span><br><span class="line">GET key                 <span class="comment">#获取指定 key 的值</span></span><br><span class="line">GETRANGE key start end  <span class="comment">#返回 key 中字符串值的子字符</span></span><br><span class="line">GETSET key value        <span class="comment">#将给定 key 的值设为 value ，并返回 key 的旧值(old value)</span></span><br><span class="line">GETBIT key offset       <span class="comment">#对 key 所储存的字符串值，获取指定偏移量上的位(bit)</span></span><br><span class="line">MGET key1 [key2..]      <span class="comment">#获取所有(一个或多个)给定 key 的值</span></span><br><span class="line">SETBIT key offset value <span class="comment">#对 key 所储存的字符串值，设置或清除指定偏移量上的位(bit)</span></span><br><span class="line">SETEX key seconds value <span class="comment">#将值 value 关联到 key ，并将 key 的过期时间设为 seconds (以秒为单位)</span></span><br><span class="line">SETNX key value           <span class="comment">#只有在 key 不存在时设置 key 的值</span></span><br><span class="line">SETRANGE key offset value <span class="comment">#用 value 参数覆写给定 key 所储存的字符串值，从偏移量 offset 开始</span></span><br><span class="line">STRLEN key   <span class="comment">#返回 key 所储存的字符串值的长度</span></span><br><span class="line">MSET key value [key value ...]   <span class="comment">#同时设置一个或多个 key-value 对</span></span><br><span class="line">MSETNX key value [key value ...] <span class="comment">#同时设置一个或多个 key-value 对，当且仅当所有给定 key 都不存在</span></span><br><span class="line">PSETEX key milliseconds value    <span class="comment">#这个命令和 SETEX 命令相似，但它以毫秒为单位设置 key 的生存时间，而不是像 SETEX 命令那样，以秒为单位</span></span><br><span class="line">INCR key     <span class="comment">#将 key 中储存的数字值增一</span></span><br><span class="line">INCRBY key increment      <span class="comment">#将 key 所储存的值加上给定的增量值（increment）</span></span><br><span class="line">INCRBYFLOAT key increment <span class="comment">#将 key 所储存的值加上给定的浮点增量值（increment）</span></span><br><span class="line">DECR key                  <span class="comment">#将 key 中储存的数字值减一</span></span><br><span class="line">DECRBY key decrement      <span class="comment">#key 所储存的值减去给定的减量值（decrement）</span></span><br><span class="line">APPEND key value          <span class="comment">#如果 key 已经存在并且是一个字符串， APPEND 命令将指定的 value 追加到该 key 原来值（value）的末尾</span></span><br></pre></td></tr></table></figure>
+<h2 id="与list相关操作命令"><a href="#与list相关操作命令" class="headerlink" title="与list相关操作命令"></a>与list相关操作命令</h2><p>list即是链表。操作list的常用命令有rpush，lpop，lpush，rpop，lrange，llen等。命令举例如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">rpush myList value1         <span class="comment">#向list的头部（右边）添加元素</span></span><br><span class="line">rpush myList value2 value3  <span class="comment">#向list的头部（最右边）添加多个元素</span></span><br><span class="line">lpop myList                 <span class="comment">#将list的尾部(最左边)元素取出</span></span><br><span class="line">lrange myList 0 1           <span class="comment">#查看对应下标的list列表， 0为start，1为end</span></span><br><span class="line">lrange myList 0 -1          <span class="comment">#查看列表中的所有元素，-1表示倒数第一</span></span><br></pre></td></tr></table></figure>
 <p><img src="/images/redis_1_1.png" alt></p>
-<p>（2）hash</p>
-<p>hash类似于JDK1.8前的HashMap。操作hash的常用命令有hset，hmset，hexists，hget，hgetall，hkeys，hvals等。命令举例如下：</p>
+<h2 id="与hash相关操作命令"><a href="#与hash相关操作命令" class="headerlink" title="与hash相关操作命令"></a>与hash相关操作命令</h2><p>hash类似于JDK1.8前的HashMap。操作hash的常用命令有hset，hmset，hexists，hget，hgetall，hkeys，hvals等。命令举例如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">hmset userInfoKey name <span class="string">"guide"</span> description <span class="string">"dev"</span> age “24”  <span class="comment">#初始化一个hash对象</span></span><br><span class="line">hexists userInfoKey name  <span class="comment">#查看key对应的value中指定的字段是否存在</span></span><br><span class="line">hget userInfoKey name     <span class="comment">#获取存储在哈希表中指定字段的值</span></span><br><span class="line">hgetall userInfoKey       <span class="comment">#获取在哈希表中指定key的所有字段和值</span></span><br><span class="line">hkeys userInfoKey         <span class="comment">#获取key列表</span></span><br><span class="line">hvals userInfoKey         <span class="comment">#获取value列表</span></span><br><span class="line">hset userInfoKey name <span class="string">"GuideGeGe"</span>  <span class="comment">#修改某个字段对应的值</span></span><br></pre></td></tr></table></figure>
-<p>（3）set</p>
-<p>set类似于Java中的HashSet。Redis中的set类型是一种无序集合，集合中的元素没有先后顺序。操作set的常用命令有sadd，spop，smembers，sismember，scard，sinterstore，sunion等。</p>
+<h2 id="与set相关操作命令"><a href="#与set相关操作命令" class="headerlink" title="与set相关操作命令"></a>与set相关操作命令</h2><p>set类似于Java中的HashSet。Redis中的set类型是一种无序集合，集合中的元素没有先后顺序。操作set的常用命令有sadd，spop，smembers，sismember，scard，sinterstore，sunion等。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sadd mySet value1 value2  <span class="comment">#添加元素进去</span></span><br><span class="line">sadd mySet value1         <span class="comment">#不允许有重复元素</span></span><br><span class="line">smembers mySet            <span class="comment">#查看set中所有的元素</span></span><br><span class="line">scard mySet               <span class="comment">#查看set的长度</span></span><br><span class="line">sismember mySet value1    <span class="comment">#检查某个元素是否存在set中，只能接收单个元素</span></span><br><span class="line"></span><br><span class="line">sadd mySet2 value2 value3</span><br><span class="line">sinterstore mySet3 mySet mySet2  <span class="comment">#获取mySet和mySet2的交集并存放在mySet3中</span></span><br></pre></td></tr></table></figure>
-<p>（4）sorted set</p>
-<p>和set相比，sorted set增加了一个权重参数score，使得集合中的元素能够按score进行有序排列，还可以通过score的范围来获取元素的列表。操作sorted set的常用命令有zadd，zcard，zscore，zrange，zrevrange，zrem等。</p>
+<h2 id="与sorted-set相关操作命令"><a href="#与sorted-set相关操作命令" class="headerlink" title="与sorted set相关操作命令"></a>与sorted set相关操作命令</h2><p>和set相比，sorted set增加了一个权重参数score，使得集合中的元素能够按score进行有序排列，还可以通过score的范围来获取元素的列表。操作sorted set的常用命令有zadd，zcard，zscore，zrange，zrevrange，zrem等。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">zadd myZset 3.0 value1             <span class="comment">#添加元素到sorted set中3.0为权重</span></span><br><span class="line">zadd myZset 2.0 value2 1.0 value3  <span class="comment">#一次添加多个元素</span></span><br><span class="line">zcard myZset          <span class="comment">#查看sorted set中的元素数量</span></span><br><span class="line">zscore myZset value1  <span class="comment">#查看某个value的权重</span></span><br><span class="line">zrange myZset 0 -1    <span class="comment">#顺序输出某个范围区间的元素，0-1表示输出所有元素</span></span><br><span class="line">zrange myZset 0 1     <span class="comment">#顺序输出某个范围区间的元素，0为start，1为stop</span></span><br><span class="line">zrevrange myZset 0 1  <span class="comment">#逆序输出某个范围区间的元素，0为start，1为stop</span></span><br></pre></td></tr></table></figure>
-<p>（5）bitmap</p>
-<p>bitmap存储的是连续的二进制数字（0和1），通过bitmap，只需要一个bit位来表示某个元素对应的值或者状态，key就是对应元素本身。操作bitmap的常用命令有setbit，getbit，bitcount，bitop。</p>
-<h1 id="Redis内存淘汰机制"><a href="#Redis内存淘汰机制" class="headerlink" title="Redis内存淘汰机制"></a>Redis内存淘汰机制</h1><p>Redis内存淘汰机制，保证Redis中的数据都是热点数据。Redis提供6种数据淘汰策略如下：</p>
+<h1 id="Redis发布订阅"><a href="#Redis发布订阅" class="headerlink" title="Redis发布订阅"></a>Redis发布订阅</h1><p>redis发布与订阅是一种消息通信的模式，发送者（pub）发送消息，订阅者（sub）接收消息。这使Redis可以用作消息队列。</p>
+<p><img src="/images/redis_1_4.png" alt></p>
+<p><img src="/images/redis_1_5.png" alt></p>
+<p>第一个redis客户端设置订阅某频道的消息：</p>
+<pre><code>redis 127.0.0.1:6379&gt; SUBSCRIBE runoobChat
+
+Reading messages... (press Ctrl-C to quit)
+1) &quot;subscribe&quot;
+2) &quot;runoobChat&quot;
+3) (integer) 1
+</code></pre><p>第二个redis客户端往某频道发布消息：</p>
+<pre><code>redis 127.0.0.1:6379&gt; PUBLISH runoobChat &quot;Redis PUBLISH test&quot;
+
+(integer) 1
+
+redis 127.0.0.1:6379&gt; PUBLISH runoobChat &quot;Learn redis by runoob.com&quot;
+
+(integer) 1
+
+# 订阅者的客户端会显示如下消息
+1) &quot;message&quot;
+2) &quot;runoobChat&quot;
+3) &quot;Redis PUBLISH test&quot;
+1) &quot;message&quot;
+2) &quot;runoobChat&quot;
+3) &quot;Learn redis by runoob.com&quot;
+</code></pre><p>备注：订阅客户端订阅频道还支持模式匹配，如<code>PUBLISH a.*</code>，则该客户端会订阅a.b，a.c等等频道。</p>
+<h1 id="Redis内存淘汰机制"><a href="#Redis内存淘汰机制" class="headerlink" title="Redis内存淘汰机制"></a>Redis内存淘汰机制</h1><p>在Redis中，我们可以通过server.maxmemory去设置Redis最大使用内存大小，而当Redis内存数据集大小上升到一定程度的时候（Redis的内存已经快放不下了），Redis就会施行数据淘汰机制。Redis提供了一下6种数据淘汰机制：</p>
+<p>Redis内存淘汰机制，保证Redis中的数据都是热点数据。Redis提供6种数据淘汰策略如下：</p>
 <p>（1）volatile-lru（least recently used）</p>
 <p>从已设置过期时间的数据集（server.db[i].expires）中挑选最近最少使用的数据淘汰。</p>
 <p>（2）volatile-ttl</p>
@@ -473,9 +535,22 @@ TTL
 <h1 id="Redis部署方式"><a href="#Redis部署方式" class="headerlink" title="Redis部署方式"></a>Redis部署方式</h1><p>（1）单机部署模式</p>
 <p>（2）Master-Slave + Sentinel选举模式</p>
 <p>（3）Redis Cluster模式</p>
-<h1 id="Redisson"><a href="#Redisson" class="headerlink" title="Redisson"></a>Redisson</h1><p>Redisson是一个企业级的开源Redis Client，这个推荐使用。且这个Client还带有分布式锁支持，从而避免使用原生Client API实现分布式锁时考虑的一些复杂问题。</p>
-<h1 id="其他闲杂"><a href="#其他闲杂" class="headerlink" title="其他闲杂"></a>其他闲杂</h1><p>（1）缓存击穿，缓存穿透</p>
-<p>（2）从Redis 2.6版本起，Redis开始支持Lua脚本，一个Lua脚本操作Redis，是一个原子性操作，Redis分布式的实现一般来说会用到Lua脚本。</p>
+<h1 id="缓存几个可用性问题"><a href="#缓存几个可用性问题" class="headerlink" title="缓存几个可用性问题"></a>缓存几个可用性问题</h1><h2 id="缓存穿透"><a href="#缓存穿透" class="headerlink" title="缓存穿透"></a>缓存穿透</h2><p>缓存穿透是指缓存和数据库中都没有的数据，而用户不断发起请求。由于缓存是不命中时被动写的，并且出于容错考虑，如果从存储层查不到数据则不写入缓存，这将导致这个不存在的数据每次请求都要到存储层去查询，失去了缓存的意义。在流量大时，可能DB就挂掉了，要是有人利用不存在的key频繁攻击我们的应用，这就是漏洞。解决方法如下：</p>
+<p>（1）接口层增加校验，如用户鉴权校验，id做基础校验，id&lt;=0的直接拦截；</p>
+<p>（2）从缓存取不到的数据，在数据库中也没有取到，这时也可以将key-value对写为key-null，缓存有效时间可以设置短点，如30秒（设置太长会导致正常情况也没法使用）。这样可以防止攻击用户反复用同一个id暴力攻击。</p>
+<p>（3）布隆过滤器。类似于一个hash set，用于快速判某个元素是否存在于集合中，其典型的应用场景就是快速判断一个key是否存在于某容器，不存在就直接返回。布隆过滤器的关键就在于hash算法和容器大小。</p>
+<h2 id="缓存击穿"><a href="#缓存击穿" class="headerlink" title="缓存击穿"></a>缓存击穿</h2><p>缓存击穿是指缓存中没有但数据库中有的数据（一般是缓存时间到期），这时由于并发用户特别多，同时读缓存没读到数据，又同时去数据库去取数据，引起数据库压力瞬间增大，造成过大压力。解决方案如下：</p>
+<p>（1）设置热点数据永远不过期。</p>
+<p>（2）接口限流与熔断，降级。重要的接口一定要做好限流策略，防止用户恶意刷接口，同时要降级准备，当接口中的某些服务不可用时候，进行熔断，失败快速返回机制。</p>
+<p>（3）加互斥锁</p>
+<h2 id="缓存雪崩"><a href="#缓存雪崩" class="headerlink" title="缓存雪崩"></a>缓存雪崩</h2><p>缓存雪崩是指缓存中数据大批量到过期时间，而查询数据量巨大，引起数据库压力过大甚至down机。和缓存击穿不同的是，缓存击穿指并发查同一条数据，缓存雪崩是不同数据都过期了，很多数据都查不到从而查数据库。解决方案如下：</p>
+<p>（1）缓存数据的过期时间设置随机，防止同一时间大量数据过期现象发生。</p>
+<p>（2）如果缓存数据库是分布式部署，将热点数据均匀分布在不同的缓存数据库中。</p>
+<p>（3）设置热点数据永远不过期</p>
+<h1 id="SpringBoot集成Redis"><a href="#SpringBoot集成Redis" class="headerlink" title="SpringBoot集成Redis"></a>SpringBoot集成Redis</h1><p>使用Spring Data Redis模块，构造RedisTemplate对象访问Redis实例，底层使用的是Jredis客户端，不过SpringBoot2.x开始，已经默认使用Lettuce客户端了。</p>
+<h1 id="其他闲杂"><a href="#其他闲杂" class="headerlink" title="其他闲杂"></a>其他闲杂</h1><p>（1）Redisson是一个企业级的开源Redis Client，这个推荐使用。且这个Client还带有分布式锁支持，从而避免使用原生Client API实现分布式锁时考虑的一些复杂问题。</p>
+<p>（2）从Redis 2.6版本起，Redis开始支持Lua脚本，通过内嵌支持Lua环境，执行脚本的常用命令为EVAL。整个Lua脚本中所有redis命令集合是一个原子性操作。Redis分布式的实现一般来说会用到Lua脚本。</p>
+<p>学习资料参考于：<br><a href="https://mp.weixin.qq.com/s/7ct-mvSIaT3o4-tsMaKRWA" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/7ct-mvSIaT3o4-tsMaKRWA</a></p>
 
       
     </div>
@@ -851,7 +926,7 @@ TTL
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis简介"><span class="nav-number">1.</span> <span class="nav-text">Redis简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis的一些特性"><span class="nav-number">2.</span> <span class="nav-text">Redis的一些特性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis持久化"><span class="nav-number">3.</span> <span class="nav-text">Redis持久化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis的速度为什么快"><span class="nav-number">4.</span> <span class="nav-text">Redis的速度为什么快</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis命令"><span class="nav-number">5.</span> <span class="nav-text">Redis命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis支持抽象数据类型"><span class="nav-number">6.</span> <span class="nav-text">Redis支持抽象数据类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis内存淘汰机制"><span class="nav-number">7.</span> <span class="nav-text">Redis内存淘汰机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis部署方式"><span class="nav-number">8.</span> <span class="nav-text">Redis部署方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redisson"><span class="nav-number">9.</span> <span class="nav-text">Redisson</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他闲杂"><span class="nav-number">10.</span> <span class="nav-text">其他闲杂</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis简介"><span class="nav-number">1.</span> <span class="nav-text">Redis简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis的一些特性"><span class="nav-number">2.</span> <span class="nav-text">Redis的一些特性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis持久化"><span class="nav-number">3.</span> <span class="nav-text">Redis持久化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis的速度为什么快"><span class="nav-number">4.</span> <span class="nav-text">Redis的速度为什么快</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis客户端"><span class="nav-number">5.</span> <span class="nav-text">Redis客户端</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis整体的数据结构以及支持的数据类型"><span class="nav-number">6.</span> <span class="nav-text">Redis整体的数据结构以及支持的数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis数据结构"><span class="nav-number">6.1.</span> <span class="nav-text">Redis数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis支持的五种数据类型"><span class="nav-number">6.2.</span> <span class="nav-text">Redis支持的五种数据类型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis命令"><span class="nav-number">7.</span> <span class="nav-text">Redis命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis命令简介"><span class="nav-number">7.1.</span> <span class="nav-text">Redis命令简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#与keys相关操作命令"><span class="nav-number">7.2.</span> <span class="nav-text">与keys相关操作命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#与string相关操作命令"><span class="nav-number">7.3.</span> <span class="nav-text">与string相关操作命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#与list相关操作命令"><span class="nav-number">7.4.</span> <span class="nav-text">与list相关操作命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#与hash相关操作命令"><span class="nav-number">7.5.</span> <span class="nav-text">与hash相关操作命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#与set相关操作命令"><span class="nav-number">7.6.</span> <span class="nav-text">与set相关操作命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#与sorted-set相关操作命令"><span class="nav-number">7.7.</span> <span class="nav-text">与sorted set相关操作命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis发布订阅"><span class="nav-number">8.</span> <span class="nav-text">Redis发布订阅</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis内存淘汰机制"><span class="nav-number">9.</span> <span class="nav-text">Redis内存淘汰机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis部署方式"><span class="nav-number">10.</span> <span class="nav-text">Redis部署方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#缓存几个可用性问题"><span class="nav-number">11.</span> <span class="nav-text">缓存几个可用性问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存穿透"><span class="nav-number">11.1.</span> <span class="nav-text">缓存穿透</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存击穿"><span class="nav-number">11.2.</span> <span class="nav-text">缓存击穿</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存雪崩"><span class="nav-number">11.3.</span> <span class="nav-text">缓存雪崩</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SpringBoot集成Redis"><span class="nav-number">12.</span> <span class="nav-text">SpringBoot集成Redis</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他闲杂"><span class="nav-number">13.</span> <span class="nav-text">其他闲杂</span></a></li></ol></div>
             
 
           </div>
