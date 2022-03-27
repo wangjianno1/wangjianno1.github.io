@@ -114,12 +114,13 @@
 <meta property="og:site_name" content="老坛の菜园子">
 <meta property="og:description" content="扩展Extensions简介扩展是TLS比较重要的一个知识点。它的存在能让Client和Server在不更新TLS版本的基础上，获得新的能力。Extension是TLS中的一系列可水平扩展的插件，是TLS中握手协议中ClientHello和ServerHello报文中的字段信息。 Client在ClientHello中申明多个自己可以支持的Extension，以向Server表示自己有以下这些能力">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://wangjianno1.github.io/images/https_extend_1_2.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/https_extend_1_1.png">
-<meta property="og:updated_time" content="2022-02-26T10:21:20.167Z">
+<meta property="og:updated_time" content="2022-03-27T08:49:16.544Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TLS协议中扩展Extension简介">
 <meta name="twitter:description" content="扩展Extensions简介扩展是TLS比较重要的一个知识点。它的存在能让Client和Server在不更新TLS版本的基础上，获得新的能力。Extension是TLS中的一系列可水平扩展的插件，是TLS中握手协议中ClientHello和ServerHello报文中的字段信息。 Client在ClientHello中申明多个自己可以支持的Extension，以向Server表示自己有以下这些能力">
-<meta name="twitter:image" content="http://wangjianno1.github.io/images/https_extend_1_1.png">
+<meta name="twitter:image" content="http://wangjianno1.github.io/images/https_extend_1_2.png">
 
 
 
@@ -410,6 +411,8 @@
       
         <h1 id="扩展Extensions简介"><a href="#扩展Extensions简介" class="headerlink" title="扩展Extensions简介"></a>扩展Extensions简介</h1><p>扩展是TLS比较重要的一个知识点。它的存在能让Client和Server在不更新TLS版本的基础上，获得新的能力。Extension是TLS中的一系列可水平扩展的插件，是TLS中握手协议中ClientHello和ServerHello报文中的字段信息。</p>
 <p>Client在ClientHello中申明多个自己可以支持的Extension，以向Server表示自己有以下这些能力，或者向Server协商某些协议。Server收到ClientHello以后，依次解析Extension，有些如果需要立即回应，就在ServerHello中作出回应，有些不需要回应，或者Server不支持的Extension就不用响应，忽略不处理。</p>
+<p>如下是Extension在ClientHello/ServerHello报文中的位置结构如下：</p>
+<p><img src="/images/https_extend_1_2.png" alt></p>
 <h1 id="TLS1-2中一些扩展Extension"><a href="#TLS1-2中一些扩展Extension" class="headerlink" title="TLS1.2中一些扩展Extension"></a>TLS1.2中一些扩展Extension</h1><p>（1）server_name</p>
 <p>我们知道，在Nginx中可以通过指定不同的server_name来配置多个站点。HTTP/1.1协议请求头中的Host字段可以标识出当前请求属于哪个站点。但是对于HTTPS网站来说，要想发送HTTP数据，必须等待SSL握手完成，而在握手阶段服务端就必须提供网站证书。对于在同一个IP部署不同HTTPS站点，并且还使用了不同证书的情况下，服务端怎么知道该发送哪个证书？</p>
 <p>Server Name Indication，简称为SNI，是TLS的一个扩展，为解决这个问题应运而生。有了SNI，服务端可以通过ClientHello中的SNI扩展拿到用户要访问网站的Server Name，进而发送与之匹配的证书，顺利完成SSL握手。</p>
