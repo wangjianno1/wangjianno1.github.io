@@ -11,6 +11,10 @@ categories: HTTPS
 
 Client在ClientHello中申明多个自己可以支持的Extension，以向Server表示自己有以下这些能力，或者向Server协商某些协议。Server收到ClientHello以后，依次解析Extension，有些如果需要立即回应，就在ServerHello中作出回应，有些不需要回应，或者Server不支持的Extension就不用响应，忽略不处理。
 
+如下是Extension在ClientHello/ServerHello报文中的位置结构如下：
+
+![](/images/https_extend_1_2.png)
+
 # TLS1.2中一些扩展Extension
 
 （1）server_name
