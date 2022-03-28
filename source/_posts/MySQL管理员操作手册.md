@@ -172,6 +172,24 @@ select name，count(*) from employee_tbl group by name;
 select dept, max(salary) as maximum from staff group by dept;
 ```
 
+（12）limit | offset子句
+
+    select _column,_column from _table [where Clause] [limit N][offset M]
+
+说明如下：
+
+    limit N表示返回前N条记录
+    offset M表示跳过M条记录，从第M条记录开始
+    limit N offset M表示从第M条记录开始, 返回N条记录
+    limit M, N等价于limit N offset M
+
+`limit | offset`一个重要用途就是实现MySQL查询分页功能：
+
+```sql
+select * from _table limit (page_number-1)*lines_perpage, lines_perpage;       //写法一
+select * from _table limit lines_perpage offset (page_number-1)*lines_perpage; //写法二
+```
+
 # MySQL NULL值处理
 
 mysql使用select命令及where子句来读取数据表中的数据，但是当提供的查询条件字段为NULL时，该命令可能就无法正常工作。 为了处理这种情况，mysql提供了两种运算符：
