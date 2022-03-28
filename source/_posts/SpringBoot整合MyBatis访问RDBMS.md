@@ -201,6 +201,8 @@ public interface UserMapper {
 }
 ```
 
+备注：UserMapper接口中的名字要和映射文件中的id对应起来。
+
 （5）在Service层直接注入Mapper类，然后是用Mapper类来对数据进行操作
 
 同第一种方式。
