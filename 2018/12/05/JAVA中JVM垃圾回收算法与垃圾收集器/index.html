@@ -126,7 +126,7 @@
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_gc_1_9.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_gc_1_10.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_gc_1_11.png">
-<meta property="og:updated_time" content="2022-02-21T15:19:51.084Z">
+<meta property="og:updated_time" content="2022-03-28T07:35:20.029Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA中JVM垃圾回收算法与垃圾收集器">
 <meta name="twitter:description" content="判断对象是否还被使用的算法判断对象是否还在被使用的算法有： 引用计数算法给对象中添加一个引用计数器，每当有一个地方引用它时，计数器值就加1；当引用失效时，计数器值就减1；任何时刻计数器都为0的对象就是不可能被使用的。但是Java语言中没有选用引用计数算法来管理内存，其最主要原因是它很难解决对象之间的相互循环引用的问题。 根搜索算法也称为“可达性分析算法”，通过一系列的名为GC Roots的对象作为">
@@ -434,7 +434,8 @@
 <p><img src="/images/java_gc_1_3.png" alt></p>
 <h2 id="标记-整理（Mark-Compact）算法"><a href="#标记-整理（Mark-Compact）算法" class="headerlink" title="标记-整理（Mark-Compact）算法"></a>标记-整理（Mark-Compact）算法</h2><p>根据老年代的特点推出的一种标记算法，标记过程仍然与“标记-清除”算法一样，但后续步骤不是直接对可回收对象回收，而是让所有存活的对象向一端移动，然后直接清理掉端边界以外的内存。</p>
 <p><img src="/images/java_gc_1_4.png" alt></p>
-<h2 id="分代回收（Generational-Collection）算法"><a href="#分代回收（Generational-Collection）算法" class="headerlink" title="分代回收（Generational Collection）算法"></a>分代回收（Generational Collection）算法</h2><p>当前虚拟机的垃圾收集都采用分代回收算法，这种算法没有什么新的思想，只是根据对象存活周期的不同将内存分为几块。一般将Java堆分为新生代和老年代，这样我们就可以根据各个年代的特点选择合适的垃圾收集算法。 比如在新生代中，每次收集都会有大量对象死去，所以可以选择“标记-复制”算法，只需要付出少量对象的复制成本就可以完成每次垃圾收集。而老年代的对象存活几率是比较高的，而且没有额外的空间对它进行分配担保，所以我们必须选择“标记-清除”或“标记-整理”算法进行垃圾收集。</p>
+<p>“标记-整理”算法一方面在“标记-清除”算法上做了升级，解决了内存碎片的问题，也规避了复制算法只能利用一半内存区域的弊端。看起来很美好，但从上图可以看到，它对内存变动更频繁，需要整理所有存活对象的引用地址，在效率上比复制算法要差很多。</p>
+<h2 id="分代回收（Generational-Collection）算法"><a href="#分代回收（Generational-Collection）算法" class="headerlink" title="分代回收（Generational Collection）算法"></a>分代回收（Generational Collection）算法</h2><p>分代收集算法严格来说并不是一种思想或理论，而是融合上述3种基础的算法思想，而产生的针对不同情况所采用不同算法的一套组合拳。一般来说，根据对象存活周期的不同将内存分为几块，一般将Java堆分为新生代和老年代，这样我们就可以根据各个年代的特点选择合适的垃圾收集算法。 比如在新生代中，每次收集都会有大量对象死去，所以可以选择“复制”算法，只需要付出少量对象的复制成本就可以完成每次垃圾收集。而老年代的对象存活几率是比较高的，而且没有额外的空间对它进行分配担保，所以我们必须选择“标记-清除”或“标记-整理”算法进行垃圾收集。</p>
 <h1 id="垃圾回收-收集器"><a href="#垃圾回收-收集器" class="headerlink" title="垃圾回收/收集器"></a>垃圾回收/收集器</h1><p>垃圾回收算法是内存回收的方法论，垃圾回收器则是内存回收的具体实现。Java虚拟机规范中对垃圾收集器的实现并没有任何规定，因此不同的厂商、不同版本的虚拟机所提供的垃圾收集器都可能会有很大的差别，并且一般都会提供参数供用户根据自己的应用特点和要求组合出各个年代所使用的收集器。如下为Sun HotSpot虚拟机所提供的所有收集器：</p>
 <p><img src="/images/java_gc_1_5.png" alt></p>
 <p>从图中可以看出每个垃圾收集器所适用于的JVM运行时内存区域，如Serial/ParNew/Parallel Scavenge是年轻代区域的垃圾收集器，Serial Old/Parallel Old/CMS是年老代的垃圾收集器，而G1可以同时对年轻代和年老代的内存进行回收。在上图中如果两个收集器之间存在连线，则说明它们可以搭配在一起使用。</p>
@@ -493,7 +494,8 @@
 <p>Minor GC触发条件是Eden区域满了。Minor GC的工作内容主要有：</p>
 <p>（1）将Eden中没有引用的对象直接被GC掉，其他还有引用的对象会复制到To Survivor区域。</p>
 <p>（2）会将From Survivor中还存活的对象，一部分复制到To Survivor，一部分满足条件（这个条件后面会说明）的对象复制到年老代。</p>
-<p>（3）From Survivor和To Survivor互换角色，From Survivor会变成To Survivor，To Survivor会变成From Survivor。<br>经过一次Minor GC后，Eden区域被清空了，From Survivor会被清空，且会变成To Survivor。</p>
+<p>（3）From Survivor和To Survivor互换角色，From Survivor会变成To Survivor，To Survivor会变成From Survivor。</p>
+<p>通过Minor GC之后，<strong>Eden会被清空</strong>，Eden区中绝大部分对象会被回收，而那些无需回收的存活对象，将会进到Survivor区。在Survivor区会将Eden区和From存活的对象放到Survivor的To区（如果To区不够，则直接进入Old区）。然后From Survivor和To Survivor互换角色，等待下次的Minor GC的到来。</p>
 <h2 id="Major-GC"><a href="#Major-GC" class="headerlink" title="Major GC"></a>Major GC</h2><p>Major GC指对年老代的堆内存进行垃圾回收。</p>
 <h2 id="Full-GC"><a href="#Full-GC" class="headerlink" title="Full GC"></a>Full GC</h2><p>Full GC指即对年轻代又对年老代堆内存进行垃圾回收。Full GC时会同时进行Major GC和Minor GC。Full GC触发条件如下：</p>
 <p>（1）调用System.GC时，系统建议执行Full GC，但是不必然执行</p>
@@ -504,7 +506,7 @@
 <p>（1）部分对象会在From Survivor和To Survivor区域中复制来复制去，如此交换15次（由JVM参数MaxTenuringThreshold决定，这个参数默认是15），最终如果还是存活，就存入到老年代。</p>
 <p>（2）如果对象的大小大于Eden的二分之一会直接分配在年老代</p>
 <p>（3）动态年龄判断，大于等于某个年龄的对象超过了Survivor空间一半，这些大于等于某个年龄的对象直接进入老年代</p>
-<p>学习资料参考于：<br><a href="https://cloud.tencent.com/developer/article/1592943" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1592943</a></p>
+<p>学习资料参考于：<br><a href="https://cloud.tencent.com/developer/article/1592943" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1592943</a><br><a href="https://mp.weixin.qq.com/s/feJKRqYJTVEIxl6jvjevAg" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/feJKRqYJTVEIxl6jvjevAg</a></p>
 
       
     </div>

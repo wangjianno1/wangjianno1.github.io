@@ -122,8 +122,9 @@
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_mem_1_8.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_mem_1_2.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_mem_1_6.png">
+<meta property="og:image" content="http://wangjianno1.github.io/images/java_mem_1_9.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_mem_1_3.png">
-<meta property="og:updated_time" content="2022-03-28T04:07:22.796Z">
+<meta property="og:updated_time" content="2022-03-28T07:11:36.921Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA虚拟机内存管理机制">
 <meta name="twitter:description" content="Java虚拟机在执行Java程序的过程中会把它所管理的内存划分为若干个不同的数据区域。这些区域都有各自的用途，有的区域随着虚拟机进程的启动而存在，有些区域则是依赖用户线程的启动和结束而建立和销毁。根据《Java虚拟机规范》的规定，Java虚拟机所管理的内存会包括以下几个区域：    备注：方法区和堆是所有线程共享的内存区域，而虚拟机栈、本地方法栈以及程序计数器是每个线程所独享的一片区域。 程序计数">
@@ -436,6 +437,8 @@
 <p>在JDK 1.8中移除整个永久代，取而代之的是一个叫元空间（Metaspace）的区域（永久代使用的是JVM的堆内存空间，而元空间使用的是物理内存，直接受到本机的物理内存限制）。</p>
 <p>如下是JVM在创建一个新对象时分配堆内存的过程图如下：</p>
 <p><img src="/images/java_mem_1_6.png" alt></p>
+<p>JVM默认情况下，堆内存中不同的内存区域的大概占比如下：</p>
+<p><img src="/images/java_mem_1_9.png" alt></p>
 <h2 id="新生代"><a href="#新生代" class="headerlink" title="新生代"></a>新生代</h2><p>所有新生成的对象首先都是放在年轻代的。年轻代的目标就是尽可能快速的收集掉那些生命周期短的对象。年轻代分三个区，一个Eden区，两个Survivor区（一般而言）。大部分对象首先在Eden区中生成。为了整理内存的需要，对象会在Minor GC时在两个Survivor区复制来复制去，Survivor总有一个是空的。同时，根据程序需要，Survivor区是可以配置为多个的（多于两个），这样可以增加对象在年轻代中的存在时间，减少被放到年老代的可能。</p>
 <h2 id="年老代"><a href="#年老代" class="headerlink" title="年老代"></a>年老代</h2><p>在年轻代中经历了N次垃圾回收后仍然存活的对象，就会被放到年老代中。因此，可以认为年老代中存放的都是一些生命周期较长的对象。</p>
 <h2 id="持久代"><a href="#持久代" class="headerlink" title="持久代"></a>持久代</h2><p>用于存放静态文件，如今Java类、方法等。持久代对垃圾回收没有显著影响，但是有些应用可能动态生成或者调用一些class，例如Hibernate等，在这种时候需要设置一个比较大的持久代空间来存放这些运行过程中新增的类。持久代大小通过-XX:MaxPermSize=<n>进行设置。</n></p>
@@ -448,6 +451,7 @@
 <h1 id="直接内存"><a href="#直接内存" class="headerlink" title="直接内存"></a>直接内存</h1><p>直接内存并不是虚拟机运行时数据区的一部分，也不是虚拟机规范中定义的内存区域，但是这部分内存也被频繁地使用。而且也可能导致OutOfMemoryError异常出现。</p>
 <p>JDK1.4中新加入的NIO（New Input/Output）类，引入了一种基于通道（Channel）与缓存区（Buffer）的I/O方式，它可以直接使用Native函数库直接分配堆外内存，然后通过一个存储在Java堆中的DirectByteBuffer对象作为这块内存的引用进行操作。这样就能在一些场景中显著提高性能，因为避免了在Java堆和Native堆之间来回复制数据。</p>
 <p>本机直接内存的分配不会受到Java堆的限制，但是，既然是内存就会受到本机总内存大小以及处理器寻址空间的限制。</p>
+<p>学习资料参考于：<br><a href="https://mp.weixin.qq.com/s/Y1MW20Qm1wqx2oVoT5tPDw" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/Y1MW20Qm1wqx2oVoT5tPDw</a></p>
 
       
     </div>
