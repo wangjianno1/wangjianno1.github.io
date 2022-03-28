@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="老坛の菜园子">
 <meta property="og:description" content="MySQL登录（1）利用TCP/IP连接，客户端和服务端可以在不同的机器上 12mysql -h12.45.23.41 -uwahaha -pmysql -h12.45.23.41 -P3345 -uwahaha -p   #非标准的3306端口 然后输入用户密码，若无密码，直接回车即可。 （2）利用Unix域套接字来连接，客户端和服务端要在同一台机器上 1mysql -S /var/lib/my">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2022-02-09T07:40:43.940Z">
+<meta property="og:updated_time" content="2022-03-28T01:05:18.597Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL管理员操作手册">
 <meta name="twitter:description" content="MySQL登录（1）利用TCP/IP连接，客户端和服务端可以在不同的机器上 12mysql -h12.45.23.41 -uwahaha -pmysql -h12.45.23.41 -P3345 -uwahaha -p   #非标准的3306端口 然后输入用户密码，若无密码，直接回车即可。 （2）利用Unix域套接字来连接，客户端和服务端要在同一台机器上 1mysql -S /var/lib/my">
@@ -243,7 +243,7 @@
         
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">339</span>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">340</span>
               </a>
         </li>
       
@@ -449,6 +449,15 @@
 <p>（11）分组group by子句</p>
 <p>mysql中可使用group by子句对记录行进行分组。select子句中的列名必须为分组列或列函数。列函数对于group by子句定义的每个组各返回一个结果。举例来说：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">name</span>，<span class="keyword">count</span>(*) <span class="keyword">from</span> employee_tbl <span class="keyword">group</span> <span class="keyword">by</span> <span class="keyword">name</span>;</span><br><span class="line"><span class="keyword">select</span> dept, <span class="keyword">max</span>(salary) <span class="keyword">as</span> maximum <span class="keyword">from</span> staff <span class="keyword">group</span> <span class="keyword">by</span> dept;</span><br></pre></td></tr></table></figure>
+<p>（12）limit | offset子句</p>
+<pre><code>select _column,_column from _table [where Clause] [limit N][offset M]
+</code></pre><p>说明如下：</p>
+<pre><code>limit N表示返回前N条记录
+offset M表示跳过M条记录，从第M条记录开始
+limit N offset M表示从第M条记录开始, 返回N条记录
+limit M, N等价于limit N offset M
+</code></pre><p><code>limit | offset</code>一个重要用途就是实现MySQL查询分页功能：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> _table <span class="keyword">limit</span> (page_number<span class="number">-1</span>)*lines_perpage, lines_perpage;       //写法一</span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> _table <span class="keyword">limit</span> lines_perpage <span class="keyword">offset</span> (page_number<span class="number">-1</span>)*lines_perpage; //写法二</span><br></pre></td></tr></table></figure>
 <h1 id="MySQL-NULL值处理"><a href="#MySQL-NULL值处理" class="headerlink" title="MySQL NULL值处理"></a>MySQL NULL值处理</h1><p>mysql使用select命令及where子句来读取数据表中的数据，但是当提供的查询条件字段为NULL时，该命令可能就无法正常工作。 为了处理这种情况，mysql提供了两种运算符：</p>
 <pre><code>IS NULL       #当列的值是NULL，此运算符返回true
 IS NOT NULL   #当列的值不为NULL，此运算符返回true
@@ -611,7 +620,7 @@ IS NOT NULL   #当列的值不为NULL，此运算符返回true
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">339</span>
+                    <span class="site-state-item-count">340</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>

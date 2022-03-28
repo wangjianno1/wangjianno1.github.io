@@ -116,7 +116,8 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://wangjianno1.github.io/images/mysql_innodb_1_1.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/mysql_innodb_1_2.png">
-<meta property="og:updated_time" content="2022-03-27T10:35:29.686Z">
+<meta property="og:image" content="http://wangjianno1.github.io/images/mysql_innodb_1_3.png">
+<meta property="og:updated_time" content="2022-03-28T02:18:12.052Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="InnoDB引擎的存储结构及索引原理">
 <meta name="twitter:description" content="InnoDB引擎的存储结构 InnoDB的存储结构是有表空间TableSpace、段Segment、区Extent、页Page、行Row组成。数据库中所有记录可以放到一个表空间中（称为共享表空间），也可以每一张表放到不同的表空间中（称为独立表空间）。 在InnoDB中每个页Page的大小是16KB，页Page是InnoDB磁盘管理的最小单位。 行Row就是我们一条的数据记录。 InnoDB聚集索引">
@@ -245,7 +246,7 @@
         
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">339</span>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">340</span>
               </a>
         </li>
       
@@ -419,17 +420,32 @@
 <p>（2）B+数的叶子节点存储的是一张表的完整数据记录。B+树的非叶子节点存储的是为了快速检索数据的目录数据，非实际的数据记录</p>
 <p>（3）所有页Page内的记录是按照主键的大小顺序排成一个单向链表</p>
 <p>（4）每一层的所有页Page按主键大小顺序排成一个双向链表</p>
-<p>我们把具有如上特性的B+树称为聚簇索引，所有完整的用户记录都存放在这个聚簇索引的叶子节点处。这种聚簇索引并不需要我们在MySQL语句中显式的去创建，InnoDB存储引擎会自动地为我们在主键上创建聚簇索引。如果表没有主键，InnoDB会在一个非NULL且唯一的列上创建聚集索引。若主键和非NULL且唯一的列都不存在，InnoDB将会自动增加一个6字节(48位)的整数列，被叫做ROWID，聚集数据将在这个隐藏列上创建，需要注意的是，ROWID既不能通过任何查询获取到也不能做像基于行复制的任何内部操作，是看不到的。</p>
+<p>我们把具有如上特性的B+树称为聚簇索引，所有完整的用户记录都存放在这个聚簇索引的叶子节点处。这种聚簇索引并不需要我们在MySQL语句中显式的去创建，InnoDB存储引擎会自动地为我们在主键上创建聚簇索引。如果表没有主键，InnoDB会选择一个非NULL且唯一索引作为聚集索引。若主键和非NULL且唯一索引都不存在，InnoDB将会自动增加一个6字节(48位)的整数列，被叫做ROWID，聚集数据将在这个隐藏列上创建，需要注意的是，ROWID既不能通过任何查询获取到也不能做像基于行复制的任何内部操作，是看不到的。</p>
 <p>另外有趣的一点是，在InnoDB存储引擎中，聚簇索引就是数据的存储方式（一张表所有的数据记录都存储在了叶子节点），也就是所谓的索引即数据。</p>
 <p>简单来说，InnoDB中每一种表都自动有一个聚集索引，而该聚集索引也完整的包括了该表的所有数据记录，而并非是一个快速查找数据的目录而已。</p>
-<p>除了聚集索引，其他的都称为非聚集索引。</p>
-<h1 id="InnoDB的普通索引"><a href="#InnoDB的普通索引" class="headerlink" title="InnoDB的普通索引"></a>InnoDB的普通索引</h1><p>普通索引，也称二级索引，也是一个B+树的结构，但是普通索引有如下几点不同：</p>
+<h1 id="InnoDB索引的一些概念"><a href="#InnoDB索引的一些概念" class="headerlink" title="InnoDB索引的一些概念"></a>InnoDB索引的一些概念</h1><h2 id="聚集索引（主键索引）"><a href="#聚集索引（主键索引）" class="headerlink" title="聚集索引（主键索引）"></a>聚集索引（主键索引）</h2><p>聚集索引，也成为主键索引。其他的索引统称为非聚集索引。</p>
+<h2 id="普通索引"><a href="#普通索引" class="headerlink" title="普通索引"></a>普通索引</h2><p>普通索引，也称二级索引，也是一个B+树的结构，但是普通索引有如下几点不同：</p>
 <p>（1）普通索引需要人为显式地在数据表中某一列上创建</p>
 <p>（2）在数据表某字段上创建普通索引，索引中各种排序链表，是按照该字段的值进行排序</p>
 <p>（3）普通索引的B+树的叶子节点对应页Page的记录，就不是数据表中完整的记录，只包含被索引列的值和主键值，而记录中其他字段是不存储的</p>
-<p>因此当我们执行一条select语句用到一个普通索引时，会在普通索引的B+树结构中，找到对应被索引列的值和主键值。然后再通过主键值，去聚集索引中查找到最终的完整数据记录。</p>
-<h1 id="联合索引"><a href="#联合索引" class="headerlink" title="联合索引"></a>联合索引</h1><p>联合索引，也称复合索引或组合索引，是我们在数据表的多个列上创建一个索引。如在f1和f2列上创建联合索引，那么联合索引对应的B+树中链表排序，是先根据f1进行排序，若f1相同再根据f2进行排序。</p>
-<p>当我们执行一条select语句用到一个组合索引时，会在组合索引的B+树结构中，也是先找到对应多个被索引列的值和主键值。然后再通过主键值，去聚集索引中查找到最终的完整数据记录。需要注意的是，若我们只想查询数据表的某些列，并非是记录的所有列，且要查询的列正好包含在索引列中，也就是组合索引的B+树的叶子节点中已经包含了这些列的值，那么不用在透过主键去聚集索引中去在查找一遍啦，直接返回就好了。这种情形也叫“覆盖索引”。</p>
+<p>因此当我们执行一条select语句用到一个普通索引时，会在普通索引的B+树结构中，找到对应被索引列的值和主键值。然后再通过主键值，去聚集索引中查找到最终的完整数据记录。这个过程应该叫回表查询。</p>
+<h2 id="联合索引"><a href="#联合索引" class="headerlink" title="联合索引"></a>联合索引</h2><p>它是普通索引中的一种。</p>
+<p>联合索引，也称复合索引或组合索引，是我们在数据表的多个列上创建一个索引。如在f1和f2列上创建联合索引，那么联合索引对应的B+树中链表排序，是先根据f1进行排序，若f1相同再根据f2进行排序。当我们执行一条select语句用到一个组合索引时，会在组合索引的B+树结构中，也是先找到对应多个被索引列的值和主键值。然后再通过主键值，去聚集索引中查找到最终的完整数据记录。</p>
+<p>举例来说，我们在表myTable上的三个字段（vc_Name，vc_City，i_Age） 创建一个组合索引里如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> <span class="string">`myTable`</span> <span class="keyword">ADD</span> <span class="keyword">INDEX</span> <span class="string">`name_city_age`</span> (vc_Name(<span class="number">10</span>),vc_City,i_Age);</span><br></pre></td></tr></table></figure>
+<p>这就相当于分别建立了三个组合索引如下：</p>
+<pre><code>vc_Name,vc_City,i_Age
+vc_Name,vc_City
+vc_Name
+</code></pre><p>为什么没有vc_City,i_Age等这样的组合索引呢？这是因为MySQL组合索引“最左前缀”的结果。简单的理解就是只从最左面的开始组合。并不是只要包含这三列的查询都会用到该组合索引。</p>
+<p>因此若执行<code>SELECT * FROM myTable WHREE vc_Name=”erquan” AND vc_City=”郑州”;</code>SQL语句，是会用到上面的组合索引。若执行<code>SELECT * FROM myTable WHREE i_Age=20 AND vc_City=”郑州”;</code>SQL语句是不会用到上面的组合索引。</p>
+<h2 id="前缀索引"><a href="#前缀索引" class="headerlink" title="前缀索引"></a>前缀索引</h2><p>它是普通索引中的一种。当要索引的列字符很长时，索引则会很大且变慢，而我们又需要在此字段上创建索引来提供查询效率，这时可以在该字段的前N个字符上创建索引，节约索引空间，从而提高索引效率，这也成为前缀索引。</p>
+<p>假设有如下一个test表：</p>
+<p><img src="/images/mysql_innodb_1_3.png" alt></p>
+<p>执行<code>alter table test add index(area(5));</code>SQL语句就可以在在area字段的前5个字符上创建了前缀索引。创建前缀索引时，一定要注意索引长度和重复度的权衡选择。</p>
+<h2 id="覆盖索引"><a href="#覆盖索引" class="headerlink" title="覆盖索引"></a>覆盖索引</h2><p>并非一种索引哦。</p>
+<p>若我们只想查询数据表的某些列，并非是记录的所有列，且要查询的列正好包含在索引列中，也就是索引的B+树的叶子节点中已经包含了这些列的值，那么不用在透过主键去聚集索引中去在查找一遍啦，直接返回就好了。这种情形也叫“覆盖索引”。</p>
+<p>比如<code>select income from user where imcome&gt;40;</code>时，因income字段上建立了索引，索引文件中已经有income字段的内容了，这时就不用拿着主键再去聚集索引中做回表查询啦。</p>
 <h1 id="其他闲杂知识"><a href="#其他闲杂知识" class="headerlink" title="其他闲杂知识"></a>其他闲杂知识</h1><p>（1）一般说来，在InnoDB的索引B+树中，最多需要四层就可以满足啦</p>
 <p>（2）上面说的都是InnoDB的存储结构以及索引原理，不同的存储引擎会表现的稍有不同。如MyISAM的聚集索引B+树的叶子节点，只存储了主键值和行号。数据查询会通过聚集索引找到主键值和行号，然后再通过行号（也就物理位置的偏移量）找到完整的数据记录。</p>
 <p>学习资料参考于：<br>我们都是小青蛙的<a href="https://mp.weixin.qq.com/s/vtIHUlR92GQVG6UW74PEqQ" target="_blank" rel="noopener">《InnoDB记录存储结构》</a><br>我们都是小青蛙的<a href="https://mp.weixin.qq.com/s/GYRuFhty5gDLAmDXw7AluA" target="_blank" rel="noopener">《InnoDB数据页结构》</a><br>我们都是小青蛙的<a href="https://mp.weixin.qq.com/s/9gloKNtZrYlGsBODCckQrw" target="_blank" rel="noopener">《MySQL的索引》</a><br>我们都是小青蛙的<a href="https://mp.weixin.qq.com/s/ktEBA03Kip4bYYkp2ktiIQ" target="_blank" rel="noopener">《MySQL的索引（中）》</a></p>
@@ -572,7 +588,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">339</span>
+                    <span class="site-state-item-count">340</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -802,7 +818,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#InnoDB引擎的存储结构"><span class="nav-number">1.</span> <span class="nav-text">InnoDB引擎的存储结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#InnoDB聚集索引"><span class="nav-number">2.</span> <span class="nav-text">InnoDB聚集索引</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#InnoDB的普通索引"><span class="nav-number">3.</span> <span class="nav-text">InnoDB的普通索引</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#联合索引"><span class="nav-number">4.</span> <span class="nav-text">联合索引</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他闲杂知识"><span class="nav-number">5.</span> <span class="nav-text">其他闲杂知识</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#InnoDB引擎的存储结构"><span class="nav-number">1.</span> <span class="nav-text">InnoDB引擎的存储结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#InnoDB聚集索引"><span class="nav-number">2.</span> <span class="nav-text">InnoDB聚集索引</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#InnoDB索引的一些概念"><span class="nav-number">3.</span> <span class="nav-text">InnoDB索引的一些概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#聚集索引（主键索引）"><span class="nav-number">3.1.</span> <span class="nav-text">聚集索引（主键索引）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#普通索引"><span class="nav-number">3.2.</span> <span class="nav-text">普通索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#联合索引"><span class="nav-number">3.3.</span> <span class="nav-text">联合索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前缀索引"><span class="nav-number">3.4.</span> <span class="nav-text">前缀索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#覆盖索引"><span class="nav-number">3.5.</span> <span class="nav-text">覆盖索引</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他闲杂知识"><span class="nav-number">4.</span> <span class="nav-text">其他闲杂知识</span></a></li></ol></div>
             
 
           </div>

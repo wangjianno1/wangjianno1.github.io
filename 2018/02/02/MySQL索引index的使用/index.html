@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="老坛の菜园子">
 <meta property="og:description" content="MySQL索引MySQL索引的建立对于mysql的高效运行是很重要的，索引可以大大提高MySQL的检索速度。索引分单列索引和组合索引。单列索引，即一个索引只包含单个列，一个表可以有多个单列索引，但这不是组合索引。组合索引，即一个索引包含多个列。 需要注意的是，过多的使用索引将会造成滥用，虽然索引能大大提高查询速度，但是却会降低更新表的速度（如对表进行insert、update和delete）。因为">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2022-02-09T07:40:43.940Z">
+<meta property="og:updated_time" content="2022-03-28T02:36:21.703Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL索引index的使用">
 <meta name="twitter:description" content="MySQL索引MySQL索引的建立对于mysql的高效运行是很重要的，索引可以大大提高MySQL的检索速度。索引分单列索引和组合索引。单列索引，即一个索引只包含单个列，一个表可以有多个单列索引，但这不是组合索引。组合索引，即一个索引包含多个列。 需要注意的是，过多的使用索引将会造成滥用，虽然索引能大大提高查询速度，但是却会降低更新表的速度（如对表进行insert、update和delete）。因为">
@@ -243,7 +243,7 @@
         
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">339</span>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">340</span>
               </a>
         </li>
       
@@ -419,6 +419,10 @@
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">index</span> some_index <span class="keyword">on</span> some_table;</span><br></pre></td></tr></table></figure>
 <p>（4）查看指定数据库表上的所有索引</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">index</span> <span class="keyword">from</span> some_table;</span><br></pre></td></tr></table></figure>
+<h1 id="创建索引注意事项"><a href="#创建索引注意事项" class="headerlink" title="创建索引注意事项"></a>创建索引注意事项</h1><p>（1）对where，on，group by，order by等字句中出现的字段上创建索引</p>
+<p>（2）对较小的数据列使用索引，这样会使索引文件更小，同时内存中也可以装载更多的索引键。</p>
+<p>（3）为较长的字符串使用前缀索引。</p>
+<p>（4）不要过多创建索引，除了增加额外的磁盘空间外，对于DML操作的速度影响很大，因为其每增删改一次就得从新建立索引。</p>
 <h1 id="聚集索引与非聚集索引"><a href="#聚集索引与非聚集索引" class="headerlink" title="聚集索引与非聚集索引"></a>聚集索引与非聚集索引</h1><p>聚集索引是指数据库表行中数据的物理存储顺序与键值的逻辑（索引）顺序相同。一个表只能有一个聚集索引，因为一个表的物理顺序只有一种情况，所以，对应的聚集索引只能有一个。如果某索引不是聚集索引，则表中的行物理顺序与索引顺序不匹配，与非聚集索引相比，聚集索引有着更快的检索速度。</p>
 <p>InnoDB支持聚集索引，而MyISAM不支持聚集索引。MySQL数据表中的自增id字段上就是聚集索引哦。</p>
 <p>学习资料参考于：<br><a href="http://www.runoob.com/mysql/mysql-index.html" target="_blank" rel="noopener">http://www.runoob.com/mysql/mysql-index.html</a><br><a href="https://mp.weixin.qq.com/s/tvfieCo_W_pLQwpLofwT9A" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/tvfieCo_W_pLQwpLofwT9A</a></p>
@@ -567,7 +571,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">339</span>
+                    <span class="site-state-item-count">340</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -797,7 +801,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL索引"><span class="nav-number">1.</span> <span class="nav-text">MySQL索引</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#索引的创建、删除及查看"><span class="nav-number">2.</span> <span class="nav-text">索引的创建、删除及查看</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#聚集索引与非聚集索引"><span class="nav-number">3.</span> <span class="nav-text">聚集索引与非聚集索引</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL索引"><span class="nav-number">1.</span> <span class="nav-text">MySQL索引</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#索引的创建、删除及查看"><span class="nav-number">2.</span> <span class="nav-text">索引的创建、删除及查看</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建索引注意事项"><span class="nav-number">3.</span> <span class="nav-text">创建索引注意事项</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#聚集索引与非聚集索引"><span class="nav-number">4.</span> <span class="nav-text">聚集索引与非聚集索引</span></a></li></ol></div>
             
 
           </div>

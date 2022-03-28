@@ -107,12 +107,12 @@
   <meta name="keywords" content="Hexo, NexT">
 
 
-<meta name="description" content="简单多表查询1SELECT * FROM TableA a, TableB b where a.name = b.name; 子查询MySQL子查询简介子查询是在MySQL中经常使用到的一个操作，不仅仅是用在DQL语句中，在DDL语句、DML语句中也都会常用到子查询。所谓子查询是将一个查询语句嵌套在另一个查询语句中。在特定情况下，一个查询语句的条件需要另一个查询语句来获取，内层查询（inner q">
+<meta name="description" content="简单多表查询1SELECT TableA.name, TableA.sex, TableB.income, TableB.dscrept FROM TableA a, TableB b where a.name = b.name; 子查询MySQL子查询简介子查询是在MySQL中经常使用到的一个操作，不仅仅是用在DQL语句中，在DDL语句、DML语句中也都会常用到子查询。所谓子查询是将一个查询语句">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据库中多表查询操作">
 <meta property="og:url" content="http://wangjianno1.github.io/2019/03/13/数据库中多表查询操作/index.html">
 <meta property="og:site_name" content="老坛の菜园子">
-<meta property="og:description" content="简单多表查询1SELECT * FROM TableA a, TableB b where a.name = b.name; 子查询MySQL子查询简介子查询是在MySQL中经常使用到的一个操作，不仅仅是用在DQL语句中，在DDL语句、DML语句中也都会常用到子查询。所谓子查询是将一个查询语句嵌套在另一个查询语句中。在特定情况下，一个查询语句的条件需要另一个查询语句来获取，内层查询（inner q">
+<meta property="og:description" content="简单多表查询1SELECT TableA.name, TableA.sex, TableB.income, TableB.dscrept FROM TableA a, TableB b where a.name = b.name; 子查询MySQL子查询简介子查询是在MySQL中经常使用到的一个操作，不仅仅是用在DQL语句中，在DDL语句、DML语句中也都会常用到子查询。所谓子查询是将一个查询语句">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://wangjianno1.github.io/images/mysql_set_1_1.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/mysqlunion_1_1.png">
@@ -120,10 +120,10 @@
 <meta property="og:image" content="http://wangjianno1.github.io/images/mysqlunion_1_3.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/mysql_set_1_2.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/mysql_set_1_3.png">
-<meta property="og:updated_time" content="2022-02-09T07:40:43.976Z">
+<meta property="og:updated_time" content="2022-03-28T01:21:48.812Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库中多表查询操作">
-<meta name="twitter:description" content="简单多表查询1SELECT * FROM TableA a, TableB b where a.name = b.name; 子查询MySQL子查询简介子查询是在MySQL中经常使用到的一个操作，不仅仅是用在DQL语句中，在DDL语句、DML语句中也都会常用到子查询。所谓子查询是将一个查询语句嵌套在另一个查询语句中。在特定情况下，一个查询语句的条件需要另一个查询语句来获取，内层查询（inner q">
+<meta name="twitter:description" content="简单多表查询1SELECT TableA.name, TableA.sex, TableB.income, TableB.dscrept FROM TableA a, TableB b where a.name = b.name; 子查询MySQL子查询简介子查询是在MySQL中经常使用到的一个操作，不仅仅是用在DQL语句中，在DDL语句、DML语句中也都会常用到子查询。所谓子查询是将一个查询语句">
 <meta name="twitter:image" content="http://wangjianno1.github.io/images/mysql_set_1_1.png">
 
 
@@ -249,7 +249,7 @@
         
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">339</span>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">340</span>
               </a>
         </li>
       
@@ -413,7 +413,7 @@
       
 
       
-        <h1 id="简单多表查询"><a href="#简单多表查询" class="headerlink" title="简单多表查询"></a>简单多表查询</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> TableA a, TableB b <span class="keyword">where</span> a.name = b.name;</span><br></pre></td></tr></table></figure>
+        <h1 id="简单多表查询"><a href="#简单多表查询" class="headerlink" title="简单多表查询"></a>简单多表查询</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> TableA.name, TableA.sex, TableB.income, TableB.dscrept <span class="keyword">FROM</span> TableA a, TableB b <span class="keyword">where</span> a.name = b.name;</span><br></pre></td></tr></table></figure>
 <h1 id="子查询"><a href="#子查询" class="headerlink" title="子查询"></a>子查询</h1><h2 id="MySQL子查询简介"><a href="#MySQL子查询简介" class="headerlink" title="MySQL子查询简介"></a>MySQL子查询简介</h2><p>子查询是在MySQL中经常使用到的一个操作，不仅仅是用在DQL语句中，在DDL语句、DML语句中也都会常用到子查询。所谓子查询是将一个查询语句嵌套在另一个查询语句中。在特定情况下，一个查询语句的条件需要另一个查询语句来获取，内层查询（inner query）语句的查询结果，可以为外层查询（outer query）语句提供查询条件。</p>
 <h2 id="MySQL子查询的分类"><a href="#MySQL子查询的分类" class="headerlink" title="MySQL子查询的分类"></a>MySQL子查询的分类</h2><p>按子查询（select语句）在外部查询（select语句）出现的位置的不同可以分为：</p>
 <pre><code>from子查询，即子查询跟在from之后
@@ -583,7 +583,7 @@ in子查询，即子查询出现在in里面
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">339</span>
+                    <span class="site-state-item-count">340</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>

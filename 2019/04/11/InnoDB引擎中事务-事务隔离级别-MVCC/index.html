@@ -126,7 +126,7 @@
 <meta property="og:image" content="http://wangjianno1.github.io/images/innodb_trx_1_11.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/innodb_trx_1_5.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/innodb_trx_1_12.png">
-<meta property="og:updated_time" content="2022-03-27T16:43:39.313Z">
+<meta property="og:updated_time" content="2022-03-27T16:53:13.059Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="InnoDB引擎中事务|事务隔离级别|MVCC">
 <meta name="twitter:description" content="MySQL事务MySQL事务主要用于处理操作量大，复杂度高的数据。比如说，在人员管理系统中，你删除一个人员，即需要删除人员的基本资料，也要删除和该人员相关的信息，如信箱，文章等等，这样，这些数据库操作语句就构成一个事务。 关于MySQL事务操作，需要注意如下几点： （1）在MySQL中只有使用了InnoDB存储引擎的数据库或表才支持事务 （2）事务处理可以用来维护数据库的完整性，保证成批的SQL语">
@@ -255,7 +255,7 @@
         
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">339</span>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">340</span>
               </a>
         </li>
       
@@ -469,7 +469,7 @@ SET AUTOCOMMIT=1开启自动提交
 <h2 id="可重复读（REPEATABLE-READ）"><a href="#可重复读（REPEATABLE-READ）" class="headerlink" title="可重复读（REPEATABLE READ）"></a>可重复读（REPEATABLE READ）</h2><p><img src="/images/innodb_trx_1_3.png" alt></p>
 <p>在可重复读隔离级别下，事务B只能在事务A修改过数据并提交后，自己也提交事务后，才能读取到事务B修改的数据。</p>
 <p>可重复读隔离级别解决了脏读和不可重复读的问题，但可能发生<strong>幻读</strong>问题。</p>
-<p>MySQL InonoDB默认使用可重复读隔离级别。</p>
+<p>MySQL InnoDB默认使用可重复读隔离级别。</p>
 <h2 id="可串行化（SERIALIZABLE）"><a href="#可串行化（SERIALIZABLE）" class="headerlink" title="可串行化（SERIALIZABLE）"></a>可串行化（SERIALIZABLE）</h2><p><img src="/images/innodb_trx_1_4.png" alt></p>
 <p><img src="/images/innodb_trx_1_9.png" alt></p>
 <p><img src="/images/innodb_trx_1_10.png" alt></p>
@@ -640,7 +640,7 @@ SET AUTOCOMMIT=1开启自动提交
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">339</span>
+                    <span class="site-state-item-count">340</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
