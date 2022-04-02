@@ -117,7 +117,8 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_syntax_9_1.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_syntax_8_1.png">
-<meta property="og:updated_time" content="2022-03-25T15:33:43.386Z">
+<meta property="og:image" content="http://wangjianno1.github.io/images/java_collection_1_1.png">
+<meta property="og:updated_time" content="2022-04-02T10:35:22.105Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA中容器类或集合类">
 <meta name="twitter:description" content="复杂数据类型（1）枚举Enumeration 枚举（Enumeration）接口虽然它本身不属于数据结构,但它在其他数据结构的范畴里应用很广。 枚举（The Enumeration）接口定义了一种从数据结构中取回连续元素的方式。例如，枚举定义了一个叫nextElement 的方法，该方法用来得到一个包含多元素的数据结构的下一个元素。 （2）位集合BitSet 位集合类实现了一组可以单独设置和清除的">
@@ -433,14 +434,107 @@
 <p>上图中有一点疑惑，水平的实心箭头的produces是什么含义？一个Collection的类可以产生一个Iterator的对象？</p>
 <p><img src="/images/java_syntax_8_1.png" alt></p>
 <p>如上是一个简化版的容器类关系图，图中只列举了主要的继承派生关系，并没有列举所有关系。比方省略了AbstractList，NavigableSet等抽象类以及其他的一些辅助类，如想深入了解，可自行查看源码。</p>
-<h1 id="JAVA常用集合类"><a href="#JAVA常用集合类" class="headerlink" title="JAVA常用集合类"></a>JAVA常用集合类</h1><p>常用的接口和类：</p>
-<p>（1）List接口</p>
-<p>有序、可重复。如ArrayList、LinkedList以及Vector等。</p>
-<p>（2）Set接口</p>
-<p>无序、不能重复。如HashSet以及TreeSet等。</p>
-<p>（3）Map接口</p>
-<p>大都是无序（有些LinkedHashMap是有序的），键值对、键唯一、值不唯一。如HashMap、Hashtable以及TreeMap等。</p>
+<h1 id="JAVA常用集合类"><a href="#JAVA常用集合类" class="headerlink" title="JAVA常用集合类"></a>JAVA常用集合类</h1><h2 id="List接口"><a href="#List接口" class="headerlink" title="List接口"></a>List接口</h2><p>有序、可重复。如ArrayList、LinkedList以及Vector等。</p>
+<h2 id="Set接口"><a href="#Set接口" class="headerlink" title="Set接口"></a>Set接口</h2><p>无序、不能重复。如HashSet以及TreeSet等。</p>
+<h2 id="Map接口"><a href="#Map接口" class="headerlink" title="Map接口"></a>Map接口</h2><p>大都是无序（有些LinkedHashMap是有序的），键值对、键唯一、值不唯一。如HashMap、Hashtable以及TreeMap等。</p>
 <p>备注：有序，指的是遍历读取集合中元素的顺序，和集合中元素添加时的先后次序保持一样。</p>
+<h2 id="Queue接口"><a href="#Queue接口" class="headerlink" title="Queue接口"></a>Queue接口</h2><p>（1）Queue</p>
+<p>Queue队列接口。Deque是继承Queue的子接口，是一个双端队列（即两头都可以添加或删除元素）。</p>
+<p>Queue定义了6个队列相关操作的方法，分别如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">接口</th>
+<th style="text-align:left">抛uncheck异常</th>
+<th style="text-align:left">返回null</th>
+<th style="text-align:left">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">入队列</td>
+<td style="text-align:left">add(e)</td>
+<td style="text-align:left">offer(e)</td>
+<td style="text-align:left">都是从往队列中添加元素，只是当队列满时，add会抛异常，而offer返回null</td>
+</tr>
+<tr>
+<td style="text-align:left">出队列</td>
+<td style="text-align:left">remove(e)</td>
+<td style="text-align:left">poll(e)</td>
+<td style="text-align:left">都是从往队列中获取元素，只是当队列为空时，remove会抛异常，而poll返回null</td>
+</tr>
+<tr>
+<td style="text-align:left">队头元素取出</td>
+<td style="text-align:left">element(e)</td>
+<td style="text-align:left">peek(e)</td>
+<td style="text-align:left">从队列头部读取一个元素，但是不会删除队列中元素，只是当队列为空时，element会抛异常，而peek返回null。该方法通常用来判断队列中是否还有元素哦，不要使用isEmpty或size</td>
+</tr>
+</tbody>
+</table>
+<p>（2）Deque</p>
+<p>Deque是一个双端队列接口，继承自Queue接口，Deque的实现类是LinkedList、ArrayDeque、LinkedBlockingDeque，其中LinkedList是最常用的。Deque有三种用途：一是普通队列(一端进另一端出)；二是双端队列(两端都可进出)；三是堆栈。</p>
+<p>如下是Deque中定义的一些作为双端队列的方法，如下：</p>
+<p><img src="/images/java_collection_1_1.png" alt></p>
+<p>Deque接口扩展（继承）了Queue接口。在将双端队列用作队列时，将得到FIFO（先进先出）行为。将元素添加到双端队列的末尾，从双端队列的开头移除元素。从Queue接口继承的方法完全等效于Deque方法，如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">继承自Queue的方法</th>
+<th style="text-align:left">等效Deque方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">add(e)</td>
+<td style="text-align:left">addLast(e)</td>
+</tr>
+<tr>
+<td style="text-align:left">offer(e)</td>
+<td style="text-align:left">offerLast(e)</td>
+</tr>
+<tr>
+<td style="text-align:left">remove(e)</td>
+<td style="text-align:left">removeLast(e)</td>
+</tr>
+<tr>
+<td style="text-align:left">poll(e)</td>
+<td style="text-align:left">pollLast(e)</td>
+</tr>
+<tr>
+<td style="text-align:left">element(e)</td>
+<td style="text-align:left">elementLast(e)</td>
+</tr>
+<tr>
+<td style="text-align:left">peek(e)</td>
+<td style="text-align:left">peekLast(e)</td>
+</tr>
+</tbody>
+</table>
+<p>双端队列也可用作LIFO（后进先出）堆栈。（实现了List接口的Stack类是专门用来做堆栈的，但是已经过时了，现在都建议使用Deque接口实现类来做堆栈会更好）。在将双端队列用作堆栈时，元素被推入双端队列的开头并从双端队列开头弹出。堆栈方法完全等效于Deque方法，如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">堆栈方法</th>
+<th style="text-align:left">等效Deque方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">push(e)</td>
+<td style="text-align:left">addFirst(e)</td>
+</tr>
+<tr>
+<td style="text-align:left">pop(e)</td>
+<td style="text-align:left">popFirst(e)</td>
+</tr>
+<tr>
+<td style="text-align:left">peek(e)</td>
+<td style="text-align:left">peekFirst(e)</td>
+</tr>
+</tbody>
+</table>
+<p>当作不同的数据结构来使用，就使用相对应的方法。如当栈使用，用<code>push/pop/peek</code>；若当队列使用，就使用<code>offer/poll/peek</code>等方法；若当双端队列使用，就用<code>offerFirst/pollFirst/peekFirst/offerLast/pollLast/peekLast</code>等。</p>
+<p>备注：LinkedList内部使用的双向链表的数据结构，其实现了Queue/Deque接口，因此LinkedList即可以当作队列来使用，也可以当堆来使用，还可以当作双端队列来使用哦。</p>
 <h1 id="集合类的遍历操作"><a href="#集合类的遍历操作" class="headerlink" title="集合类的遍历操作"></a>集合类的遍历操作</h1><p>集合类的遍历操作有如下几种方式：</p>
 <ul>
 <li>普通for循环，形如<code>for(int i=0; i&lt;arr.size(); i++) {…}</code></li>
@@ -827,7 +921,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#复杂数据类型"><span class="nav-number">1.</span> <span class="nav-text">复杂数据类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#集合类-容器类"><span class="nav-number">2.</span> <span class="nav-text">集合类 | 容器类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#容器类的框架图"><span class="nav-number">3.</span> <span class="nav-text">容器类的框架图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JAVA常用集合类"><span class="nav-number">4.</span> <span class="nav-text">JAVA常用集合类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#集合类的遍历操作"><span class="nav-number">5.</span> <span class="nav-text">集合类的遍历操作</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#复杂数据类型"><span class="nav-number">1.</span> <span class="nav-text">复杂数据类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#集合类-容器类"><span class="nav-number">2.</span> <span class="nav-text">集合类 | 容器类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#容器类的框架图"><span class="nav-number">3.</span> <span class="nav-text">容器类的框架图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JAVA常用集合类"><span class="nav-number">4.</span> <span class="nav-text">JAVA常用集合类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#List接口"><span class="nav-number">4.1.</span> <span class="nav-text">List接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Set接口"><span class="nav-number">4.2.</span> <span class="nav-text">Set接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Map接口"><span class="nav-number">4.3.</span> <span class="nav-text">Map接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Queue接口"><span class="nav-number">4.4.</span> <span class="nav-text">Queue接口</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#集合类的遍历操作"><span class="nav-number">5.</span> <span class="nav-text">集合类的遍历操作</span></a></li></ol></div>
             
 
           </div>

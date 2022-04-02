@@ -120,7 +120,7 @@
 <meta property="og:image" content="http://wangjianno1.github.io/images/redis_1_1.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/redis_1_4.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/redis_1_5.png">
-<meta property="og:updated_time" content="2022-03-27T03:13:42.009Z">
+<meta property="og:updated_time" content="2022-04-02T01:05:42.102Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis技术调研">
 <meta name="twitter:description" content="Redis简介Redis是一个key-value的非关系型数据库（NoSQL），现在在各种系统中的使用越来越多，大部分情况下是因为其高性能的特性，被当做缓存使用。Redis应用广泛，尤其是被作为缓存使用，Redis由于其丰富的数据结构也可以被应用到其他场景。Redis的具有很多优势： （1）读写性能高，10w次/s+的读速度，8w次/s+的写速度 （2）K-V，value支持的数据类型很多，包括字">
@@ -449,7 +449,7 @@ redis 127.0.0.1:6379&gt; PING
 
 PONG
 </code></pre><p>备注：redis也有账号密码，这块待研究。</p>
-<h1 id="Redis整体的数据结构以及支持的数据类型"><a href="#Redis整体的数据结构以及支持的数据类型" class="headerlink" title="Redis整体的数据结构以及支持的数据类型"></a>Redis整体的数据结构以及支持的数据类型</h1><h2 id="Redis数据结构"><a href="#Redis数据结构" class="headerlink" title="Redis数据结构"></a>Redis数据结构</h2><p>Redis内部整体的存储结构是一个大的hashmap，内部是数组实现的hash，key冲突通过挂链表去实现，每个dictEntry为一个key/value对象，value为定义的redisObject。</p>
+<h1 id="Redis整体的数据结构以及支持的数据类型"><a href="#Redis整体的数据结构以及支持的数据类型" class="headerlink" title="Redis整体的数据结构以及支持的数据类型"></a>Redis整体的数据结构以及支持的数据类型</h1><h2 id="Redis数据结构"><a href="#Redis数据结构" class="headerlink" title="Redis数据结构"></a>Redis数据结构</h2><p>Redis内部整体的存储结构是一个大的hashmap（和Java中的HashMap结构很相似），内部是数组实现的hash，key冲突通过挂链表去实现，每个dictEntry为一个key/value对象，value为定义的redisObject。</p>
 <p><img src="/images/redis_1_3.png" alt></p>
 <p>dictEntry是存储key-&gt;value的地方，再让我们看一下dictEntry结构体：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 字典</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">dictEntry</span> &#123;</span></span><br><span class="line">    <span class="comment">// 键</span></span><br><span class="line">    <span class="keyword">void</span> *key;</span><br><span class="line">    <span class="comment">// 值</span></span><br><span class="line">    <span class="keyword">union</span> &#123;</span><br><span class="line">        <span class="comment">// 指向具体redisObject</span></span><br><span class="line">        <span class="keyword">void</span> *val;</span><br><span class="line">        <span class="comment">// </span></span><br><span class="line">        <span class="keyword">uint64_t</span> u64;</span><br><span class="line">        <span class="keyword">int64_t</span> s64;</span><br><span class="line">    &#125; v;</span><br><span class="line">    <span class="comment">// 指向下个哈希表节点，形成链表</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">dictEntry</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125; dictEntry;</span><br></pre></td></tr></table></figure>
@@ -532,6 +532,7 @@ redis 127.0.0.1:6379&gt; PUBLISH runoobChat &quot;Learn redis by runoob.com&quot
 <p>从数据集（server.db[i].dict）中任意选择数据淘汰。</p>
 <p>（6）no-eviction</p>
 <p>禁止驱逐数据，也就是说当内存不足以容纳新写入数据时，新写入操作会报错。</p>
+<p>当Redis要淘汰key并回收内存时，也有两种方式，一种是惰性删除（即不会立即删除，等下次来访问的时候再删除）；一种是定期删除要淘汰的部分key。</p>
 <h1 id="Redis部署方式"><a href="#Redis部署方式" class="headerlink" title="Redis部署方式"></a>Redis部署方式</h1><p>（1）单机部署模式</p>
 <p>（2）Master-Slave + Sentinel选举模式</p>
 <p>（3）Redis Cluster模式</p>
@@ -549,7 +550,7 @@ redis 127.0.0.1:6379&gt; PUBLISH runoobChat &quot;Learn redis by runoob.com&quot
 <p>（3）设置热点数据永远不过期</p>
 <h1 id="SpringBoot集成Redis"><a href="#SpringBoot集成Redis" class="headerlink" title="SpringBoot集成Redis"></a>SpringBoot集成Redis</h1><p>使用Spring Data Redis模块，构造RedisTemplate对象访问Redis实例，底层使用的是Jredis客户端，不过SpringBoot2.x开始，已经默认使用Lettuce客户端了。</p>
 <h1 id="其他闲杂"><a href="#其他闲杂" class="headerlink" title="其他闲杂"></a>其他闲杂</h1><p>（1）Redisson是一个企业级的开源Redis Client，这个推荐使用。且这个Client还带有分布式锁支持，从而避免使用原生Client API实现分布式锁时考虑的一些复杂问题。</p>
-<p>（2）从Redis 2.6版本起，Redis开始支持Lua脚本，通过内嵌支持Lua环境，执行脚本的常用命令为EVAL。整个Lua脚本中所有redis命令集合是一个原子性操作。Redis分布式的实现一般来说会用到Lua脚本。</p>
+<p>（2）从Redis 2.6版本起，Redis开始支持Lua脚本，通过内嵌支持Lua环境，执行脚本的常用命令为EVAL。整个Lua脚本中所有redis命令集合是一个原子性操作。Redis分布式的实现一般来说会用到Lua脚本。但是不保证事务（也就是部分命令失败，不会回滚），只能保证Lua脚本中命令集中间不会插入其他命令执行。至于事务，需要业务自己去保证。</p>
 <p>学习资料参考于：<br><a href="https://mp.weixin.qq.com/s/7ct-mvSIaT3o4-tsMaKRWA" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/7ct-mvSIaT3o4-tsMaKRWA</a></p>
 
       

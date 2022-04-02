@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="老坛の菜园子">
 <meta property="og:description" content="MySQL的数据类型有： （1）整型 12345TINYINT   #占用1ByteSMALLINT  #占用2BytesMEDIUMINT #占用3BytesINT       #占用4BytesBIGINT    #占用8Bytes （2）浮点数 123FLOAT    #占用4BytesDOUBLE   #占用8BytesDECIMAL （3）字符串 1234VARCHAR  #可变长度的字">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2022-02-09T07:40:43.939Z">
+<meta property="og:updated_time" content="2022-03-30T16:57:37.899Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL的基本数据类型">
 <meta name="twitter:description" content="MySQL的数据类型有： （1）整型 12345TINYINT   #占用1ByteSMALLINT  #占用2BytesMEDIUMINT #占用3BytesINT       #占用4BytesBIGINT    #占用8Bytes （2）浮点数 123FLOAT    #占用4BytesDOUBLE   #占用8BytesDECIMAL （3）字符串 1234VARCHAR  #可变长度的字">
@@ -414,6 +414,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">FLOAT    <span class="comment">#占用4Bytes</span></span><br><span class="line">DOUBLE   <span class="comment">#占用8Bytes</span></span><br><span class="line">DECIMAL</span><br></pre></td></tr></table></figure>
 <p>（3）字符串</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">VARCHAR  <span class="comment">#可变长度的字符串的存储</span></span><br><span class="line">CHAR     <span class="comment">#固定长度的字符串的存储</span></span><br><span class="line">TEXT     <span class="comment">#包括TINYTEXT/TEXT/MEDIUMTEXT/LONGTEXT四种类型</span></span><br><span class="line">BLOB     <span class="comment">#包括TINYBLOB/BLOB/MEDIUMBLOB/LONGBLOB四种类型</span></span><br></pre></td></tr></table></figure>
+<p>备注：VARCHAR存储可变长度的字符串，如VARCHAR(100)，虽然是100，但会根据字符串的实际大小来分配空间。CHAR是存储固定长度字符串的，如CHAR(100)，不管字符串的长度多长，都分配100个Byte。</p>
 <p>（4）日期</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DATETIME   <span class="comment">#占用8Bytes</span></span><br><span class="line">TIMESTAMP  <span class="comment">#占用4Bytes</span></span><br></pre></td></tr></table></figure>
       
