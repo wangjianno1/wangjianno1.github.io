@@ -84,7 +84,7 @@ Redis命令用于在redis服务上执行操作。要在redis服务上执行命�
 
 ## Redis数据结构
 
-Redis内部整体的存储结构是一个大的hashmap，内部是数组实现的hash，key冲突通过挂链表去实现，每个dictEntry为一个key/value对象，value为定义的redisObject。
+Redis内部整体的存储结构是一个大的hashmap（和Java中的HashMap结构很相似），内部是数组实现的hash，key冲突通过挂链表去实现，每个dictEntry为一个key/value对象，value为定义的redisObject。
 
 ![](/images/redis_1_3.png)
 
@@ -344,6 +344,8 @@ Redis内存淘汰机制，保证Redis中的数据都是热点数据。Redis提�
 
 禁止驱逐数据，也就是说当内存不足以容纳新写入数据时，新写入操作会报错。
 
+当Redis要淘汰key并回收内存时，也有两种方式，一种是惰性删除（即不会立即删除，等下次来访问的时候再删除）；一种是定期删除要淘汰的部分key。
+
 # Redis部署方式
 
 （1）单机部署模式
@@ -392,7 +394,7 @@ Redis内存淘汰机制，保证Redis中的数据都是热点数据。Redis提�
 
 （1）Redisson是一个企业级的开源Redis Client，这个推荐使用。且这个Client还带有分布式锁支持，从而避免使用原生Client API实现分布式锁时考虑的一些复杂问题。
 
-（2）从Redis 2.6版本起，Redis开始支持Lua脚本，通过内嵌支持Lua环境，执行脚本的常用命令为EVAL。整个Lua脚本中所有redis命令集合是一个原子性操作。Redis分布式的实现一般来说会用到Lua脚本。
+（2）从Redis 2.6版本起，Redis开始支持Lua脚本，通过内嵌支持Lua环境，执行脚本的常用命令为EVAL。整个Lua脚本中所有redis命令集合是一个原子性操作。Redis分布式的实现一般来说会用到Lua脚本。但是不保证事务（也就是部分命令失败，不会回滚），只能保证Lua脚本中命令集中间不会插入其他命令执行。至于事务，需要业务自己去保证。
 
 学习资料参考于：
 https://mp.weixin.qq.com/s/7ct-mvSIaT3o4-tsMaKRWA

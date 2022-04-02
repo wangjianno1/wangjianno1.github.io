@@ -121,3 +121,8 @@ public static void main(String[] args) {
     System.out.println((String)map.get("how are you?"));
 }
 ```
+
+# 一点闲杂
+
+不管是泛型类，泛型方法，还是泛型接口，在使用这些泛型时候，类型参数必须是抽象类型，不能是基本数据类型，如int/short，应该使用他们的封箱类Integer/Short等等。
+

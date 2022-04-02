@@ -42,6 +42,77 @@ public class Singleton {
 
 备注：还有一些其他构建单例类的改进方式。
 
+# 工厂模式
+
+工厂模式属于创建型模式，它提供了一种创建对象的最佳方式。在工厂模式中，我们在创建对象时不会对客户端暴露创建逻辑，并且是通过使用一个共同的接口来指向新创建的对象。
+
+（1）定义接口
+
+```java
+public interface Shape {
+    void draw();
+}
+```
+
+（2）定义多个实现类
+
+定义一个矩形，
+
+```java
+public class Rectangle implements Shape {
+    @Override
+    public void draw() {
+        System.out.println("Inside Rectangle::draw() method.");
+    }
+}
+```
+
+定义一个三角形，
+
+```java
+public class Circle implements Shape {
+    @Override
+    public void draw() {
+        System.out.println("Inside Circle::draw() method.");
+    }
+}
+```
+
+（3）创建工厂类
+
+```java
+public class ShapeFactory {
+    //使用 getShape 方法获取形状类型的对象
+    public Shape getShape(String shapeType){
+        if(shapeType == null){
+            return null;
+        }        
+        if(shapeType.equalsIgnoreCase("CIRCLE")){
+            return new Circle();
+        } else if(shapeType.equalsIgnoreCase("RECTANGLE")){
+            return new Rectangle();
+        } 
+        return null;
+    }
+}
+```
+
+（4）使用工厂类
+
+```java
+public class FactoryPatternDemo {
+    public static void main(String[] args) {
+        ShapeFactory shapeFactory = new ShapeFactory();
+ 
+        //获取 Circle 的对象，并调用它的 draw 方法
+        Shape shape = shapeFactory.getShape("CIRCLE");
+ 
+        //调用 Circle 的 draw 方法
+        shape.draw();
+    }
+}
+```
+
 # 模版模式
 
 在模板模式（Template Pattern）中，一个抽象类公开定义了执行它的方法的方式/模板。它的子类可以按需要重写方法实现，但调用将以抽象类中定义的方式进行。这种类型的设计模式属于行为型模式。

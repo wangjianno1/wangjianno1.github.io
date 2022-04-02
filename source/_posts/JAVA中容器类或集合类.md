@@ -60,21 +60,64 @@ Properties继承于Hashtable。Properties类表示了一个持久的属性集.�
 
 # JAVA常用集合类
 
-常用的接口和类：
-
-（1）List接口
+## List接口
 
 有序、可重复。如ArrayList、LinkedList以及Vector等。
 
-（2）Set接口
+## Set接口
 
 无序、不能重复。如HashSet以及TreeSet等。
 
-（3）Map接口
+## Map接口
 
 大都是无序（有些LinkedHashMap是有序的），键值对、键唯一、值不唯一。如HashMap、Hashtable以及TreeMap等。
 
 备注：有序，指的是遍历读取集合中元素的顺序，和集合中元素添加时的先后次序保持一样。
+
+## Queue接口
+
+（1）Queue
+
+Queue队列接口。Deque是继承Queue的子接口，是一个双端队列（即两头都可以添加或删除元素）。
+
+Queue定义了6个队列相关操作的方法，分别如下：
+
+|接口|抛uncheck异常|返回null|备注|
+|:----|:---|:---|:---|
+|入队列|add(e)|offer(e)|都是从往队列中添加元素，只是当队列满时，add会抛异常，而offer返回null|
+|出队列|remove(e)|poll(e)|都是从往队列中获取元素，只是当队列为空时，remove会抛异常，而poll返回null|
+|队头元素取出|element(e)|peek(e)|从队列头部读取一个元素，但是不会删除队列中元素，只是当队列为空时，element会抛异常，而peek返回null。该方法通常用来判断队列中是否还有元素哦，不要使用isEmpty或size|
+
+（2）Deque
+
+Deque是一个双端队列接口，继承自Queue接口，Deque的实现类是LinkedList、ArrayDeque、LinkedBlockingDeque，其中LinkedList是最常用的。Deque有三种用途：一是普通队列(一端进另一端出)；二是双端队列(两端都可进出)；三是堆栈。
+
+如下是Deque中定义的一些作为双端队列的方法，如下：
+
+![](/images/java_collection_1_1.png)
+
+Deque接口扩展（继承）了Queue接口。在将双端队列用作队列时，将得到FIFO（先进先出）行为。将元素添加到双端队列的末尾，从双端队列的开头移除元素。从Queue接口继承的方法完全等效于Deque方法，如下表所示：
+
+|继承自Queue的方法|等效Deque方法|
+|:----|:---|
+|add(e)|addLast(e)|
+|offer(e)|offerLast(e)|
+|remove(e)|removeLast(e)|
+|poll(e)|pollLast(e)|
+|element(e)|elementLast(e)|
+|peek(e)|peekLast(e)|
+
+双端队列也可用作LIFO（后进先出）堆栈。（实现了List接口的Stack类是专门用来做堆栈的，但是已经过时了，现在都建议使用Deque接口实现类来做堆栈会更好）。在将双端队列用作堆栈时，元素被推入双端队列的开头并从双端队列开头弹出。堆栈方法完全等效于Deque方法，如下表所示：
+
+|堆栈方法|等效Deque方法|
+|:----|:---|
+|push(e)|addFirst(e)|
+|pop(e)|popFirst(e)|
+|peek(e)|peekFirst(e)|
+
+当作不同的数据结构来使用，就使用相对应的方法。如当栈使用，用`push/pop/peek`；若当队列使用，就使用`offer/poll/peek`等方法；若当双端队列使用，就用`offerFirst/pollFirst/peekFirst/offerLast/pollLast/peekLast`等。
+
+备注：LinkedList内部使用的双向链表的数据结构，其实现了Queue/Deque接口，因此LinkedList即可以当作队列来使用，也可以当堆来使用，还可以当作双端队列来使用哦。
 
 # 集合类的遍历操作
 
