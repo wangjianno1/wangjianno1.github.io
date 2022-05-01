@@ -118,7 +118,7 @@
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_syntax_9_1.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_syntax_8_1.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_collection_1_1.png">
-<meta property="og:updated_time" content="2022-04-02T10:35:22.105Z">
+<meta property="og:updated_time" content="2022-04-03T08:47:08.007Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA中容器类或集合类">
 <meta name="twitter:description" content="复杂数据类型（1）枚举Enumeration 枚举（Enumeration）接口虽然它本身不属于数据结构,但它在其他数据结构的范畴里应用很广。 枚举（The Enumeration）接口定义了一种从数据结构中取回连续元素的方式。例如，枚举定义了一个叫nextElement 的方法，该方法用来得到一个包含多元素的数据结构的下一个元素。 （2）位集合BitSet 位集合类实现了一组可以单独设置和清除的">
@@ -459,14 +459,14 @@
 </tr>
 <tr>
 <td style="text-align:left">出队列</td>
-<td style="text-align:left">remove(e)</td>
-<td style="text-align:left">poll(e)</td>
+<td style="text-align:left">remove()</td>
+<td style="text-align:left">poll()</td>
 <td style="text-align:left">都是从往队列中获取元素，只是当队列为空时，remove会抛异常，而poll返回null</td>
 </tr>
 <tr>
 <td style="text-align:left">队头元素取出</td>
-<td style="text-align:left">element(e)</td>
-<td style="text-align:left">peek(e)</td>
+<td style="text-align:left">element()</td>
+<td style="text-align:left">peek()</td>
 <td style="text-align:left">从队列头部读取一个元素，但是不会删除队列中元素，只是当队列为空时，element会抛异常，而peek返回null。该方法通常用来判断队列中是否还有元素哦，不要使用isEmpty或size</td>
 </tr>
 </tbody>
@@ -475,6 +475,7 @@
 <p>Deque是一个双端队列接口，继承自Queue接口，Deque的实现类是LinkedList、ArrayDeque、LinkedBlockingDeque，其中LinkedList是最常用的。Deque有三种用途：一是普通队列(一端进另一端出)；二是双端队列(两端都可进出)；三是堆栈。</p>
 <p>如下是Deque中定义的一些作为双端队列的方法，如下：</p>
 <p><img src="/images/java_collection_1_1.png" alt></p>
+<p>备注：木有elementFirst/elementLast，只有getFirst/getLast。</p>
 <p>Deque接口扩展（继承）了Queue接口。在将双端队列用作队列时，将得到FIFO（先进先出）行为。将元素添加到双端队列的末尾，从双端队列的开头移除元素。从Queue接口继承的方法完全等效于Deque方法，如下表所示：</p>
 <table>
 <thead>
@@ -485,28 +486,28 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left">add(e)</td>
-<td style="text-align:left">addLast(e)</td>
-</tr>
-<tr>
 <td style="text-align:left">offer(e)</td>
 <td style="text-align:left">offerLast(e)</td>
 </tr>
 <tr>
-<td style="text-align:left">remove(e)</td>
-<td style="text-align:left">removeLast(e)</td>
+<td style="text-align:left">poll()</td>
+<td style="text-align:left">pollFirst()</td>
 </tr>
 <tr>
-<td style="text-align:left">poll(e)</td>
-<td style="text-align:left">pollLast(e)</td>
+<td style="text-align:left">peek()</td>
+<td style="text-align:left">peekFirst()</td>
 </tr>
 <tr>
-<td style="text-align:left">element(e)</td>
-<td style="text-align:left">elementLast(e)</td>
+<td style="text-align:left">add(e)</td>
+<td style="text-align:left">addLast(e)</td>
 </tr>
 <tr>
-<td style="text-align:left">peek(e)</td>
-<td style="text-align:left">peekLast(e)</td>
+<td style="text-align:left">remove()</td>
+<td style="text-align:left">removeFirst()</td>
+</tr>
+<tr>
+<td style="text-align:left">element()</td>
+<td style="text-align:left">getFirst()</td>
 </tr>
 </tbody>
 </table>
@@ -524,17 +525,18 @@
 <td style="text-align:left">addFirst(e)</td>
 </tr>
 <tr>
-<td style="text-align:left">pop(e)</td>
-<td style="text-align:left">popFirst(e)</td>
+<td style="text-align:left">pop()</td>
+<td style="text-align:left">removeFirst()</td>
 </tr>
 <tr>
-<td style="text-align:left">peek(e)</td>
-<td style="text-align:left">peekFirst(e)</td>
+<td style="text-align:left">peek()</td>
+<td style="text-align:left">peekFirst()</td>
 </tr>
 </tbody>
 </table>
 <p>当作不同的数据结构来使用，就使用相对应的方法。如当栈使用，用<code>push/pop/peek</code>；若当队列使用，就使用<code>offer/poll/peek</code>等方法；若当双端队列使用，就用<code>offerFirst/pollFirst/peekFirst/offerLast/pollLast/peekLast</code>等。</p>
-<p>备注：LinkedList内部使用的双向链表的数据结构，其实现了Queue/Deque接口，因此LinkedList即可以当作队列来使用，也可以当堆来使用，还可以当作双端队列来使用哦。</p>
+<p>LinkedList内部使用的双向链表的数据结构，其实现了Queue/Deque接口，因此LinkedList即可以当作队列来使用，也可以当堆来使用，还可以当作双端队列来使用哦。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 普通队列（一端进另一端出）</span></span><br><span class="line">Queue&lt;Integer&gt; queue = <span class="keyword">new</span> LinkedList(); <span class="comment">// 或 Deque deque = new LinkedList()</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 双端队列（两端都可进出）</span></span><br><span class="line">Deque&lt;Integer&gt; deque = <span class="keyword">new</span> LinkedList();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 堆栈</span></span><br><span class="line">Deque&lt;Integer&gt; deque = <span class="keyword">new</span> LinkedList();</span><br></pre></td></tr></table></figure>
 <h1 id="集合类的遍历操作"><a href="#集合类的遍历操作" class="headerlink" title="集合类的遍历操作"></a>集合类的遍历操作</h1><p>集合类的遍历操作有如下几种方式：</p>
 <ul>
 <li>普通for循环，形如<code>for(int i=0; i&lt;arr.size(); i++) {…}</code></li>

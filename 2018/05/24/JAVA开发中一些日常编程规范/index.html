@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="老坛の菜园子">
 <meta property="og:description" content="类注释在import之后，class声明之前进行注释，格式如下： 12345678910/** * 这个类是用来产生随机数 * @author  zhangsan * @author  lisi * @see     java.lang.Object#toString() * @see     java.lang.StringBuffer * @version   1.2 */public cla">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2022-02-11T12:58:16.268Z">
+<meta property="og:updated_time" content="2022-04-06T04:13:59.363Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA开发中一些日常编程规范">
 <meta name="twitter:description" content="类注释在import之后，class声明之前进行注释，格式如下： 12345678910/** * 这个类是用来产生随机数 * @author  zhangsan * @author  lisi * @see     java.lang.Object#toString() * @see     java.lang.StringBuffer * @version   1.2 */public cla">
@@ -456,6 +456,11 @@
 展示对象:xxxVO，xxx一般为网页名称
 POJO是DO/DTO/BO/VO的统称，禁止命名成xxxPOJO
 </code></pre><p>（4）不要使用一个常量类维护所有常量，按常量功能进行归类，分开维护。大而全的常量类，不利于理解和维护。建议缓存相关常量放在类CacheConsts下；系统配置相关常量放在类ConfigConsts下。</p>
+<p>（5）省略花括号</p>
+<p>当<code>if</code>或<code>for</code>控制语句的执行体，只有一行时，可以省略花括号。如下写法都是可以的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testfunc</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) System.out.println(<span class="string">"aaaaa"</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++)</span><br><span class="line">        System.out.println(<span class="string">"aaaaa"</span>);</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">3</span>;</span><br><span class="line">    <span class="keyword">if</span> (a &gt; <span class="number">1</span>) System.out.println(<span class="string">"bbbbb"</span>);</span><br><span class="line">    <span class="keyword">if</span> (a &gt; <span class="number">1</span>)</span><br><span class="line">        System.out.println(<span class="string">"bbbbb"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（6）一行声明/定义多个变量</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">3</span>, b = <span class="number">6</span>, c = <span class="number">4</span>, d = <span class="number">9</span>;</span><br></pre></td></tr></table></figure>
 
       
     </div>
