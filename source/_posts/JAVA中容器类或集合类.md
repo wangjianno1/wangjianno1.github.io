@@ -85,8 +85,8 @@ Queue定义了6个队列相关操作的方法，分别如下：
 |接口|抛uncheck异常|返回null|备注|
 |:----|:---|:---|:---|
 |入队列|add(e)|offer(e)|都是从往队列中添加元素，只是当队列满时，add会抛异常，而offer返回null|
-|出队列|remove(e)|poll(e)|都是从往队列中获取元素，只是当队列为空时，remove会抛异常，而poll返回null|
-|队头元素取出|element(e)|peek(e)|从队列头部读取一个元素，但是不会删除队列中元素，只是当队列为空时，element会抛异常，而peek返回null。该方法通常用来判断队列中是否还有元素哦，不要使用isEmpty或size|
+|出队列|remove()|poll()|都是从往队列中获取元素，只是当队列为空时，remove会抛异常，而poll返回null|
+|队头元素取出|element()|peek()|从队列头部读取一个元素，但是不会删除队列中元素，只是当队列为空时，element会抛异常，而peek返回null。该方法通常用来判断队列中是否还有元素哦，不要使用isEmpty或size|
 
 （2）Deque
 
@@ -96,28 +96,41 @@ Deque是一个双端队列接口，继承自Queue接口，Deque的实现类是Li
 
 ![](/images/java_collection_1_1.png)
 
+备注：木有elementFirst/elementLast，只有getFirst/getLast。
+
 Deque接口扩展（继承）了Queue接口。在将双端队列用作队列时，将得到FIFO（先进先出）行为。将元素添加到双端队列的末尾，从双端队列的开头移除元素。从Queue接口继承的方法完全等效于Deque方法，如下表所示：
 
 |继承自Queue的方法|等效Deque方法|
 |:----|:---|
-|add(e)|addLast(e)|
 |offer(e)|offerLast(e)|
-|remove(e)|removeLast(e)|
-|poll(e)|pollLast(e)|
-|element(e)|elementLast(e)|
-|peek(e)|peekLast(e)|
+|poll()|pollFirst()|
+|peek()|peekFirst()|
+|add(e)|addLast(e)|
+|remove()|removeFirst()|
+|element()|getFirst()|
 
 双端队列也可用作LIFO（后进先出）堆栈。（实现了List接口的Stack类是专门用来做堆栈的，但是已经过时了，现在都建议使用Deque接口实现类来做堆栈会更好）。在将双端队列用作堆栈时，元素被推入双端队列的开头并从双端队列开头弹出。堆栈方法完全等效于Deque方法，如下表所示：
 
 |堆栈方法|等效Deque方法|
 |:----|:---|
 |push(e)|addFirst(e)|
-|pop(e)|popFirst(e)|
-|peek(e)|peekFirst(e)|
+|pop()|removeFirst()|
+|peek()|peekFirst()|
 
 当作不同的数据结构来使用，就使用相对应的方法。如当栈使用，用`push/pop/peek`；若当队列使用，就使用`offer/poll/peek`等方法；若当双端队列使用，就用`offerFirst/pollFirst/peekFirst/offerLast/pollLast/peekLast`等。
 
-备注：LinkedList内部使用的双向链表的数据结构，其实现了Queue/Deque接口，因此LinkedList即可以当作队列来使用，也可以当堆来使用，还可以当作双端队列来使用哦。
+LinkedList内部使用的双向链表的数据结构，其实现了Queue/Deque接口，因此LinkedList即可以当作队列来使用，也可以当堆来使用，还可以当作双端队列来使用哦。
+
+```java
+// 普通队列（一端进另一端出）
+Queue<Integer> queue = new LinkedList(); // 或 Deque deque = new LinkedList()
+
+// 双端队列（两端都可进出）
+Deque<Integer> deque = new LinkedList();
+
+// 堆栈
+Deque<Integer> deque = new LinkedList();
+```
 
 # 集合类的遍历操作
 

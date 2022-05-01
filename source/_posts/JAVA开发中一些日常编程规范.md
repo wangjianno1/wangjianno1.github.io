@@ -99,3 +99,26 @@ com.sina.webo.as
     POJO是DO/DTO/BO/VO的统称，禁止命名成xxxPOJO
 
 （4）不要使用一个常量类维护所有常量，按常量功能进行归类，分开维护。大而全的常量类，不利于理解和维护。建议缓存相关常量放在类CacheConsts下；系统配置相关常量放在类ConfigConsts下。
+
+（5）省略花括号
+
+当`if`或`for`控制语句的执行体，只有一行时，可以省略花括号。如下写法都是可以的：
+
+```java
+public static void testfunc() {
+    for(int i = 0; i < 5; i++) System.out.println("aaaaa");
+    for (int i = 0; i < 5; i++)
+        System.out.println("aaaaa");
+        
+    int a = 3;
+    if (a > 1) System.out.println("bbbbb");
+    if (a > 1)
+        System.out.println("bbbbb");
+}
+```
+
+（6）一行声明/定义多个变量
+
+```java
+int a = 3, b = 6, c = 4, d = 9;
+```
