@@ -139,6 +139,7 @@ Deque<Integer> deque = new LinkedList();
 - 普通for循环，形如`for(int i=0; i<arr.size(); i++) {…}`
 - 增强for循环foreach，形如`for(Object i : arr) {…}`
 - 迭代器Iterator，形如`Iterator it = arr.iterator(); while(it.hasNext()) { Object o =it.next(); …}`
+- forEach + Lambda表达式（JDK 1.8+）
 
 List类型的集合类的遍历示例代码如下：
 

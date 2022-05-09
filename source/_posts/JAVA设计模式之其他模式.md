@@ -121,22 +121,22 @@ public class FactoryPatternDemo {
 
 ```java
 public abstract class Game {
-   abstract void initialize();
-   abstract void startPlay();
-   abstract void endPlay();
+    abstract void initialize();
+    abstract void startPlay();
+    abstract void endPlay();
  
-   //模板
-   public final void play(){
+    //模板
+    public final void play(){
  
-      //初始化游戏
-      initialize();
+        //初始化游戏
+        initialize();
  
-      //开始游戏
-      startPlay();
+        //开始游戏
+        startPlay();
  
-      //结束游戏
-      endPlay();
-   }
+        //结束游戏
+        endPlay();
+    }
 }
 ```
 
@@ -145,40 +145,40 @@ public abstract class Game {
 ```java
 public class Cricket extends Game {
  
-   @Override
-   void endPlay() {
-      System.out.println("Cricket Game Finished!");
-   }
- 
-   @Override
-   void initialize() {
-      System.out.println("Cricket Game Initialized! Start playing.");
-   }
- 
-   @Override
-   void startPlay() {
-      System.out.println("Cricket Game Started. Enjoy the game!");
-   }
+    @Override
+    void initialize() {
+        System.out.println("Cricket Game Initialized! Start playing.");
+    }
+
+    @Override
+    void startPlay() {
+        System.out.println("Cricket Game Started. Enjoy the game!");
+    }
+
+    @Override
+    void endPlay() {
+        System.out.println("Cricket Game Finished!");
+    }
 }
 ```
 
 ```java
 public class Football extends Game {
  
-   @Override
-   void endPlay() {
-      System.out.println("Football Game Finished!");
-   }
- 
-   @Override
-   void initialize() {
-      System.out.println("Football Game Initialized! Start playing.");
-   }
- 
-   @Override
-   void startPlay() {
-      System.out.println("Football Game Started. Enjoy the game!");
-   }
+    @Override
+    void initialize() {
+        System.out.println("Football Game Initialized! Start playing.");
+    }
+
+    @Override
+    void startPlay() {
+        System.out.println("Football Game Started. Enjoy the game!");
+    }
+
+    @Override
+    void endPlay() {
+        System.out.println("Football Game Finished!");
+    }
 }
 ```
 
