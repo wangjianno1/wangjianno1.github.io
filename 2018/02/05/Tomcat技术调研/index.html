@@ -116,7 +116,7 @@
 <meta property="og:description" content="Tomcat简介Java servlet容器。Tomcat的主要的目录结构如下： bin，存放tomcat的启停脚本等 conf，Tomcat的全局配置文件 lib，Tomcat依赖的jar文件 webapps，WEB应用的部署目录 logs，Tomcat输出日志的目录 Tomcat一些配置文件（1）server.xml Tomcat的主配置文件，包含service、connectors、engi">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://wangjianno1.github.io/images/tomcat_1_1.png">
-<meta property="og:updated_time" content="2022-02-09T07:40:43.961Z">
+<meta property="og:updated_time" content="2022-05-28T03:33:34.958Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Tomcat技术调研">
 <meta name="twitter:description" content="Tomcat简介Java servlet容器。Tomcat的主要的目录结构如下： bin，存放tomcat的启停脚本等 conf，Tomcat的全局配置文件 lib，Tomcat依赖的jar文件 webapps，WEB应用的部署目录 logs，Tomcat输出日志的目录 Tomcat一些配置文件（1）server.xml Tomcat的主配置文件，包含service、connectors、engi">
@@ -421,6 +421,7 @@ logs，Tomcat输出日志的目录
 <p>遵循Servlet规范标准的配置文件，用于配置Servlet，并为所有的Web应用程序提供包括MIME映射等默认配置信息。如下为web.xml中关于一个Servlet的配置举例：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;servlet&gt;</span><br><span class="line">    &lt;servlet-name&gt;ServletName&lt;/servlet-name&gt;</span><br><span class="line">    &lt;servlet-class&gt;xxxpackage.xxxServlet&lt;/servlet-class&gt;</span><br><span class="line">    &lt;init-param&gt;</span><br><span class="line">        &lt;param-name&gt;参数名称&lt;/param-name&gt;</span><br><span class="line">        &lt;param-value&gt;参数值&lt;/param-value&gt;</span><br><span class="line">    &lt;/init-param&gt;</span><br><span class="line">&lt;/servlet&gt;</span><br><span class="line">&lt;servlet-mapping&gt;</span><br><span class="line">    &lt;servlet-name&gt;ServletName&lt;/servlet-name&gt;             </span><br><span class="line">    &lt;url-pattern&gt;/aaa/xxx&lt;/url-pattern&gt;</span><br><span class="line">&lt;/servlet-mapping&gt;</span><br></pre></td></tr></table></figure>
 <p>然后，在地址栏中输入<code>http://localhost:8080/web-App/aaa/xxx</code>就可以访问了。</p>
+<p>备注：在webapps中部署WEB应用也有web.xml文件，即WEB-INF/web.xml文件。</p>
 <p>（3）tomcat-user.xml</p>
 <p>Realm认证时用到的相关角色、用户和密码等信息；Tomcat自带的manager默认情况下会用到此文件；在Tomcat中添加/删除用户，为用户指定角色等将通过编辑此文件实现。</p>
 <p>（4）catalina.policy</p>

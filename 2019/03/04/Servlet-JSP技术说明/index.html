@@ -121,7 +121,7 @@
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_jsp_1_1.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_jsp_1_2.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_jsp_1_3.png">
-<meta property="og:updated_time" content="2022-03-21T02:41:10.745Z">
+<meta property="og:updated_time" content="2022-05-28T03:24:55.290Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Servlet&#x2F;JSP技术说明">
 <meta name="twitter:description" content="Servlet简介Java Servlet是运行在Web服务器或应用服务器上的程序，它是作为来自Web浏览器或其他HTTP客户端的请求和HTTP服务器上的数据库或应用程序之间的中间层。 使用Servlet，可以收集来自网页表单的用户输入，呈现来自数据库或者其他源的记录，还可以动态创建网页。Java Servlet通常情况下与使用CGI（Common Gateway Interface，公共网关接口">
@@ -435,6 +435,8 @@
 <p>需要注意的是，JAVA Web应用部署到容器后，/WEB-INF/classes/和/WEB-INF/lib/目录都属于CLASSPATH中一部分，JAVA Web应用可以直接使用这些目录中jar包中的类。</p>
 <h1 id="其他闲杂知识"><a href="#其他闲杂知识" class="headerlink" title="其他闲杂知识"></a>其他闲杂知识</h1><p>（1）Listener</p>
 <p>监听器Listener，它是实现了javax.servlet.ServletContextListener接口的服务器端程序，它是随web应用的启动而启动，只初始化一次，随web应用的停止而销毁。主要作用是做一些初始化的内容添加工作、设置一些基本的内容、比如一些参数或者是一些固定的对象等等。在Servlet被Servlet容器初始化之前，可以向Servlet容器注册一些Listener来执行一些前置的工作逻辑，该Listener需要继承自javax.servlet.ServletContextListener。比如Spring 框架的监听器ContextLoaderListener会在服务器启动的时候实例化我们配置的bean对象、hibernate的session的监听器会监听session的活动和生命周期，负责创建，关闭session等活动。</p>
+<p>以Spring的ContextLoaderListener举例来说：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">web-app</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">listener</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">listener-class</span>&gt;</span>org.springframework.web.context.ContextLoaderListener<span class="tag">&lt;/<span class="name">listener-class</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">listener</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>（2）Filter</p>
 <p>Filter是一个可以复用的代码片段，可以用来转换HTTP请求、响应和头信息。Filter不像Servlet，它不能产生一个接收请求或者响应请求，它只是修改对某一资源的请求，或者修改对某一资源的响应。Servlet/JSP规范中的过滤器Filter是实现了javax.servlet.Filter接口的服务器端程序，主要的用途是过滤字符编码、做一些业务逻辑判断等。</p>
 <h1 id="JSP"><a href="#JSP" class="headerlink" title="JSP"></a>JSP</h1><p>在使用Servlet时，若想给浏览器返回HTML页面，那我们在Servlet中代码中插入HTML页面的字符串，那一个简单的页面都很复杂（当然现在结合模版引擎也很方便啦）：</p>
