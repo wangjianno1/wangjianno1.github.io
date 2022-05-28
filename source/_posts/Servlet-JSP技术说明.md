@@ -98,6 +98,16 @@ public class HelloWorld extends HttpServlet {
 
 监听器Listener，它是实现了javax.servlet.ServletContextListener接口的服务器端程序，它是随web应用的启动而启动，只初始化一次，随web应用的停止而销毁。主要作用是做一些初始化的内容添加工作、设置一些基本的内容、比如一些参数或者是一些固定的对象等等。在Servlet被Servlet容器初始化之前，可以向Servlet容器注册一些Listener来执行一些前置的工作逻辑，该Listener需要继承自javax.servlet.ServletContextListener。比如Spring 框架的监听器ContextLoaderListener会在服务器启动的时候实例化我们配置的bean对象、hibernate的session的监听器会监听session的活动和生命周期，负责创建，关闭session等活动。
 
+以Spring的ContextLoaderListener举例来说：
+
+```xml
+<web-app>
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+</web-app>
+```
+
 （2）Filter
 
 Filter是一个可以复用的代码片段，可以用来转换HTTP请求、响应和头信息。Filter不像Servlet，它不能产生一个接收请求或者响应请求，它只是修改对某一资源的请求，或者修改对某一资源的响应。Servlet/JSP规范中的过滤器Filter是实现了javax.servlet.Filter接口的服务器端程序，主要的用途是过滤字符编码、做一些业务逻辑判断等。

@@ -97,7 +97,7 @@ http://www.springframework.org/schema/taskhttp://www.springframework.org/schema/
 
 @Bean标注在某个方法上（该方法需要返回某个实例对象），这就相当于在Spring的XML配置文件中添加了一个`<bean>`的配置。说白了，@Bean和@Component等一样，定义了一个被Spring管理的Bean对象，只是@Bean是将某个方法返回的实例对象作为Bean让Spring去管理。
 
-备注：使用@Configuration和@Bean注解来代替传统的XML配置文件，这种方式称为Spring JavaConfig方式哦，记住这个名词。
+备注：使用@Configuration和@Bean注解来代替传统的XML配置文件，这种方式称为Spring JavaConfig（Java Configuration）方式哦，记住这个名词。
 
 # @ConfigurationProperties
 

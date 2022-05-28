@@ -42,6 +42,8 @@ Tomcat的主配置文件，包含service、connectors、engine、realm、valve�
 
 然后，在地址栏中输入`http://localhost:8080/web-App/aaa/xxx`就可以访问了。
 
+备注：在webapps中部署WEB应用也有web.xml文件，即WEB-INF/web.xml文件。
+
 （3）tomcat-user.xml
 
 Realm认证时用到的相关角色、用户和密码等信息；Tomcat自带的manager默认情况下会用到此文件；在Tomcat中添加/删除用户，为用户指定角色等将通过编辑此文件实现。
