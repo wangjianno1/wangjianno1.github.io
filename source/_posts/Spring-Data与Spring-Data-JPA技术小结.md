@@ -131,6 +131,14 @@ JpaRepository继承了PagingAndSortingRepository，实现了JPA规范相关的�
 
 （3）Spring Data JPA是对JPA ORM框架的进一步封装，让用户程序的DAO层开发更简单高效，只需要按照Spring Data JPA的规范书定义一些接口，然后Spring Data JPA会帮我们生产一些实现接口的具体方法。
 
+# 一些闲杂
+
+（1）在使用Spring Data JPA时，
+
+    插入记录过程时，新增Entity对象，然后调用Repository的save方法
+    删除记录，直接调用Repository的deleteById等方法
+    修改记录，是先查询获取Entity对象，该对象中都有主键哦，然后调用Repository的save方法，若没有主键，那就是新增记录哦
+    查找，就是直接调用Repository的find方法等
 
 参考资料来源于：
 https://projects.spring.io/spring-data-jpa/
