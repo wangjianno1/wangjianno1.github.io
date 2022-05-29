@@ -114,7 +114,7 @@
 <meta property="og:site_name" content="老坛の菜园子">
 <meta property="og:description" content="@Controller|@Service|@Repository|@Component事实上，@Controller|@Service|@Repository|@Component这几个注解并没有任何功能上的区别，可以把这些当做是分类标签，目的是为了让你的代码可读性更强。在Annotaion配置注解中用@Component来表示一个通用注解，用于说明一个类是一个被Spring容器管理的bean，即">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2022-05-28T03:19:11.801Z">
+<meta property="og:updated_time" content="2022-05-29T08:02:43.769Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringBoot项目中的一些常用注解">
 <meta name="twitter:description" content="@Controller|@Service|@Repository|@Component事实上，@Controller|@Service|@Repository|@Component这几个注解并没有任何功能上的区别，可以把这些当做是分类标签，目的是为了让你的代码可读性更强。在Annotaion配置注解中用@Component来表示一个通用注解，用于说明一个类是一个被Spring容器管理的bean，即">
@@ -242,7 +242,7 @@
         
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">340</span>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">341</span>
               </a>
         </li>
       
@@ -440,6 +440,8 @@
 <h1 id="ResponseBody"><a href="#ResponseBody" class="headerlink" title="@ResponseBody"></a>@ResponseBody</h1><p>该注解用于将Controller的方法返回的对象通过适当的HttpMessageConverter转换为指定格式后，写入到Response对象的body数据区。因此，当我们Controller方法返回的数据不是html格式的页面，而是其他某种格式的数据时，如json、xml等，就需要使用到@ResponseBody注解。</p>
 <h1 id="Transactional"><a href="#Transactional" class="headerlink" title="@Transactional"></a>@Transactional</h1><p>在和数据库做相关操作时，我们可以通过@Transactional注解来达到事务功能。@Transactional注解可以作用到类上，也可以作用到方法上。假设@Transactional作用到某个方法上，那么在一次客户端请求过程中，如果该方法中任何地方抛出异常（不管是数据库相关的异常，还是其他的异常），则回滚所有数据库相关的变更操作。如果@Transactional作用到类上，那么相当于该类中所有方法上都使用了@Transactional注解。需要注意的是，一般我们将@Transactional注解到Service层的类名或Service层的方法上，注解到Service的类上，则该类中所有方法都有事务性，注解到方法上则只有该方法有事务性。</p>
 <p>备注：@Transactional注解的完整包路径是<code>org.springframework.transaction.annotation.Transactional</code>，是属于Spring Framework框架中的。</p>
+<h1 id="Async"><a href="#Async" class="headerlink" title="@Async"></a>@Async</h1><p>“异步调用”对应的是“同步调用”，同步调用指程序按照定义顺序依次执行，每一行程序都必须等待上一行程序执行完成之后才能执行；异步调用指程序在顺序执行时，不等待异步调用的语句返回结果就执行后面的程序。</p>
+<p>SpringBoot项目中在方法上标注@Async，既让该方法变成一个异步方法，调用方调用后，不等待该异步方法的结果，然后继续执行后面的逻辑。需要注意的是，还需要在SpringBoot的主程序中配置@EnableAsync才能生效。</p>
 
       
     </div>
@@ -579,7 +581,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">340</span>
+                    <span class="site-state-item-count">341</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -809,7 +811,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Controller-Service-Repository-Component"><span class="nav-number">1.</span> <span class="nav-text">@Controller|@Service|@Repository|@Component</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RestController"><span class="nav-number">2.</span> <span class="nav-text">@RestController</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设置路由映射及请求方法-RequestMapping-GetMapping-PostMapping-PutMapping-DeleteMapping"><span class="nav-number">3.</span> <span class="nav-text">设置路由映射及请求方法_@RequestMapping|@GetMapping|@PostMapping|@PutMapping|@DeleteMapping</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获取HTTP请求参数-PathVariable-RequestParam-RequestBody"><span class="nav-number">4.</span> <span class="nav-text">获取HTTP请求参数_@PathVariable|@RequestParam|@RequestBody</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#EnableAutoConfiguration"><span class="nav-number">5.</span> <span class="nav-text">@EnableAutoConfiguration</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Autowired"><span class="nav-number">6.</span> <span class="nav-text">@Autowired</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#EnableScheduling-Scheduled"><span class="nav-number">7.</span> <span class="nav-text">@EnableScheduling|@Scheduled</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Resource"><span class="nav-number">8.</span> <span class="nav-text">@Resource</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Configuration"><span class="nav-number">9.</span> <span class="nav-text">@Configuration</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Bean"><span class="nav-number">10.</span> <span class="nav-text">@Bean</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ConfigurationProperties"><span class="nav-number">11.</span> <span class="nav-text">@ConfigurationProperties</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Value"><span class="nav-number">12.</span> <span class="nav-text">@Value</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SpringBootApplication"><span class="nav-number">13.</span> <span class="nav-text">@SpringBootApplication</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ResponseBody"><span class="nav-number">14.</span> <span class="nav-text">@ResponseBody</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Transactional"><span class="nav-number">15.</span> <span class="nav-text">@Transactional</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Controller-Service-Repository-Component"><span class="nav-number">1.</span> <span class="nav-text">@Controller|@Service|@Repository|@Component</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RestController"><span class="nav-number">2.</span> <span class="nav-text">@RestController</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设置路由映射及请求方法-RequestMapping-GetMapping-PostMapping-PutMapping-DeleteMapping"><span class="nav-number">3.</span> <span class="nav-text">设置路由映射及请求方法_@RequestMapping|@GetMapping|@PostMapping|@PutMapping|@DeleteMapping</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获取HTTP请求参数-PathVariable-RequestParam-RequestBody"><span class="nav-number">4.</span> <span class="nav-text">获取HTTP请求参数_@PathVariable|@RequestParam|@RequestBody</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#EnableAutoConfiguration"><span class="nav-number">5.</span> <span class="nav-text">@EnableAutoConfiguration</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Autowired"><span class="nav-number">6.</span> <span class="nav-text">@Autowired</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#EnableScheduling-Scheduled"><span class="nav-number">7.</span> <span class="nav-text">@EnableScheduling|@Scheduled</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Resource"><span class="nav-number">8.</span> <span class="nav-text">@Resource</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Configuration"><span class="nav-number">9.</span> <span class="nav-text">@Configuration</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Bean"><span class="nav-number">10.</span> <span class="nav-text">@Bean</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ConfigurationProperties"><span class="nav-number">11.</span> <span class="nav-text">@ConfigurationProperties</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Value"><span class="nav-number">12.</span> <span class="nav-text">@Value</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SpringBootApplication"><span class="nav-number">13.</span> <span class="nav-text">@SpringBootApplication</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ResponseBody"><span class="nav-number">14.</span> <span class="nav-text">@ResponseBody</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Transactional"><span class="nav-number">15.</span> <span class="nav-text">@Transactional</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Async"><span class="nav-number">16.</span> <span class="nav-text">@Async</span></a></li></ol></div>
             
 
           </div>

@@ -242,7 +242,7 @@
         
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">340</span>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">341</span>
               </a>
         </li>
       
@@ -409,7 +409,7 @@
         <h1 id="外部样式表"><a href="#外部样式表" class="headerlink" title="外部样式表"></a>外部样式表</h1><p>外部样式表就是将CSS的内容定义在一个单独的文件中，这样就可以使用同一个CSS样式表来控制多个HTML文档。然后HTML文档使用<code>&lt;link&gt;</code>标签链接到外部样式表。 <code>&lt;link&gt;</code>标签在HTML文档的头部：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">type</span>=<span class="string">"text/css"</span> <span class="attr">href</span>=<span class="string">"mystyle.css"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h1 id="内部样式表"><a href="#内部样式表" class="headerlink" title="内部样式表"></a>内部样式表</h1><p>当单个文档需要特殊的样式时，就应该使用内部样式表。你可以使用<code>&lt;style&gt;</code>标签在文档头部定义内部样式表，像如下方式：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line">hr &#123;color:sienna;&#125;</span><br><span class="line">p &#123;margin-left:20px;&#125;</span><br><span class="line">body &#123;background-image:url("images/back40.gif");&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css"><span class="selector-tag">hr</span> &#123;<span class="attribute">color</span>:sienna;&#125;</span></span><br><span class="line"><span class="css"><span class="selector-tag">p</span> &#123;<span class="attribute">margin-left</span>:<span class="number">20px</span>;&#125;</span></span><br><span class="line"><span class="css"><span class="selector-tag">body</span> &#123;<span class="attribute">background-image</span>:<span class="built_in">url</span>(<span class="string">"images/back40.gif"</span>);&#125;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h1 id="内联样式"><a href="#内联样式" class="headerlink" title="内联样式"></a>内联样式</h1><p>内联样式，就是在HTML标签内使用样式<code>style</code>属性，<code>style</code>属性可以包含任何CSS属性。如下例子是用来控制段落的颜色和左外边距：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">style</span>=<span class="string">"color:sienna;margin-left:20px"</span>&gt;</span>This is a paragraph.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h1 id="各种使用方式的优先级"><a href="#各种使用方式的优先级" class="headerlink" title="各种使用方式的优先级"></a>各种使用方式的优先级</h1><p>当一个HTML文档同时使用了外部样式表、内部样式表和内联样式。这时候各个样式表会合并成一个样式，假设样式表1中定义了<code>a</code>元素，样式表2中定义了<code>b</code>元素上，那么最终的<code>a</code>和<code>b</code>都会得到控制。但是如果不同的样式表对同一个元素进行了重复的定义，那么就会使用样式表的优先级来覆盖，优先级为<code>内联样式 &gt; 内部样式表 &gt; 外部样式表 &gt; 浏览器缺省值</code>，也就是内联样式的优先级最大。</p>
@@ -552,7 +552,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">340</span>
+                    <span class="site-state-item-count">341</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
