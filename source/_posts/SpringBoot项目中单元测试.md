@@ -38,7 +38,7 @@ public class StudentServiceTest {
     private StudentService studentService;
        
     @Test
-    public void getAllStudentTest() {
+    public void testGetAllStudent() {
         List<Student> allStudent = studentService.getAllStudent();
         Assert.assertNotNull(allStudent);
     }
@@ -69,7 +69,7 @@ public class StudentControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    public void getAllStudentTest() throws Exception {
+    public void testGetAllStudent() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/student/all")).andExpect(MockMvcResultMatchers.status().isOk());
     }
 }
@@ -106,7 +106,7 @@ Assert.assertArrayEquals(Object[] expected, Object[] actual) // 比较数组，�
 
 （1）src/test/java目录下的package结构要和src/main/java下的package结构一样。被测试类要和测试类保持一一对应。
 
-（2）测试类的命名是被测试类类名加上Test，如被测试类为StudentService，则测试类为StudentServiceTest。测试方法名是被测试方法名加上Test，如被测试方法名为getAllStudent，则测试方法名为getAllStudentTest。
+（2）测试类的命名是被测试类类名加上Test，如被测试类为StudentService，则测试类为StudentServiceTest。测试方法名是被测试方法名前加上test前缀，如被测试方法名为getAllStudent，则测试方法名为testGetAllStudent。
 
 （3）在测试方法名上`Run As >> JUnit Test`，只会测试该测试用例。如果想运行整个SpringBoot项目的测试用例，可以在项目名或src/test/java上右键鼠标，选择`Run As >> JUnit Test`菜单项，那么就会运行整个项目的测试用例啦。
 

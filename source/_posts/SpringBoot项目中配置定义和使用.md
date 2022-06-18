@@ -51,7 +51,7 @@ public class ConfigController {
 
     es.index.url=http://10.16.20.97:9200/_cat/indices?h=index,docs.count,health,pri.store.size&format=json
 
-（2）定义一个配置类，将配置文件中内容映射到JAVA对象中，如com.sohu.sysadmin.sgwlogsys.config.ElasticSearchConfig，内容如下：
+（2）定义一个配置类，将配置文件中内容映射到JAVA对象中，如com.xxoo.admin.xxoologsys.config.ElasticSearchConfig，内容如下：
 
 ```java
 @Component
@@ -97,11 +97,13 @@ public class TestController {
 
 多环境配置的生成有如下几种方法：
 
-（1）在application.properties文件中通过`spring.profiles.active=xxx`来说明使用什么环境的配置。若`spring.profiles.active=test`，表示使用application-test.properties中配置来运行项目。
+（1）在application.properties文件中通过`spring.profiles.active=xxx`来说明使用什么环境的配置。若`spring.profiles.active=test`，表示使用application-test.properties中配置来运行项目。若直接运行`java -jar xxxx.jar`，则会根据application.properties中的`spring.profiles.active=xxx`来决定以什么环境来启动SpringBoot应用。
 
-（2）在我们启动项目时，可以通过`java -jar xxxx.jar --spring.profiles.active=prod`来运行不同的环境。若直接运行`java -jar xxxx.jar`，则会根据application.properties中的`spring.profiles.active=xxx`来决定以什么环境来启动SpringBoot应用。
+（2）在我们启动项目时，可以通过`java -jar xxxx.jar --spring.profiles.active=prod`来运行不同的环境。
 
-备注：在application.properties中配置的属性，会在所有环境中有效哦。另外，这需要与Maven pom.xml中多环境配置的区别要注意下哦。
+（3）也可以通过虚拟机参数指定，即通过`java -jar xxxx.jar -Dspring.profiles.active=prod`来运行prod环境。
+
+备注：在application.properties中配置的属性，会在所有环境中有效哦。当application.properties和application-xxx.properties中有重复的配置项时，application-xxx.properties中的属性会覆盖掉application.properties中配置。另外，这需要与Maven pom.xml中多环境配置的区别要注意下哦。
 
 学习资料参考于：
 [关于自定义配置](https://surpass-wei.github.io/2017/02/24/spring-boot1.5%E4%BB%A5%E4%B8%8A%E7%89%88%E6%9C%AC@ConfigurationProperties%E5%8F%96%E6%B6%88location%E6%B3%A8%E8%A7%A3%E5%90%8E%E7%9A%84%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88/)

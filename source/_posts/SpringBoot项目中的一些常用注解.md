@@ -51,13 +51,13 @@ Spring4之后新加的注解，表示controller返回给浏览器json格式的�
 
 **@Autowired可以注解到私有成员变量、构造方法、成员方法上**。当@Autowired对方法或构造函数进行标注时，Spring会将构造函数或成员方法的参数所对应的对象以Spring Bean的形式注入进去。
 
+# @Resource
+
+@Resource和@Autowired的功能是类似的，也是用来自动装配的。只是@Resource这个注解是JDK自带的（J2EE），Spring对@Resource也是支持的。而@Autowired是Spring自带的注解。
+
 # @EnableScheduling|@Scheduled
 
 @EnableScheduling表示开启Spring的定时调度任务功能，在SpringBoot项目上要实现定时调度任务，必须在项目入口类上加上该注解。@Scheduled是用来设定具体的调度策略，如`@Scheduled(cron = "0 0 8,20 * * ?")`表示每天的8点和20点执行一下该任务。
-
-# @Resource
-
-@Resource和@Autowired的功能是类似的，也是用来自动装配的。只是@Resource这个注解是JDK自带的，Spring对@Resource也是支持的。而@Autowired是Spring自带的注解。
 
 # @Configuration
 
