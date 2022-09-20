@@ -125,7 +125,7 @@
 <meta property="og:image" content="http://wangjianno1.github.io/images/maven_1_8.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/maven_1_9.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/maven_1_10.png">
-<meta property="og:updated_time" content="2022-02-17T03:58:13.641Z">
+<meta property="og:updated_time" content="2022-09-04T14:08:31.757Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA项目构建工具Maven技术调研">
 <meta name="twitter:description" content="Maven简介Apache Maven是一个软件（特别是Java软件）项目管理及自动构建工具，由Apache软件基金会所提供。基于项目对象模型（POM）概念，Maven利用一小段描述信息来管理一个项目的构建、报告和文档等。Maven也可被用于构建和管理各种项目，例如C#，Ruby，Scala和其他语言编写的项目。Maven曾是Jakarta项目的子项目，现为由Apache软件基金会主持的独立Apa">
@@ -423,7 +423,7 @@
 <h1 id="Windows平台下Maven的环境配置和搭建"><a href="#Windows平台下Maven的环境配置和搭建" class="headerlink" title="Windows平台下Maven的环境配置和搭建"></a>Windows平台下Maven的环境配置和搭建</h1><p>（1）安装JDK并配置JAVA环境变量</p>
 <p>（2）Apache Maven上下载二进制安装包，解压即可，不需要安装哦</p>
 <p>（3）为Maven配置系统环境变量</p>
-<p>首先新建环境变量M2_HOME，值为Maven的部署路径；然后修改系统PATH变量，增加%M2_HOME/bin</p>
+<p>首先新建环境变量M2_HOME，值为Maven的部署路径；然后修改系统PATH变量，增加%M2_HOME%/bin。</p>
 <p>（4）测试验证</p>
 <p>在Windows的cmd中输入<code>mvn -v</code>即可。</p>
 <h1 id="Maven管理的项目的目录结构"><a href="#Maven管理的项目的目录结构" class="headerlink" title="Maven管理的项目的目录结构"></a>Maven管理的项目的目录结构</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">|-src</span><br><span class="line">    |-main</span><br><span class="line">        |-java</span><br><span class="line">            |-package <span class="comment">#即用户的自己的代码，例如com.baidu.xxoomon等</span></span><br><span class="line">        |-resources   <span class="comment">#存放一些配置文件或静态资源文件，如模板文件、静态图片等</span></span><br><span class="line">            |-static</span><br><span class="line">            |-templates</span><br><span class="line">    |-<span class="built_in">test</span></span><br><span class="line">        |-java</span><br><span class="line">            |-package <span class="comment">#即用户的自己的代码</span></span><br><span class="line">        |-resources   <span class="comment">#存放测试需要用到的一些配置文件或静态资源文件，如模板文件、静态图片等</span></span><br><span class="line">            |-static</span><br><span class="line">            |-templates</span><br><span class="line">|-pom.xml     <span class="comment">#Maven的项目管理配置文件</span></span><br></pre></td></tr></table></figure>
