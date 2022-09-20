@@ -1,5 +1,5 @@
 ---
-title: 在windowns中如何默认以管理员身份运行指定程序
+title: 在windows中如何默认以管理员身份运行指定程序
 date: 2018-02-04 02:03:20
 tags:
 categories: Windows

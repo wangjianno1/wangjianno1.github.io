@@ -18,7 +18,7 @@ Apache Maven是一个软件（特别是Java软件）项目管理及自动构建�
 
 （3）为Maven配置系统环境变量
 
-首先新建环境变量M2_HOME，值为Maven的部署路径；然后修改系统PATH变量，增加%M2_HOME/bin
+首先新建环境变量M2_HOME，值为Maven的部署路径；然后修改系统PATH变量，增加%M2_HOME%/bin。
 
 （4）测试验证
 
