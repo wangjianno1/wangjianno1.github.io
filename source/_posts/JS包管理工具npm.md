@@ -51,7 +51,7 @@ npm install package@~1.1.0  #表示满足>=1.1.0 && < 1.2.0条件中最新的版
 npm install package@^1.1.0  #表示满足>=1.1.0 && < 2.0.0条件中最新的版本号
 ```
 
-其中~和^两个前缀让人比较迷惑，简单的来说：
+其中`~`和`^`两个前缀让人比较迷惑，简单的来说：
 
 	~ 前缀表示，安装大于指定的这个版本，并且匹配到x.y.z中z最新的版本
 	^ 前缀在^0.y.z时的表现和~0.y.z是一样的，然而^1.y.z的时候，就会匹配到y和z都是最新的版本
@@ -108,6 +108,17 @@ scripts          #定义npm script脚本，然后通过npm run *来执行
 npm search express --proxy http://10.17.29.112:3128
 ```
 
-详细参考于：
+（2）修改npm的仓库源
+
+npm官方的源地址是`http://registry.npmjs.org`。我们可以修改该源地址。有两种方式，一种使用`npm config`命令来修改如下：
+
+```bash
+npm config set registry https://registry.npm.taobao.org  # 修改为淘宝源
+npm config set registry http://x.x.x.x:7001              # 修改为内网搭建的源
+```
+
+另一种是修改npm的配置文件`~/.npmrc`。
+
+学习资料参考于：
 http://www.cnblogs.com/youfeng365/p/5846674.html
 http://www.ruanyifeng.com/blog/2016/10/npm_scripts.html
