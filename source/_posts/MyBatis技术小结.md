@@ -19,7 +19,7 @@ MyBatis的架构图如下：
 
 ![](/images/java_mybatis_1_1.png)
 
-MyBatis应用程序根据XML配置文件创建SqlSessionFactory，SqlSessionFactory在根据配置，配置来源于两个地方，一处是配置文件，一处是Java代码的注解，获取一个SqlSession。SqlSession包含了执行sql所需要的所有方法，可以通过SqlSession实例直接运行映射的SQL语句，完成对数据的增删改查和事务提交等，用完之后关闭SqlSession。
+MyBatis应用程序根据XML配置文件创建SqlSessionFactory，SqlSessionFactory再根据配置，配置来源于两个地方，一处是配置文件，一处是Java代码的注解，获取一个SqlSession。SqlSession包含了执行sql所需要的所有方法，可以通过SqlSession实例直接运行映射的SQL语句，完成对数据的增删改查和事务提交等，用完之后关闭SqlSession。
 
 # MyBatis框架中的一些基础框架
 
@@ -65,7 +65,51 @@ MyBatis应用程序根据XML配置文件创建SqlSessionFactory，SqlSessionFact
 </configuration>
 ```
 
-（3）编写SQL到实体类的映射文件
+（3）编写实体类
+
+比如实体类Blog，如下：
+
+```java
+public class Blog {
+    private int id;
+    private String title;
+    private String content;
+
+    public Blog(int id, String title, String content) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+}
+```
+
+备注：在MyBatis中定义实体类时，好像就不需要JPA中的@Entity/@Table/@Column等等注解，待确认一下哦？？
+
+（4）编写SQL到实体类的映射配置Mapper文件
 
 比如BlogMapper.xml文件内容如下：
 
@@ -83,7 +127,17 @@ MyBatis应用程序根据XML配置文件创建SqlSessionFactory，SqlSessionFact
 
 备注：这里`id="selectBlog"`是给这条SQL语句命个名字，然后就可以在代码中调用，从而执行这条SQL语句。
 
-MyBatis也支持使用注解代替xml文件方法，如上可以用下面接口来达到同样效果：
+（5）编写Mapper接口
+
+如BlogMpper.java的文件内容如下：
+
+```java
+public interface BlogMapper {
+  Blog selectBlog(int id);
+}
+```
+
+需要特别注意的是，MyBatis也支持使用注解代替xml Mapper文件方法，若定义Mapper接口时，在接口的方法使用MyBatis的一些注解来定义SQL语句，则第（4）步骤定义xml Mapper配置文件可以省略掉，举例如下：
 
 ```java
 public interface BlogMapper {
@@ -91,7 +145,8 @@ public interface BlogMapper {
   Blog selectBlog(int id);
 }
 ```
-（4）生成SqlSessionFactory
+
+（6）生成SqlSessionFactory
 
 ```java
 String resource = "org/mybatis/mybatis-config.xml";
@@ -99,7 +154,7 @@ InputStream inputStream = Resources.getResourceAsStream(resource);
 SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 ```
 
-（5）获取数据库SqlSession并进行CRUD操作
+（7）获取数据库SqlSession并进行CRUD操作
 
 ```java
 try (SqlSession session = sqlSessionFactory.openSession()) {
