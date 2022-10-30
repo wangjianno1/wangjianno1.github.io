@@ -83,13 +83,6 @@ const element = <h1>Hello, world</h1>;
 React组件可以是函数组件，也可以是Class组件。组件可以被用来重用哦。一个组件的输入是JavaScript对象，输出是一个React元素。举例来说：
 
 ```javascript
-// functional式React组件
-function Welcome(props) {
-  return <h1>Hello, {props.name}</h1>;
-}
-```
-
-```javascript
 // class式React组件
 class Welcome extends React.Component {
   render() {
@@ -98,7 +91,89 @@ class Welcome extends React.Component {
 }
 ```
 
-备注：`React.createClass`方法也可以生成一个组件类。
+# React组件的几种写法
+
+（1）ES5中React.createClass写法
+
+这种写法也是React中最早使用的写法，使用的ES5的规范。
+
+```javascript
+import React from 'react';
+import ReactDom from 'react-dom';
+import Animate from 'rc-animate';
+
+export default React.createClass({
+    getDefaultProps() {
+        // TBD
+    },
+
+    getInitialState() {
+        // TBD
+    },
+
+    handleClose(e) {
+        // TBD
+    },
+
+    animationEnd() {
+        // TBD
+    },
+
+    render() {
+        // TBD
+    }
+});
+```
+
+（2）ES6的Class写法
+
+```javascript
+import React from 'react';
+import ReactDom from 'react-dom';
+import Animate from 'rc-animate';
+
+class Badge extends React.Component {
+    render() {
+        // TBD
+    }
+}
+
+Badge.defaultProps = {
+    // TBD
+};
+
+Badge.propTypes = {
+    // TBD  
+};
+
+export default Badge
+```
+
+（3）函数式写法
+
+```javascript
+import React from 'react';
+
+const Footer = (props) => (
+    <h1>Hello, {props.name}</h1>
+)
+
+export default Footer
+```
+
+或者，
+
+```javascript
+import React from 'react';
+
+function Footer(props) {
+    return <h1>Hello, {props.name}</h1>;
+}
+
+export default Footer;
+```
+
+备注：目前来说比较推荐的是函数式React组件写法，结合React Hooks后，代码更加简洁高效。
 
 # React开发包的结构
 
