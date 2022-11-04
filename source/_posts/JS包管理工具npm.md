@@ -119,6 +119,12 @@ npm config set registry http://x.x.x.x:7001              # 修改为内网搭建
 
 另一种是修改npm的配置文件`~/.npmrc`。
 
+（3）package-lock.json
+
+在工程中，和package.json同目录下，可能会有package-lock.json文件。假设某项目中packgae.json的配置的依赖是`"react": "^17.0.2"`，当我们执行npm install下载安装的版本是`17.0.2`，因为有标识符`^`，所以如果React模块有在17大版本下新的小版本，比如17.0.3，此时其他人再执行`npm install`时，会自动安装最新版本`17.0.3`。这是就会出现不同环境的依赖的具体版本出现了不同。npm install自动生成package-lock.json就是用来解决这种不一致的问题的，package-lock.json简单来说就是锁定安装模块的版本号。就是在npm install的时候，记录各个模块的版本信息和下载路径，这样别人拉项目npm install时候， 就会依据packgae-lock.json去安装依赖，保证大家依赖一致并且安装模块速度也能提高。
+
+package-lock.json不是必需的，是在npm install时，npm自动生成的，当我们把package-lock.json提交到代码仓中，其他人获取到项目安装依赖时，一些依赖模块就会依据packjson-lock.json文件来下载依赖。
+
 学习资料参考于：
 http://www.cnblogs.com/youfeng365/p/5846674.html
 http://www.ruanyifeng.com/blog/2016/10/npm_scripts.html
