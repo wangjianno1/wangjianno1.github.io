@@ -114,7 +114,7 @@
 <meta property="og:site_name" content="老坛の菜园子">
 <meta property="og:description" content="npm简介npm，全称为node package manager，是Node的模块管理器，也可以说是JavaScript的包管理工具。npm体系有npm工具客户端和npm包仓库两部分。npm包官方仓库为https://www.npmjs.com，使用npm客户端工具可以在本地安装、删除JavaScript包，功能非常强大。 npm客户端工具的安装npm客户端工具并不需要单独安装。安装完nodejs">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2022-09-20T16:45:53.813Z">
+<meta property="og:updated_time" content="2022-11-04T08:05:24.828Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS包管理工具npm">
 <meta name="twitter:description" content="npm简介npm，全称为node package manager，是Node的模块管理器，也可以说是JavaScript的包管理工具。npm体系有npm工具客户端和npm包仓库两部分。npm包官方仓库为https://www.npmjs.com，使用npm客户端工具可以在本地安装、删除JavaScript包，功能非常强大。 npm客户端工具的安装npm客户端工具并不需要单独安装。安装完nodejs">
@@ -428,6 +428,9 @@
 <p>npm官方的源地址是<code>http://registry.npmjs.org</code>。我们可以修改该源地址。有两种方式，一种使用<code>npm config</code>命令来修改如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org  <span class="comment"># 修改为淘宝源</span></span><br><span class="line">npm config <span class="built_in">set</span> registry http://x.x.x.x:7001              <span class="comment"># 修改为内网搭建的源</span></span><br></pre></td></tr></table></figure>
 <p>另一种是修改npm的配置文件<code>~/.npmrc</code>。</p>
+<p>（3）package-lock.json</p>
+<p>在工程中，和package.json同目录下，可能会有package-lock.json文件。假设某项目中packgae.json的配置的依赖是<code>&quot;react&quot;: &quot;^17.0.2&quot;</code>，当我们执行npm install下载安装的版本是<code>17.0.2</code>，因为有标识符<code>^</code>，所以如果React模块有在17大版本下新的小版本，比如17.0.3，此时其他人再执行<code>npm install</code>时，会自动安装最新版本<code>17.0.3</code>。这是就会出现不同环境的依赖的具体版本出现了不同。npm install自动生成package-lock.json就是用来解决这种不一致的问题的，package-lock.json简单来说就是锁定安装模块的版本号。就是在npm install的时候，记录各个模块的版本信息和下载路径，这样别人拉项目npm install时候， 就会依据packgae-lock.json去安装依赖，保证大家依赖一致并且安装模块速度也能提高。</p>
+<p>package-lock.json不是必需的，是在npm install时，npm自动生成的，当我们把package-lock.json提交到代码仓中，其他人获取到项目安装依赖时，一些依赖模块就会依据packjson-lock.json文件来下载依赖。</p>
 <p>学习资料参考于：<br><a href="http://www.cnblogs.com/youfeng365/p/5846674.html" target="_blank" rel="noopener">http://www.cnblogs.com/youfeng365/p/5846674.html</a><br><a href="http://www.ruanyifeng.com/blog/2016/10/npm_scripts.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2016/10/npm_scripts.html</a></p>
 
       
