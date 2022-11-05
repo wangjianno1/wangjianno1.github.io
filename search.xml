@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>合并分支之Git Rebase</title>
+      <link href="/2022/11/06/%E5%90%88%E5%B9%B6%E5%88%86%E6%94%AF%E4%B9%8BGit-Rebase/"/>
+      <url>/2022/11/06/%E5%90%88%E5%B9%B6%E5%88%86%E6%94%AF%E4%B9%8BGit-Rebase/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Git-Rebase变基介绍"><a href="#Git-Rebase变基介绍" class="headerlink" title="Git Rebase变基介绍"></a>Git Rebase变基介绍</h1><p>Rebase在Git中是一个非常有魅力的命令，使用得当会极大提高自己的工作效率。相反，如果乱用，会给团队中其他人带来麻烦。它的作用简要概括为，可以对某一段线性提交历史进行编辑、删除、复制、粘贴。因此，合理使用Rebase命令可以使我们的提交历史干净、简洁。</p><p>简单来说，变基就是，先确定变基分支和目标变基分支共同祖先的那一次提交，然后变基分支会将共同祖先后最开始的一次提交的parent修改指向，指向目标变基分支的最新的一次提交。</p><h1 id="Git-Rebase使用场景之合并多个commit"><a href="#Git-Rebase使用场景之合并多个commit" class="headerlink" title="Git Rebase使用场景之合并多个commit"></a>Git Rebase使用场景之合并多个commit</h1><p>Git Rebase的一种使用场景就是用来合并多个commit为一个完整commit。当我们在本地仓库中提交了多次，在我们把本地提交push到公共仓库中之前，为了让提交记录更简洁明了，我们希望把如下分支B、C、D三个提交记录合并为一个完整的提交，然后再push到公共仓库。</p><p>需要注意的是，是在本地仓库多次提交，但是还未被push到远程仓库中，使用Git Rebase功能对本地仓库的commit历史进行合并调整等。对于已经push到远程仓库中的多次提交，也是可以用git rebase来合并多次提交的，只是最后push到远程仓库时，要force push到远程仓库才可以。</p><p><img src="/images/git_rebase_1_1.png" alt></p><p>假设本地仓库的rebase分支下当前的提交历史如下：</p><p><img src="/images/git_rebase_1_2.png" alt></p><p>此时我们需要合并第1～3条提交记录。我们执行如下格式的命令：</p><pre><code>git rebase -i [startpoint] [endpoint]</code></pre><p>其中<code>-i</code>的意思是<code>--interactive</code>，即弹出交互式的界面让用户编辑完成合并操作，<code>[startpoint]</code>和<code>[endpoint]</code>则指定了一个编辑区间，如果不指定<code>[endpoint]</code>，则该区间的终点默认是当前分支HEAD所指向的commit（注：该区间指定的是一个前开后闭的区间）。</p><p>具体到我们这个例子，就是执行如下命令：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rebase -i 825241aa0 <span class="comment">#或执行git rebase -i HEAD~3也是可以的</span></span><br></pre></td></tr></table></figure><p>然后我们会看到如下界面：</p><p><img src="/images/git_rebase_1_3.png" alt></p><p>上面未被注释的部分列出的是我们本次rebase操作包含的所有提交，下面注释部分是git为我们提供的命令说明。每一个commit id前面的pick表示指令类型，git为我们提供了以下几个命令：</p><pre><code>* pick：保留该commit（缩写:p）* reword：保留该commit，但我需要修改该commit的注释（缩写:r）* edit：保留该commit, 但我要停下来修改该提交(不仅仅修改注释)（缩写:e）* squash：将该commit和前一个commit合并（缩写:s）* fixup：将该commit和前一个commit合并，但我不要保留该提交的注释信息（缩写:f）* exec：执行shell命令（缩写:x）* drop：我要丢弃该commit（缩写:d）</code></pre><p>根据我们的需求，我们将commit内容编辑如下：</p><p><img src="/images/git_rebase_1_4.png" alt></p><p>然后是注释修改界面：</p><p><img src="/images/git_rebase_1_5.png" alt></p><p>编辑完保存即可完成commit的合并了：</p><p><img src="/images/git_rebase_1_6.png" alt></p><p>本地仓库合并完成之后，考虑到推送到远程仓库。若合并之前，本地的多次commit并未被push到远程仓库，那这里直接使用git push origin rebase即可将合并后的内容push到远程仓库。若合并之前，本地的多次commit已经被push到远程仓库，这是使用git push origin rebase则会提示如下错误：</p><p><img src="/images/git_rebase_1_7.png" alt></p><p>此处若想push成功，必须使用force push才可以，如下：</p><p><img src="/images/git_rebase_1_8.png" alt></p><h1 id="Git-Rebase使用场景之合并分支"><a href="#Git-Rebase使用场景之合并分支" class="headerlink" title="Git Rebase使用场景之合并分支"></a>Git Rebase使用场景之合并分支</h1><p>假设一个代码仓有master和experiment两个分支，其当前的git log内容如下图，现在要将feature分支的内容合并到master分支中。</p><p><img src="/images/git_rebase_1_9.png" alt></p><p>如果我们要使用git rebase来完成这个任务的话，其操作命令如下：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout experiment</span><br><span class="line">git rebase master <span class="comment">#将experiment分支变基到master分支上</span></span><br></pre></td></tr></table></figure><p>git rebase master这条命令的执行原理需要特别说明下，它的原理是首先找到这两个分支（即当前分支experiment 、变基操作的目标基底分支master）的最近共同祖先C2 ，然后对比当前分支（即experiment分支）相对于该祖先C2的历次提交，把这些提交抽离出来并存为临时文件，然后将当前分支（即experiment分支）指向目标基底C3，最后再将临时文件中的各个提交依序在experiment分支上应用。执行完成上面的任务后，git log内容如下图：</p><p><img src="/images/git_rebase_1_10.png" alt></p><p>如果再有需求，要把experiment分支的内容合并到master上来，则需要再执行一个merge操作。首先回到master分支，再进行一次快进合并。即执行如下命令：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">git merge experiment</span><br></pre></td></tr></table></figure><p>执行完之后，master分支中已经有了experiment分支的，而experiment分支中也包含了master中C3。git log内容如下图：</p><p><img src="/images/git_rebase_1_11.png" alt></p><h1 id="一点闲杂"><a href="#一点闲杂" class="headerlink" title="一点闲杂"></a>一点闲杂</h1><p>关于使用Git Rebase，将某个分支上的一段commit合并到另一个分支上，还有更复杂的场景如下：</p><p><img src="/images/git_rebase_1_12.png" alt></p><p>这时候我们用到的git rebase的命令格式如下：</p><pre><code>git rebase [startpoint] [endpoint] --onto [branchName]</code></pre><p>其中，<code>[startpoint]</code>和<code>[endpoint]</code>仍然和git merge命令中的一样，指定了一个编辑区间（还是需要注意，这是一个前开后闭的区间），<code>--onto</code>表示是要将该指定的提交复制到哪个分支上。这部分具体实例，等后续遇到再研究，再把内容补充进来。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> VCS </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Git </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Git管理员操作手册</title>
       <link href="/2022/11/06/Git%E7%AE%A1%E7%90%86%E5%91%98%E6%93%8D%E4%BD%9C%E6%89%8B%E5%86%8C/"/>
       <url>/2022/11/06/Git%E7%AE%A1%E7%90%86%E5%91%98%E6%93%8D%E4%BD%9C%E6%89%8B%E5%86%8C/</url>
