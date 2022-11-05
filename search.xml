@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Git合并分支时冲突解决</title>
+      <link href="/2022/11/06/Git%E5%90%88%E5%B9%B6%E5%88%86%E6%94%AF%E6%97%B6%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3/"/>
+      <url>/2022/11/06/Git%E5%90%88%E5%B9%B6%E5%88%86%E6%94%AF%E6%97%B6%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3/</url>
+      
+        <content type="html"><![CDATA[<h1 id="合并分支时冲突产生"><a href="#合并分支时冲突产生" class="headerlink" title="合并分支时冲突产生"></a>合并分支时冲突产生</h1><p>有时候合并操作不会如此顺利，如果你在两个不同的分支中，对同一个文件的同一个部分进行了不同的修改，Git就没法干净的合并它们。不管是Git Rebase还是Git Merge，在进行合并时难免会产生冲突，所谓的冲突是指两个分支上的代码对同一个地方进行修改，系统无法判断该保留哪一份代码，需要人工进行干预解决冲突的过程。如果有冲突产生，在进行合并时会列出所有冲突的代码。</p><h1 id="使用Git命令行解决冲突"><a href="#使用Git命令行解决冲突" class="headerlink" title="使用Git命令行解决冲突"></a>使用Git命令行解决冲突</h1><p>下面我们以一个例子来说明合并冲突的产生和解决。假如我们做合并iss53分支的内容到master产生了冲突。</p><p><img src="/images/git_conflict_1_1.png" alt></p><p>此时Git做了合并，但是没有自动地创建一个新的合并提交。Git会暂停下来，等待你去解决合并产生的冲突。你可以在合并冲突后的任意时刻使用git status命令来查看那些因包含合并冲突而处于未合并（unmerged）状态的文件：</p><p><img src="/images/git_conflict_1_2.png" alt></p><p>任何因包含合并冲突而有待解决的文件，都会以未合并状态标识出来。Git会在有冲突的文件中加入标准的冲突解决标记，这样你可以打开这些包含冲突的文件然后手动解决冲突。出现冲突的文件会包含一些特殊区段，看起来像下面这个样子：</p><p><img src="/images/git_conflict_1_3.png" alt></p><p>这表示HEAD所指示的版本（也就是你的master分支所在的位置，因为你在运行merge命令的时候已经检出到了这个分支）在这个区段的上半部分（<code>=======</code>的上半部分），而iss53分支所指示的版本在<code>=======</code>的下半部分。 为了解决冲突，你必须选择使用由<code>=======</code>分割的两部分中的一个，或者你也可以自行合并这些内容。 例如，你可以通过把这段内容换成下面的样子来解决冲突：</p><p><img src="/images/git_conflict_1_4.png" alt></p><p>上述的冲突解决方案仅保留了其中一个分支的修改，并且<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>，<code>=======</code>，和<code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>这些行被完全删除了。 在你解决了所有文件里的冲突之后，对每个文件使用git add命令来将其标记为冲突已解决。一旦暂存这些原本有冲突的文件，Git就会将它们标记为冲突已解决。</p><h1 id="IDEA中合并冲突解决"><a href="#IDEA中合并冲突解决" class="headerlink" title="IDEA中合并冲突解决"></a>IDEA中合并冲突解决</h1><p>上面的部分是使用Git命令行来操作解决冲突的方式，我们也可以选择一些图形化界面工具来解决合并冲突，比如IDEA，那么解决合并冲突会更加直观一点，下面是IDEA中解决合并冲突的操作方式：</p><p><img src="/images/git_conflict_1_5.png" alt></p><p>这时候有三个选项可以选择：</p><p>（1）Accept Yours，表示保留当前分支代码，丢弃被合并的分支代码。</p><p>（2）Accept Theirs，表示保留被合并分支代码，丢失当前分支代码。</p><p>（3）Merge，表示要手工进行合并。</p><p>若选择Merge后进入手工合并代码界面，如下：</p><p><img src="/images/git_conflict_1_6.png" alt></p><p>上图中，①是当前分支代码，②是合并后的代码，③是被合并的分支代码。</p><p>IDEA会把两边不同的进行高亮显示，你可以根据实际情况进行合并。</p><p>合并后会弹出一个确认框，如果所有的冲突都解决完毕，可以点击Apply Change and Mark Resolved，表示冲突已解决。</p><p><img src="/images/git_conflict_1_7.png" alt></p><p>学习资料参考于：<br><a href="https://segmentfault.com/a/1190000040707581" target="_blank" rel="noopener">https://segmentfault.com/a/1190000040707581</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> VCS </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Git </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>合并分支之Git Merge</title>
       <link href="/2022/11/06/%E5%90%88%E5%B9%B6%E5%88%86%E6%94%AF%E4%B9%8BGit-Merge/"/>
       <url>/2022/11/06/%E5%90%88%E5%B9%B6%E5%88%86%E6%94%AF%E4%B9%8BGit-Merge/</url>
