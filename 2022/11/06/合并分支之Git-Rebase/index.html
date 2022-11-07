@@ -127,7 +127,7 @@
 <meta property="og:image" content="http://wangjianno1.github.io/images/git_rebase_1_10.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/git_rebase_1_11.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/git_rebase_1_12.png">
-<meta property="og:updated_time" content="2022-11-05T17:34:54.282Z">
+<meta property="og:updated_time" content="2022-11-07T14:49:16.135Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="合并分支之Git Rebase">
 <meta name="twitter:description" content="Git Rebase变基介绍Rebase在Git中是一个非常有魅力的命令，使用得当会极大提高自己的工作效率。相反，如果乱用，会给团队中其他人带来麻烦。它的作用简要概括为，可以对某一段线性提交历史进行编辑、删除、复制、粘贴。因此，合理使用Rebase命令可以使我们的提交历史干净、简洁。 简单来说，变基就是，先确定变基分支和目标变基分支共同祖先的那一次提交，然后变基分支会将共同祖先后最开始的一次提交的">
@@ -452,7 +452,12 @@
 <p><img src="/images/git_rebase_1_7.png" alt></p>
 <p>此处若想push成功，必须使用force push才可以，如下：</p>
 <p><img src="/images/git_rebase_1_8.png" alt></p>
-<h1 id="Git-Rebase使用场景之合并分支"><a href="#Git-Rebase使用场景之合并分支" class="headerlink" title="Git Rebase使用场景之合并分支"></a>Git Rebase使用场景之合并分支</h1><p>假设一个代码仓有master和experiment两个分支，其当前的git log内容如下图，现在要将feature分支的内容合并到master分支中。</p>
+<p>总结操作步骤如下：</p>
+<pre><code>步骤一：get rebase -i [startpoint] [endpoint]，即指定要合并的提交
+步骤二：指令编辑，即选择pick/reword/edit/squash等
+步骤三：重新编辑提交注释，保存后，本地仓库中合并完成
+步骤四：推送至远程仓库
+</code></pre><h1 id="Git-Rebase使用场景之合并分支"><a href="#Git-Rebase使用场景之合并分支" class="headerlink" title="Git Rebase使用场景之合并分支"></a>Git Rebase使用场景之合并分支</h1><p>假设一个代码仓有master和experiment两个分支，其当前的git log内容如下图，现在要将feature分支的内容合并到master分支中。</p>
 <p><img src="/images/git_rebase_1_9.png" alt></p>
 <p>如果我们要使用git rebase来完成这个任务的话，其操作命令如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout experiment</span><br><span class="line">git rebase master <span class="comment">#将experiment分支变基到master分支上</span></span><br></pre></td></tr></table></figure>
@@ -462,7 +467,11 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">git merge experiment</span><br></pre></td></tr></table></figure>
 <p>执行完之后，master分支中已经有了experiment分支的，而experiment分支中也包含了master中C3。git log内容如下图：</p>
 <p><img src="/images/git_rebase_1_11.png" alt></p>
-<h1 id="一点闲杂"><a href="#一点闲杂" class="headerlink" title="一点闲杂"></a>一点闲杂</h1><p>关于使用Git Rebase，将某个分支上的一段commit合并到另一个分支上，还有更复杂的场景如下：</p>
+<p>总结操作步骤如下：</p>
+<pre><code>步骤一：git checkout 变基分支名
+步骤二：git rebase 变基目标分支名
+步骤三：git checkout 变基目标分支名 &amp;&amp; git merge 变基分支名  // 需要的时候才执行
+</code></pre><h1 id="一点闲杂"><a href="#一点闲杂" class="headerlink" title="一点闲杂"></a>一点闲杂</h1><p>关于使用Git Rebase，将某个分支上的一段commit合并到另一个分支上，还有更复杂的场景如下：</p>
 <p><img src="/images/git_rebase_1_12.png" alt></p>
 <p>这时候我们用到的git rebase的命令格式如下：</p>
 <pre><code>git rebase [startpoint] [endpoint] --onto [branchName]

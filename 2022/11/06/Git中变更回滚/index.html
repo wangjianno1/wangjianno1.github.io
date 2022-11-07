@@ -107,13 +107,13 @@
   <meta name="keywords" content="Git,">
 
 
-<meta name="description" content="合并重新提交12345git commit -m &apos;initial commit&apos;# 此处做继续修改文件的操作git add someotherfile.datgit commit --amend 最终你只会有一个提交，第二次提交将代替第一次提交的结果，其实就是将两次提交合并成一个提交，使用git log只能看到一条提交记录。在使用git push可能需要-f参数，即git push origin">
+<meta name="description" content="撤消工作区域中文件的修改使用git checkout -- [filename]将工作区域中修改去掉，很危险哦，修改会丢失的哦。 备注：git status命令有操作提示。 取消被暂存的文件使用git reset HEAD &amp;lt;filename&amp;gt;来取消被放到暂存区域的文件，然后重新放到工作目录。 备注：git status命令有操作提示。 合并重新提交12345git commit -m">
 <meta name="keywords" content="Git">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Git中变更回滚">
 <meta property="og:url" content="http://wangjianno1.github.io/2022/11/06/Git中变更回滚/index.html">
 <meta property="og:site_name" content="老坛の菜园子">
-<meta property="og:description" content="合并重新提交12345git commit -m &apos;initial commit&apos;# 此处做继续修改文件的操作git add someotherfile.datgit commit --amend 最终你只会有一个提交，第二次提交将代替第一次提交的结果，其实就是将两次提交合并成一个提交，使用git log只能看到一条提交记录。在使用git push可能需要-f参数，即git push origin">
+<meta property="og:description" content="撤消工作区域中文件的修改使用git checkout -- [filename]将工作区域中修改去掉，很危险哦，修改会丢失的哦。 备注：git status命令有操作提示。 取消被暂存的文件使用git reset HEAD &amp;lt;filename&amp;gt;来取消被放到暂存区域的文件，然后重新放到工作目录。 备注：git status命令有操作提示。 合并重新提交12345git commit -m">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://wangjianno1.github.io/images/git_rollback_1_1.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/git_rollback_1_2.png">
@@ -129,10 +129,10 @@
 <meta property="og:image" content="http://wangjianno1.github.io/images/git_rollback_1_12.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/git_rollback_1_13.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/git_rollback_1_14.png">
-<meta property="og:updated_time" content="2022-11-05T18:17:23.988Z">
+<meta property="og:updated_time" content="2022-11-07T16:32:07.589Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git中变更回滚">
-<meta name="twitter:description" content="合并重新提交12345git commit -m &apos;initial commit&apos;# 此处做继续修改文件的操作git add someotherfile.datgit commit --amend 最终你只会有一个提交，第二次提交将代替第一次提交的结果，其实就是将两次提交合并成一个提交，使用git log只能看到一条提交记录。在使用git push可能需要-f参数，即git push origin">
+<meta name="twitter:description" content="撤消工作区域中文件的修改使用git checkout -- [filename]将工作区域中修改去掉，很危险哦，修改会丢失的哦。 备注：git status命令有操作提示。 取消被暂存的文件使用git reset HEAD &amp;lt;filename&amp;gt;来取消被放到暂存区域的文件，然后重新放到工作目录。 备注：git status命令有操作提示。 合并重新提交12345git commit -m">
 <meta name="twitter:image" content="http://wangjianno1.github.io/images/git_rollback_1_1.png">
 
 
@@ -422,16 +422,16 @@
       
 
       
-        <h1 id="合并重新提交"><a href="#合并重新提交" class="headerlink" title="合并重新提交"></a>合并重新提交</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git commit -m <span class="string">'initial commit'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 此处做继续修改文件的操作</span></span><br><span class="line">git add someotherfile.dat</span><br><span class="line">git commit --amend</span><br></pre></td></tr></table></figure>
-<p>最终你只会有一个提交，第二次提交将代替第一次提交的结果，其实就是将两次提交合并成一个提交，使用git log只能看到一条提交记录。在使用git push可能需要-f参数，即git push origin branchname -f，否则push不成功。</p>
-<p>备注：这个和Git Rebase第一个使用场景看着是一样的。</p>
+        <h1 id="撤消工作区域中文件的修改"><a href="#撤消工作区域中文件的修改" class="headerlink" title="撤消工作区域中文件的修改"></a>撤消工作区域中文件的修改</h1><p>使用<code>git checkout -- [filename]</code>将工作区域中修改去掉，很危险哦，修改会丢失的哦。</p>
+<p>备注：git status命令有操作提示。</p>
 <h1 id="取消被暂存的文件"><a href="#取消被暂存的文件" class="headerlink" title="取消被暂存的文件"></a>取消被暂存的文件</h1><p>使用<code>git reset HEAD &lt;filename&gt;</code>来取消被放到暂存区域的文件，然后重新放到工作目录。</p>
 <p>备注：git status命令有操作提示。</p>
-<h1 id="撤消工作区域中文件的修改"><a href="#撤消工作区域中文件的修改" class="headerlink" title="撤消工作区域中文件的修改"></a>撤消工作区域中文件的修改</h1><p>使用<code>git checkout -- [filename]</code>将工作区域中修改去掉，很危险哦，修改会丢失的哦。</p>
-<p>备注：git status命令有操作提示。</p>
+<h1 id="合并重新提交"><a href="#合并重新提交" class="headerlink" title="合并重新提交"></a>合并重新提交</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git commit -m <span class="string">'initial commit'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 此处做继续修改文件的操作</span></span><br><span class="line">git add someotherfile.dat</span><br><span class="line">git commit --amend</span><br></pre></td></tr></table></figure>
+<p>最终你只会有一个提交，第二次提交将代替第一次提交的结果，其实就是将两次提交合并成一个提交，使用git log只能看到一条提交记录。在使用git push可能需要-f参数，即git push origin branchname -f，否则push不成功。</p>
+<p>备注：这个和Git Rebase第一个使用场景看着是一样的。</p>
 <h1 id="使用Git-Reset回滚已经commit的内容"><a href="#使用Git-Reset回滚已经commit的内容" class="headerlink" title="使用Git Reset回滚已经commit的内容"></a>使用Git Reset回滚已经commit的内容</h1><p>（1）Git Reset命令格式</p>
 <pre><code>git reset [--soft | --mixed | --hard] commitid
-</code></pre><p>其中commitid是要回滚到那次提交的commitid。</p>
+</code></pre><p>soft模式会将被撤销的commit内容撤销至暂存区域。mixed模式时默认模式，会将被撤销的commit内容撤销至工作区域。hard模式比较危险，会将被撤销的commmit内容直接丢弃掉。commitid是要回滚到那次提交的commitid。</p>
 <p>（2）实际操作案例</p>
 <p>首先修改文件uuu.txt，并提交到本地仓库中，使用git log查看提交历史，假设我们想借助Git Reset命令回滚掉这次update uuu.txt的提交。</p>
 <p><img src="/images/git_rollback_1_1.png" alt></p>
@@ -478,7 +478,8 @@ Commit3：向file3.txt中添加内容
 <pre><code>commit1 -&gt; commit2 
 </code></pre><p>如果使用Git Revert回滚掉commit2（注意是回滚掉，与Git Revert的回滚到，是有区别的，Git Revert能回滚掉指定的commit），则有点像UNDO，会把commit2做的操作反做一遍，也就是UNDO，并且生成一个新的commit，提交历史git log会变成如下：</p>
 <pre><code>commit1 -&gt; commit2 -&gt; commit3 -&gt; commit4
-</code></pre>
+</code></pre><h1 id="重要TIPS"><a href="#重要TIPS" class="headerlink" title="重要TIPS"></a>重要TIPS</h1><p>不管使用<code>--amend</code>合并commit，还是使用Git Reset/Rebase回滚已经commit的内容，有一点必须要知道：若这些被操作或修改的commit还未被push到远程仓库，那么本地仓库操作完，直接push到远程仓库就好了；若这些被操作或修改的commit已经被push到远程仓库了，那么本地操作完，是push不成功的，若要push只能使用force push，但是这个操作风险极高，不知道对远程操作带来的实际影响，就不要去force push。</p>
+
       
     </div>
     
@@ -857,7 +858,7 @@ Commit3：向file3.txt中添加内容
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#合并重新提交"><span class="nav-number">1.</span> <span class="nav-text">合并重新提交</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#取消被暂存的文件"><span class="nav-number">2.</span> <span class="nav-text">取消被暂存的文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#撤消工作区域中文件的修改"><span class="nav-number">3.</span> <span class="nav-text">撤消工作区域中文件的修改</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用Git-Reset回滚已经commit的内容"><span class="nav-number">4.</span> <span class="nav-text">使用Git Reset回滚已经commit的内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用Git-Revert回滚已经commit的内容"><span class="nav-number">5.</span> <span class="nav-text">使用Git Revert回滚已经commit的内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Git-Reset和Git-Revert不同"><span class="nav-number">6.</span> <span class="nav-text">Git Reset和Git Revert不同</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#撤消工作区域中文件的修改"><span class="nav-number">1.</span> <span class="nav-text">撤消工作区域中文件的修改</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#取消被暂存的文件"><span class="nav-number">2.</span> <span class="nav-text">取消被暂存的文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#合并重新提交"><span class="nav-number">3.</span> <span class="nav-text">合并重新提交</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用Git-Reset回滚已经commit的内容"><span class="nav-number">4.</span> <span class="nav-text">使用Git Reset回滚已经commit的内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用Git-Revert回滚已经commit的内容"><span class="nav-number">5.</span> <span class="nav-text">使用Git Revert回滚已经commit的内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Git-Reset和Git-Revert不同"><span class="nav-number">6.</span> <span class="nav-text">Git Reset和Git Revert不同</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#重要TIPS"><span class="nav-number">7.</span> <span class="nav-text">重要TIPS</span></a></li></ol></div>
             
 
           </div>
