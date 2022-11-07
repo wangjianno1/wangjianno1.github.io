@@ -5,6 +5,18 @@ tags: Git
 categories: VCS
 ---
 
+# 撤消工作区域中文件的修改
+
+使用`git checkout -- [filename]`将工作区域中修改去掉，很危险哦，修改会丢失的哦。
+
+备注：git status命令有操作提示。
+
+# 取消被暂存的文件
+
+使用`git reset HEAD <filename>`来取消被放到暂存区域的文件，然后重新放到工作目录。
+
+备注：git status命令有操作提示。
+
 # 合并重新提交
 
 ```bash
@@ -19,25 +31,13 @@ git commit --amend
 
 备注：这个和Git Rebase第一个使用场景看着是一样的。
 
-# 取消被暂存的文件
-
-使用`git reset HEAD <filename>`来取消被放到暂存区域的文件，然后重新放到工作目录。
-
-备注：git status命令有操作提示。
-
-# 撤消工作区域中文件的修改
-
-使用`git checkout -- [filename]`将工作区域中修改去掉，很危险哦，修改会丢失的哦。
-
-备注：git status命令有操作提示。
-
 # 使用Git Reset回滚已经commit的内容
 
 （1）Git Reset命令格式
 
     git reset [--soft | --mixed | --hard] commitid
 
-其中commitid是要回滚到那次提交的commitid。
+soft模式会将被撤销的commit内容撤销至暂存区域。mixed模式时默认模式，会将被撤销的commit内容撤销至工作区域。hard模式比较危险，会将被撤销的commmit内容直接丢弃掉。commitid是要回滚到那次提交的commitid。
 
 （2）实际操作案例
 
@@ -132,3 +132,7 @@ Git Revert可以将指定的commit所做的修改全部撤销掉，而不影响�
 如果使用Git Revert回滚掉commit2（注意是回滚掉，与Git Revert的回滚到，是有区别的，Git Revert能回滚掉指定的commit），则有点像UNDO，会把commit2做的操作反做一遍，也就是UNDO，并且生成一个新的commit，提交历史git log会变成如下：
 
     commit1 -> commit2 -> commit3 -> commit4
+
+# 重要TIPS
+
+不管使用`--amend`合并commit，还是使用Git Reset/Rebase回滚已经commit的内容，有一点必须要知道：若这些被操作或修改的commit还未被push到远程仓库，那么本地仓库操作完，直接push到远程仓库就好了；若这些被操作或修改的commit已经被push到远程仓库了，那么本地操作完，是push不成功的，若要push只能使用force push，但是这个操作风险极高，不知道对远程操作带来的实际影响，就不要去force push。

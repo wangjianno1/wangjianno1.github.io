@@ -34,7 +34,8 @@ git log -p    #查看当前分支提交记录及每次的提交的diff
 git log -p -2 #查看当前分支最近两次的提交记录及diff内容
 git log --pretty=format:"%h %s" #只显示commitid和提交说明
 git log --graph                 #以图表的方式展示分支及分支合并的历史
-git log --graph --pretty=oneline --abbrev-commit #图形化展示提交历史，这个很好用哦，类似于一些Git图形化工具，如IDEA的Git面板中log展示
+git log --graph --pretty=oneline --abbrev-commit       #图形化展示提交历史，这个很好用哦，类似于一些Git图形化工具，如IDEA的Git面板中log展示，执行前最好git fetch origin xxx一下
+git log --graph --pretty=oneline --abbrev-commit --all #图形化展示所有本地和远程仓库的提交历史，执行前最好git fetch --all一下
 ```
 
 ![](/images/git_handbook_1_1.png)
@@ -67,15 +68,16 @@ git push origin         #表示将当前分支推送到远程仓库origin相同�
 
 # git pull使用
 
-git pull用于从远程仓库的分支下载代码变更，并合并本地仓库的分支上。git pull其实就是git fetch和git merge。我的理解，若`git pull --rebase`这种形式执行，如git pull相当于是git fetch和git rebase。git pull命令格式如下：
+git pull用于从远程仓库的分支下载代码变更，并合并本地仓库的分支上。git pull其实就是git fetch和git merge。需要注意的是，git pull默认合并分支使用的是Git Merge，我们也可以通过参数修改成使用Git Rebase的方式来合并分支。我的理解，若`git pull --rebase`这种形式执行，如git pull相当于是git fetch和git rebase。git pull命令格式如下：
 
     git pull <remote> <remote branch name>:<local branch to merge into>
 
 ```bash
 git pull origin master:develop #将远程仓库origin的master分支拉取过来，与本地仓库的develop分支合并
 git pull origin master         #省略本地仓库分支，该命令表示从远程仓库拉取master分支内容，并于本地仓库的当前分支（HEAD）合并（此例子中并不一定表示合并到本地master分支哦）
-git pull origin #表示从远程仓库中拉取于当前分支同名的远程分支，并合并到本地仓库当前分支中
-git pull        #同git pull origin
+git pull origin   #表示从远程仓库中拉取于当前分支同名的远程分支，并合并到本地仓库当前分支中
+git pull          #同git pull origin
+git pull --rebase #使用Git Rebase方式合并远程分支代码到本地，这种方式可以避免产生一条额外的“Merge branch xxx”的commit，且导致git log历史分叉
 ```
 
 # git fetch使用
@@ -126,7 +128,7 @@ git config --global --unset http.proxy
 git config --global --unset https.proxy
 ```
 
-# 其他
+# 其他命令
 
 ```bash
 git status #查看文件的状态信息，这个命令要经常执行，会给一些有用的提示。有时执行git status时，提示Your Branch is up to date with 'origin/xxxxx'，即和远程仓库是一致的，其实并不准，需要git fetch或git pull一下，才能获取到远程仓库这个分支的最新状态

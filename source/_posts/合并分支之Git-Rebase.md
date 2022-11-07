@@ -69,6 +69,13 @@ git rebase -i 825241aa0 #或执行git rebase -i HEAD~3也是可以的
 
 ![](/images/git_rebase_1_8.png)
 
+总结操作步骤如下：
+
+    步骤一：get rebase -i [startpoint] [endpoint]，即指定要合并的提交
+    步骤二：指令编辑，即选择pick/reword/edit/squash等
+    步骤三：重新编辑提交注释，保存后，本地仓库中合并完成
+    步骤四：推送至远程仓库
+
 # Git Rebase使用场景之合并分支
 
 假设一个代码仓有master和experiment两个分支，其当前的git log内容如下图，现在要将feature分支的内容合并到master分支中。
@@ -96,6 +103,12 @@ git merge experiment
 执行完之后，master分支中已经有了experiment分支的，而experiment分支中也包含了master中C3。git log内容如下图：
 
 ![](/images/git_rebase_1_11.png)
+
+总结操作步骤如下：
+
+    步骤一：git checkout 变基分支名
+    步骤二：git rebase 变基目标分支名
+    步骤三：git checkout 变基目标分支名 && git merge 变基分支名  // 需要的时候才执行
 
 # 一点闲杂
 
