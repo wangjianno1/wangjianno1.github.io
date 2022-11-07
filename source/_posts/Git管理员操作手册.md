@@ -14,6 +14,8 @@ git pull origin main   #从远程仓库origin的main分支获取最新版本并m
 git push origin master #把本地仓库中当前分支的内容b，向远程仓库推送提交
 ```
 
+备注：push之前，commit之后，一定要记得pull一下，有冲突解决冲突，没冲突更好。注意pull动作不能放到commit之前，因为pull过来的内容可能会覆盖掉你已经修改，但是还未commit到本地仓库中内容。
+
 # 分支操作
 
 ```bash
