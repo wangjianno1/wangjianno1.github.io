@@ -83,6 +83,32 @@ SELECT * FROM TableA a FULL OUTER JOIN TableB b ON a.name = b.name;  --OUTER可�
 SELECT * FROM TableA a LEFT OUTER JOIN TableB b ON a.name = b.name WHERE b.name IS null;
 ```
 
+# 一个复杂查询例子
+
+```sql
+select B.CUST_NO "custNo", B.CUST_NAME "custName", B.SELL_NAME "sellName", B.CUST_TYPE "custType", sum(B.AMOUNT) "amountSum" from T_ORDER_APPLY A left join T_ORDER_APPLY_DETAIL B on A.ORDER_ID=B.ORDER_ID where A.STATUS=6 and A.IS_DELETE='N' and B.IS_DELETE='N' and A.UPDATE_DATE<='2022-09-25 00:00:00' group by B.CUST_NO, B.CUST_NAME, B.SELL_NAME, B.CUST_TYPE
+```
+
+上面是一个复杂查询的例子，包括了join、where以及group by等操作，我们可以进行如下拆解任务：
+
+（1）第一步：先进行左连接
+
+```sql
+select * from T_ORDER_APPLY A left join T_ORDER_APPLY_DETAIL B on A.ORDER_ID=B.ORDER_ID
+```
+
+（2）第二步：对左连接的结果进行where子句进行筛选过滤
+
+```sql
+select * from (第一步中得到的查询结果) where A.STATUS=6 and A.IS_DELETE='N' and B.IS_DELETE='N' and A.UPDATE_DATE<='2022-09-25 00:00:00'
+```
+
+（3）第三步：对第二步的结果进行group by子句进行分组统计
+
+```sql
+select B.CUST_NO "custNo", B.CUST_NAME "custName", B.SELL_NAME "sellName", B.CUST_TYPE "custType", sum(B.AMOUNT) "amountSum" from (第二步中得到的查询结果) group by B.CUST_NO, B.CUST_NAME, B.SELL_NAME, B.CUST_TYPE
+```
+
 学习资料参考于：
 http://www.ruanyifeng.com/blog/2019/01/table-join.html
 https://coolshell.cn/articles/3463.html/comment-page-1
