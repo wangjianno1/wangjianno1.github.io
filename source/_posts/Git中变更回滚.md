@@ -37,7 +37,13 @@ git commit --amend
 
     git reset [--soft | --mixed | --hard] commitid
 
-soft模式会将被撤销的commit内容撤销至暂存区域。mixed模式时默认模式，会将被撤销的commit内容撤销至工作区域。hard模式比较危险，会将被撤销的commmit内容直接丢弃掉。commitid是要回滚到那次提交的commitid。
++ soft模式会将被撤销的commit内容撤销至暂存区域
+
++ mixed模式时默认模式，会将被撤销的commit内容撤销至工作区域
+
++ hard模式比较危险，会将被撤销的commmit内容直接丢弃掉
+
+commitid是要回滚到的那次提交的commitid。比如现在git log上按最近时间排序有四次提交，分别是c4，c3，c2，c1，若我们要回滚掉c4和c3，回到c2版本上，那这里的commitid就是c2（注意不是c3哦）。
 
 （2）实际操作案例
 
