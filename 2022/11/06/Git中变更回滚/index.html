@@ -129,7 +129,7 @@
 <meta property="og:image" content="http://wangjianno1.github.io/images/git_rollback_1_12.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/git_rollback_1_13.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/git_rollback_1_14.png">
-<meta property="og:updated_time" content="2022-11-07T16:32:07.589Z">
+<meta property="og:updated_time" content="2022-11-24T04:01:33.090Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git中变更回滚">
 <meta name="twitter:description" content="撤消工作区域中文件的修改使用git checkout -- [filename]将工作区域中修改去掉，很危险哦，修改会丢失的哦。 备注：git status命令有操作提示。 取消被暂存的文件使用git reset HEAD &amp;lt;filename&amp;gt;来取消被放到暂存区域的文件，然后重新放到工作目录。 备注：git status命令有操作提示。 合并重新提交12345git commit -m">
@@ -431,7 +431,15 @@
 <p>备注：这个和Git Rebase第一个使用场景看着是一样的。</p>
 <h1 id="使用Git-Reset回滚已经commit的内容"><a href="#使用Git-Reset回滚已经commit的内容" class="headerlink" title="使用Git Reset回滚已经commit的内容"></a>使用Git Reset回滚已经commit的内容</h1><p>（1）Git Reset命令格式</p>
 <pre><code>git reset [--soft | --mixed | --hard] commitid
-</code></pre><p>soft模式会将被撤销的commit内容撤销至暂存区域。mixed模式时默认模式，会将被撤销的commit内容撤销至工作区域。hard模式比较危险，会将被撤销的commmit内容直接丢弃掉。commitid是要回滚到那次提交的commitid。</p>
+</code></pre><ul>
+<li><p>soft模式会将被撤销的commit内容撤销至暂存区域</p>
+</li>
+<li><p>mixed模式时默认模式，会将被撤销的commit内容撤销至工作区域</p>
+</li>
+<li><p>hard模式比较危险，会将被撤销的commmit内容直接丢弃掉</p>
+</li>
+</ul>
+<p>commitid是要回滚到的那次提交的commitid。比如现在git log上按最近时间排序有四次提交，分别是c4，c3，c2，c1，若我们要回滚掉c4和c3，回到c2版本上，那这里的commitid就是c2（注意不是c3哦）。</p>
 <p>（2）实际操作案例</p>
 <p>首先修改文件uuu.txt，并提交到本地仓库中，使用git log查看提交历史，假设我们想借助Git Reset命令回滚掉这次update uuu.txt的提交。</p>
 <p><img src="/images/git_rollback_1_1.png" alt></p>
