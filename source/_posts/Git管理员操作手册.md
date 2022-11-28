@@ -19,7 +19,7 @@ git push origin master #把本地仓库中当前分支的内容b，向远程仓�
 # 分支操作
 
 ```bash
-git branch -a #查看本地仓库以及远程仓库上所有的分支
+git branch -a #查看本地仓库以及远程仓库上所有的分支，记得先执行下git fetch --all一下
 git branch    #查看本地仓库中的所有分支，有星号*的是当前分支，这里面看不到远程仓库中的其他分支哦
 git checkout branch_name    #从当前分支切换到名称为branch_name的分支上去
 git checkout -b branch_name #在本地仓库创建一个新分支，并切换到新仓库中，相当于git branch branch_name和git checkout branch_name两个命令的结合
