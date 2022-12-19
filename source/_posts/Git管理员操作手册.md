@@ -82,6 +82,8 @@ git pull          #同git pull origin
 git pull --rebase #使用Git Rebase方式合并远程分支代码到本地，这种方式可以避免产生一条额外的“Merge branch xxx”的commit，且导致git log历史分叉
 ```
 
+备注：通常，我们合并分支代码时，一般使用git merge或者git rebase命令，实际上，我们也可以直接用git pull来合并不同分支，比如执行git pull origin feature-xxx表示把远程的feature-xxx分支合并到当前分支上。但记住git pull其实就用的是git merge和git rebase哦。
+
 # git fetch使用
 
 git fetch命令，从远程仓库中下载代码变更，但是不会于本地的代码合并。若需要合并，需要再执行git merge命令来合并。
