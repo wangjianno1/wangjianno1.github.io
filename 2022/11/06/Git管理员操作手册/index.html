@@ -116,7 +116,7 @@
 <meta property="og:description" content="代码提交1234git add -A             #将未被git管理的文件加入跟踪，将本地已修改的文件提交到暂存区，或者执行git add .也一样git commit -m &quot;xxxxxx&quot; #将本地暂存区中的修改，提交到本地仓库中git pull origin main   #从远程仓库origin的main分支获取最新版本并merge到本地仓库git push origin ma">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://wangjianno1.github.io/images/git_handbook_1_1.png">
-<meta property="og:updated_time" content="2022-11-28T06:25:48.588Z">
+<meta property="og:updated_time" content="2022-12-19T10:07:04.928Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git管理员操作手册">
 <meta name="twitter:description" content="代码提交1234git add -A             #将未被git管理的文件加入跟踪，将本地已修改的文件提交到暂存区，或者执行git add .也一样git commit -m &quot;xxxxxx&quot; #将本地暂存区中的修改，提交到本地仓库中git pull origin main   #从远程仓库origin的main分支获取最新版本并merge到本地仓库git push origin ma">
@@ -423,6 +423,7 @@
 <h1 id="git-pull使用"><a href="#git-pull使用" class="headerlink" title="git pull使用"></a>git pull使用</h1><p>git pull用于从远程仓库的分支下载代码变更，并合并本地仓库的分支上。git pull其实就是git fetch和git merge。需要注意的是，git pull默认合并分支使用的是Git Merge，我们也可以通过参数修改成使用Git Rebase的方式来合并分支。我的理解，若<code>git pull --rebase</code>这种形式执行，如git pull相当于是git fetch和git rebase。git pull命令格式如下：</p>
 <pre><code>git pull &lt;remote&gt; &lt;remote branch name&gt;:&lt;local branch to merge into&gt;
 </code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git pull origin master:develop <span class="comment">#将远程仓库origin的master分支拉取过来，与本地仓库的develop分支合并</span></span><br><span class="line">git pull origin master         <span class="comment">#省略本地仓库分支，该命令表示从远程仓库拉取master分支内容，并于本地仓库的当前分支（HEAD）合并（此例子中并不一定表示合并到本地master分支哦）</span></span><br><span class="line">git pull origin   <span class="comment">#表示从远程仓库中拉取于当前分支同名的远程分支，并合并到本地仓库当前分支中</span></span><br><span class="line">git pull          <span class="comment">#同git pull origin</span></span><br><span class="line">git pull --rebase <span class="comment">#使用Git Rebase方式合并远程分支代码到本地，这种方式可以避免产生一条额外的“Merge branch xxx”的commit，且导致git log历史分叉</span></span><br></pre></td></tr></table></figure>
+<p>备注：通常，我们合并分支代码时，一般使用git merge或者git rebase命令，实际上，我们也可以直接用git pull来合并不同分支，比如执行git pull origin feature-xxx表示把远程的feature-xxx分支合并到当前分支上。但记住git pull其实就用的是git merge和git rebase哦。</p>
 <h1 id="git-fetch使用"><a href="#git-fetch使用" class="headerlink" title="git fetch使用"></a>git fetch使用</h1><p>git fetch命令，从远程仓库中下载代码变更，但是不会于本地的代码合并。若需要合并，需要再执行git merge命令来合并。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git fetch origin <span class="comment">#获取远程仓库所有分支的代码变更</span></span><br><span class="line">git fetch --all  <span class="comment">#获取远程所有分支的代码变更</span></span><br><span class="line">git fetch origin develop <span class="comment">#获取远程仓库develop分支中的所有内容</span></span><br></pre></td></tr></table></figure>
 <h1 id="git配置用户信息"><a href="#git配置用户信息" class="headerlink" title="git配置用户信息"></a>git配置用户信息</h1><p>使用git config配置个人的用户名称和电子邮件地址。这两条配置很重要，每次Git提交时都会引用这两条信息，说明是谁提交了更新，所以会随更新内容一起被永久纳入历史记录。</p>
