@@ -129,7 +129,7 @@
 <meta property="og:image" content="http://wangjianno1.github.io/images/git_rollback_1_12.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/git_rollback_1_13.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/git_rollback_1_14.png">
-<meta property="og:updated_time" content="2022-11-24T04:01:33.090Z">
+<meta property="og:updated_time" content="2022-12-30T02:48:42.744Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git中变更回滚">
 <meta name="twitter:description" content="撤消工作区域中文件的修改使用git checkout -- [filename]将工作区域中修改去掉，很危险哦，修改会丢失的哦。 备注：git status命令有操作提示。 取消被暂存的文件使用git reset HEAD &amp;lt;filename&amp;gt;来取消被放到暂存区域的文件，然后重新放到工作目录。 备注：git status命令有操作提示。 合并重新提交12345git commit -m">
@@ -487,6 +487,7 @@ Commit3：向file3.txt中添加内容
 </code></pre><p>如果使用Git Revert回滚掉commit2（注意是回滚掉，与Git Revert的回滚到，是有区别的，Git Revert能回滚掉指定的commit），则有点像UNDO，会把commit2做的操作反做一遍，也就是UNDO，并且生成一个新的commit，提交历史git log会变成如下：</p>
 <pre><code>commit1 -&gt; commit2 -&gt; commit3 -&gt; commit4
 </code></pre><h1 id="重要TIPS"><a href="#重要TIPS" class="headerlink" title="重要TIPS"></a>重要TIPS</h1><p>不管使用<code>--amend</code>合并commit，还是使用Git Reset/Rebase回滚已经commit的内容，有一点必须要知道：若这些被操作或修改的commit还未被push到远程仓库，那么本地仓库操作完，直接push到远程仓库就好了；若这些被操作或修改的commit已经被push到远程仓库了，那么本地操作完，是push不成功的，若要push只能使用force push，但是这个操作风险极高，不知道对远程操作带来的实际影响，就不要去force push。</p>
+<p>备注：一般说来，想要回滚掉已经push到远程仓库的commit，建议使用git revert命令，个人认为它会保留原来的提交记录和revert的提交记录，后续再撤回的时候也比较清晰。而git reset会直接抹掉提交记录，相对来说风险是比较大的。</p>
 
       
     </div>
