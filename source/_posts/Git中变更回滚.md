@@ -142,3 +142,5 @@ Git Revert可以将指定的commit所做的修改全部撤销掉，而不影响�
 # 重要TIPS
 
 不管使用`--amend`合并commit，还是使用Git Reset/Rebase回滚已经commit的内容，有一点必须要知道：若这些被操作或修改的commit还未被push到远程仓库，那么本地仓库操作完，直接push到远程仓库就好了；若这些被操作或修改的commit已经被push到远程仓库了，那么本地操作完，是push不成功的，若要push只能使用force push，但是这个操作风险极高，不知道对远程操作带来的实际影响，就不要去force push。
+
+备注：一般说来，想要回滚掉已经push到远程仓库的commit，建议使用git revert命令，个人认为它会保留原来的提交记录和revert的提交记录，后续再撤回的时候也比较清晰。而git reset会直接抹掉提交记录，相对来说风险是比较大的。
