@@ -83,7 +83,9 @@ SELECT * FROM TableA a FULL OUTER JOIN TableB b ON a.name = b.name;  --OUTER可�
 SELECT * FROM TableA a LEFT OUTER JOIN TableB b ON a.name = b.name WHERE b.name IS null;
 ```
 
-# 一个复杂查询例子
+# 一些复杂查询例子
+
+（1）复杂JOIN操作
 
 ```sql
 select B.CUST_NO "custNo", B.CUST_NAME "custName", B.SELL_NAME "sellName", B.CUST_TYPE "custType", sum(B.AMOUNT) "amountSum" from T_ORDER_APPLY A left join T_ORDER_APPLY_DETAIL B on A.ORDER_ID=B.ORDER_ID where A.STATUS=6 and A.IS_DELETE='N' and B.IS_DELETE='N' and A.UPDATE_DATE<='2022-09-25 00:00:00' group by B.CUST_NO, B.CUST_NAME, B.SELL_NAME, B.CUST_TYPE
@@ -108,6 +110,14 @@ select * from (第一步中得到的查询结果) where A.STATUS=6 and A.IS_DELE
 ```sql
 select B.CUST_NO "custNo", B.CUST_NAME "custName", B.SELL_NAME "sellName", B.CUST_TYPE "custType", sum(B.AMOUNT) "amountSum" from (第二步中得到的查询结果) group by B.CUST_NO, B.CUST_NAME, B.SELL_NAME, B.CUST_TYPE
 ```
+
+（2）多个JOIN操作
+
+```sql
+select * from a left join b on a.id=b.id left join c on b.id=c.id
+```
+
+上面是一个多个JOIN串联操作的例子，先是a和b左连接生成结果集t，然后再做t和c的左连接。
 
 学习资料参考于：
 http://www.ruanyifeng.com/blog/2019/01/table-join.html
