@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="老坛の菜园子">
 <meta property="og:description" content="MySQL的用户管理和权限管理，都体现在如下的六张表中mysql.user mysql.db mysql.host mysql.tables_priv mysql.columns_priv mysql.procs_priv 各种权限表（1）user表 user表是MySQL中最重要的一个权限表，记录允许连接到服务器的账号信息，里面的权限是全局级的。user表的信息有用户列、权限列、安全列和资源控制">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2022-02-09T07:40:43.939Z">
+<meta property="og:updated_time" content="2023-04-23T13:38:57.380Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL的用户和权限控制">
 <meta name="twitter:description" content="MySQL的用户管理和权限管理，都体现在如下的六张表中mysql.user mysql.db mysql.host mysql.tables_priv mysql.columns_priv mysql.procs_priv 各种权限表（1）user表 user表是MySQL中最重要的一个权限表，记录允许连接到服务器的账号信息，里面的权限是全局级的。user表的信息有用户列、权限列、安全列和资源控制">
@@ -423,6 +423,7 @@ Password表示用户密码
 <p>db表中存储了用户对某个数据库的操作权限，决定用户能从哪个主机存取哪个数据库。主要反映的是用户对Mysql中哪些db有操作权限。</p>
 <p>（3）host表</p>
 <p>host表中存储了某个主机对某个数据库有什么操作权限。</p>
+<p>备注：通过权限表user/db/host的控制，决定了一个用户登录到MySQL中，看到的db不同，看到的table不同，以及对table的操作权限不同等。</p>
 <h1 id="创建mysql新用户"><a href="#创建mysql新用户" class="headerlink" title="创建mysql新用户"></a>创建mysql新用户</h1><p>前提声明，如下命令中，10.12.21.23代表的mysql客户端所在的机器，wahaha是用户名，guest123是用户密码。</p>
 <p>新增mysql用户有如下几种方法：</p>
 <p>（1）直接在mysql库中user表中添加记录来创建新用户并授权</p>
