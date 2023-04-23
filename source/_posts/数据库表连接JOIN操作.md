@@ -59,7 +59,7 @@ SELECT * FROM TableA a INNER JOIN TableB b ON a.name = b.name;       --INNER可�
 SELECT * FROM TableA a LEFT OUTER JOIN TableB b ON a.name = b.name;  --OUTER可以省略
 ```
 
-备注：TableA和TableB做完笛卡尔积之后，除了满足a.name = b.name的记录是左连接的结果外，再加上TableA中没有被匹配上的记录（这块没有TableB的字段）。
+备注：TableA和TableB做完笛卡尔积之后，除了满足a.name = b.name的记录是左连接的结果外，再加上TableA中没有被匹配上的记录（即TableA中a.name在TableB中没有一样的b.name，这时把TableA中的这条记录添加到左连接的结果集中，且这条记录中TableB的字段值全部被设置为NULL）。
 
 （3）右连接
 
@@ -67,7 +67,7 @@ SELECT * FROM TableA a LEFT OUTER JOIN TableB b ON a.name = b.name;  --OUTER可�
 SELECT * FROM TableA a RIGHT OUTER JOIN TableB b ON a.name = b.name; --OUTER可以省略
 ```
 
-备注：TableA和TableB做完笛卡尔积之后，除了满足a.name = b.name的记录是由连接的结果外，再加上TableB中没有被匹配上的记录（这块没有TableA的字段）。
+备注：TableA和TableB做完笛卡尔积之后，除了满足a.name = b.name的记录是由连接的结果外，再加上TableB中没有被匹配上的记录（即TableB中b.name在TableA中没有一样的a.name，这时把TableB中的这条记录添加到左连接的结果集中，且这条记录中TableA的字段值全部被设置为NULL）。
 
 （4）全连接
 
