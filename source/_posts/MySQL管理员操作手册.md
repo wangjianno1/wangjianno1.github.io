@@ -28,7 +28,8 @@ mysql -S /var/lib/mysql/mysql.sock -uroot -p
 show databases;                         /*查看所有数据库*/
 use db_name;                            /*切换到数据库db_name*/
 show tables;                            /*查看某个数据库包含哪些数据库表*/
-desc table_name;                        /*查看数据库表table_name的字段信息*/
+desc table_name;                        /*查看数据库表table_name的表结构定义*/
+describe table_name;                    /*同desc table_name*/
 show columns from table_name;           /*同desc table_name*/
 select count(*) from table_name;        /*查询指定表中总共有多少条记录*/
 show index from table_name;             /*查看指定表的index信息*/
