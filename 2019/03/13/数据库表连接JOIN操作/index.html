@@ -118,7 +118,7 @@
 <meta property="og:image" content="http://wangjianno1.github.io/images/mysql_join_1_2.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/mysql_join_1_3.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/mysql_join_1_4.png">
-<meta property="og:updated_time" content="2023-03-19T14:46:44.147Z">
+<meta property="og:updated_time" content="2023-03-30T01:27:58.271Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库表连接JOIN操作">
 <meta name="twitter:description" content="表连接JOIN操作简介在关系型数据库中，JOIN本质上是基于两个或者多个表进行结合重构成一种大表的过程。其创造的结果可以被保存为一个表（table）或是作为一个表来使用。这个结合的过程的基础，或者说联系点，是存在于两个表之间的共同的列。一般来说，ANSI标准的SQL定义了如下这些JOIN操作类型： INNER JOIN，指内连接 LEFT OUTER JOIN，指左连接 RIGHT OUTER J">
@@ -431,10 +431,10 @@ CROSS JOIN，指交叉连接
 <p>备注：TableA和TableB做完笛卡尔积之后，只有满足a.name = b.name的记录才是内连接的结果。</p>
 <p>（2）左连接</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> TableA a <span class="keyword">LEFT</span> <span class="keyword">OUTER</span> <span class="keyword">JOIN</span> TableB b <span class="keyword">ON</span> a.name = b.name;  <span class="comment">--OUTER可以省略</span></span><br></pre></td></tr></table></figure>
-<p>备注：TableA和TableB做完笛卡尔积之后，除了满足a.name = b.name的记录是左连接的结果外，再加上TableA中没有被匹配上的记录（这块没有TableB的字段）。</p>
+<p>备注：TableA和TableB做完笛卡尔积之后，除了满足a.name = b.name的记录是左连接的结果外，再加上TableA中没有被匹配上的记录（即TableA中a.name在TableB中没有一样的b.name，这时把TableA中的这条记录添加到左连接的结果集中，且这条记录中TableB的字段值全部被设置为NULL）。</p>
 <p>（3）右连接</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> TableA a <span class="keyword">RIGHT</span> <span class="keyword">OUTER</span> <span class="keyword">JOIN</span> TableB b <span class="keyword">ON</span> a.name = b.name; <span class="comment">--OUTER可以省略</span></span><br></pre></td></tr></table></figure>
-<p>备注：TableA和TableB做完笛卡尔积之后，除了满足a.name = b.name的记录是由连接的结果外，再加上TableB中没有被匹配上的记录（这块没有TableA的字段）。</p>
+<p>备注：TableA和TableB做完笛卡尔积之后，除了满足a.name = b.name的记录是由连接的结果外，再加上TableB中没有被匹配上的记录（即TableB中b.name在TableA中没有一样的a.name，这时把TableB中的这条记录添加到左连接的结果集中，且这条记录中TableA的字段值全部被设置为NULL）。</p>
 <p>（4）全连接</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> TableA a <span class="keyword">FULL</span> <span class="keyword">OUTER</span> <span class="keyword">JOIN</span> TableB b <span class="keyword">ON</span> a.name = b.name;  <span class="comment">--OUTER可以省略</span></span><br></pre></td></tr></table></figure>
 <p>备注：TableA和TableB做完笛卡尔积之后，除了满足a.name = b.name的记录是全连接的结果外，再加上TableA中没有被匹配上的记录（这块没有TableB的字段），再加上TableB中没有被匹配上的记录（这块没有TableA的字段）。</p>
