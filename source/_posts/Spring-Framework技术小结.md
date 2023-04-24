@@ -14,7 +14,7 @@ Spring功能模块框架图如下：
 
 ![](/images/java_spring_1_1.png)
 
-Spring Framework的主要子模块有IoC，AOP，Spring MVC，JMS，JMX等等。
+Spring Framework的主要子模块有IoC，AOP，[SpringMVC](/2019/03/04/SpringMVC技术小结/)，JMS，JMX等等。
 
 # Spring Framework的几个核心概念
 
