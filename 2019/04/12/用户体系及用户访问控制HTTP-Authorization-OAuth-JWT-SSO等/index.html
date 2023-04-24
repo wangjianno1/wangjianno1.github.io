@@ -120,7 +120,7 @@
 <meta property="og:image" content="http://wangjianno1.github.io/images/http_auth_1_4.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/http_auth_1_5.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/http_auth_1_6.png">
-<meta property="og:updated_time" content="2022-02-09T07:40:43.979Z">
+<meta property="og:updated_time" content="2023-04-24T13:24:05.540Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="用户体系及用户访问控制HTTP Authorization|OAuth|JWT|SSO等">
 <meta name="twitter:description" content="开放授权OAuthOAuth，Open Authorization，中文名是开放授权。OAuth协议为用户资源的授权提供了一个安全的、开放而又简易的标准。与以往的授权方式不同之处是OAuth的授权不会使第三方触及到用户的帐号信息（如用户名与密码），即第三方无需使用用户的用户名与密码就可以申请获得该用户资源的授权，因此OAuth是安全的。 通俗的讲，OAuth是为解决不同公司的不同产品实现登陆的一种">
@@ -454,7 +454,8 @@ Signature，签名
 <p>（2）服务端侧</p>
 <p>服务端在收到请求后，通过Api_key找出Security_key，并使用和客户端同样的方法计算出签名串，然后和url传递过来的签名串进行比较，若一样则说明client身份是正确的，且url请求没被第三方拦截修改。</p>
 <p><img src="/images/http_auth_1_6.png" alt></p>
-<h1 id="SSO和OAuth的区别"><a href="#SSO和OAuth的区别" class="headerlink" title="SSO和OAuth的区别"></a>SSO和OAuth的区别</h1><p>OAuth是一种授权协议，只是为用户资源的授权提供了一个安全的、开放而又简易的标准。OAuth 2.0为客户端开发者开发Web应用，桌面端应用程序，移动应用及客厅设备提供特定的授权流程。SSO是在多个应用系统中，用户只需要登录一次就可以访问所有相互信任的应用系统。<br>通俗的讲，OAuth是为解决不同公司的不同产品实现登陆的一种简便授权方案，通常这些授权服务都是由大客户网站提供的，如QQ，新浪微博，人人网等。而使用这些服务的客户可能是大客户网站，也可能是小客户网站。使用OAuth授权的好处是，在为用户提供某些服务时，可减少或避免因用户懒于注册而导致的用户流失问题。SSO通常处理的是一个公司的不同应用间的访问登陆问题。如企业应用有很多业务子系统，只需登陆一个系统，就可以实现不同子系统间的跳转，而避免了登陆操作。</p>
+<h1 id="SSO和OAuth的区别"><a href="#SSO和OAuth的区别" class="headerlink" title="SSO和OAuth的区别"></a>SSO和OAuth的区别</h1><p>两者都是使用令牌的方式来代替用户密码访问应用，在需要用户访问控制的业务系统中都没有账号和密码，账号密码是存放在登录中心或新浪微博/微信服务器中的，这就是所谓的使用令牌代替账号密码访问应用。</p>
+<p>OAuth是一种授权协议，只是为用户资源的授权提供了一个安全的、开放而又简易的标准。OAuth 2.0为客户端开发者开发Web应用，桌面端应用程序，移动应用及客厅设备提供特定的授权流程。SSO是在多个应用系统中，用户只需要登录一次就可以访问所有相互信任的应用系统。<br>通俗的讲，OAuth是为解决不同公司的不同产品实现登陆的一种简便授权方案，通常这些授权服务都是由大客户网站提供的，如QQ，新浪微博，人人网等。而使用这些服务的客户可能是大客户网站，也可能是小客户网站。使用OAuth授权的好处是，在为用户提供某些服务时，可减少或避免因用户懒于注册而导致的用户流失问题。SSO通常处理的是一个公司的不同应用间的访问登陆问题。如企业应用有很多业务子系统，只需登陆一个系统，就可以实现不同子系统间的跳转，而避免了登陆操作。</p>
 <p>学习资料参考于：<br><a href="https://www.imooc.com/learn/557" target="_blank" rel="noopener">https://www.imooc.com/learn/557</a><br><a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html</a><br><a href="http://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html</a></p>
 
       
