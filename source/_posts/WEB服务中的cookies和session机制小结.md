@@ -33,7 +33,7 @@ Set-Cookie: name=value[; expires=GMTDate][; domain=domain][; path=path][; secure
 
 - 浏览器端
 
-浏览器在HTTP Request头中设置Cookie请求头中，将相关的cookeise发送到服务端的。
+浏览器在HTTP Request头中设置Cookie请求头中，将相关的cookies发送到服务端的。
 
 （3）cookies的格式及含义说明
 
@@ -47,7 +47,7 @@ name=value[; expires=GMTDate][; domain=domain][; path=path][; secure]
 
 ![](/images/cookies_session_1_1.png)
 
-下面分别说明各部分的含义：
+从上面例子中可以看出，浏览器携带Cookies信息是，只有一个Cookies Header，这个请求的所有需要携带的Cookies都放到这个Header中，如服务器端的Set-Cookie有区别。下面分别说明各部分的含义：
 
 - name和value
 
@@ -61,7 +61,7 @@ domain和path这两个选项共同决定了哪些页面可以使用这个cookies
 
 ![](/images/cookies_session_1_2.png)
 
-domain参数是用来控制cookie对「哪个域」有效，默认为设置cookie的那个域。这个值可以包含子域，也可以不包含它。如上图的例子，domain选项中，可以是`.google.com.hk`（是不包含子域的，表示它对google.com.hk下的所有子域都有效，例如aa.google.com.hk等），也可以是`www.google.com.hk`（是包含子域的，该cookies仅能被www.google.com.hk所使用）。
+domain参数是用来控制cookie对「哪个域」有效，默认为设置cookie的那个域。这个值可以包含子域，也可以不包含它。如上图的例子，domain选项中，可以是`.google.com.hk`（是不包含子域的，表示它对google.com.hk下的所有子域都有效，例如aa.google.com.hk等），也可以是`www.google.com.hk`（是包含子域的，该cookies仅能被`www.google.com.hk`所使用）。
 
 path用来控制cookie发送的指定域的「路径」，它是在域名的基础下，指定可以访问的路径。默认为"/"，表示指定域下的所有路径都能访问。例如cookie设置为`domain=.google.com.hk; path=/webhp`，那么只有`.google.com.hk/webhp`及`/webhp`下的任一子目录如`/webhp/aaa`或`/webhp/bbb`会可以读取cookie信息，而`.google.com.hk`就不会发送，即使它们来自同一个域。
 
@@ -93,7 +93,7 @@ secure是cookie的安全标志，通过cookie直接包含一个secure单词来�
 
 在计算机中，尤其是在网络应用中，称为“会话控制”。 每个用户（浏览器）首次与WEB服务器建立连接时，就会产生一个Session，同时服务器会分配一个SessionId给用户的浏览器。我们可以用浏览器开发者工具查看cookies信息，会看到有类似于SessionId的cookie，当然不同的语言或WEB服务器这个key是不一样的，例如有ASP.Net_SessionId、JSESSIONID以及SESSION等等。服务端通过这个SessionId就可以很容易获取到session状态中各种信息。大家都知道HTTP是无状态请求，但是有了Session仿佛又让HTTP请求变得有状态。这里一定要注意的是，SessionId是一个特殊的cookie，它是与Session相关的，是真正维系客户端和服务端的桥梁。session机制是一种服务器端的机制，服务器使用一种类似于散列表的结构（也可能就是使用散列表）来保存信息。
 
-当程序需要为某个客户端的请求创建一个session的时候，服务器首先检查这个客户端的请求里是否已包含了一个session标识（称为session id），如果已包含一个sessionid则说明以前已经为此客户端创建过session，服务器就按照sessionid把这个session检索出来使用（如果检索不到，可能会新建一个），如果客户端请求不包含sessionid，则为此客户端创建一个session并且生成一个与此session相关联的session id，sessionid的值应该是一个既不会重复，又不容易被找到规律以仿造的字符串，这个session id将被在本次响应中返回给客户端保存。 保存这个sessionid的方式可以采用cookie，当然也可以拼接到请求URL中，这样在交互过程中浏览器可以自动的按照规则把这个标识发给服务器。一般这个cookie的名字都是类似于SEEESIONID。比如weblogic对于web应用程序生成的cookie，如`JSESSIONID=ByOK3vjFD75aPnrF7C2HmdnV6QZcEbzWoWiBYEnLerjQ99zWpBng!-145788764`，它的名字就是JSESSIONID。
+当程序需要为某个客户端的请求创建一个session的时候，服务器首先检查这个客户端的请求里是否已包含了一个session标识（称为session id），如果已包含一个sessionid则说明以前已经为此客户端创建过session，服务器就按照sessionid把这个session检索出来使用（如果检索不到，可能会新建一个），如果客户端请求不包含sessionid，则为此客户端创建一个session并且生成一个与此session相关联的session id，sessionid的值应该是一个既不会重复，又不容易被找到规律以仿造的字符串，这个session id将被在本次响应中返回给客户端保存。 保存这个sessionid的方式可以采用cookie，当然也可以拼接到请求URL中，这样在交互过程中浏览器可以自动的按照规则把这个标识发给服务器。一般这个cookie的名字都是类似于SESSIONID。比如weblogic对于web应用程序生成的cookie，如`JSESSIONID=ByOK3vjFD75aPnrF7C2HmdnV6QZcEbzWoWiBYEnLerjQ99zWpBng!-145788764`，它的名字就是JSESSIONID。
 
 session工作的主要过程如下：
 

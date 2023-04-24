@@ -110,6 +110,7 @@ alter table testalter_tbl rename to alter_tbl;       /*修改数据库表的名�
 
 ```sql
 insert into runoob_tbl (title, author, date_t) values ("学习MySQL", "wahaha", NOW());
+insert into wahaha(name, info) values ('2332', '2323'), ('vv2332', 'vv2323'), ('as2332', 'as2323');  /*批量插入多条记录，但是MySQL对SQL语句的长度有限制（通过变量max_allowed_packet）*/
 ```
 
 （5）数据查询（select）
