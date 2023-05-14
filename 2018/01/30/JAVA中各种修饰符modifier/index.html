@@ -107,19 +107,19 @@
   <meta name="keywords" content="JAVA基础,">
 
 
-<meta name="description" content="修饰符简介像其他语言一样，Java可以使用修饰符来修饰类中方法和属性。比如在Java类中定义方法：  JAVA中修饰符的类别主要有两类修饰符如下： （1）访问控制修饰符 a）default 即缺省，什么也不写，在同一包内可见，不使用任何修饰符。修饰目标有类、接口、变量、方法。 b）public 对所有类可见，修饰目标有类、接口、变量、方法。 c）protected 对同一包内的类和所有子类可见，修">
+<meta name="description" content="修饰符简介像其他语言一样，Java可以使用修饰符来修饰类中方法和属性。比如在Java类中定义方法：  JAVA中修饰符的类别主要有两类修饰符如下： （1）访问控制修饰符 a）public 修饰的目标对所有类或者对象都是可见的，所有类或者对象都可以直接访问。修饰目标有类、接口、变量、方法。 b）protected 修饰的目标对类自身，以及同在一个包中的其他类可见，其他包下的类不可访问（除非是他的子类">
 <meta name="keywords" content="JAVA基础">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JAVA语言中各种修饰符modifier">
 <meta property="og:url" content="http://wangjianno1.github.io/2018/01/30/JAVA中各种修饰符modifier/index.html">
 <meta property="og:site_name" content="老坛の菜园子">
-<meta property="og:description" content="修饰符简介像其他语言一样，Java可以使用修饰符来修饰类中方法和属性。比如在Java类中定义方法：  JAVA中修饰符的类别主要有两类修饰符如下： （1）访问控制修饰符 a）default 即缺省，什么也不写，在同一包内可见，不使用任何修饰符。修饰目标有类、接口、变量、方法。 b）public 对所有类可见，修饰目标有类、接口、变量、方法。 c）protected 对同一包内的类和所有子类可见，修">
+<meta property="og:description" content="修饰符简介像其他语言一样，Java可以使用修饰符来修饰类中方法和属性。比如在Java类中定义方法：  JAVA中修饰符的类别主要有两类修饰符如下： （1）访问控制修饰符 a）public 修饰的目标对所有类或者对象都是可见的，所有类或者对象都可以直接访问。修饰目标有类、接口、变量、方法。 b）protected 修饰的目标对类自身，以及同在一个包中的其他类可见，其他包下的类不可访问（除非是他的子类">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_syntax_5_1.png">
-<meta property="og:updated_time" content="2022-02-09T07:40:43.921Z">
+<meta property="og:updated_time" content="2023-04-25T15:09:01.544Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA语言中各种修饰符modifier">
-<meta name="twitter:description" content="修饰符简介像其他语言一样，Java可以使用修饰符来修饰类中方法和属性。比如在Java类中定义方法：  JAVA中修饰符的类别主要有两类修饰符如下： （1）访问控制修饰符 a）default 即缺省，什么也不写，在同一包内可见，不使用任何修饰符。修饰目标有类、接口、变量、方法。 b）public 对所有类可见，修饰目标有类、接口、变量、方法。 c）protected 对同一包内的类和所有子类可见，修">
+<meta name="twitter:description" content="修饰符简介像其他语言一样，Java可以使用修饰符来修饰类中方法和属性。比如在Java类中定义方法：  JAVA中修饰符的类别主要有两类修饰符如下： （1）访问控制修饰符 a）public 修饰的目标对所有类或者对象都是可见的，所有类或者对象都可以直接访问。修饰目标有类、接口、变量、方法。 b）protected 修饰的目标对类自身，以及同在一个包中的其他类可见，其他包下的类不可访问（除非是他的子类">
 <meta name="twitter:image" content="http://wangjianno1.github.io/images/java_syntax_5_1.png">
 
 
@@ -413,14 +413,16 @@
 <p><img src="/images/java_syntax_5_1.png" alt></p>
 <h1 id="JAVA中修饰符的类别"><a href="#JAVA中修饰符的类别" class="headerlink" title="JAVA中修饰符的类别"></a>JAVA中修饰符的类别</h1><p>主要有两类修饰符如下：</p>
 <p>（1）访问控制修饰符</p>
-<p>a）default</p>
-<p>即缺省，什么也不写，在同一包内可见，不使用任何修饰符。修饰目标有类、接口、变量、方法。</p>
-<p>b）public</p>
-<p>对所有类可见，修饰目标有类、接口、变量、方法。</p>
-<p>c）protected</p>
-<p>对同一包内的类和所有子类可见，修饰目标有变量、方法。 但是不能修饰类（外部类）。</p>
+<p>a）public</p>
+<p>修饰的目标对所有类或者对象都是可见的，所有类或者对象都可以直接访问。修饰目标有类、接口、变量、方法。</p>
+<p>b）protected</p>
+<p>修饰的目标对类自身，以及同在一个包中的其他类可见，其他包下的类不可访问（除非是他的子类）。修饰目标有变量、方法。 但是不能修饰类（外部类）。</p>
+<p>c）default</p>
+<p>即缺省，什么也不写。</p>
+<p>修饰的目标只有类自身，以及同在一个包的其他类可见，其他包内的类不能访问，即便是它的子类也不能访问。修饰目标有类、接口、变量、方法。</p>
 <p>d）private</p>
-<p>在同一类内可见，修饰目标有变量、方法。 但是不能修饰类（外部类）。</p>
+<p>修饰的目标是私有的，只有当前类对其具有访问权限，除此之外其他类或者对象都没有访问权限，子类也没有访问权限。修饰目标有变量、方法。 但是不能修饰类（外部类）。</p>
+<p>备注：访问控制修改符修改的目标，权限由大到小，依次是public，protected，default和private。</p>
 <p>（2）非访问控制修饰符</p>
 <p>a）static</p>
 <p>修饰方法，使之成为类方法/静态方法；修饰变量，使之成为类变量/静态变量。</p>
@@ -430,6 +432,8 @@
 <p>修饰类，使之成为抽象类；修饰方法，使之成为抽象方法</p>
 <p>d）synchronized</p>
 <p>e）transient</p>
+<p>Java语言的关键字，变量修饰符，如果用transient声明一个实例变量，当对象存储时，它的值不需要维持。这里的对象存储是指，Java的serialization提供的一种持久化对象实例的机制。</p>
+<p>简单点说，就是被transient修饰的成员变量，在序列化的时候其值会被忽略，在被反序列化后，transient变量的值被设为初始值，如int型的是0，对象型的是null。</p>
 <p>f）volatile</p>
 
       

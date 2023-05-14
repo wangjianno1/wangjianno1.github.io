@@ -116,7 +116,7 @@
 <meta property="og:description" content="jar工具及JAR文件jar是随JDK安装的，是JDK中自带的一个工具，在JDK安装目录下的bin目录中，Windows下文件名为jar.exe，Linux下文件名为jar。jar是一个归档和压缩工具，jar工具是基于zip和zlib创建出来的。使用jar工具打包压缩出来的文件称为JAR文件，即Java Archive File。顾名思义，它的应用是与Java息息相关的，是Java的一种文档格式。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_jar_1_1.png">
-<meta property="og:updated_time" content="2022-02-09T07:40:43.922Z">
+<meta property="og:updated_time" content="2023-05-12T16:30:36.702Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA中归档和压缩工具jar介绍和使用">
 <meta name="twitter:description" content="jar工具及JAR文件jar是随JDK安装的，是JDK中自带的一个工具，在JDK安装目录下的bin目录中，Windows下文件名为jar.exe，Linux下文件名为jar。jar是一个归档和压缩工具，jar工具是基于zip和zlib创建出来的。使用jar工具打包压缩出来的文件称为JAR文件，即Java Archive File。顾名思义，它的应用是与Java息息相关的，是Java的一种文档格式。">
@@ -413,7 +413,8 @@
 <p>JAR文件包的扩展名是<code>.jar</code>，在Windows平台上，我们直接可以将JAR文件的扩展名改成.zip，然后使用WinRAR工具打开。</p>
 <h1 id="JAR文件的目录结构"><a href="#JAR文件的目录结构" class="headerlink" title="JAR文件的目录结构"></a>JAR文件的目录结构</h1><p>假设有一个简单的JAR文件，它的基本目录结构如下：</p>
 <p><img src="/images/java_jar_1_1.png" alt></p>
-<p>备注：com.bat.adsl是包结构。</p>
+<p>其中，com.bat.adsl是包结构。</p>
+<p>若是可执行jar包，jar包中还有BOOT-INF目录，目录中会有该项目所有依赖的其他jar包，注意这块与普通jar包的区别，因为可执行jar是直接跑起来的，所以它依赖的第三方jar必然被打包进自身的jar文件中。</p>
 <h1 id="jar命令格式及参数"><a href="#jar命令格式及参数" class="headerlink" title="jar命令格式及参数"></a>jar命令格式及参数</h1><p>jar命令的使用格式如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jar &#123;ctxu&#125; [vfm0M] [jar-filename] [manifest-filename] [-C 目录] 文件名 ...</span><br></pre></td></tr></table></figure>
 <p>jar命令各个选项和参数说明如下：</p>
