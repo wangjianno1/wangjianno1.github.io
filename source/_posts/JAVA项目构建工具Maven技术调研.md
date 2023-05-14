@@ -26,6 +26,8 @@ Apache Maven是一个软件（特别是Java软件）项目管理及自动构建�
 
 # Maven管理的项目的目录结构
 
+如下是Maven管理的项目的标准结构：
+
 ```bash
 |-src
     |-main
@@ -40,12 +42,18 @@ Apache Maven是一个软件（特别是Java软件）项目管理及自动构建�
         |-resources   #存放测试需要用到的一些配置文件或静态资源文件，如模板文件、静态图片等
             |-static
             |-templates
-|-pom.xml     #Maven的项目管理配置文件
+|-target #存放编译生成的一些文件
+    |-classes
+|-mvnw     #MUnix like操作系统下Maven Wrapper启动脚本
+|-mvnw.cmd #Windows操作系统下Maven Wrapper启动脚本
+|-pom.xml  #Maven的项目管理配置文件
 ```
 
 # 使用Maven进行项目开发的流程
 
 （1）按照Maven项目的目录结构创建目录
+
+运行`mvn archetype:generate`命令可以生成一个标准的Maven工程目录。也可以使用IDEA/Eclipse等IDE中的新建Maven Project的方式来创建一个新的Maven项目。
 
 （2）开发自己的代码
 
@@ -69,21 +77,33 @@ cd到Maven项目根目录，然后执行`mvn compile`。
 
 坐标是由groupId，artifactId及version等组成。其中groupId为组织名，一般是“公司域名的反写+项目名”，例如com.baidu.xxoomon。artifaceId为项目模块在组织中的标识，一般为“项目名-模块名”，例如xxoomon-api。
 
-（2）仓库
+# Maven的仓库
 
-仓库分为本地仓库和远程仓库两个。
+## 仓库分类
+
+Maven仓库分为本地仓库和远程仓库两种。
 
 + 本地仓库
 
-本地仓库是开发者本地的仓库，本地仓库在本机的${user.home}/.m2/repository目录中，即编译我们的项目时，就会将依赖安装到该目录中哦。
+本地仓库是开发者本地的仓库，本地仓库默认路径是在本机的`${user.home}/.m2/repository`目录中，即编译我们的项目时，就会将依赖安装到该目录中哦。这个本地仓库路径我们可以通过settings.conf中localRepository进行配置。
 
 + 远程仓库
 
-在本地仓库中若找不到对应的依赖，那么就会到maven的官方仓库中查找，然后下载到本地仓库中，供本地项目使用。maven中央仓库的地址为https://repo.maven.apache.org/maven2
+远程仓库又分为中央仓库、自建仓库、其他公共仓库。其中自建仓库或其他公共仓库，都可以作为中央仓库的镜像仓库，通过Maven的mirror配置给中央仓库作为镜像仓库。
 
-（3）镜像仓库
+所谓中央仓库，它是Maven的官方仓库，其中包括了大量常用的库，基本上大多数的依赖包都可以在这里找到。另外一个特殊的地方是，中央仓库是Maven默认仓库，不要要用户去配置，配置已经内置在Maven中了，Maven默认会从中央仓库中下载依赖包。在本地仓库中若找不到对应的依赖，那么就会到Maven的中央仓库中查找，然后下载到本地仓库中，供本地项目使用。Maven中央仓库的地址为`https://repo.maven.apache.org/maven2`。
 
-maven的中央仓库是部署在国外的，国内访问有点慢。其实在国内有很多maven官方仓库的镜像仓库，我们可以将maven中央仓库修改为国内的镜像仓库，那么在安装依赖jar包就会快很多哦。具体可以在`${MAVEN_HOME}/conf/settings.xml`中设置，即在该配置文件的mirrors标签中添加如下内容：
+所谓自建仓库，是某些公司在自己内网搭建的Maven仓库，这个仓库只有在该公司内网中才能访问到。自建仓库一般使用Nexus软件搭建，Nexus可以同时搭建多个仓库，如`http://ip:port/nexus/content/repositories/releases`，`http://ip:port/nexus/content/repositories/snapshots`，`http://ip:port/nexus/content/repositories/public`以及`http://ip:port/nexus/content/repositories/wahaha`等等。
+
+所谓其他公共仓库，是指某些机构或公司搭建的Maven仓库，这些仓库是在公网上开发的。如公共仓库有很多，阿里云在国内搭建的Maven仓库就有好多种，我们可以按需配置，如下：
+
+![](/images/maven_1_11.png)
+
+## 镜像仓库
+
+简单来说，镜像仓库是某个远程仓库的拦截器，它自身也是一个远程仓库。
+
+Maven的中央仓库是部署在国外的，国内访问有点慢，因此我们会用自建仓库或其他公共仓库作为Maven中央仓库的镜像仓库，那么在安装依赖jar包就会快很多哦。具体可以在`${M2_HOME}/conf/settings.xml`中设置，即在该配置文件的mirrors标签中添加如下内容：
 
 ```xml
 <mirror>
@@ -99,6 +119,86 @@ maven的中央仓库是部署在国外的，国内访问有点慢。其实在国
     <mirrorOf>central</mirrorOf>
 </mirror>
 ```
+
+这里的`<mirrorOf>central</mirrorOf>`非常重要，在上面的配置中，表示我们把id为alimaven的这个仓库，设置为id=central仓库的镜像仓库，那后续在需要从id=central仓库中拉取jar的时候，都会转向从id=alimaven仓库中拉取，不会再从id=central的仓库中拉取了。特别说明的是，id=central的仓库就指的是Maven中央仓库。mirror就像一个拦截器一样。mirrorOf不光可以设定为central，其他的远程仓库都可以被镜像，按需配置即可。
+
+## 远程仓库的存储结构
+
+Maven仓库是基于简单文件系统存储的，我们理解了其存储方式，对我们排查问题会有一定的帮助。
+
+任何一个依赖包都有其唯一坐标，根据这个坐标可以定位其在仓库中的唯一存储路径，这便是Maven的仓库布局方式。例如`log4j:log4j:1.2.15`这一依赖包，我们在浏览器中打开Maven中央仓库的地址`https://repo.maven.apache.org/maven2/`，然后在其下相对路径为`log4j/log4j/1.2.15/`下即有我们需要依赖包`log4j-1.2.15.jar`。因此在实际项目中，我们若发现一个jar下载不成功，我们可以通过此种方式看看远程仓库中是否有我们需要的jar包，若没有，我们可能需要在settings.xml中配置特定的Maven远程仓库才可以。
+
+## 远程仓库的配置
+
+在很多情况下，默认的中央仓库无法满足项目依赖包的需求，可能项目需要的依赖包存在于另外一个远程仓库中，如JBoss Maven仓库。这时，可以在pom.xml或settings.conf中配置该仓库。如在settings.xml中配置内容如下：
+
+```xml
+<profiles>
+  <id>wahaha</id>
+  <profile>
+    <repositories>
+      <repository>
+        <id>jboss</id>
+        <name>JBoss Repository</name>
+        <url>http://repository.jboss.com/maven2</url>
+        <releases>
+          <enabled>true</enabled>
+        </releases>
+        <snapshots>
+          <enabled>false</enabled>
+          <updatePolicy>daily</updatePolicy>
+          <checksumPolicy>ignore</checksumPolicy>
+        </snapshots>
+      </repository> 
+    </repositories>
+  </profile>
+</profiles>
+<activeProfiles>
+    <activeProfile>wahaha</activeProfile>
+</activeProfiles>
+```
+
+我们可以配置多个远程仓库，Maven在下载依赖时，会按照先后顺序，从这些远程仓库中依次查找是否有需要的依赖Jar包。若所有的远程仓库中都没有需要的依赖Jar包，则会报找不到Jar包的错误。
+
+在repositories元素下，可以使用repository子元素声明一个或多个远程仓库，该例中声明了一个id为jboss，名称为JBoss Repository的仓库（名称可以随便写）。任何一个仓库声明的id必须是唯一的，尤其需要注意的是，Maven自带的中央仓库使用的id是central，如果其他仓库的声明也使用该id，就会覆盖中央仓库的配置。配置中url指定了仓库的地址。
+
+该例中配置的releases和snapshots元素比较重要，它们用来控制Maven对于正式版依赖包和快照版依赖包的下载。该例中releases的enabled的值为true，代表开启JBoss仓库的发布版本下载支持，而snapshots的enabled值为false，表示关闭JBoss仓库的快照版本的下载支持，若我们想要下载JBoss仓库一个snapshot版本的依赖包，就会下载失败。
+
+updatePolicy元素用来配置Maven从远程仓库检查更新的频率，也即在本地仓库中已经有的依赖包，后续工程中通过此参数代表的策略，来决定是否需要从远程仓库中拉取一份新的jar包文件，默认值是daily，表示Maven每天检查一次。其他可用的值包括，never是从不更新，always是每次依赖包都检查更新。interval：X是每隔多少分钟更新一次（X为任意整数）。
+
+checksumPolicy元素用来配置Maven检查检验和文件的策略。当依赖包被部署到Maven仓库时，会同时部署对应的校验和文件。在下载依赖包的时候，Maven会验证校验和文件，如果校验和验证失败，怎么办？当checksumPolicy的值为默认的warn时，Maven会执行依赖包输出警告信息，其他可用值包括，fail是Maven遇到检验和错误就让构件失败，ignore是使Maven完全忽略校验和错误。
+
+# Maven包的正式Release版本和快照SNAPSHOT版本
+
+所谓Release版，形如`xxoo-1.1.2.jar`，是稳定的版本。所谓快照版本，形如`xxoo-1.1.2-SNAPSHOT.jar`，即在项目配置文件中（无论是build.gradle还是pom.xml）指定的版本号带有`-SNAPSHOT`后缀，那么打出的包就是一个快照版本，快照版本代表不稳定、尚处于开发中的版本。
+
+快照版本和正式版本的主要区别在于，本地获取这些依赖的机制有所不同。假设你依赖一个库的正式版本，构建的时候构建工具会先在本次仓库中查找是否已经有了这个依赖库，如果没有的话才会去远程仓库中去拉取。所以假设你发布了Junit-4.10.jar到了远程仓库，有一个项目依赖了这个库，它第一次构建的时候会把该库从远程仓库中下载到本地仓库缓存，以后再次构建都不会去访问远程仓库了。所以如果你修改了代码，向远程仓库中发布了新的软件包，但仍然叫Junit-4.10.jar，那么依赖这个库的项目就无法得到最新更新。你只有在重新发布的时候升级版本，比如叫做Junit-4.11.jar，然后通知依赖该库的项目组也修改依赖版本为Junit-4.11，这样才能使用到你最新添加的功能。
+
+假设有两个小组负责维护两个组件，example-service和example-ui，其中example-ui项目依赖于example-service。而这两个项目每天都会构建多次，如果每次构建你都要升级example-service的版本，那么你会疯掉。这个时候SNAPSHOT版本就派上用场了。每天日常构建时你可以构建example-service的快照版本，比如example-service-1.0-SNAPSHOT.jar，而example-ui依赖该快照版本。每次example-ui构建时，会优先去远程仓库中查看是否有最新的example-service-1.0-SNAPSHOT.jar，如果有则下载下来使用。即使本地仓库中已经有了example-service-1.0-SNAPSHOT.jar，它也会尝试去远程仓库中查看同名的jar是否是最新的。有的人可能会问，这样不就不能充分利用本地仓库的缓存机制了吗？别着急，Maven比我们想象中的要聪明。在配置Maven的Repository的时候中有个配置项updatePolicy，可以配置对于SNAPSHOT版本向远程仓库中查找的频率。频率共有四种，分别是always、daily、interval、never。当本地仓库中存在需要的依赖项目时，always是每次都去远程仓库查看是否有更新。daily是只在第一次的时候查看是否有更新，当天的其它时候则不会查看。interval允许设置一个分钟为单位的间隔时间，在这个间隔时间内只会去远程仓库中查找一次。never是不会去远程仓库中查找（这种就和正式版本的行为一样了）。
+
+所以，一般在开发模式下，我们可以频繁的发布SNAPSHOT版本，以便让其它项目能实时的使用到最新的功能做联调。当版本趋于稳定时，再发布一个正式版本，供正式使用。当然在做正式发布时，也要确保当前项目的依赖项中不包含对任何SNAPSHOT版本的依赖，保证正式版本的稳定性。
+
+备注：项目中不建议依赖SNAPSHOT版本的jar包， 比如说，今天你依赖某个SNAPSHOT版本的第三方库成功构建了自己的应用，明天再构建时可能就会失败，因为今晚第三方可能已经更新了它的SNAPSHOT库。你再次构建时，Maven会去远程仓库下载SNAPSHOT的最新版本，你构建时用的库就是新的jar文件了，这时正确性就很难保证了。
+
+# Maven的配置文件
+
+对于Maven来说，我们会看到有多个配置文件：
+
+（1）项目pom.xml文件
+
+这是对当前项目的配置。
+
+（2）`${USER_HOME}/.m2/settings.xml`文件
+
+这是对当前用户的配置。
+
+（3）Maven安装目录`${MAVEN_HOME}/conf/settings.xml`文件
+
+这是对全局的配置文件。
+
+如果一个配置同时存在于多个位置，那么到底以哪个为准呢？其实三者的优先级是`pom.xml` > `${USER_HOME}/.m2/settings.xml` > `${MAVEN_HOME}/conf/settings.xml`。
+
+Maven安装后，用户目录下不会自动生成settings.xml，只有全局配置文件。如果需要创建用户范围的settings.xml，可以将安装路径下的settings复制到目录`${USER_HOME}/.m2/`。Maven默认的settings.xml是一个包含了注释和例子的模板，可以快速的修改它来达到你的要求。
 
 # mvn常见的使用命令
 
@@ -714,6 +814,23 @@ resources代表了Maven的资源文件，是项目中要使用的文件，代码
 ## Maven Wrapper
 
 我们使用Maven时，基本上只会用到mvn这一个命令。有些童鞋可能听说过mvnw，这个是啥？mvnw是Maven Wrapper的缩写。因为我们安装Maven时，默认情况下，系统所有项目都会使用全局安装的这个Maven版本。但是，对于某些项目来说，它可能必须使用某个特定的Maven版本，这个时候，就可以使用Maven Wrapper，它可以负责给这个特定的项目安装指定版本的Maven，而其他项目不受影响。简单地说，Maven Wrapper就是给一个项目提供一个独立的，指定版本的Maven给它使用。实际使用中使用mvnw代替mvn，如`mvnw clean package`。
+
+## 手动从远程仓库中下载依赖并安装包到本地仓库
+
+有两种方式，
+
+打开命令行，输入：
+
+```bash
+mvn dependency:get -DgroupId=com.alibaba -DartifactId=fastjson -Dversion=1.2.70
+
+# 指定仓库的网络地址
+mvn dependency:get -DremoteRepositories=https://mvnrepository.com/artifact/commons-logging/commons-logging -DgroupId=commons-logging -DartifactId=commons-logging -Dversion=1.1.1
+```
+
+该命令会自动读取本地的Maven配置，下载jar包并安装到本地仓库中。
+
+另外，我们也可以直接在远程仓库的WEB页面，手动下载需要的jar包，然后通过`mvn install:install-file`命令将jar安装到本地仓库中。
 
 
 学习资料参考于：

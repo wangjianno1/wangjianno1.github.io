@@ -17,7 +17,9 @@ JAR文件包的扩展名是`.jar`，在Windows平台上，我们直接可以将J
 
 ![](/images/java_jar_1_1.png)
 
-备注：com.bat.adsl是包结构。
+其中，com.bat.adsl是包结构。
+
+若是可执行jar包，jar包中还有BOOT-INF目录，目录中会有该项目所有依赖的其他jar包，注意这块与普通jar包的区别，因为可执行jar是直接跑起来的，所以它依赖的第三方jar必然被打包进自身的jar文件中。
 
 # jar命令格式及参数
 

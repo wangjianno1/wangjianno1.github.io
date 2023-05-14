@@ -28,3 +28,11 @@ str1.equals(str2)   // true，因为str1和str2的字符串内容是一样的
 ```java
 var = A ? B : C  // 如果A为真，返回B，否则返回C
 ```
+
+# Java中一些容易迷惑的关键字
+
+    继承父类/父接口的关键字：extends
+    实现接口的关键字：implements
+    在方法后面声明抛出异常的关键字：throws
+    在代码中抛出异常的关键字：throw
+

@@ -11,19 +11,26 @@ categories: VCS
 
 # 使用Git命令行解决冲突
 
-操作步骤总结如下：
+Git Merge和Git Rebase操作步骤总结如下：
 
     # Git Merge产生冲突
     第一步：git merge产生冲突文件
-    第二步：手动编辑冲突文件
+    第二步：手动编辑冲突文件，或使用IDEA/VSCode等IDE去编辑冲突文件
     第三步：git add <conflict file>标记冲突解决
     第四步：git merge继续合并
      
     # Git Rebase产生冲突
     第一步：git rebase产生冲突文件
-    第二步：手动编辑冲突文件
+    第二步：手动编辑冲突文件，或使用IDEA/VSCode等IDE去编辑冲突文件
     第三步：git add <conflict file>标记冲突解决
     第四步：git rebase --continue继续合并
+
+Git Pull底层默认使用的是Git Merge来合并代码，使用Git Pull时，也会产生代码冲突，我们可以通过如下步骤来解决Git Pull时产生的冲突：
+
+    第一步：git commit将本地修改提交到本地仓库后，再使用git pull可能会产生本地仓库和远程仓库的文件冲突
+    第二步：手动编辑冲突文件，或使用IDEA/VSCode等IDE去编辑冲突文件
+    第三步：git add <conflict file>标记冲突解决
+    第四步：git commit结束冲突，git commit可以不用带-m参数
 
 下面我们以一个例子来说明合并冲突的产生和解决。假如我们做合并iss53分支的内容到master产生了冲突。
 
