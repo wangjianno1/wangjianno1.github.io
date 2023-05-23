@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="老坛の菜园子">
 <meta property="og:description" content="类注释在import之后，class声明之前进行注释，格式如下： 12345678910/** * 这个类是用来产生随机数 * @author  zhangsan * @author  lisi * @see     java.lang.Object#toString() * @see     java.lang.StringBuffer * @version   1.2 */public cla">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2022-04-06T04:13:59.363Z">
+<meta property="og:updated_time" content="2023-05-20T10:37:59.621Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA开发中一些日常编程规范">
 <meta name="twitter:description" content="类注释在import之后，class声明之前进行注释，格式如下： 12345678910/** * 这个类是用来产生随机数 * @author  zhangsan * @author  lisi * @see     java.lang.Object#toString() * @see     java.lang.StringBuffer * @version   1.2 */public cla">
@@ -444,8 +444,8 @@
 <p>局部变量名以<code>lowerCamelCase</code>风格编写，比起其它类型的名称，局部变量名可以有更为宽松的缩写。</p>
 <h1 id="Java编程规范的一些最佳实践"><a href="#Java编程规范的一些最佳实践" class="headerlink" title="Java编程规范的一些最佳实践"></a>Java编程规范的一些最佳实践</h1><p>（1）抽象类命名使用Abstract或Base开头。异常类命名使用Exception结尾。测试类命名以它要测试的类的名称开始，以Test结尾。</p>
 <p>（2）Service/DAO层方法命名规约：</p>
-<pre><code>获取单个对象的方法用get做前缀
-获取多个对象的方法用list做前缀
+<pre><code>获取单个对象的方法用get做前缀，如getStudent
+获取多个对象的方法用list做前缀，复数结尾，如listStudents
 获取统计值的方法用count做前缀
 插入的方法用save/insert做前缀
 删除的方法用remove/delete做前缀

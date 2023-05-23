@@ -121,7 +121,7 @@
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_jsp_1_1.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_jsp_1_2.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_jsp_1_3.png">
-<meta property="og:updated_time" content="2022-05-28T03:24:55.290Z">
+<meta property="og:updated_time" content="2023-05-23T08:43:16.162Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Servlet&#x2F;JSP技术说明">
 <meta name="twitter:description" content="Servlet简介Java Servlet是运行在Web服务器或应用服务器上的程序，它是作为来自Web浏览器或其他HTTP客户端的请求和HTTP服务器上的数据库或应用程序之间的中间层。 使用Servlet，可以收集来自网页表单的用户输入，呈现来自数据库或者其他源的记录，还可以动态创建网页。Java Servlet通常情况下与使用CGI（Common Gateway Interface，公共网关接口">
@@ -431,8 +431,9 @@
 <h1 id="Servlet的生命周期"><a href="#Servlet的生命周期" class="headerlink" title="Servlet的生命周期"></a>Servlet的生命周期</h1><p><img src="/images/java_servlet_1_3.png" alt></p>
 <h1 id="JAVA-Servlet-WEB应用程序部署规范"><a href="#JAVA-Servlet-WEB应用程序部署规范" class="headerlink" title="JAVA Servlet WEB应用程序部署规范"></a>JAVA Servlet WEB应用程序部署规范</h1><p>根据J2EE Servlet规范，WEB应用程序有特定的目录结构，将Servlet应用程序部署到Servlet容器（Tomcat/Jetty等）时必须按照这样的目录结构部署，具体结构如下：</p>
 <p><img src="/images/java_servlet_1_4.png" alt></p>
-<p>当我们使用Eclipse等IDE工具创建WEB工程时，IDE会自动在webapp目录下按照这样的目录结构给开发者组织WEB应用。</p>
+<p>当我们使用Eclipse等IDE工具创建WEB工程时，IDE会自动在webapp目录下按照这样的目录结构给开发者组织WEB应用。web.xml很重要，一般使用了Spring等框架时，该配置文件中定义了框架的核心Servlet。</p>
 <p>需要注意的是，JAVA Web应用部署到容器后，/WEB-INF/classes/和/WEB-INF/lib/目录都属于CLASSPATH中一部分，JAVA Web应用可以直接使用这些目录中jar包中的类。</p>
+<p>备注：我们构建项目生成的WAR包就是这个目录结构，WAR包是可以直接扔到Servlet容器（Tomcat/Jetty等）中被加载起来的。另外WAR包中也可以有META-INF的目录，该目录中会有MANIFEST.MF文件，该文件的内容同普通JAR中是一样的。这里要注意WAR包和JAR包的结构是有差比的。简单来说，WAR包是Java Web程序打的包，WAR包里面包括写的代码编译成的class文件，依赖的包，配置文件，所有的网站页面，包括html/jsp等等，一个WAR包可以理解为是一个WEB项目，里面是项目的所有东西。</p>
 <h1 id="其他闲杂知识"><a href="#其他闲杂知识" class="headerlink" title="其他闲杂知识"></a>其他闲杂知识</h1><p>（1）Listener</p>
 <p>监听器Listener，它是实现了javax.servlet.ServletContextListener接口的服务器端程序，它是随web应用的启动而启动，只初始化一次，随web应用的停止而销毁。主要作用是做一些初始化的内容添加工作、设置一些基本的内容、比如一些参数或者是一些固定的对象等等。在Servlet被Servlet容器初始化之前，可以向Servlet容器注册一些Listener来执行一些前置的工作逻辑，该Listener需要继承自javax.servlet.ServletContextListener。比如Spring 框架的监听器ContextLoaderListener会在服务器启动的时候实例化我们配置的bean对象、hibernate的session的监听器会监听session的活动和生命周期，负责创建，关闭session等活动。</p>
 <p>以Spring的ContextLoaderListener举例来说：</p>

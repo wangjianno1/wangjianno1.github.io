@@ -119,10 +119,11 @@
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_spring_1_3.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_spring_1_4.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_spring_1_5.png">
+<meta property="og:image" content="http://wangjianno1.github.io/images/java_spring_1_9.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_spring_1_8.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_spring_1_7.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_spring_1_6.png">
-<meta property="og:updated_time" content="2023-04-25T13:25:35.885Z">
+<meta property="og:updated_time" content="2023-05-23T13:47:57.334Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring Framework技术小结">
 <meta name="twitter:description" content="Spring Framework简介通常来说，我们说的Spring指的是Spring Framework，其实它只是Spring家族中一个产品。 Spring Framework是使用基本的JavaBean代替EJB，通过容器来管理JavaBean的配置和生命周期，在此基础上实现了AOP、IoC的Spring核心功能，其他WEB框架组件在AOP、IoC的基础上工作，将JavaBean交给Sprin">
@@ -464,6 +465,7 @@ AnnotationConfigWebApplicationContext
 <p><img src="/images/java_spring_1_5.png" alt></p>
 <p>（2）AOP技术的实现方式</p>
 <p>AOP技术的实现方式有两种，一个是以AspectJ等为代表的预编译方式，一个是以Spring AOP，JbossAOP等为代表的运行期动态代理（JDK动态代理、CGLib动态代理）。</p>
+<p><img src="/images/java_spring_1_9.png" alt></p>
 <p><img src="/images/java_spring_1_8.png" alt></p>
 <p>Spring AOP是基于动态代理的，如果要代理的对象，实现了某个接口，那么Spring AOP会使用JDK Proxy，去创建代理对象，而对于没有实现接口的对象，就无法使用JDK Proxy去进行代理了，这时候Spring AOP会使用Cglib，这时候Spring AOP会使用Cglib生成一个被代理对象的子类来作为代理，如下图所示：</p>
 <p><img src="/images/java_spring_1_7.png" alt></p>
