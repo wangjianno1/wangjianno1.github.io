@@ -118,6 +118,8 @@ AOP，Aspect Oriented Programming，中文为面向切面的编程，通过预�
 
 AOP技术的实现方式有两种，一个是以AspectJ等为代表的预编译方式，一个是以Spring AOP，JbossAOP等为代表的运行期动态代理（JDK动态代理、CGLib动态代理）。
 
+![](/images/java_spring_1_9.png)
+
 ![](/images/java_spring_1_8.png)
 
 Spring AOP是基于动态代理的，如果要代理的对象，实现了某个接口，那么Spring AOP会使用JDK Proxy，去创建代理对象，而对于没有实现接口的对象，就无法使用JDK Proxy去进行代理了，这时候Spring AOP会使用Cglib，这时候Spring AOP会使用Cglib生成一个被代理对象的子类来作为代理，如下图所示：

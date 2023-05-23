@@ -88,9 +88,11 @@ public class HelloWorld extends HttpServlet {
 
 ![](/images/java_servlet_1_4.png)
 
-当我们使用Eclipse等IDE工具创建WEB工程时，IDE会自动在webapp目录下按照这样的目录结构给开发者组织WEB应用。
+当我们使用Eclipse等IDE工具创建WEB工程时，IDE会自动在webapp目录下按照这样的目录结构给开发者组织WEB应用。web.xml很重要，一般使用了Spring等框架时，该配置文件中定义了框架的核心Servlet。
 
 需要注意的是，JAVA Web应用部署到容器后，/WEB-INF/classes/和/WEB-INF/lib/目录都属于CLASSPATH中一部分，JAVA Web应用可以直接使用这些目录中jar包中的类。
+
+备注：我们构建项目生成的WAR包就是这个目录结构，WAR包是可以直接扔到Servlet容器（Tomcat/Jetty等）中被加载起来的。另外WAR包中也可以有META-INF的目录，该目录中会有MANIFEST.MF文件，该文件的内容同普通JAR中是一样的。这里要注意WAR包和JAR包的结构是有差比的。简单来说，WAR包是Java Web程序打的包，WAR包里面包括写的代码编译成的class文件，依赖的包，配置文件，所有的网站页面，包括html/jsp等等，一个WAR包可以理解为是一个WEB项目，里面是项目的所有东西。
 
 # 其他闲杂知识
 
