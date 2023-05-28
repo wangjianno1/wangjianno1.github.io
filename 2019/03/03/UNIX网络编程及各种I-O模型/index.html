@@ -124,7 +124,7 @@
 <meta property="og:image" content="http://wangjianno1.github.io/images/unix_io_1_8.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/unix_io_1_9.png">
 <meta property="og:image" content="http://wangjianno1.github.io/images/unix_io_1_10.png">
-<meta property="og:updated_time" content="2022-03-15T02:58:16.361Z">
+<meta property="og:updated_time" content="2023-05-28T01:53:55.280Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="UNIX网络编程及各种I&#x2F;O模型">
 <meta name="twitter:description" content="UNIX网络编程概述在UNIX网络编程中，同时有大量的客户端连接到同一个服务器上时，服务端一般对每一个客户端请求fork出一个进程来响应处理，或者对每一个客户端创建出一个线程来响应处理。 最基础的TCP网络编程 （1）socket函数 socket()函数用于在客户端或服务端创建一个socket对象，sockect函数的定义如下： 12#include&amp;lt;sys/socket.h&amp;gt;int">
@@ -457,9 +457,15 @@
 <h1 id="UNIX中五种I-O模型的异同"><a href="#UNIX中五种I-O模型的异同" class="headerlink" title="UNIX中五种I/O模型的异同"></a>UNIX中五种I/O模型的异同</h1><p><img src="/images/unix_io_1_7.png" alt></p>
 <p>前四种模型都会导致应用进程阻塞，我们称他们为“同步IO模型”，因为他们的真正I/O操作recvfrom会阻塞应用进程。只有第五种模型才是“异步IO模型”，因为自始至终都没有因为I/O操作导致应用进程被阻塞。</p>
 <h1 id="一点概念理解"><a href="#一点概念理解" class="headerlink" title="一点概念理解"></a>一点概念理解</h1><p>同步，异步，阻塞以及非阻塞等概念相对难理解。</p>
-<p>所谓同步/异步是客户端和服务端之间交互的一种行为状态。同步就是在发出一个调用时，在没有得到结果之前，该调用就不返回，但是一旦调用返回，就得到返回值了。换句话说，就是由调用者主动等待这个调用的结果。而异步则是相反，调用在发出之后，这个调用就直接返回了，所以没有返回结果。换句话说，当一个异步过程调用发出后，调用者不会立刻得到结果。而是在调用发出后，被调用者通过状态信号来通知调用者，或通过回调函数处理这个调用。</p>
-<p>所谓阻塞/非阻塞是客户端一种调用发出后的一种状态。阻塞调用是指调用结果返回之前，调用者会被挂起，调用线程只有在得到结果之后才会返回。非阻塞调用指在不能立刻得到结果之前，该调用不会阻塞当前线程。</p>
-<p>以一个例子来说明，同步就是烧开水，要自己来看开没开；异步就是水开了，然后水壶响了通知你水开了。阻塞是烧开水的过程中，你不能干其他事情（即你被阻塞住了）；非阻塞是烧开水的过程里可以干其他事情。同步与异步说的是你获得水开了的方式不同。阻塞与非阻塞说的是你得到结果之前能不能干其他事情。两组概念描述的是不同的内容。</p>
+<p>所谓同步/异步是客户端和服务端之间交互的一种行为状态，<strong>是描述被调用方的</strong>。同步就是在发出一个调用时，在没有得到结果之前，该调用就不返回，但是一旦调用返回，就得到返回值了。换句话说，就是由调用者主动等待这个调用的结果。而异步则是相反，调用在发出之后，这个调用就直接返回了，所以没有返回结果。换句话说，当一个异步过程调用发出后，调用者不会立刻得到结果。而是在调用发出后，被调用者通过状态信号来通知调用者，或通过回调函数处理这个调用。</p>
+<p>所谓阻塞/非阻塞是客户端一种调用发出后的一种状态，<strong>是描述调用方的</strong>。阻塞调用是指调用结果返回之前，调用者会被挂起，调用线程只有在得到结果之后才会返回。非阻塞调用指在不能立刻得到结果之前，该调用不会阻塞当前线程。</p>
+<p>举个简单的例子，老张烧水。</p>
+<p>（1）老张把水壶放到火上，一直在水壶旁等着水开。（这是同步阻塞）</p>
+<p>（2）老张把水壶放到火上，去客厅看电视，时不时去厨房看看水开没有。（这是同步非阻塞）</p>
+<p>（3）老张把响水壶放到火上，一直在水壶旁等着水开。（这是异步阻塞） </p>
+<p>（4）老张把响水壶放到火上，去客厅看电视，水壶响之前不再去看它了，响了再去拿壶。（这是异步非阻塞）</p>
+<p>1和2的区别是，调用方在得到返回之前所做的事情不一样。1和3的区别是，被调用方对于烧水的处理不一样。</p>
+<p>同步就是烧开水，要自己来看开没开；异步就是水开了，然后水壶响了通知你水开了。阻塞是烧开水的过程中，你不能干其他事情（即你被阻塞住了）；非阻塞是烧开水的过程里可以干其他事情。同步与异步说的是你获得水开了的方式不同。阻塞与非阻塞说的是你得到结果之前能不能干其他事情。两组概念描述的是不同的内容。</p>
 <h1 id="网络编程的线程-进程模型"><a href="#网络编程的线程-进程模型" class="headerlink" title="网络编程的线程/进程模型"></a>网络编程的线程/进程模型</h1><h2 id="传统的线程-进程模型"><a href="#传统的线程-进程模型" class="headerlink" title="传统的线程/进程模型"></a>传统的线程/进程模型</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 传统模型1：单线程模式，无法并发，如果当前的请求没有处理完，那么后面的请求只能被阻塞，服务器的吞吐量太低。</span></span><br><span class="line"><span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">    socket = accept();</span><br><span class="line">    handle(socket);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 传统模型2：多线程模式，connection per thread，每一个连接用一个线程处理。</span></span><br><span class="line"><span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">    socket = accept();</span><br><span class="line">    <span class="keyword">new</span> Thread(socket);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 传统模型3：线程池模式，减少了线程的反复创建和销毁，但本质上一个线程还是要完整的处理连接、读取、写入</span></span><br><span class="line"><span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">    socket = accept();</span><br><span class="line">    ExecutorService executorService = Executors.newCachedThreadPool();</span><br><span class="line">    executorService.execute(<span class="keyword">new</span> Thread(socket));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="Reactor模型"><a href="#Reactor模型" class="headerlink" title="Reactor模型"></a>Reactor模型</h2><p>基于I/O多路复用和线程池，就是所谓的”Reactor模型”的基本设计思想。</p>
 <p>以Java的NIO库来说，Java nio的select函数，可以同时监听多个套接字socket。每个socket都会关联连接event、读取event、回写event。然后把一个线程拆分成更小的粒度：建立连接的handler、读取数据的handler、回写数据的hander。handler处理完event就丢给下一个handler处理，自己又可以去服务socket，提高了复用率，提高了系统的吞吐量。</p>

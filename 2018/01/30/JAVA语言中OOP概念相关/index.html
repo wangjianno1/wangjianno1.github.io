@@ -116,7 +116,7 @@
 <meta property="og:description" content="OOP中一些基本概念123456789101112多态继承封装类对象成员变量/实例变量/成员属性类变量/静态变量成员方法/实例方法类方法/静态方法构造方法重载overload覆盖/覆写/重写override 具体说明构造方法每个类都有构造方法。如果没有显式地为类定义构造方法，Java编译器将会为该类提供一个默认构造方法。在创建一个对象的时候，至少要调用一个构造方法。构造方法的名称必须与类同名，一个">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://wangjianno1.github.io/images/java_oop_1_1.png">
-<meta property="og:updated_time" content="2022-02-10T09:54:57.580Z">
+<meta property="og:updated_time" content="2023-05-23T15:05:10.570Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA语言中OOP概念相关">
 <meta name="twitter:description" content="OOP中一些基本概念123456789101112多态继承封装类对象成员变量/实例变量/成员属性类变量/静态变量成员方法/实例方法类方法/静态方法构造方法重载overload覆盖/覆写/重写override 具体说明构造方法每个类都有构造方法。如果没有显式地为类定义构造方法，Java编译器将会为该类提供一个默认构造方法。在创建一个对象的时候，至少要调用一个构造方法。构造方法的名称必须与类同名，一个">
@@ -428,6 +428,8 @@
 <p>覆写（override）是子类对父类的允许访问的方法的实现过程进行重新编写，返回值和形参都不能改变。即外壳不变，核心重写！重写的好处在于子类可以根据需要，定义特定于自己的行为。也就是说子类能够根据需要实现父类的方法。</p>
 <p>（2）重载</p>
 <p>重载（overload）是在一个类里面，方法名字相同，而参数不同。返回类型可以相同也可以不同。每个重载的方法（或者构造函数）都必须有一个独一无二的参数类型列表。最常用的地方就是构造器的重载。</p>
+<h2 id="方法签名"><a href="#方法签名" class="headerlink" title="方法签名"></a>方法签名</h2><p>方法签名（Method Signature），是来区分不同方法的标示符。JAVA方法签名包括两部分，即方法名和参数列表。访问修饰符和返回值类型不属于方法签名的构成部分，仅仅是访问修饰符或者是返回值类型不同不能区分两个方法。</p>
+<p>简单来说，若两个方法的方法签名不一样，那他们就是两个不同的方法。</p>
 
       
     </div>
@@ -807,7 +809,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#OOP中一些基本概念"><span class="nav-number">1.</span> <span class="nav-text">OOP中一些基本概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#具体说明"><span class="nav-number">2.</span> <span class="nav-text">具体说明</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#构造方法"><span class="nav-number">2.1.</span> <span class="nav-text">构造方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#成员变量-实例变量-成员属性"><span class="nav-number">2.2.</span> <span class="nav-text">成员变量/实例变量/成员属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类变量-静态变量"><span class="nav-number">2.3.</span> <span class="nav-text">类变量/静态变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#继承"><span class="nav-number">2.4.</span> <span class="nav-text">继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多态"><span class="nav-number">2.5.</span> <span class="nav-text">多态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重载-覆写"><span class="nav-number">2.6.</span> <span class="nav-text">重载/覆写</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#OOP中一些基本概念"><span class="nav-number">1.</span> <span class="nav-text">OOP中一些基本概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#具体说明"><span class="nav-number">2.</span> <span class="nav-text">具体说明</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#构造方法"><span class="nav-number">2.1.</span> <span class="nav-text">构造方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#成员变量-实例变量-成员属性"><span class="nav-number">2.2.</span> <span class="nav-text">成员变量/实例变量/成员属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类变量-静态变量"><span class="nav-number">2.3.</span> <span class="nav-text">类变量/静态变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#继承"><span class="nav-number">2.4.</span> <span class="nav-text">继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多态"><span class="nav-number">2.5.</span> <span class="nav-text">多态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重载-覆写"><span class="nav-number">2.6.</span> <span class="nav-text">重载/覆写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法签名"><span class="nav-number">2.7.</span> <span class="nav-text">方法签名</span></a></li></ol></li></ol></div>
             
 
           </div>
