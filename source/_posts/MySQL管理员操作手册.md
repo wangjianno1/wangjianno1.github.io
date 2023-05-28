@@ -125,6 +125,7 @@ select a.runoob_id, a.runoob_author, b.runoob_count from runoob_tbl a, tcount_tb
 
 ```sql
 update some_table set title='学习MySQL' where author='wahaha';
+update some_table set title='学习MySQL', content='MySQL的数据类型有哪些' where author='wahaha';  /*同时修改多个属性*/
 ```
 
 备注：若update语句后面不带条件，即不带where子句，那么update语句将修改该数据库表some_table中的所有记录。

@@ -122,6 +122,8 @@ public static void main(String[] args) {
 }
 ```
 
+有两个函数，他们的参数类型不同，一个是`List<String>`另一个是`List<Integer>`，但是，这段代码是编译通不过的，是构成了不了重载Overload关系的。因为参数`List<Integer>`和`List<String>`编译之后都被擦除了，变成了一样的原生类型`List`，擦除动作导致这两个方法的方法签名变得一模一样。
+    
 # 一点闲杂
 
 不管是泛型类，泛型方法，还是泛型接口，在使用这些泛型时候，类型参数必须是抽象类型，不能是基本数据类型，如int/short，应该使用他们的封箱类Integer/Short等等。

@@ -189,7 +189,7 @@ public void addSomeUsers() throws Exception {
 </mapper>
 ```
 
-（4）编写Dao层的代码
+（4）编写Dao层的Mapper接口
 
 ```java
 public interface UserMapper {

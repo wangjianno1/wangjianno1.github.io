@@ -121,6 +121,8 @@ public class HostNameDaoImpl implements HostNameDao {
 }
 ```
 
+备注：JdbcTemplate提供了大量的query方法来处理各种对数据库表的查询操作，如`query()`，`queryForObject()`，`queryForList()`等等方法。
+
 （4）在sevice层直接使用Dao层实现类即可
 
 备注：使用JdbcTemplate模式是没有对象关系映射ORM的功能。
